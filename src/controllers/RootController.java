@@ -1,17 +1,25 @@
 package controllers;
 
-import models.User;
+import models.*;
+import services.EmailValidator;
+import services.PhoneValidator;
 import views.RootView;
 
 public class RootController {
 
     private UsersDAO usersDAO;
     private RootView rootView;
+    private AdminController adminController;
+    private StudentController studentController;
+    private MentorController mentorController;
 
     RootController() {
 
         this.usersDAO = new UsersDAO();
         this.rootView = new RootView();
+        this.adminController = new AdminController();
+        this.studentController = new StudentController();
+        this.mentorController = new MentorController();
     }
 
     public void start() {
@@ -53,11 +61,11 @@ public class RootController {
                 isLoggedIn = true;
                 if (user instanceof BlankUser) {
                     rootView.displayUserNotAssignedMessage();
-                } else (user instanceof Student) {
+                } else if (user instanceof Student) {
                     studentController.start();
-                } else (user instanceof Mentor) {
+                } else if (user instanceof Mentor) {
                     mentorController.start();
-                } else (user instanceof Admin) {
+                } else if (user instanceof Admin) {
                     adminController.start();
                 }
             } else {
@@ -142,7 +150,7 @@ public class RootController {
 
         while(!isCorrectInput) {
             email = rootView.getNewUserEmail();
-            if (EmailValidator.validate(email)) {
+            if (new EmailValidator().validate(email)) {
                 isCorrectInput = true;
             }
         }
@@ -156,7 +164,7 @@ public class RootController {
 
         while(!isCorrectInput) {
             phoneNumber = rootView.getNewUserPhoneNumber();
-            if (PhoneValidator.validate(phoneNumber)) {
+            if (new PhoneValidator().validate(phoneNumber)) {
                 isCorrectInput = true;
             }
         }
