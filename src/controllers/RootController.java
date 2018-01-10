@@ -70,6 +70,9 @@ public class RootController {
 
         boolean isUserCreated = false;
         String login;
+        String name;
+        String email;
+        String phoneNumber;
         String password;
         String user;
 
@@ -96,7 +99,7 @@ public class RootController {
         boolean isCorrectInput = false;
 
         while(!isCorrectInput) {
-            login = rootView.createUserLogin();
+            login = rootView.getNewUserLogin();
             if (login.length() >= 6 && login.length() <= 15) {
                 isCorrectInput = true;
             }
@@ -110,7 +113,7 @@ public class RootController {
         boolean isCorrectInput = false;
 
         while(!isCorrectInput) {
-            password = rootView.createUserPassword();
+            password = rootView.getNewUserPassword();
             if (password.length() >= 6 && password.length() <= 15) {
                 isCorrectInput = true;
             }
@@ -124,11 +127,25 @@ public class RootController {
         boolean isCorrectInput = false;
 
         while(!isCorrectInput) {
-            name = rootView.createUserName();
+            name = rootView.getNewUserName();
             if (name.length() > 1) {
                 isCorrectInput = true;
             }
         }
         return name;
+    }
+
+    private String createUserEmail() {
+
+        String email = null;
+        boolean isCorrectInput = false;
+
+        while(!isCorrectInput) {
+            email = rootView.getNewUserEmail();
+            if (EmailValidator.validate(email)) {
+                isCorrectInput = true;
+            }
+        }
+        return email;
     }
 }
