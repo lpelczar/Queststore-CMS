@@ -79,5 +79,17 @@ public class RootController {
         }
     }
 
+    private String createUserLogin() {
 
+        String login = null;
+        boolean isCorrectInput = false;
+
+        while(!isCorrectInput) {
+            login = rootView.createUserLogin();
+            if (login.length() > 1 && login.length() < 15) {
+                isCorrectInput = true;
+            }
+        }
+        return login;
+    }
 }
