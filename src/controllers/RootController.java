@@ -9,11 +9,17 @@ public class RootController {
 
     private UsersDAO usersDAO;
     private RootView rootView;
+    private AdminController adminController;
+    private StudentController studentController;
+    private MentorController mentorController;
 
     RootController() {
 
         this.usersDAO = new UsersDAO();
         this.rootView = new RootView();
+        this.adminController = new AdminController();
+        this.studentController = new StudentController();
+        this.mentorController = new MentorController();
     }
 
     public void start() {
