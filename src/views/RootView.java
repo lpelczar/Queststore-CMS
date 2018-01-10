@@ -37,6 +37,16 @@ public class RootView {
         return getStringInput();
     }
 
+    public String createUserLogin() {
+        System.out.print("Enter login (minimum 6 and maximum 15 characters): ");
+        return getStringInput();
+    }
+
+    public String createUserPassword() {
+        System.out.print("Enter password (minimum 6 and maximum 15 characters): ");
+        return getStringInput();
+    }
+
     public void displayUserNotAssignedMessage() {
         System.out.println("\nUser is no assigned yet, you need to wait for Admin to approve your account.");
         displayPressAnyKeyToContinueMessage();
