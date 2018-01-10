@@ -16,7 +16,10 @@ public abstract class User {
     }
 
     public String toString(){
-        return "";
+        return  "\nName: " + name +
+                "\nLogin: " + login +
+                "\nEmail: " + email +
+                "\nPhone number: " + phoneNumber;
     }
 
     public String getName() {
