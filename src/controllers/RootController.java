@@ -148,4 +148,18 @@ public class RootController {
         }
         return email;
     }
+
+    private String createUserPhoneNumber() {
+
+        String phoneNumber = null;
+        boolean isCorrectInput = false;
+
+        while(!isCorrectInput) {
+            phoneNumber = rootView.getNewUserPhoneNumber();
+            if (PhoneValidator.validate(phoneNumber)) {
+                isCorrectInput = true;
+            }
+        }
+        return phoneNumber;
+    }
 }

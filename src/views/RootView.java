@@ -57,7 +57,10 @@ public class RootView {
         return getStringInput();
     }
 
-
+    public String getNewUserPhoneNumber() {
+        System.out.print("Enter phone number: ");
+        return getStringInput();
+    }
 
     public void displayUserNotAssignedMessage() {
         System.out.println("\nUser is no assigned yet, you need to wait for Admin to approve your account.");
