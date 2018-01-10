@@ -20,6 +20,12 @@ public class RootController {
             rootView.displayMenu();
             String userInput = rootView.getUserInput();
             switch (userInput) {
+                case "1":
+                    signIn();
+                    break;
+                case "2":
+                    signUp();
+                    break;
                 case "0":
                     shouldExit = true;
                     break;
