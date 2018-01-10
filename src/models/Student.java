@@ -7,7 +7,7 @@ public class Student extends User {
 
     Student(String name, String login, String password, String email, String phoneNumber, Integer coolCoins) {
         super(name, email, login, password, phoneNumber);
-        this.backpack = Inventory();
+        this.backpack = new Inventory();
         this.levelGrade = 1;
         this.coolCoins = coolCoins;
     }

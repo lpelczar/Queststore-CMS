@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Map;
+
 public class Level {
 
     private String rank;
@@ -14,19 +16,19 @@ public class Level {
         this.experience += taskExp;
     }
 
-    private void updateRank(Map<String, Integer> levelTrehsold) {
-        for (Integer value : levelTrehsold.values()) {
-            if value.equals(experience) {
-                String newRank = getKeyFromValue(levelTrehsold, value);
+    private void updateRank(Map<String, Integer> levelThreshold) {
+        for (Integer value : levelThreshold.values()) {
+            if (value.equals(experience)) {
+                String newRank = getKeyFromValue(levelThreshold, value);
                 setRank(newRank);
 
             }
         }
     }
 
-    public String getKeyFromValue(Map<String, Integer>levelTrehsold, String value) {
-        for (String element : levelTrehsold.keySet()) {
-            if (levelTrehsold.get(element).equals(value)) {
+    private String getKeyFromValue(Map<String, Integer> levelThreshold, Integer value) {
+        for (String element : levelThreshold.keySet()) {
+            if (levelThreshold.get(element).equals(value)) {
                 return element;
             }
         }

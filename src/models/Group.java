@@ -24,7 +24,7 @@ public class Group {
 
     public boolean removeTeam(Team team) {
         if (group.contains(team)) {
-            gorup.remove(team);
+            group.remove(team);
             return true;
         }
         return false;
@@ -37,4 +37,14 @@ public class Group {
     public List<Team> getGroup() {
         return group;
     }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+
 }

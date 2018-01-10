@@ -9,4 +9,8 @@ public class Admin extends User {
         this.adminID = generateID;
         generateID++;
     }
+
+    public int getAdminID() {
+        return adminID;
+    }
 }
