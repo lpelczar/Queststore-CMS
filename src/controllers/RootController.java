@@ -1,6 +1,7 @@
 package controllers;
 
 import models.*;
+import services.EmailValidator;
 import views.RootView;
 
 public class RootController {
@@ -142,7 +143,7 @@ public class RootController {
 
         while(!isCorrectInput) {
             email = rootView.getNewUserEmail();
-            if (EmailValidator.validate(email)) {
+            if (new EmailValidator().validate(email)) {
                 isCorrectInput = true;
             }
         }
