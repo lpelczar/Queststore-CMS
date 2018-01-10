@@ -18,7 +18,9 @@ public class AdminController {
             }
 
             if (option == 1) {
-                //Promote blank user
+                //Promote blank user, add argument (list with users) to display method
+                view.displayBlankUsers()
+                String userLogin = askForLoginToPromote();
                 ;
             }
             else if (option == 2) {
@@ -41,6 +43,12 @@ public class AdminController {
                 isRunning = false;
             }
         }
+    }
 
+    public void promoteUser() {
+        boolean userTypePromote = view.typeOfPromotion();
+        if (userTypePromote) {
+            
+        }
     }
 }

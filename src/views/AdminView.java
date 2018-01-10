@@ -39,4 +39,28 @@ public class AdminView {
             System.out.println(user.toString());
         }
     }
+
+    public String askForLoginToPromote() {
+        String userLogin = scanner.next();
+        return userLogin
+    }
+
+    public Boolean typeOfPromotion() {
+        String userChoose = "";
+        String[] promoteOptions = {"m", "s"};
+
+        System.out.println("Type 'm' if you want promote user to mentor or 's' to student");
+
+        while (!Arrays.asList(promoteOptions).contains(playerChoose.toLowerCase())) {
+            userChoose = scanner.next();
+
+            if (userChoose.equals("m")) {
+                return true;
+            }
+            else if (userChoose.equals("s")) {
+                return false;
+            }
+        }
+        throw new IlleagalOptionException();
+    }
 }
