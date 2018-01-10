@@ -77,7 +77,7 @@ public class RootController {
             login = createUserLogin();
             user = usersDAO.getUserByLogin(login);
             if (user != null) {
-                rootView.displayUserWithThisNameAlreatyExists();
+                rootView.displayUserWithThisNameAlreadyExists();
             } else {
                 password = createUserPassword();
                 name = createUserName();

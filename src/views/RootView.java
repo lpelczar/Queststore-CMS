@@ -52,6 +52,21 @@ public class RootView {
         displayPressAnyKeyToContinueMessage();
     }
 
+    public void displayUserWithThisNameAlreadyExists() {
+        System.out.println("\nUser with that name already exists!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayUserCreated(String login, String name, String email, String phoneNumber) {
+        System.out.println("\nUser created: " +
+                           "\nLogin: " + login +
+                           "\nName: " + name +
+                           "\nEmail: " + email +
+                           "\nPhone number: " + phoneNumber +
+                           "\nYou need to wait for Admin to activate it!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
     public void displayUserNotExistsMessage() {
         System.out.println("\nUser not exists!");
         displayPressAnyKeyToContinueMessage();
