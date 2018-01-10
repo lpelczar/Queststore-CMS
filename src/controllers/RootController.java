@@ -2,6 +2,7 @@ package controllers;
 
 import models.*;
 import services.EmailValidator;
+import services.PhoneValidator;
 import views.RootView;
 
 public class RootController {
@@ -157,7 +158,7 @@ public class RootController {
 
         while(!isCorrectInput) {
             phoneNumber = rootView.getNewUserPhoneNumber();
-            if (PhoneValidator.validate(phoneNumber)) {
+            if (new PhoneValidator().validate(phoneNumber)) {
                 isCorrectInput = true;
             }
         }
