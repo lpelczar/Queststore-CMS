@@ -1,21 +1,23 @@
 package controllers;
 
+import dao.*;
 import models.*;
-import services.EmailValidator;
-import services.PhoneValidator;
+import services.*;
 import views.RootView;
 
 public class RootController {
 
     private UsersDAO usersDAO;
+    private BlankUserDAO blankUserDAO;
     private RootView rootView;
     private AdminController adminController;
     private StudentController studentController;
     private MentorController mentorController;
 
-    RootController() {
+    public RootController() {
 
         this.usersDAO = new UsersDAO();
+        this.blankUserDAO = new BlankUserDAO();
         this.rootView = new RootView();
         this.adminController = new AdminController();
         this.studentController = new StudentController();
@@ -82,7 +84,7 @@ public class RootController {
         String email;
         String phoneNumber;
         String password;
-        String user;
+        User user;
 
         while(!isUserCreated) {
             login = createUserLogin();
@@ -94,7 +96,7 @@ public class RootController {
                 name = createUserName();
                 email = createUserEmail();
                 phoneNumber = createUserPhoneNumber();
-                usersDAO.addUser(new BlankUser(name, login, password, email, phoneNumber));
+                this.blankUserDAO.addBlankUser(new BlankUser(name, login, password, email, phoneNumber));
                 rootView.displayUserCreated(login, name, email, phoneNumber);
                 isUserCreated = true;
             }
