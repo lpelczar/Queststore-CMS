@@ -47,7 +47,7 @@ public class RootController {
 
             login = rootView.getUserLogin();
             password = rootView.getUserPassword();
-            user = usersDAO.getUserWithLoginAndPassword(login, password);
+            user = usersDAO.getUserByLoginAndPassword(login, password);
 
             if(user != null) {
                 isLoggedIn = true;
@@ -71,11 +71,22 @@ public class RootController {
         boolean isUserCreated = false;
         String login;
         String password;
+        String user;
 
         while(!isUserCreated) {
-
             login = createUserLogin();
-            password = createUserPassword();
+            user = usersDAO.getUserByLogin(login);
+            if (user != null) {
+                rootView.displayUserWithThisNameAlreatyExists();
+            } else {
+                password = createUserPassword();
+                name = createUserName();
+                email = createUserEmail();
+                phoneNumber = createUserPhoneNumber();
+                usersDAO.addUser(new BlankUser(name, login, password, email, phoneNumber));
+                rootView.displayUserCreated(login, name, email, phoneNumber);
+                isUserCreated = true;
+            }
         }
     }
 
