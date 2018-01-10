@@ -8,6 +8,7 @@ import java.util.List;
 public class UsersDAO extends AbstractDAO {
 
     private List<User> usersList = new ArrayList<>();
+    private String FILE_PATH = "src/data/users.ser";
 
     public UsersDAO() {}
 
@@ -15,8 +16,7 @@ public class UsersDAO extends AbstractDAO {
     private void readAllUsers() {
 
         usersList = new ArrayList<>();
-        String filepath = "src/data/users.ser";
-        this.usersList = (ArrayList<User>) readAllData(filepath);
+        this.usersList = (ArrayList<User>) readAllData(FILE_PATH);
     }
 
     public User getUserByLoginAndPassword(String login, String password) {
