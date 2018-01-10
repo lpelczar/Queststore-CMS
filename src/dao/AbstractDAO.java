@@ -8,7 +8,7 @@ abstract class AbstractDAO {
         Serializator.serializeObject(data, filepath);
     }
 
-    protected Object readAllData(Object data, String filepath) {
+    protected Object readAllData(String filepath) {
         return Serializator.deserializeObject(filepath);
     }
 }
