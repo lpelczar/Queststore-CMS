@@ -117,4 +117,18 @@ public class RootController {
         }
         return password;
     }
+
+    private String createUserName() {
+
+        String name = null;
+        boolean isCorrectInput = false;
+
+        while(!isCorrectInput) {
+            name = rootView.createUserName();
+            if (name.length() > 1) {
+                isCorrectInput = true;
+            }
+        }
+        return name;
+    }
 }

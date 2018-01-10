@@ -47,6 +47,11 @@ public class RootView {
         return getStringInput();
     }
 
+    public String createUserName() {
+        System.out.print("Enter name: ");
+        return getStringInput();
+    }
+
     public void displayUserNotAssignedMessage() {
         System.out.println("\nUser is no assigned yet, you need to wait for Admin to approve your account.");
         displayPressAnyKeyToContinueMessage();
