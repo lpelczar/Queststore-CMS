@@ -1,12 +1,12 @@
 package models;
 
 public class Admin extends User {
-    int generateID = 0;
-    int adminID;
+    private static int generateID = 1;
+    private final int adminID;
 
     public Admin() {
         super(name, login, email, password, phoneNumber);
-        generateID ++;
         this.adminID = generateID;
+        generateID++;
     }
 }
