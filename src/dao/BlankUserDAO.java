@@ -21,4 +21,14 @@ public class BlankUserDAO extends AbstractDAO {
         }
     }
 
+    private void saveAllBlankUsers() {
+
+        saveAllData(this.blankUserList, FILE_PATH);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void readAllBlankUsers() {
+
+        this.blankUserList = (ArrayList<BlankUser>) readAllData(FILE_PATH);
+    }
 }
