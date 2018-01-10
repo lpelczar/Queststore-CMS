@@ -42,6 +42,11 @@ public class RootView {
         displayPressAnyKeyToContinueMessage();
     }
 
+    public void displayUserNotExistsMessage() {
+        System.out.println("\nUser not exists!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
     private void displayPressAnyKeyToContinueMessage() {
         System.out.print("\nPress any key to continue.");
         Scanner scanner = new Scanner(System.in);
