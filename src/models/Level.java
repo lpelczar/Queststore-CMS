@@ -14,11 +14,26 @@ public class Level {
         this.experience += taskExp;
     }
 
-    private boolean checkTreshold() {
-        ;
+    private void updateRank(Map<String, Integer> levelTrehsold) {
+        for (Integer value : levelTrehsold.values()) {
+            if value.equals(experience) {
+                String newRank = getKeyFromValue(levelTrehsold, value);
+                setRank(newRank);
+
+            }
+        }
     }
 
-    private void updateRank() {
-        ;
+    public String getKeyFromValue(Map<String, Integer>levelTrehsold, String value) {
+        for (String element : levelTrehsold.keySet()) {
+            if (levelTrehsold.get(element).equals(value)) {
+                return element;
+            }
+        }
+        return null;
+    }
+
+    private void setRank(String newRank) {
+        this.rank = newRank;
     }
 }
