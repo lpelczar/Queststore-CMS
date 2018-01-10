@@ -47,9 +47,10 @@ public class RootController {
 
             login = rootView.getUserLogin();
             password = rootView.getUserPassword();
-            user = usersDAO.getUserWithLoginAndPassword();
+            user = usersDAO.getUserWithLoginAndPassword(login, password);
 
             if(user != null) {
+                isLoggedIn = true;
                 if (user instanceof BlankUser) {
                     rootView.displayUserNotAssignedMessage();
                 } else (user instanceof Student) {
@@ -64,5 +65,19 @@ public class RootController {
             }
         }
     }
+
+    private void signUp() {
+
+        boolean isUserCreated = false;
+        String login;
+        String password;
+
+        while(!isUserCreated) {
+
+            login = createUserLogin();
+            password = createUserPassword();
+        }
+    }
+
 
 }
