@@ -6,6 +6,7 @@ public class RootView {
 
     public void displayMenu() {
 
+        clearConsole();
         System.out.println("Welcome to QuestStore" +
                 "\nWhat do you want to do?\n" +
                 " 1. Sign in\n" +
@@ -91,5 +92,10 @@ public class RootView {
         System.out.print("\nPress any key to continue.");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
+    }
+
+    private static void clearConsole() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

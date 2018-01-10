@@ -1,5 +1,9 @@
 package controllers;
-import src.views.AdminView;
+
+
+import views.AdminView;
+
+import java.util.InputMismatchException;
 
 public class AdminController {
     AdminView view = new AdminView();
@@ -7,11 +11,13 @@ public class AdminController {
     private boolean isRunning = true;
 
     public void start() {
+        int option = 0;
+
         while (isRunning) {
             view.handleAdminMenu();
 
             try {
-                int option = view.askForOption();
+                option = view.askForOption();
             }
             catch (InputMismatchException e) {
                 System.err.println("You type wrong sign!");
@@ -19,8 +25,8 @@ public class AdminController {
 
             if (option == 1) {
                 //Promote blank user, add argument (list with users) to display method
-                view.displayBlankUsers()
-                String userLogin = askForLoginToPromote();
+                //view.displayBlankUsers();
+                String userLogin = view.askForLoginToPromote();
                 ;
             }
             else if (option == 2) {

@@ -1,4 +1,6 @@
 package views;
+import models.BlankUser;
+
 import java.util.*;
 
 public class AdminView {
@@ -27,9 +29,12 @@ public class AdminView {
     }
 
     public int askForOption() throws InputMismatchException {
+
+        int option = 0;
+
         while(!scanner.hasNextInt()) {
             System.out.println("\nEnter option: ");
-            int option = scanner.nextInt();
+            option = scanner.nextInt();
         }
         return option;
     }
@@ -41,8 +46,7 @@ public class AdminView {
     }
 
     public String askForLoginToPromote() {
-        String userLogin = scanner.next();
-        return userLogin
+        return scanner.next();
     }
 
     public Boolean typeOfPromotion() {
@@ -51,7 +55,7 @@ public class AdminView {
 
         System.out.println("Type 'm' if you want promote user to mentor or 's' to student");
 
-        while (!Arrays.asList(promoteOptions).contains(playerChoose.toLowerCase())) {
+        while (!Arrays.asList(promoteOptions).contains(userChoose.toLowerCase())) {
             userChoose = scanner.next();
 
             if (userChoose.equals("m")) {
@@ -61,6 +65,6 @@ public class AdminView {
                 return false;
             }
         }
-        throw new IlleagalOptionException();
+        return false;
     }
 }
