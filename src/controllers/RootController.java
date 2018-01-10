@@ -1,6 +1,6 @@
 package controllers;
 
-import models.User;
+import models.*;
 import views.RootView;
 
 public class RootController {
@@ -53,11 +53,11 @@ public class RootController {
                 isLoggedIn = true;
                 if (user instanceof BlankUser) {
                     rootView.displayUserNotAssignedMessage();
-                } else (user instanceof Student) {
+                } else if (user instanceof Student) {
                     studentController.start();
-                } else (user instanceof Mentor) {
+                } else if (user instanceof Mentor) {
                     mentorController.start();
-                } else (user instanceof Admin) {
+                } else if (user instanceof Admin) {
                     adminController.start();
                 }
             } else {
