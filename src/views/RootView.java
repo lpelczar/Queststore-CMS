@@ -36,4 +36,15 @@ public class RootView {
         System.out.print("Enter password: ");
         return getStringInput();
     }
+
+    public void displayUserNotAssignedMessage() {
+        System.out.println("\nUser is no assigned yet, you need to wait for Admin to approve your account.");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    private void displayPressAnyKeyToContinueMessage() {
+        System.out.print("\nPress any key to continue.");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
 }
