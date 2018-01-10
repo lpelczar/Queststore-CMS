@@ -1,7 +1,8 @@
 package models;
 
 public class Mentor extends User {
-    String groupResponsibility;
+
+    private String groupResponsibility;
 
     public Mentor(String name, String login, String password, String email, String phoneNumber,String groupSignature) {
         super(name, login, password, email, phoneNumber);

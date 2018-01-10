@@ -1,9 +1,11 @@
 package models;
 
+import java.util.Date;
+
 public class Task {
     private String category;
     private String name;
-    private String descritpion;
+    private String description;
     private Date deadLine;
     private int points;
 
