@@ -1,5 +1,6 @@
 package controllers;
 
+import models.User;
 import views.RootView;
 
 public class RootController {
@@ -35,5 +36,33 @@ public class RootController {
         }
     }
 
+    private void signIn() {
+
+        boolean isLoggedIn = false;
+        String login;
+        String password;
+        User user;
+
+        while(!isLoggedIn) {
+
+            login = rootView.getUserLogin();
+            password = rootView.getUserPassword();
+            user = usersDAO.getUserWithLoginAndPassword();
+
+            if(user != null) {
+                if (user instanceof BlankUser) {
+                    rootView.displayUserNotAssignedMessage();
+                } else (user instanceof Student) {
+                    studentController.start();
+                } else (user instanceof Mentor) {
+                    mentorController.start();
+                } else (user instanceof Admin) {
+                    adminController.start();
+                }
+            } else {
+                rootView.displayUserNotExistsMessage();
+            }
+        }
+    }
 
 }
