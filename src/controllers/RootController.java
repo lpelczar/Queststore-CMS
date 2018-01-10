@@ -86,10 +86,24 @@ public class RootController {
 
         while(!isCorrectInput) {
             login = rootView.createUserLogin();
-            if (login.length() > 1 && login.length() < 15) {
+            if (login.length() >= 6 && login.length() <= 15) {
                 isCorrectInput = true;
             }
         }
         return login;
+    }
+
+    private String createUserPassword() {
+
+        String password = null;
+        boolean isCorrectInput = false;
+
+        while(!isCorrectInput) {
+            password = rootView.createUserPassword();
+            if (password.length() >= 6 && password.length() <= 15) {
+                isCorrectInput = true;
+            }
+        }
+        return password;
     }
 }
