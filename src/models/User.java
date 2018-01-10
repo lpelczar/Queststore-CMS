@@ -7,6 +7,14 @@ public abstract class User {
     private String email;
     private String phoneNumber;
 
+    User(String name, String login, String password, String email, String phoneNumber) {
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+
     public String toString(){
         return "";
     }

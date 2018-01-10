@@ -5,7 +5,7 @@ public class Student extends User {
     private Integer levelGrade;
     private Integer coolCoins;
 
-    Student(Integer coolCoins) {
+    Student(String name, String login, String password, String email, String phoneNumber, Integer coolCoins) {
         super(name, email, login, password, phoneNumber);
         this.backpack = Inventory();
         this.levelGrade = 1;
