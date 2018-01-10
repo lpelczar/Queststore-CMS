@@ -26,4 +26,14 @@ public class RootView {
     public void displayWrongInputMessage() {
         System.out.println("Wrong input!");
     }
+
+    public String getUserLogin() {
+        System.out.print("Enter login: ");
+        return getStringInput();
+    }
+
+    public String getUserPassword() {
+        System.out.print("Enter password: ");
+        return getStringInput();
+    }
 }
