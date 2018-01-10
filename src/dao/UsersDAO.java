@@ -31,4 +31,17 @@ public class UsersDAO extends AbstractDAO {
         }
         return user;
     }
+
+    public User getUserByLogin(String login) {
+
+        readAllUsers();
+        User user = null;
+
+        for (User u : usersList) {
+            if (u.getLogin().equals(login)) {
+                user = u;
+            }
+        }
+        return user;
+    }
 }
