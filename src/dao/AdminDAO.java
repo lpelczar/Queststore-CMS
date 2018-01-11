@@ -25,4 +25,18 @@ public class AdminDAO extends AbstractDAO {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    private void readAllAdmins() {
+
+        if (readAllData(FILE_PATH) != null) {
+            this.adminList = (ArrayList<Admin>) readAllData(FILE_PATH);
+        } else {
+            this.adminList = new ArrayList<>();
+        }
+    }
+
+    public List<Admin> getAdmins() {
+        readAllAdmins();
+        return this.adminList;
+    }
 }
