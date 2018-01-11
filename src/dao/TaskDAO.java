@@ -4,9 +4,10 @@ import models.Task;
 
 import java.util.*;
 
-public class TaskDAO {
+public class TaskDAO extends AbstractDAO {
 
     private List<Task> tasksList = new ArrayList<>();
+    private final String FILE_PATH = "src/data/tasks.ser";
 
     public TaskDAO() { readAllTasks();}
 
@@ -40,6 +41,16 @@ public class TaskDAO {
             return true;
         } else {
             return false;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void readAllTasks() {
+
+        if (readAllData(FILE_PATH) != null) {
+            this.tasksList = (ArrayList<Task>) readAllData(FILE_PATH);
+        } else {
+            this.tasksList = new ArrayList<>();
         }
     }
 }
