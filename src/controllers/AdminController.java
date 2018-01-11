@@ -1,13 +1,13 @@
 package controllers;
 import java.util.InputMismatchException;
-import src.views.AdminView;
+import views.AdminView;
 import models.*;
 import dao.*;
 
 public class AdminController {
     AdminView view = new AdminView();
     BlankUserDAO blankUserDAO = new BlankUserDAO();
-    MentorDAO mentorDAO = new MentroDAO();
+    MentorDAO mentorDAO = new MentorDAO();
     StudentDAO studentDAO = new StudentDAO();
     UsersDAO usersDAO = new UsersDAO();
 
@@ -58,9 +58,9 @@ public class AdminController {
         if (isBlankUsersExist()) {
 
             view.displayBlankUsers(blankUsersContainer);
-            String login = askForLogin();
+            String login = view.askForLogin();
 
-            BlankUser user = blankUserDAO.getUserBy(login);
+            User user = usersDAO.getUserBy(login);
             promote(user);
         }
         else {
@@ -75,30 +75,31 @@ public class AdminController {
         return false;
     }
 
-    public void promote(BlankUser user) {
+    public void promote(User user) {
         try {
             boolean isPromoteToMentor = view.typeOfPromotion();
 
             if (isPromoteToMentor) {
-                Mentor mentor = new Mentor( user.name,
-                                            user.login,
-                                            user.password,
-                                            user.email,
-                                            user.phoneNumber );
+                Mentor mentor = new Mentor( user.getName(),
+                                            user.getLogin(),
+                                            user.getPassword(),
+                                            user.getEmail(),
+                                            user.getPhoneNumber() );
 
                 mentorDAO.addMentor(mentor);
 
             } else {
-                Student student = new Student( user.name,
-                                               user.login,
-                                               user.password,
-                                               user.email,
-                                               user.phoneNumber );
+                Student student = new Student( user.getName(),
+                                               user.getLogin(),
+                                               user.getPassword(),
+                                               user.getEmail(),
+                                               user.getPhoneNumber(),
+                                               0 );
 
                 studentDAO.addStudent(student);
             }
 
-            blankUserDAO.removeBlankUser(user);
+            blankUserDAO.removeUser(user);
 
         } catch (InputMismatchException e) {
             view.displayWrongSignError();
@@ -106,8 +107,11 @@ public class AdminController {
     }
 
     public void handleEditProfile() {
-        view.displayMentors();
-        view.displayStudents();
+        List<Mentor> mentorContainer = mentorDAO.getMentors();
+        List<Student> studentContainer = studentDAO.getStudents();
+
+        view.displayMentors(mentorContainer);
+        view.displayStudents(studentContainer);
 
         String login = view.askForLogin();
         User profileToEdit = usersDAO.getUserBy(login);
