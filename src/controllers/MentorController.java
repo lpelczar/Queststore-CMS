@@ -72,8 +72,12 @@ public class MentorController {
         String category = view.askForCategory();
         String description = view.askForInput();
         Date deadline = view.askForDeadline();
-        int points = view.askForPoints();
-        
+        try {
+            int points = view.askForPoints();
+        }
+        catch (InputMismatchException e) {
+            System.err.println("You type wrong sign!");
+        }
         Task task = new Task(name, category, description, deadline, points);
         
         TaskDAO.addTask(task);
