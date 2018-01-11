@@ -26,7 +26,7 @@ public class AdminController {
 
             view.clearConsole();
             view.handleAdminMenu();
-            
+
             option = view.askForOption();
 
             if (option == 1) {
@@ -94,7 +94,12 @@ public class AdminController {
             String login = view.askForLogin();
 
             BlankUser user = blankUserDAO.getBlankUserBy(login);
-            promote(user);
+
+            if (user != null) {
+                promote(user);
+            } else {
+                view.displayUserDosentExist();
+            }
         }
         else if (isEmpty) {
             view.displayEmptyListMsg();
@@ -177,14 +182,14 @@ public class AdminController {
             view.displayWrongSignError();
         }
     }
-    
+
     private void handleCreateLevel() {
-    
+
         view.displayLevelCreation();
         String level = view.askForInput();
         int threshold = view.askForThreshold();
-        
+
         levelDAO.setThreshold(level, threshold);
-    
+
     }
 }
