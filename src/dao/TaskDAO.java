@@ -22,4 +22,13 @@ public class TaskDAO {
         }
         return task;
     }
+
+    public addTask(Task task) {
+
+        readAllTasks();
+        if(!tasksList.contains(task)) {
+            tasksList.add(task);
+            saveAllTasks();
+        }
+    }
 }
