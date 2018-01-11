@@ -11,4 +11,10 @@ public class Mentor extends User implements Serializable {
     public Mentor(String name, String login, String password, String email, String phoneNumber) {
         super(name, login, password, email, phoneNumber);
     }
+
+    public void addGroup(int groupID) {
+        if (!groups.contains(groupID)) {
+            groups.add(groupID);
+        }
+    }
 }
