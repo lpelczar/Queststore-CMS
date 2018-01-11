@@ -9,6 +9,7 @@ public class AdminController {
     BlankUserDAO blankUserDAO = new BlankUserDAO();
     MentorDAO mentorDAO = new MentroDAO();
     StudentDAO studentDAO = new StudentDAO();
+    UsersDAO usersDAO = new UsersDAO();
 
     List<BlankUser> blankUsersContainer = blankUserDAO.getBlankUsers();
 
@@ -57,7 +58,7 @@ public class AdminController {
         if (isBlankUsersExist()) {
 
             view.displayBlankUsers(blankUsersContainer);
-            String login = askForLoginToPromote();
+            String login = askForLogin();
 
             BlankUser user = blankUserDAO.getUserBy(login);
             promote(user);
@@ -105,6 +106,15 @@ public class AdminController {
     }
 
     public void handleEditProfile() {
+        view.displayMentors();
+        view.displayStudents();
+        String login = view.askForLogin();
+        User profileToEdit = usersDAO.getUserBy(login);
+        // 1. Ask what admin want to change in profile.
+        // 2. Override attribute.
+        // 3. Save profile after edit.
+        
+
 
     }
 }
