@@ -163,11 +163,11 @@ public class AdminController {
 
     private void handleCreateLevel() {
 
-        view.displayLevelCreation();
-        String level = view.askForInput();
-        int threshold = view.askForThreshold();
+        String levelName = view.getLevelNameInput();
+        int value = view.getLevelValueInput();
 
-        levelDAO.setThreshold(level, threshold);
+        levelDAO.setThreshold(levelName, value);
+        view.displayLevelSetMessage();
 
     }
 }

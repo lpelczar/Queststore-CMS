@@ -121,6 +121,11 @@ public class AdminView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
+    public void displayLevelSetMessage() {
+        System.out.println("Level has been set!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
     public String getMentorLoginToAssignGroup() {
         System.out.print("Enter mentor login: ");
         return getStringInput();
@@ -131,9 +136,24 @@ public class AdminView extends UserView {
         return getStringInput();
     }
 
+    public String getLevelNameInput() {
+        System.out.print("Enter level of experience name to set: ");
+        return getStringInput();
+    }
+
+    public int getLevelValueInput() {
+        System.out.print("Enter value of experience to set: ");
+        return getIntInput();
+    }
+
     private String getStringInput() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
+    }
+
+    private int getIntInput() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
     }
 
     private void displayPressAnyKeyToContinueMessage() {
@@ -169,10 +189,6 @@ public class AdminView extends UserView {
 
     public void displayWrongSignError() {
         System.out.println("You type wrong sign!");
-    }
-
-    public void displayLevelCreation() {
-        System.out.println("Create new level:\nLevel name:");
     }
 
     public int askForThreshold() {
