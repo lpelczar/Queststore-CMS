@@ -2,6 +2,7 @@ package views;
 import models.Group;
 import models.Student;
 import models.Team;
+import models.Student;
 
 import java.util.*;
 
@@ -36,34 +37,34 @@ public class MentorView extends UserView {
     public void displayTeams(List<Team> teams) {
         for (Team team : teams) System.out.println(team.getTeamName());
     }
-    
-    public void displayStudentsInGroup(Group group) {
-        for (Student student : group.getAllStudents()) System.out.println(student.toString());
+
+    public void displayStudentsInGroup(Team group) {
+        for (Student student : group.getAllMembers()) System.out.println(student.toString());
     }
-    
+
     public void displaySummaryOfStudentsCoins(List<Student> students) {
         for (Student student : students) System.out.println(student.toString());
     }
-    
+
     public void displayStudentsItemsList(List<Student> students) {
-        for (Student student : students) System.out.println(student.backpackToString());//?
+        //for (Student student : students) System.out.println(student.backpackToString());//?
     }
-    
+
     public void displayCreatingTask() {
         System.out.println("Create new task:\nName:");
     }
-    
-    public String askForCategory() {
-        char option = "q";
 
-        while() {
+    public String askForCategory() {
+        char option = 'q';
+
+        while(true) {
             System.out.println("\nBasic or extra(b/e):");
-            option = scanner.next();
-            if (option == "b") return "Basic";
-            else if (option == "e") return "Extra";
+            option = scanner.next().charAt(0);
+            if (option == 'b') return "Basic";
+            else if (option == 'e') return "Extra";
         }
     }
-    
+
     public Date askForDeadline() {
         System.out.println("\nDeadline:");
         try {
@@ -72,7 +73,9 @@ public class MentorView extends UserView {
         catch (InputMismatchException e) {
             System.err.println("You type wrong sign!");
         }
-    
+        return null;
+    }
+
     public int askForPoints() throws InputMismatchException {
 
         int points = 0;
@@ -83,11 +86,11 @@ public class MentorView extends UserView {
         }
         return points;
     }
-    
+
     public void displayCreatingItem() {
         System.out.println("Create new Item:\nName:");
     }
-    
+
     public int askForPrice() throws InputMismatchException {
 
         int price = 0;

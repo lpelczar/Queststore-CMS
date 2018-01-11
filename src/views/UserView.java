@@ -6,13 +6,15 @@ abstract class UserView {
 
     private Scanner scanner = new Scanner(System.in);
 
-    public int askForOption() throws InputMismatchException {
-
+    public int askForOption() {
         int option = 0;
 
-        while(!scanner.hasNextInt()) {
+        try {
             System.out.println("\nEnter option: ");
             option = scanner.nextInt();
+
+        } catch (InputMismatchException e) {
+            System.out.println("You type wrong sign!");
         }
         return option;
     }
@@ -33,4 +35,8 @@ abstract class UserView {
 
     }
 
+    public void clearConsole() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
 }

@@ -29,4 +29,8 @@ public class Team {
     public List<Student> getAllMembers() {
         return teamMembers;
     }
+    
+    public String getTeamName() {
+    return this.teamSignature;
+    }
 }
