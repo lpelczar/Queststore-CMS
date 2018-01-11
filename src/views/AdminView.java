@@ -32,7 +32,7 @@ public class AdminView extends UserView {
         }
     }
 
-    public String askForLoginToPromote() {
+    public String askForLogin() {
         String userLogin = scanner.next();
         return userLogin
     }
