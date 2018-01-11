@@ -30,13 +30,13 @@ public class AdminController {
             if (option == 1) {
                 handlePromoteBlankUser();
             } else if (option == 2) {
-                handleEditProfile();
-            } else if (option == 3) {
                 handleCreatingGroup();
+            } else if (option == 3) {
+                handleEditProfile();
             } else if (option == 4) {
-                handleCreateLevel();
-            } else if (option == 5) {
                 handleShowingMentorProfile();
+            } else if (option == 5) {
+                handleCreateLevel();
             } else if (option == 6) {
                 isRunning = false;
             }
