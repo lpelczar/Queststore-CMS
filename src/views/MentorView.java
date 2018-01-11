@@ -31,17 +31,6 @@ public class MentorView {
         displayMentorMenu();
     }
 
-    public int askForOption() throws InputMismatchException {
-
-        int option = 0;
-
-        while(!scanner.hasNextInt()) {
-            System.out.println("\nEnter option: ");
-            option = scanner.nextInt();
-        }
-        return option;
-    }
-
     public void displayBlankUsers(List<BlankUser> blankUsers) {
         for (BlankUser user : blankUsers) {
             System.out.println(user.toString());
