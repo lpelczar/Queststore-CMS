@@ -36,7 +36,7 @@ public class AdminView extends UserView {
     public String askForLogin() {
         scanner = new Scanner(System.in);
 
-        System.out.prinln("Enter login profile to change: ");
+        System.out.println("Enter login profile to change: ");
         String userLogin = scanner.next();
         return userLogin;
     }
