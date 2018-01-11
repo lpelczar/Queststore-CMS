@@ -113,11 +113,10 @@ public class AdminController {
         User profileToEdit = usersDAO.getUserBy(login);
         updateProfileAttribute(profileToEdit);
 
-        // 1. Ask what admin want to change in profile.
-        // 2. Override attribute.
-        // 3. Save profile after edit.
-
+        studentDAO.saveAllStudents();
+        mentorDAO.saveAllMentors();
     }
+
     public void updateProfileAttribute(User profile) {
         toChange = view.askForChangeInProfile(profile);
 
