@@ -11,10 +11,6 @@ public class Item {
         this.description = description;
     }
 
-    public void bonus() {
-        // implementation what will be change after use this item
-    }
-
     public String getName() {
         return name;
     }
