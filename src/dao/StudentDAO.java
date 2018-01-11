@@ -20,7 +20,7 @@ public class StudentDAO extends AbstractDAO {
         }
     }
 
-    private void saveAllStudents() {
+    public void saveAllStudents() {
 
         saveAllData(this.studentsList, FILE_PATH);
     }

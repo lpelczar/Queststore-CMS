@@ -51,4 +51,17 @@ public class BlankUserDAO extends AbstractDAO {
             return false;
         }
     }
+
+    public BlankUser getBlankUserBy(String login) {
+
+        readAllBlankUsers();
+        BlankUser blankUser = null;
+
+        for (BlankUser u : blankUserList) {
+            if (u.getLogin().equals(login)) {
+                blankUser = u;
+            }
+        }
+        return blankUser;
+    }
 }
