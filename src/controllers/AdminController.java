@@ -13,6 +13,7 @@ public class AdminController {
     private MentorDAO mentorDAO = new MentorDAO();
     private StudentDAO studentDAO = new StudentDAO();
     private UsersDAO usersDAO = new UsersDAO();
+    private LevelThresholdDAO levelDAO = new LevelThresholdDAO();
     private List<BlankUser> blankUsersContainer;
     private boolean isRunning = true;
 
@@ -22,7 +23,7 @@ public class AdminController {
         while (isRunning) {
             view.clearConsole();
             view.handleAdminMenu();
-
+            
             option = view.askForOption();
 
             if (option == 1) {
@@ -42,6 +43,7 @@ public class AdminController {
             else if (option == 4) {
                 // I want to create levels of experience based on amount of earning coolcoins,
                 // So Codecoolers can achieve them.
+                handleCreateLevel();
             }
             else if (option == 5) {
                 handleShowingMentorProfile();
@@ -159,5 +161,15 @@ public class AdminController {
         else {
             view.displayWrongSignError();
         }
+    }
+    
+    private void handleCreateLevel() {
+    
+        view.displayLevelCreation();
+        String level = view.askForInput();
+        int threshold = view.askForThreshold();
+        
+        levelDAO.setThreshold(level, threshold);
+    
     }
 }

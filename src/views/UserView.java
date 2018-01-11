@@ -24,8 +24,14 @@ abstract class UserView {
 
         String option = "";
 
-        while(!scanner.hasNextLine()) {
+        scanner = new Scanner(System.in);
+
+        try {
+            System.out.println("\nEnter option: ");
             option = scanner.nextLine();
+
+        } catch (InputMismatchException e) {
+            System.out.println("You type wrong sign!");
         }
         return option;
     }

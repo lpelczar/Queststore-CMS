@@ -103,4 +103,13 @@ public class AdminView extends UserView {
     public void displayWrongSignError() {
         System.out.println("You type wrong sign!");
     }
+    
+    public void displayLevelCreation() {
+        System.out.println("Create new level:\nLevel name:");
+    }
+    
+    public int askForThreshold() {
+        System.out.println("Level threshold:");
+        return askForOption();
+    }
 }
