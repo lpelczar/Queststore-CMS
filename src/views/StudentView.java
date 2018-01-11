@@ -22,4 +22,9 @@ public class StudentView {
         }
     }
 
+    public void handleStudentMenu() {
+        prepareStudentMenu();
+        displayStudentMenu();
+    }
+
 }
