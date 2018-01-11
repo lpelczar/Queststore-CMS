@@ -36,7 +36,7 @@ public class AdminView extends UserView {
     public String askForLogin() {
         scanner = new Scanner(System.in);
 
-        System.out.prinln("Enter login profile to change: ");
+        System.out.println("Enter login profile to change: ");
         String userLogin = scanner.next();
         return userLogin;
     }
@@ -60,6 +60,14 @@ public class AdminView extends UserView {
         }
         throw new InputMismatchException();
     }
+
+        public void displayNoMentorMessage() {
+            System.out.println("There is no mentor with this login!");
+        }
+
+        public void displayMentorProfile(Mentor mentor) {
+            System.out.println(mentor);
+        }
 
     public void displayMentors(List<Mentor> mentorContainer) {
         System.out.println("Available mentors to edit: \n");
