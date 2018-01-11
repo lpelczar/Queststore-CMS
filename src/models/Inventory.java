@@ -1,10 +1,11 @@
 package models;
 
 
+import java.io.Serializable;
 import java.util.*;
 
 
-public class Inventory implements Container{
+public class Inventory implements Container, Serializable {
     private List<Item> backpack;
     private Iterator iter;
 

@@ -45,6 +45,7 @@ public class MentorDAO extends AbstractDAO {
         readAllMentors();
         if (this.mentorsList.contains(mentor)) {
             this.mentorsList.remove(mentor);
+            saveAllMentors();
             return true;
         } else {
             return false;

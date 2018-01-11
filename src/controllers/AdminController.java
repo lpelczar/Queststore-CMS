@@ -37,6 +37,7 @@ public class AdminController {
 
             }
             else if (option == 3) {
+                handleCreatingClass();
                 // I want to create a class,
                 // So I can assign Mentors to their classes.
 
@@ -55,6 +56,10 @@ public class AdminController {
                 isRunning = false;
             }
         }
+    }
+
+    private void handleCreatingClass() {
+
     }
 
     private void handleShowingMentorProfile() {

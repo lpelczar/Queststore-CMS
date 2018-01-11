@@ -38,6 +38,7 @@ public class TaskDAO extends AbstractDAO {
         readAllTasks();
         if (this.tasksList.contains(task)) {
             this.tasksList.remove(task);
+            saveAllTasks();
             return true;
         } else {
             return false;
