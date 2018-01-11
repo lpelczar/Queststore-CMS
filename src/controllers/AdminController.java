@@ -20,6 +20,8 @@ public class AdminController {
         int option = 0;
 
         while (isRunning) {
+            blankUsersContainer = blankUserDAO.getBlankUsers();
+
             view.clearConsole();
             view.handleAdminMenu();
 
@@ -70,7 +72,6 @@ public class AdminController {
     }
 
     private void handlePromoteBlankUser() {
-        blankUsersContainer = blankUserDAO.getBlankUsers();
         boolean isEmpty = checkIfBlankUsersExist();
 
         if (isEmpty == false) {
