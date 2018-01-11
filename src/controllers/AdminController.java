@@ -30,24 +30,42 @@ public class AdminController {
             }
 
             else if (option == 2) {
+                //Edit mentor data and his class
                 handleEditProfile();
 
             }
             else if (option == 3) {
-                // Create new group
+                // I want to create a class,
+                // So I can assign Mentors to their classes.
 
             }
             else if (option == 4) {
-                // Edit level treshold
-
+                // I want to create levels of experience based on amount of earning coolcoins,
+                // So Codecoolers can achieve them.
             }
             else if (option == 5) {
-                // Show all accounts with details
+                handleShowingMentorProfile();
+                // I want to see a Mentor' s profile,
+                // So I can view his personal data and Codecoolers in his class.
 
             }
             else if (option == 6) {
                 isRunning = false;
             }
+        }
+    }
+
+    private void handleShowingMentorProfile() {
+        view.displayMentors(mentorDAO.getMentors());
+        String login = view.askForLogin();
+
+        Mentor mentor = mentorDAO.getMentorBy(login);
+
+        if (mentor != null) {
+            view.displayMentorProfile(mentor);
+            // Display mentor class info!!
+        } else {
+            view.displayNoMentorMessage();
         }
     }
 

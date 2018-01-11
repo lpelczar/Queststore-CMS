@@ -50,4 +50,17 @@ public class MentorDAO extends AbstractDAO {
             return false;
         }
     }
+
+    public Mentor getMentorBy(String login) {
+
+        readAllMentors();
+        Mentor mentor = null;
+
+        for (Mentor m : mentorsList) {
+            if (m.getLogin().equals(login)) {
+                mentor = m;
+            }
+        }
+        return mentor;
+    }
 }

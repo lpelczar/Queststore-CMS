@@ -18,10 +18,10 @@ public abstract class User implements Serializable{
     }
 
     public String toString(){
-        return  "\nName: " + name +
-                "\nLogin: " + login +
-                "\nEmail: " + email +
-                "\nPhone number: " + phoneNumber;
+        return  "Name: " + name +
+                " Login: " + login +
+                " Email: " + email +
+                " Phone number: " + phoneNumber;
     }
 
     public String getName() {
