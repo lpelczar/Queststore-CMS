@@ -40,4 +40,14 @@ public class StudentDAO extends AbstractDAO {
         return this.studentsList;
     }
 
+    public boolean removeStudent(Student student) {
+
+        readAllStudents();
+        if (this.studentsList.contains(student)) {
+            this.studentsList.remove(student);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
