@@ -70,10 +70,14 @@ public class AdminView extends UserView {
         }
 
     public void displayMentors(List<Mentor> mentorContainer) {
-        System.out.println("Available mentors to edit: \n");
+        System.out.println("Mentors list: \n");
 
-        for (Mentor mentor : mentorContainer) {
-            System.out.println(mentor.toString());
+        if(!mentorContainer.isEmpty()) {
+            for (Mentor mentor : mentorContainer) {
+                System.out.println(mentor.toString());
+            }
+        } else {
+            System.out.println("List is empty!");
         }
     }
 

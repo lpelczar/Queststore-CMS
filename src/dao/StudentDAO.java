@@ -45,6 +45,7 @@ public class StudentDAO extends AbstractDAO {
         readAllStudents();
         if (this.studentsList.contains(student)) {
             this.studentsList.remove(student);
+            saveAllStudents();
             return true;
         } else {
             return false;
