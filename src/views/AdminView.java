@@ -63,4 +63,8 @@ public class AdminView {
         }
         throw new IlleagalOptionException();
     }
+
+    public void displayEmptyListMsg() {
+        System.out.println("List is empty!");
+    }
 }

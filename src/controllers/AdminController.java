@@ -6,6 +6,7 @@ import dao.*;
 public class AdminController {
     AdminView view = new AdminView();
     BlankUser BlankUserDAO = new BlankUser();
+    List<BlankUser> users = BlankUserDAO.getBlankUsers();
 
     private boolean isRunning = true;
 
@@ -21,20 +22,6 @@ public class AdminController {
             }
 
             if (option == 1) {
-                //Promote blank user, add argument (list with users) to display method
-                view.displayBlankUsers()
-                String userLogin = askForLoginToPromote();
-                BlankUser user = BlankUserDAO.getUserByLogin(userLogin);
-
-                Admin addAdmin = Admin( user.name,
-                                        user.login,
-                                        user.password,
-                                        user.email,
-                                        user.phoneNumber );
-
-
-
-
                 ;
             }
             else if (option == 2) {
@@ -64,5 +51,29 @@ public class AdminController {
         if (userTypePromote) {
 
         }
+    }
+
+    public void handlePromoteBlankUser() {
+        if (isBlankUsersExist()) {
+            view.displayBlankUsers(users);
+            String userLogin = askForLoginToPromote();
+            BlankUser user = BlankUserDAO.getUserByLogin(userLogin);
+
+            Admin addAdmin = Admin( user.name,
+                                    user.login,
+                                    user.password,
+                                    user.email,
+                                    user.phoneNumber );
+        }
+        else {
+            view.displayEmptyListMsg();
+        }
+    }
+
+    public boolean isBlankUsersExist() {
+        if (users != null) {
+            return true;
+        }
+        return false;
     }
 }
