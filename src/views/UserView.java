@@ -15,7 +15,7 @@ abstract class UserView {
         return option;
     }
 
-    public String askForInput() throws InputMismatchException {
+    protected String askForInput() throws InputMismatchException {
 
         String option = "";
 
@@ -25,5 +25,7 @@ abstract class UserView {
         }
         return option;
     }
+    
+    
 
 }
