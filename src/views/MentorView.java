@@ -47,5 +47,9 @@ public class MentorView {
             System.out.println(user.toString());
         }
     }
+    
+    public String askForLoginToPromote() {
+        return scanner.next();
+    }
 
 }
