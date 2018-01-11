@@ -24,12 +24,15 @@ public class GroupDAO extends AbstractDAO {
         return group;
     }
 
-    public void addGroup(Group group) {
+    public boolean addGroup(Group group) {
 
         readAllGroups();
         if(!groupsList.contains(group)) {
             groupsList.add(group);
             saveAllGroups();
+            return true;
+        } else {
+            return false;
         }
     }
 

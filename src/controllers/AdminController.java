@@ -10,6 +10,7 @@ public class AdminController {
 
     private AdminView view = new AdminView();
     private BlankUserDAO blankUserDAO = new BlankUserDAO();
+    private GroupDAO groupDAO = new GroupDAO();
     private MentorDAO mentorDAO = new MentorDAO();
     private StudentDAO studentDAO = new StudentDAO();
     private UsersDAO usersDAO = new UsersDAO();
@@ -37,7 +38,7 @@ public class AdminController {
 
             }
             else if (option == 3) {
-                handleCreatingClass();
+                handleCreatingGroup();
                 // I want to create a class,
                 // So I can assign Mentors to their classes.
 
@@ -58,8 +59,15 @@ public class AdminController {
         }
     }
 
-    private void handleCreatingClass() {
+    private void handleCreatingGroup() {
 
+        String name = view.getGroupNameInput();
+        if (groupDAO.addGroup(new Group(name))) {
+            view.displayGroupAdded();
+            // Assign mentor?
+        } else {
+            view.displayGroupWithThisNameAlreadyExists();
+        }
     }
 
     private void handleShowingMentorProfile() {
