@@ -4,7 +4,7 @@ import java.util.*;
 
 abstract class UserView {
 
-    protected int askForOption() throws InputMismatchException {
+    public int askForOption() throws InputMismatchException {
 
         int option = 0;
 
@@ -15,7 +15,7 @@ abstract class UserView {
         return option;
     }
 
-    protected String askForInput() throws InputMismatchException {
+    public String askForInput() throws InputMismatchException {
 
         String option = "";
 
@@ -25,7 +25,7 @@ abstract class UserView {
         return option;
     }
 
-    protected void displayMessage(String message) {
+    public void displayMessage(String message) {
 
         System.out.println(message);
 
