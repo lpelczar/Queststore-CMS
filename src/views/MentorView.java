@@ -42,4 +42,10 @@ public class MentorView {
         return option;
     }
 
+    public void displayBlankUsers(List<BlankUser> blankUsers) {
+        for (BlankUser user : blankUsers) {
+            System.out.println(user.toString());
+        }
+    }
+
 }
