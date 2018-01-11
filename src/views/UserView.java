@@ -5,7 +5,6 @@ import java.util.*;
 abstract class UserView {
 
     private Scanner scanner = new Scanner(System.in);
-    
     public int askForOption() throws InputMismatchException {
 
         int option = 0;

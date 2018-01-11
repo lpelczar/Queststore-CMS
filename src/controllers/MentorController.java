@@ -1,6 +1,7 @@
 package controllers;
 
 
+import models.Task;
 import views.MentorView;
 import dao.TaskDAO;
 import models.Task;
@@ -13,8 +14,7 @@ public class MentorController {
 
     private boolean isRunning = true;
 
-    public void start() {
-        int option = 0;
+    public void start(){}
 
         while (isRunning) {
             view.handleMentorMenu();
@@ -103,5 +103,4 @@ public class MentorController {
         //we need dao for shop!
     
     }
-
 }

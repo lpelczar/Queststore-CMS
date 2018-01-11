@@ -1,13 +1,14 @@
 package models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Mentor extends User implements Serializable {
 
-    private String groupResponsibility;
+    private List<Integer> groups = new ArrayList<>();
 
     public Mentor(String name, String login, String password, String email, String phoneNumber) {
         super(name, login, password, email, phoneNumber);
-        this.groupResponsibility = groupSignature;
     }
 }
