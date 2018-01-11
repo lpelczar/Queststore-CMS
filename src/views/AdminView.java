@@ -1,5 +1,6 @@
 package views;
 import java.util.*;
+import models.*;
 
 public class AdminView extends UserView {
 
@@ -34,7 +35,7 @@ public class AdminView extends UserView {
 
     public String askForLogin() {
         String userLogin = scanner.next();
-        return userLogin
+        return userLogin;
     }
 
     public Boolean typeOfPromotion() {
