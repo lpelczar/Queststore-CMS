@@ -44,7 +44,7 @@ public class BlankUserDAO extends AbstractDAO {
     public boolean removeBlankUser(String login) {
         
         readAllBlankUsers();
-        BlankUser userToRemove = containsBlankUserWithLogin(login);
+        BlankUser userToRemove = getBlankUserBy(login);
         if (userToRemove != null) {
             this.blankUserList.remove(userToRemove);
             saveAllBlankUsers();
@@ -52,18 +52,6 @@ public class BlankUserDAO extends AbstractDAO {
         } else {
             return false;
         }
-    }
-
-    private BlankUser containsBlankUserWithLogin(String login) {
-
-        BlankUser blankUser = null;
-
-        for (BlankUser bu : blankUserList) {
-            if (bu.getLogin().equals(login)) {
-                blankUser = bu;
-            }
-        }
-        return blankUser;
     }
 
     public BlankUser getBlankUserBy(String login) {
