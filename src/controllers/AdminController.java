@@ -28,7 +28,7 @@ public class AdminController {
                 handlePromoteBlankUser();
             }
             else if (option == 2) {
-                // Edit user profile
+                handleEditProfile();
                 ;
             }
             else if (option == 3) {
@@ -98,5 +98,9 @@ public class AdminController {
         } catch (InputMismatchException e) {
             view.displayWrongSignError();
         }
+    }
+
+    public void handleEditProfile() {
+        
     }
 }
