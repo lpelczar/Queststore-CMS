@@ -30,6 +30,7 @@ public class AdminView extends UserView {
     }
 
     public void displayBlankUsers(List<BlankUser> blankUsers) {
+        System.out.println("\nBlank users list: ");
         for (BlankUser user : blankUsers) {
             System.out.println(user.toString());
         }
@@ -38,11 +39,11 @@ public class AdminView extends UserView {
     public String askForLogin() {
         scanner = new Scanner(System.in);
 
-        System.out.println("Enter login profile to change: ");
+        System.out.print("\nEnter login profile to change: ");
         return scanner.next();
     }
 
-    public Boolean typeOfPromotion() {
+    public Boolean getTypeOfPromotion() {
         String userChoose = "";
         String[] promoteOptions = {"m", "s"};
         scanner = new Scanner(System.in);
@@ -59,7 +60,7 @@ public class AdminView extends UserView {
                 return false;
             }
         }
-        throw new InputMismatchException();
+        return null;
     }
 
     public void displayNoMentorMessage() {
@@ -140,8 +141,9 @@ public class AdminView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
-    public void displayUserDoesntExist() {
-        System.out.println("This user dosent exist!");
+    public void displayUserDoesNotExist() {
+        System.out.println("This user does not exist!");
+        displayPressAnyKeyToContinueMessage();
     }
 
     public void displayWrongSignError() {

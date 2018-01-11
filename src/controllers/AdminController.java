@@ -53,7 +53,7 @@ public class AdminController {
             if (user != null) {
                 promote(user);
             } else {
-                view.displayUserDoesntExist();
+                view.displayUserDoesNotExist();
             }
         } else {
             view.displayEmptyListMsg();
@@ -61,37 +61,23 @@ public class AdminController {
     }
 
     private void promote(BlankUser user) {
-        try {
-            boolean isPromoteToMentor = view.typeOfPromotion();
 
-            if (isPromoteToMentor) {
-                Mentor mentor = new Mentor( user.getName(),
-                        user.getLogin(),
-                        user.getPassword(),
-                        user.getEmail(),
-                        user.getPhoneNumber() );
+        boolean isPromoteToMentor = view.getTypeOfPromotion();
 
-                mentorDAO.addMentor(mentor);
+        if (isPromoteToMentor) {
+            Mentor mentor = new Mentor( user.getName(),user.getLogin(),user.getPassword(),
+                    user.getEmail(), user.getPhoneNumber() );
+            mentorDAO.addMentor(mentor);
+        } else {
+            Student student = new Student( user.getName(),user.getLogin(),user.getPassword(),
+                    user.getEmail(),user.getPhoneNumber(),0 );
+            studentDAO.addStudent(student);
+        }
 
-            } else {
-                Student student = new Student( user.getName(),
-                        user.getLogin(),
-                        user.getPassword(),
-                        user.getEmail(),
-                        user.getPhoneNumber(),
-                        0 );
-
-                studentDAO.addStudent(student);
-            }
-
-            if (blankUserDAO.removeBlankUser(user.getLogin())) {
-                view.displayHasBeenPromoted();
-            } else {
-                view.displayUserNotExists();
-            }
-
-        } catch (InputMismatchException e) {
-            view.displayWrongSignError();
+        if (blankUserDAO.removeBlankUser(user.getLogin())) {
+            view.displayHasBeenPromoted();
+        } else {
+            view.displayUserNotExists();
         }
     }
 
