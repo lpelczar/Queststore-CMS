@@ -46,5 +46,20 @@ public class MentorView extends UserView {
     public void displayStudentsItemsList(List<Student> students) {
         for (Student student : students) System.out.println(student.backpackToString());//?
     }
+    
+    public void displayCreatingTask() {
+        System.out.println("Create new task:\nName:");
+    }
+    
+    public String askForCategory() {
+        char option = "q";
+
+        while() {
+            System.out.println("\nBasic or extra(b/e):");
+            option = scanner.next();
+            if (option == "b") return "Basic";
+            else if (option == "e") return "Extra";
+        }
+    }
 
 }
