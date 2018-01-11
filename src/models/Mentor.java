@@ -6,7 +6,7 @@ public class Mentor extends User implements Serializable {
 
     private String groupResponsibility;
 
-    public Mentor(String name, String login, String password, String email, String phoneNumber,String groupSignature) {
+    public Mentor(String name, String login, String password, String email, String phoneNumber) {
         super(name, login, password, email, phoneNumber);
         this.groupResponsibility = groupSignature;
     }
