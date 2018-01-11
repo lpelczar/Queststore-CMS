@@ -1,8 +1,11 @@
 package controllers;
 import src.views.AdminView;
+import models.*;
+import dao.*;
 
 public class AdminController {
     AdminView view = new AdminView();
+    BlankUser BlankUserDAO = new BlankUser();
 
     private boolean isRunning = true;
 
@@ -21,6 +24,17 @@ public class AdminController {
                 //Promote blank user, add argument (list with users) to display method
                 view.displayBlankUsers()
                 String userLogin = askForLoginToPromote();
+                BlankUser user = BlankUserDAO.getUserByLogin(userLogin);
+
+                Admin addAdmin = Admin( user.name,
+                                        user.login,
+                                        user.password,
+                                        user.email,
+                                        user.phoneNumber );
+
+
+
+
                 ;
             }
             else if (option == 2) {
@@ -48,7 +62,7 @@ public class AdminController {
     public void promoteUser() {
         boolean userTypePromote = view.typeOfPromotion();
         if (userTypePromote) {
-            
+
         }
     }
 }
