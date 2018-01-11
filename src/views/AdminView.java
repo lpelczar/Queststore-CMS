@@ -72,6 +72,17 @@ public class AdminView extends UserView {
         }
     }
 
+    public String askForChangeInProfile(User profile) {
+        System.out.println(profile.toString());
+        System.out.println("What would you like to change in profile:" +
+                            "\n1. Name" +
+                            "\n2. Login" +
+                            "\n3. Email" +
+                            "\n4. Phone number");
+
+        return askForOption();
+    }
+
     public void displayEmptyListMsg() {
         System.out.println("List is empty!");
     }

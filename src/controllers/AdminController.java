@@ -108,13 +108,37 @@ public class AdminController {
     public void handleEditProfile() {
         view.displayMentors();
         view.displayStudents();
+
         String login = view.askForLogin();
         User profileToEdit = usersDAO.getUserBy(login);
+        updateProfileAttribute(profileToEdit);
+
         // 1. Ask what admin want to change in profile.
         // 2. Override attribute.
         // 3. Save profile after edit.
-        
 
+    }
+    public void updateProfileAttribute(User profile) {
+        toChange = view.askForChangeInProfile(profile);
 
+        if (toChange == 1) {
+            String name = view.askForInput();
+            profile.setName(name);
+        }
+        else if (toChange == 2) {
+            String login = view.askForInput();
+            profile.setLogin(login);
+        }
+        else if (toChange == 3) {
+            String email = view.askForInput();
+            profile.setEmail(email);
+        }
+        else if (toChange == 4) {
+            String phoneNumber = view.askForInput();
+            profile.setPhoneNumber(setPhoneNumber);
+        }
+        else {
+            view.displayWrongSignError();
+        }
     }
 }

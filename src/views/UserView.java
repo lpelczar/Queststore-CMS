@@ -20,16 +20,15 @@ abstract class UserView {
         String option = "";
 
         while(!scanner.hasNextLine()) {
-            System.out.println("\nEnter option: ");
             option = scanner.nextLine();
         }
         return option;
     }
-    
+
     protected void displayMessage(String message) {
-    
+
         System.out.println(message);
-    
+
     }
 
 }
