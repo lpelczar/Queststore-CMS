@@ -9,10 +9,10 @@ public class AdminView extends UserView {
 
     public void prepareAdminMenu() {
         menu.put(1, "Promote blank user.");
-        menu.put(2, "Edit user profile.");
+        menu.put(2, "Edit mentor profile.");
         menu.put(3, "Create new group.");
-        menu.put(4, "Edit level treshold.");
-        menu.put(5, "Show all users.");
+        menu.put(4, "Edit level threshold.");
+        menu.put(5, "Show mentor profile and his class.");
         menu.put(6, "Log out.");
     }
 
@@ -63,6 +63,14 @@ public class AdminView extends UserView {
         for (Mentor mentor : mentorContainer) {
             System.out.println(mentor.toString());
         }
+    }
+
+    public void displayNoMentorMessage() {
+        System.out.println("There is no mentor with this login!");
+    }
+
+    public void displayMentorProfile(Mentor mentor) {
+        System.out.println(mentor);
     }
 
     public void displayStudents(List<Student> studentContainer) {
