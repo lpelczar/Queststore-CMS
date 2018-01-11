@@ -10,10 +10,10 @@ public class AdminView extends UserView {
 
     public void prepareAdminMenu() {
         menu.put(1, "Promote blank user.");
-        menu.put(2, "Edit user profile.");
-        menu.put(3, "Create new group.");
-        menu.put(4, "Edit level treshold.");
-        menu.put(5, "Show all users.");
+        menu.put(2, "Edit mentor profile and his groups.");
+        menu.put(3, "Create new group and assign mentor.");
+        menu.put(4, "Edit experience levels.");
+        menu.put(5, "Show mentor profile and all his Codecoolers.");
         menu.put(6, "Log out.");
     }
 
@@ -38,8 +38,7 @@ public class AdminView extends UserView {
         scanner = new Scanner(System.in);
 
         System.out.println("Enter login profile to change: ");
-        String userLogin = scanner.next();
-        return userLogin;
+        return scanner.next();
     }
 
     public Boolean typeOfPromotion() {
@@ -139,7 +138,7 @@ public class AdminView extends UserView {
         System.out.println("List is empty!");
     }
 
-    public void displayUserDosentExist() {
+    public void displayUserDoesntExist() {
         System.out.println("This user dosent exist!");
     }
 
