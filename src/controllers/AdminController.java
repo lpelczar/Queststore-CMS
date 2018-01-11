@@ -45,7 +45,7 @@ public class AdminController {
 
     private void handlePromoteBlankUser() {
 
-        if (blankUserDAO.getBlankUsers() != null) {
+        if (blankUserDAO.getBlankUsers().size() > 0) {
             view.displayBlankUsers(blankUserDAO.getBlankUsers());
             String login = view.askForLogin();
             BlankUser user = blankUserDAO.getBlankUserBy(login);

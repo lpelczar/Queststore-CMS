@@ -8,7 +8,7 @@ public class AdminView extends UserView {
     private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner;
 
-    public void prepareAdminMenu() {
+    private void prepareAdminMenu() {
         menu.put(1, "Promote blank user.");
         menu.put(2, "Edit mentor profile and his groups.");
         menu.put(3, "Create new group and assign mentor.");
@@ -17,7 +17,8 @@ public class AdminView extends UserView {
         menu.put(6, "Log out.");
     }
 
-    public void displayAdminMenu() {
+    private void displayAdminMenu() {
+        System.out.println("You are logged as Admin.");
         for (Integer option : menu.keySet()) {
             System.out.println(option + ". " + menu.get(option));
         }
@@ -136,6 +137,7 @@ public class AdminView extends UserView {
 
     public void displayEmptyListMsg() {
         System.out.println("List is empty!");
+        displayPressAnyKeyToContinueMessage();
     }
 
     public void displayUserDoesntExist() {
