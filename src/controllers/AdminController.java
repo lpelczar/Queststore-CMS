@@ -1,8 +1,6 @@
 package controllers;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
+
 import java.util.List;
-import java.util.Scanner;
 
 import views.AdminView;
 import models.*;
@@ -15,7 +13,6 @@ public class AdminController {
     private GroupDAO groupDAO = new GroupDAO();
     private MentorDAO mentorDAO = new MentorDAO();
     private StudentDAO studentDAO = new StudentDAO();
-    private UsersDAO usersDAO = new UsersDAO();
     private LevelThresholdDAO levelDAO = new LevelThresholdDAO();
 
     public void start() {
@@ -136,40 +133,45 @@ public class AdminController {
     }
 
     private void handleEditProfile() {
-        List<Mentor> mentorContainer = mentorDAO.getMentors();
-        List<Student> studentContainer = studentDAO.getStudents();
 
-        view.displayMentors(mentorContainer);
-        view.displayStudents(studentContainer);
+        final String QUIT_OPTION = "q";
 
-        String login = view.askForLogin();
-        User profileToEdit = usersDAO.getUserBy(login);
-        updateProfileAttribute(profileToEdit);
-
-        studentDAO.saveAllStudents();
-        mentorDAO.saveAllMentors();
+        view.displayMentors(mentorDAO.getMentors());
+        if (mentorDAO.getMentors().isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String login = view.getMentorLoginToEdit();
+        if (login.equals(QUIT_OPTION)) return;
+        Mentor profileToEdit = mentorDAO.getMentorBy(login);
+        if (profileToEdit != null) {
+            updateProfileAttribute(profileToEdit);
+            mentorDAO.saveAllMentors();
+        } else {
+            view.displayThereIsNoMentorWithThisLogin();
+        }
     }
 
-    private void updateProfileAttribute(User profile) {
-        int toChange = view.askForChangeInProfile(profile);
+    private void updateProfileAttribute(Mentor profile) {
 
+        int toChange = view.askForChangeInProfile(profile);
         if (toChange == 1) {
-            String name = view.askForInput();
+            String name = view.askForNewValue();
             profile.setName(name);
-        }
-        else if (toChange == 2) {
-            String login = view.askForInput();
+            view.displayValueHasBeenChanged();
+        } else if (toChange == 2) {
+            String login = view.askForNewValue();
             profile.setLogin(login);
-        }
-        else if (toChange == 3) {
-            String email = view.askForInput();
+            view.displayValueHasBeenChanged();
+        } else if (toChange == 3) {
+            String email = view.askForNewValue();
             profile.setEmail(email);
-        }
-        else if (toChange == 4) {
-            String phoneNumber = view.askForInput();
+            view.displayValueHasBeenChanged();
+        } else if (toChange == 4) {
+            String phoneNumber = view.askForNewValue();
             profile.setPhoneNumber(phoneNumber);
-        }
-        else {
+            view.displayValueHasBeenChanged();
+        } else {
             view.displayWrongSignError();
         }
     }

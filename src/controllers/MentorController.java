@@ -21,46 +21,21 @@ public class MentorController {
             int option = 0;
             try {
                 option = view.askForOption();
-            }
-            catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.err.println("You type wrong sign!");
             }
 
             if (option == 1) {
-                //Promote blank user to Student, add argument (list with users) to display method
-                //view.displayBlankUsers();
-                //String userLogin = view.askForLoginToPromote();
-                ;
-            }
-            else if (option == 2) {
-                // Add new task
+            } else if (option == 2) {
                 createTask();
-            }
-            else if (option == 3) {
-                // Add new item
+            } else if (option == 3) {
                 createItem();
-            }
-            else if (option == 4) {
-                // Edit quest
-                ;
-            }
-            else if (option == 5) {
-                // Edit item
-                ;
-            }
-            else if (option == 6) {
-                // Mark Student's task
-                ;
-            }
-            else if (option == 7) {
-                // Mark Students's bought items
-                ;
-            }
-            else if (option == 8) {
-                // See Student's backpack
-                ;
-            }
-            else if (option == 9) {
+            } else if (option == 4) {
+            } else if (option == 5) {
+            } else if (option == 6) {
+            } else if (option == 7) {
+            } else if (option == 8) {
+            } else if (option == 9) {
                 isRunning = false;
             }
         }
@@ -99,8 +74,5 @@ public class MentorController {
             System.err.println("You type wrong sign!");
         }
         String description = view.askForInput();
-
-        //we need dao for shop!
-
     }
 }

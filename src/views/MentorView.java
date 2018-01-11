@@ -47,7 +47,6 @@ public class MentorView extends UserView {
     }
 
     public void displayStudentsItemsList(List<Student> students) {
-        //for (Student student : students) System.out.println(student.backpackToString());//?
     }
 
     public void displayCreatingTask() {

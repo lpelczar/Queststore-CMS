@@ -39,7 +39,7 @@ public class AdminView extends UserView {
     public String askForLogin() {
         scanner = new Scanner(System.in);
 
-        System.out.print("\nEnter login profile to change: ");
+        System.out.print("\nEnter login of profile to change: ");
         return scanner.next();
     }
 
@@ -93,8 +93,8 @@ public class AdminView extends UserView {
     }
 
     public int askForChangeInProfile(User profile) {
-        System.out.println(profile.toString());
-        System.out.println("What would you like to change in profile:" +
+        System.out.println("\n" + profile.toString());
+        System.out.println("\nWhat would you like to change in profile:" +
                             "\n1. Name" +
                             "\n2. Login" +
                             "\n3. Email" +
@@ -119,6 +119,11 @@ public class AdminView extends UserView {
 
     public void displayThereIsNoMentorWithThisLogin() {
         System.out.println("There is no mentor with this login!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayValueHasBeenChanged() {
+        System.out.println("Value has been changed!");
         displayPressAnyKeyToContinueMessage();
     }
 
@@ -147,8 +152,18 @@ public class AdminView extends UserView {
         return getStringInput();
     }
 
+    public String getMentorLoginToEdit() {
+        System.out.print("\nEnter mentor login to edit his data (or q to go back): ");
+        return getStringInput();
+    }
+
     public String getLevelNameInput() {
         System.out.print("Enter level of experience name to set: ");
+        return getStringInput();
+    }
+
+    public String askForNewValue() {
+        System.out.print("Enter new value: ");
         return getStringInput();
     }
 
@@ -200,5 +215,6 @@ public class AdminView extends UserView {
 
     public void displayWrongSignError() {
         System.out.println("You type wrong sign!");
+        displayPressAnyKeyToContinueMessage();
     }
 }
