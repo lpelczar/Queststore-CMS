@@ -76,24 +76,25 @@ public class AdminController {
 
     private void handlePromoteBlankUser() {
         blankUsersContainer = blankUserDAO.getBlankUsers();
-        if (isBlankUsersExist()) {
+        boolean isEmpty = checkIfBlankUsersExist();
 
+        if (isEmpty == false) {
             view.displayBlankUsers(blankUsersContainer);
             String login = view.askForLogin();
 
             BlankUser user = blankUserDAO.getBlankUserBy(login);
             promote(user);
         }
-        else {
+        else if (isEmpty) {
             view.displayEmptyListMsg();
         }
     }
 
-    private boolean isBlankUsersExist() {
+    private boolean checkIfBlankUsersExist() {
         if (blankUsersContainer != null) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     private void promote(BlankUser user) {
