@@ -43,4 +43,19 @@ public class GroupDAO extends AbstractDAO {
             return false;
         }
     }
+
+    @SuppressWarnings("unchecked")
+    private void readAllGroups() {
+
+        if (readAllData(FILE_PATH) != null) {
+            this.groupsList = (ArrayList<Group>) readAllData(FILE_PATH);
+        } else {
+            this.groupsList = new ArrayList<>();
+        }
+    }
+
+    private void saveAllGroups() {
+
+        saveAllData(this.groupsList, FILE_PATH);
+    }
 }
