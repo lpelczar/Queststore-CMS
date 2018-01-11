@@ -3,6 +3,7 @@ package controllers;
 
 import views.MentorView;
 import dao.TaskDAO;
+import java.util.Date;
 
 import java.util.InputMismatchException;
 
@@ -32,7 +33,7 @@ public class MentorController {
             }
             else if (option == 2) {
                 // Add new task
-                ;
+                createTask();
             }
             else if (option == 3) {
                 // Add new item
@@ -62,6 +63,21 @@ public class MentorController {
                 isRunning = false;
             }
         }
+    }
+    
+    public void createTask() {
+        
+        view.displayCreatingTask();
+        String name = view.askForInput();
+        String category = view.askForCategory();
+        String description = view.askForInput();
+        Date deadline = view.askForDeadline();
+        int points = view.askForInt();
+        
+        Task task = new Task(name, category, description, deadline, points);
+        
+        TaskDAO.addTask(task);
+    
     }
 
 }
