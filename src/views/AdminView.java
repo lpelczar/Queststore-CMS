@@ -10,10 +10,10 @@ public class AdminView extends UserView {
 
     private void prepareAdminMenu() {
         menu.put(1, "Promote blank user.");
-        menu.put(2, "Edit mentor profile and his groups.");
-        menu.put(3, "Create new group and assign mentor.");
-        menu.put(4, "Edit experience levels.");
-        menu.put(5, "Show mentor profile and all his Codecoolers.");
+        menu.put(2, "Create new group and assign mentor.");
+        menu.put(3, "Edit mentor profile and his groups.");
+        menu.put(4, "Show mentor profile and all his Codecoolers.");
+        menu.put(5, "Edit experience levels.");
         menu.put(6, "Log out.");
     }
 
@@ -108,6 +108,27 @@ public class AdminView extends UserView {
 
     public void displayGroupWithThisNameAlreadyExists() {
         System.out.println("Group with this name already exists!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayThereIsNoMentorsMessage() {
+        System.out.println("There are no mentors in database to assign to group, you need to add one!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayThereIsNoMentorWithThisLogin() {
+        System.out.println("There is no mentor with this login!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayLevelSetMessage() {
+        System.out.println("Level has been set!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public String getMentorLoginToAssignGroup() {
+        System.out.print("Enter mentor login: ");
+        return getStringInput();
     }
 
     public String getGroupNameInput() {
@@ -115,9 +136,24 @@ public class AdminView extends UserView {
         return getStringInput();
     }
 
+    public String getLevelNameInput() {
+        System.out.print("Enter level of experience name to set: ");
+        return getStringInput();
+    }
+
+    public int getLevelValueInput() {
+        System.out.print("Enter value of experience to set: ");
+        return getIntInput();
+    }
+
     private String getStringInput() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLine();
+    }
+
+    private int getIntInput() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
     }
 
     private void displayPressAnyKeyToContinueMessage() {
@@ -128,6 +164,11 @@ public class AdminView extends UserView {
 
     public void displayHasBeenPromoted() {
         System.out.println("User has been promoted!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayMentorAssignedToThisGroup() {
+        System.out.println("Mentor has been assigned to this group!");
         displayPressAnyKeyToContinueMessage();
     }
 
@@ -148,10 +189,6 @@ public class AdminView extends UserView {
 
     public void displayWrongSignError() {
         System.out.println("You type wrong sign!");
-    }
-
-    public void displayLevelCreation() {
-        System.out.println("Create new level:\nLevel name:");
     }
 
     public int askForThreshold() {

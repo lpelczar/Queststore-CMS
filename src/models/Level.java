@@ -1,8 +1,9 @@
 package models;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class Level {
+public class Level implements Serializable {
 
     private String rank;
     private Integer experience;

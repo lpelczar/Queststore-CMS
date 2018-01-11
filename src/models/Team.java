@@ -1,7 +1,8 @@
 package models;
+import java.io.Serializable;
 import java.util.*;
 
-public class Team {
+public class Team implements Serializable {
     private List<Student> teamMembers;
     private String teamSignature;
 

@@ -30,13 +30,13 @@ public class AdminController {
             if (option == 1) {
                 handlePromoteBlankUser();
             } else if (option == 2) {
-                handleEditProfile();
-            } else if (option == 3) {
                 handleCreatingGroup();
+            } else if (option == 3) {
+                handleEditProfile();
             } else if (option == 4) {
-                handleCreateLevel();
-            } else if (option == 5) {
                 handleShowingMentorProfile();
+            } else if (option == 5) {
+                handleCreateLevel();
             } else if (option == 6) {
                 isRunning = false;
             }
@@ -84,11 +84,27 @@ public class AdminController {
     private void handleCreatingGroup() {
 
         String name = view.getGroupNameInput();
-        if (groupDAO.addGroup(new Group(name))) {
+        Group group = new Group(name);
+        if (groupDAO.addGroup(group)) {
             view.displayGroupAdded();
-            // Assign mentor?
+            if (mentorDAO.getMentors().size() > 0) {
+                addGroupToMentor(group);
+            } else {
+                view.displayThereIsNoMentorsMessage();
+            }
         } else {
             view.displayGroupWithThisNameAlreadyExists();
+        }
+    }
+
+    private void addGroupToMentor(Group group) {
+        view.displayMentors(mentorDAO.getMentors());
+        String mentorLogin = view.getMentorLoginToAssignGroup();
+        if (mentorDAO.getMentorBy(mentorLogin) != null) {
+            mentorDAO.getMentorBy(mentorLogin).addGroup(group.getID());
+            view.displayMentorAssignedToThisGroup();
+        } else {
+            view.displayThereIsNoMentorWithThisLogin();
         }
     }
 
@@ -147,11 +163,11 @@ public class AdminController {
 
     private void handleCreateLevel() {
 
-        view.displayLevelCreation();
-        String level = view.askForInput();
-        int threshold = view.askForThreshold();
+        String levelName = view.getLevelNameInput();
+        int value = view.getLevelValueInput();
 
-        levelDAO.setThreshold(level, threshold);
+        levelDAO.setThreshold(levelName, value);
+        view.displayLevelSetMessage();
 
     }
 }
