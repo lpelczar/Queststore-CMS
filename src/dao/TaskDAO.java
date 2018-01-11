@@ -53,4 +53,10 @@ public class TaskDAO extends AbstractDAO {
             this.tasksList = new ArrayList<>();
         }
     }
+
+    private void saveAllTasks() {
+
+        saveAllData(this.tasksList, FILE_PATH);
+    }
+
 }
