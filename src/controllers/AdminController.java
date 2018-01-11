@@ -47,10 +47,26 @@ public class AdminController {
     }
 
     public void promoteUser() {
-        boolean userTypePromote = view.typeOfPromotion();
-        if (userTypePromote) {
+        try {
+            boolean userTypePromote = view.typeOfPromotion();
 
+            if (userTypePromote) {
+                Mentor addMentor = Mentor( user.name,
+                                           user.login,
+                                           user.password,
+                                           user.email,
+                                           user.phoneNumber );
+            } else {
+                Student addStudent = Student( user.name,
+                                              user.login,
+                                              user.password,
+                                              user.email,
+                                              user.phoneNumber );
+            }
+        } catch (InputMismatchException e) {
+            view.displayWrongSignError();
         }
+
     }
 
     public void handlePromoteBlankUser() {
@@ -59,11 +75,7 @@ public class AdminController {
             String userLogin = askForLoginToPromote();
             BlankUser user = BlankUserDAO.getUserByLogin(userLogin);
 
-            Mentor addMentor = Mentor( user.name,
-                                    user.login,
-                                    user.password,
-                                    user.email,
-                                    user.phoneNumber );
+
         }
         else {
             view.displayEmptyListMsg();
