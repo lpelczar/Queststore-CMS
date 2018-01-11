@@ -118,6 +118,22 @@ public class AdminView extends UserView {
         return scanner.nextLine();
     }
 
+    private void displayPressAnyKeyToContinueMessage() {
+        System.out.print("\nPress any key to continue.");
+        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
+    }
+
+    public void displayHasBeenPromoted() {
+        System.out.println("User has been promoted!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayUserNotExists() {
+        System.out.println("User not exists!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
     public void displayEmptyListMsg() {
         System.out.println("List is empty!");
     }
