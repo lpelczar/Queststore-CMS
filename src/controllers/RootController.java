@@ -24,6 +24,7 @@ public class RootController {
         this.mentorController = new MentorController();
     }
 
+
     public void start() {
         boolean shouldExit = false;
 
