@@ -1,6 +1,7 @@
 package controllers;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Scanner;
 
 import views.AdminView;
 import models.*;
@@ -132,7 +133,11 @@ public class AdminController {
                 studentDAO.addStudent(student);
             }
 
-            blankUserDAO.removeBlankUser(user);
+            if (blankUserDAO.removeBlankUser(user.getLogin())) {
+                view.displayHasBeenPromoted();
+            } else {
+                view.displayUserNotExists();
+            }
 
         } catch (InputMismatchException e) {
             view.displayWrongSignError();
