@@ -61,5 +61,14 @@ public class MentorView extends UserView {
             else if (option == "e") return "Extra";
         }
     }
+    
+    public Date askForDeadline() {
+        System.out.println("\nDeadline:");
+        try {
+            return new Date(askForOption(), askForOption(), askForOption());
+        }
+        catch (InputMismatchException e) {
+            System.err.println("You type wrong sign!");
+    }
 
 }
