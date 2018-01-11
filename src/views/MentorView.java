@@ -55,13 +55,13 @@ public class MentorView extends UserView {
     }
     
     public String askForCategory() {
-        char option = "q";
+        char option = 'q';
 
         while(true) {
             System.out.println("\nBasic or extra(b/e):");
-            option = scanner.next();
-            if (option == "b") return "Basic";
-            else if (option == "e") return "Extra";
+            option = scanner.next().charAt(0);
+            if (option == 'b') return "Basic";
+            else if (option == 'e') return "Extra";
         }
     }
     
@@ -73,6 +73,7 @@ public class MentorView extends UserView {
         catch (InputMismatchException e) {
             System.err.println("You type wrong sign!");
         }
+        return null;
     }
     
     public int askForPoints() throws InputMismatchException {

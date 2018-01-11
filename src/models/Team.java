@@ -31,6 +31,6 @@ public class Team {
     }
     
     public String getTeamName() {
-    return this.signature;
+    return this.teamSignature;
     }
 }
