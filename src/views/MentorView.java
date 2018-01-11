@@ -20,4 +20,10 @@ public class MentorView {
         menu.put(9, "Log out.");
     }
 
+    public void displayMentorMenu() {
+        for (Integer option : menu.keySet()) {
+            System.out.println(option + ". " + menu.get(option) + "\n");
+        }
+    }
+
 }
