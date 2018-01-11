@@ -5,7 +5,7 @@ import java.util.*;
 
 public class AdminView {
 
-    private Map<Integer, String> menu;
+    private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
 
     public void prepareAdminMenu() {
@@ -19,7 +19,7 @@ public class AdminView {
 
     public void displayAdminMenu() {
         for (Integer option : menu.keySet()) {
-            System.out.println(option + ". " + menu.get(option) + "\n");
+            System.out.println(option + ". " + menu.get(option));
         }
     }
 
@@ -65,6 +65,22 @@ public class AdminView {
                 return false;
             }
         }
+<<<<<<< HEAD
         return false;
+=======
+        throw new InputMismatchException();
+    }
+
+    public void displayUsers(List<Mentor> mentorContainer, List<Student> studentContainer) {
+        ;
+    }
+
+    public void displayEmptyListMsg() {
+        System.out.println("List is empty!");
+    }
+
+    public void displayWrongSignError() {
+        System.out.prinln("You type wrong sign!");
+>>>>>>> admin
     }
 }
