@@ -11,7 +11,7 @@ abstract class UserView {
         scanner = new Scanner(System.in);
 
         try {
-            System.out.println("\nEnter option: ");
+            System.out.print("\nEnter option: ");
             option = scanner.nextInt();
 
         } catch (InputMismatchException e) {
@@ -27,7 +27,7 @@ abstract class UserView {
         scanner = new Scanner(System.in);
 
         try {
-            System.out.println("\nEnter option: ");
+            System.out.print("\nEnter option: ");
             option = scanner.nextLine();
 
         } catch (InputMismatchException e) {

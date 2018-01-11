@@ -8,16 +8,17 @@ public class AdminView extends UserView {
     private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner;
 
-    public void prepareAdminMenu() {
+    private void prepareAdminMenu() {
         menu.put(1, "Promote blank user.");
-        menu.put(2, "Edit user profile.");
-        menu.put(3, "Create new group.");
-        menu.put(4, "Edit level treshold.");
-        menu.put(5, "Show all users.");
+        menu.put(2, "Edit mentor profile and his groups.");
+        menu.put(3, "Create new group and assign mentor.");
+        menu.put(4, "Edit experience levels.");
+        menu.put(5, "Show mentor profile and all his Codecoolers.");
         menu.put(6, "Log out.");
     }
 
-    public void displayAdminMenu() {
+    private void displayAdminMenu() {
+        System.out.println("You are logged as Admin.");
         for (Integer option : menu.keySet()) {
             System.out.println(option + ". " + menu.get(option));
         }
@@ -29,6 +30,7 @@ public class AdminView extends UserView {
     }
 
     public void displayBlankUsers(List<BlankUser> blankUsers) {
+        System.out.println("\nBlank users list: ");
         for (BlankUser user : blankUsers) {
             System.out.println(user.toString());
         }
@@ -37,12 +39,11 @@ public class AdminView extends UserView {
     public String askForLogin() {
         scanner = new Scanner(System.in);
 
-        System.out.println("Enter login profile to change: ");
-        String userLogin = scanner.next();
-        return userLogin;
+        System.out.print("\nEnter login profile to change: ");
+        return scanner.next();
     }
 
-    public Boolean typeOfPromotion() {
+    public Boolean getTypeOfPromotion() {
         String userChoose = "";
         String[] promoteOptions = {"m", "s"};
         scanner = new Scanner(System.in);
@@ -59,7 +60,7 @@ public class AdminView extends UserView {
                 return false;
             }
         }
-        throw new InputMismatchException();
+        return null;
     }
 
     public void displayNoMentorMessage() {
@@ -137,10 +138,12 @@ public class AdminView extends UserView {
 
     public void displayEmptyListMsg() {
         System.out.println("List is empty!");
+        displayPressAnyKeyToContinueMessage();
     }
 
-    public void displayUserDosentExist() {
-        System.out.println("This user dosent exist!");
+    public void displayUserDoesNotExist() {
+        System.out.println("This user does not exist!");
+        displayPressAnyKeyToContinueMessage();
     }
 
     public void displayWrongSignError() {

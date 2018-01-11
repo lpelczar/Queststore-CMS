@@ -16,49 +16,68 @@ public class AdminController {
     private StudentDAO studentDAO = new StudentDAO();
     private UsersDAO usersDAO = new UsersDAO();
     private LevelThresholdDAO levelDAO = new LevelThresholdDAO();
-    private List<BlankUser> blankUsersContainer;
 
     public void start() {
-        int option = 0;
+
+        int option;
         boolean isRunning = true;
 
         while (isRunning) {
-            blankUsersContainer = blankUserDAO.getBlankUsers();
-
             view.clearConsole();
             view.handleAdminMenu();
-
             option = view.askForOption();
 
             if (option == 1) {
                 handlePromoteBlankUser();
-            }
-
-            else if (option == 2) {
-                //Edit mentor data and his class
+            } else if (option == 2) {
                 handleEditProfile();
-
-            }
-            else if (option == 3) {
+            } else if (option == 3) {
                 handleCreatingGroup();
-                // I want to create a class,
-                // So I can assign Mentors to their classes.
-
-            }
-            else if (option == 4) {
-                // I want to create levels of experience based on amount of earning coolcoins,
-                // So Codecoolers can achieve them.
+            } else if (option == 4) {
                 handleCreateLevel();
-            }
-            else if (option == 5) {
+            } else if (option == 5) {
                 handleShowingMentorProfile();
-                // I want to see a Mentor' s profile,
-                // So I can view his personal data and Codecoolers in his class.
-
-            }
-            else if (option == 6) {
+            } else if (option == 6) {
                 isRunning = false;
             }
+        }
+    }
+
+    private void handlePromoteBlankUser() {
+
+        if (blankUserDAO.getBlankUsers().size() > 0) {
+            view.displayBlankUsers(blankUserDAO.getBlankUsers());
+            String login = view.askForLogin();
+            BlankUser user = blankUserDAO.getBlankUserBy(login);
+
+            if (user != null) {
+                promote(user);
+            } else {
+                view.displayUserDoesNotExist();
+            }
+        } else {
+            view.displayEmptyListMsg();
+        }
+    }
+
+    private void promote(BlankUser user) {
+
+        boolean isPromoteToMentor = view.getTypeOfPromotion();
+
+        if (isPromoteToMentor) {
+            Mentor mentor = new Mentor( user.getName(),user.getLogin(),user.getPassword(),
+                    user.getEmail(), user.getPhoneNumber() );
+            mentorDAO.addMentor(mentor);
+        } else {
+            Student student = new Student( user.getName(),user.getLogin(),user.getPassword(),
+                    user.getEmail(),user.getPhoneNumber(),0 );
+            studentDAO.addStudent(student);
+        }
+
+        if (blankUserDAO.removeBlankUser(user.getLogin())) {
+            view.displayHasBeenPromoted();
+        } else {
+            view.displayUserNotExists();
         }
     }
 
@@ -84,68 +103,6 @@ public class AdminController {
             // Display mentor class info!!
         } else {
             view.displayNoMentorMessage();
-        }
-    }
-
-    private void handlePromoteBlankUser() {
-        boolean isEmpty = checkIfBlankUsersExist();
-
-        if (isEmpty == false) {
-            view.displayBlankUsers(blankUsersContainer);
-            String login = view.askForLogin();
-
-            BlankUser user = blankUserDAO.getBlankUserBy(login);
-
-            if (user != null) {
-                promote(user);
-            } else {
-                view.displayUserDosentExist();
-            }
-        }
-        else if (isEmpty) {
-            view.displayEmptyListMsg();
-        }
-    }
-
-    private boolean checkIfBlankUsersExist() {
-        if (blankUsersContainer != null) {
-            return false;
-        }
-        return true;
-    }
-
-    private void promote(BlankUser user) {
-        try {
-            boolean isPromoteToMentor = view.typeOfPromotion();
-
-            if (isPromoteToMentor) {
-                Mentor mentor = new Mentor( user.getName(),
-                                            user.getLogin(),
-                                            user.getPassword(),
-                                            user.getEmail(),
-                                            user.getPhoneNumber() );
-
-                mentorDAO.addMentor(mentor);
-
-            } else {
-                Student student = new Student( user.getName(),
-                                               user.getLogin(),
-                                               user.getPassword(),
-                                               user.getEmail(),
-                                               user.getPhoneNumber(),
-                                               0 );
-
-                studentDAO.addStudent(student);
-            }
-
-            if (blankUserDAO.removeBlankUser(user.getLogin())) {
-                view.displayHasBeenPromoted();
-            } else {
-                view.displayUserNotExists();
-            }
-
-        } catch (InputMismatchException e) {
-            view.displayWrongSignError();
         }
     }
 
