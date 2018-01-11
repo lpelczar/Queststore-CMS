@@ -1,7 +1,8 @@
 package models;
+import java.io.Serializable;
 import java.util.*;
 
-public class Group {
+public class Group implements Serializable {
     private List<Team> group;
     private final int ID;
     private static int nextID = 1;

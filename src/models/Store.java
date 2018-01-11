@@ -1,7 +1,8 @@
 package models;
+import java.io.Serializable;
 import java.util.*;
 
-public class Store {
+public class Store implements Serializable {
 
     private static List<Item> bonuses = new ArrayList<>();
 
