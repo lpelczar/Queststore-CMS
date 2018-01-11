@@ -72,7 +72,7 @@ public class MentorController {
         String category = view.askForCategory();
         String description = view.askForInput();
         Date deadline = view.askForDeadline();
-        int points = view.askForInt();
+        int points = view.askForPoints();
         
         Task task = new Task(name, category, description, deadline, points);
         
