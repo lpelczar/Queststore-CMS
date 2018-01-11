@@ -32,12 +32,11 @@ public class MentorView extends UserView {
     }
 
     public void displayTeams(List<Team> Teams) {
-        for (Team team : Teams) {
-            System.out.println(team.getTeamName() + ":");
-            for (Student student : team.getAllStudents()) {
-                System.out.println(student.toString());
-            }
-        }
+        for (Team team : Teams) System.out.println(team.getTeamName());
+    }
+    
+    public void displayStudentsInGroup(Group group) {
+        for (Student student : group.getAllStudents()) System.out.println(student.toString());
     }
 
 }
