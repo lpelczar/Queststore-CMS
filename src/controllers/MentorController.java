@@ -3,6 +3,7 @@ package controllers;
 
 import views.MentorView;
 import dao.TaskDAO;
+import dao.ItemDAO;
 import java.util.Date;
 
 import java.util.InputMismatchException;
@@ -37,7 +38,7 @@ public class MentorController {
             }
             else if (option == 3) {
                 // Add new item
-                ;
+                createItem();
             }
             else if (option == 4) {
                 // Edit quest
@@ -81,6 +82,22 @@ public class MentorController {
         Task task = new Task(name, category, description, deadline, points);
         
         TaskDAO.addTask(task);
+    
+    }
+    
+    createItem() {
+    
+        view.displayCreatingItem();
+        String name = view.askForInput();
+        try {
+            int price = view.askForPrice();
+        }
+        catch (InputMismatchException e) {
+            System.err.println("You type wrong sign!");
+        }
+        String description = view.askForInput();
+        
+        //we need dao for shop!
     
     }
 

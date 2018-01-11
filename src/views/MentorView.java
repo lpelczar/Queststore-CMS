@@ -71,7 +71,7 @@ public class MentorView extends UserView {
             System.err.println("You type wrong sign!");
         }
     
-    protected int askForPoints() throws InputMismatchException {
+    public int askForPoints() throws InputMismatchException {
 
         int points = 0;
 
@@ -80,6 +80,21 @@ public class MentorView extends UserView {
             points = scanner.nextInt();
         }
         return points;
+    }
+    
+    public void displayCreatingItem() {
+        System.out.println("Create new Item:\nName:");
+    }
+    
+    public int askForPrice() throws InputMismatchException {
+
+        int price = 0;
+
+        while(!scanner.hasNextInt()) {
+            System.out.println("\nPrice:");
+            price = scanner.nextInt();
+        }
+        return price;
     }
 
 }
