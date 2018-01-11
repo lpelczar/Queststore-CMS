@@ -1,9 +1,7 @@
 package views;
-import models.BlankUser;
-
 import java.util.*;
 
-public class AdminView {
+public class AdminView extends UserView {
 
     private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
@@ -28,17 +26,6 @@ public class AdminView {
         displayAdminMenu();
     }
 
-    public int askForOption() throws InputMismatchException {
-
-        int option = 0;
-
-        while(!scanner.hasNextInt()) {
-            System.out.println("\nEnter option: ");
-            option = scanner.nextInt();
-        }
-        return option;
-    }
-
     public void displayBlankUsers(List<BlankUser> blankUsers) {
         for (BlankUser user : blankUsers) {
             System.out.println(user.toString());
@@ -46,7 +33,8 @@ public class AdminView {
     }
 
     public String askForLoginToPromote() {
-        return scanner.next();
+        String userLogin = scanner.next();
+        return userLogin
     }
 
     public Boolean typeOfPromotion() {
@@ -55,7 +43,7 @@ public class AdminView {
 
         System.out.println("Type 'm' if you want promote user to mentor or 's' to student");
 
-        while (!Arrays.asList(promoteOptions).contains(userChoose.toLowerCase())) {
+        while (!Arrays.asList(promoteOptions).contains(playerChoose.toLowerCase())) {
             userChoose = scanner.next();
 
             if (userChoose.equals("m")) {
@@ -65,14 +53,23 @@ public class AdminView {
                 return false;
             }
         }
-<<<<<<< HEAD
-        return false;
-=======
         throw new InputMismatchException();
     }
 
-    public void displayUsers(List<Mentor> mentorContainer, List<Student> studentContainer) {
-        ;
+    public void displayMentors(List<Mentor> mentorContainer) {
+        System.out.println("Available mentors to edit: \n");
+
+        for (Mentor mentor : mentorContainer) {
+            System.out.prinln(mentor.toString());
+        }
+    }
+
+    public void displayStudents(List<Student> studentContainer) {
+        System.out.println("Available mentors to edit: \n");
+
+        for (Student student : studentContainer) {
+            System.out.println(student.toString());
+        }
     }
 
     public void displayEmptyListMsg() {
@@ -81,6 +78,5 @@ public class AdminView {
 
     public void displayWrongSignError() {
         System.out.prinln("You type wrong sign!");
->>>>>>> admin
     }
 }
