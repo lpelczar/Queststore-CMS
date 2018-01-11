@@ -69,6 +69,17 @@ public class MentorView extends UserView {
         }
         catch (InputMismatchException e) {
             System.err.println("You type wrong sign!");
+        }
+    
+    protected int askForPoints() throws InputMismatchException {
+
+        int points = 0;
+
+        while(!scanner.hasNextInt()) {
+            System.out.println("\nPoints:");
+            points = scanner.nextInt();
+        }
+        return points;
     }
 
 }
