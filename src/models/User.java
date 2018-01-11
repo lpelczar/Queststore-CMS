@@ -19,9 +19,9 @@ public abstract class User implements Serializable{
 
     public String toString(){
         return  "Name: " + name +
-                " Login: " + login +
-                " Email: " + email +
-                " Phone number: " + phoneNumber;
+                " | Login: " + login +
+                " | Email: " + email +
+                " | Phone number: " + phoneNumber;
     }
 
     public String getName() {
