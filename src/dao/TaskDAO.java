@@ -31,4 +31,15 @@ public class TaskDAO {
             saveAllTasks();
         }
     }
+
+    public boolean removeTask(Task task) {
+
+        readAllTasks();
+        if (this.tasksList.contains(task)) {
+            this.tasksList.remove(task);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
