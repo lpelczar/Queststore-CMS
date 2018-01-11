@@ -146,7 +146,6 @@ public class AdminController {
         Mentor profileToEdit = mentorDAO.getMentorBy(login);
         if (profileToEdit != null) {
             updateProfileAttribute(profileToEdit);
-            // Change class of mentor and add him a group
             mentorDAO.saveAllMentors();
         } else {
             view.displayThereIsNoMentorWithThisLogin();
