@@ -1,5 +1,5 @@
 package views;
-import models.BlankUser;
+import models.Team;
 
 import java.util.*;
 
@@ -31,9 +31,12 @@ public class MentorView extends UserView {
         displayMentorMenu();
     }
 
-    public void displayBlankUsers(List<BlankUser> blankUsers) {
-        for (BlankUser user : blankUsers) {
-            System.out.println(user.toString());
+    public void displayTeams(List<Team> Teams) {
+        for (Team team : Teams) {
+            System.out.println(team.getTeamName() + ":");
+            for (Student student : team.getAllStudents()) {
+                System.out.println(student.toString());
+            }
         }
     }
 
