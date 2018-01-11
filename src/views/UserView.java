@@ -26,6 +26,10 @@ abstract class UserView {
         return option;
     }
     
+    protected void displayMessage(String message) {
     
+        System.out.println(message);
+    
+    }
 
 }
