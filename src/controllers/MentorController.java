@@ -45,19 +45,19 @@ public class MentorController {
                 // Edit item
                 ;
             }
-            else if (option == 5) {
+            else if (option == 6) {
                 // Mark Student's task
                 ;
             }
-            else if (option == 5) {
+            else if (option == 7) {
                 // Mark Students's bought items
                 ;
             }
-            else if (option == 5) {
+            else if (option == 8) {
                 // See Student's backpack
                 ;
             }
-            else if (option == 6) {
+            else if (option == 9) {
                 isRunning = false;
             }
         }
