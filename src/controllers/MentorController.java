@@ -15,11 +15,10 @@ public class MentorController {
     private boolean isRunning = true;
 
     public void start(){
-        int option = 0;
 
         while (isRunning) {
             view.handleMentorMenu();
-
+            int option = 0;
             try {
                 option = view.askForOption();
             }
