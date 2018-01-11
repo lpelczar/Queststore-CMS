@@ -13,7 +13,7 @@ public class AdminController {
     private MentorDAO mentorDAO = new MentorDAO();
     private StudentDAO studentDAO = new StudentDAO();
     private UsersDAO usersDAO = new UsersDAO();
-    private List<BlankUser> blankUsersContainer = blankUserDAO.getBlankUsers();
+    private List<BlankUser> blankUsersContainer;
     private boolean isRunning = true;
 
     public void start() {
@@ -70,6 +70,7 @@ public class AdminController {
     }
 
     private void handlePromoteBlankUser() {
+        blankUsersContainer = blankUserDAO.getBlankUsers();
         if (isBlankUsersExist()) {
 
             view.displayBlankUsers(blankUsersContainer);
