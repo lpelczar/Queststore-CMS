@@ -10,7 +10,7 @@ public class BlankUserDAO extends AbstractDAO {
     private List<BlankUser> blankUserList = new ArrayList<>();
     private final String FILE_PATH = "src/data/blankUsers.ser";
 
-    public BlankUserDAO() {}
+    public BlankUserDAO() { readAllBlankUsers();}
 
     public void addBlankUser(BlankUser user) {
 
@@ -29,6 +29,15 @@ public class BlankUserDAO extends AbstractDAO {
     @SuppressWarnings("unchecked")
     private void readAllBlankUsers() {
 
-        this.blankUserList = (ArrayList<BlankUser>) readAllData(FILE_PATH);
+        if (readAllData(FILE_PATH) != null) {
+            this.blankUserList = (ArrayList<BlankUser>) readAllData(FILE_PATH);
+        } else {
+            this.blankUserList = new ArrayList<>();
+        }
+    }
+
+    public List<BlankUser> getBlankUsers() {
+        readAllBlankUsers();
+        return this.blankUserList;
     }
 }

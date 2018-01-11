@@ -1,6 +1,8 @@
 package models;
 
-public class Mentor extends User {
+import java.io.Serializable;
+
+public class Mentor extends User implements Serializable {
 
     private String groupResponsibility;
 
