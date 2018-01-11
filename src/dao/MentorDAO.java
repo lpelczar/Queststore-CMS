@@ -1,0 +1,67 @@
+package dao;
+
+import models.Mentor;
+
+import java.util.*;
+
+public class MentorDAO extends AbstractDAO {
+
+    private List<Mentor> mentorsList = new ArrayList<>();
+    private final String FILE_PATH = "src/data/mentors.ser";
+
+    public MentorDAO() { readAllMentors();}
+
+    public void addMentor(Mentor mentor) {
+
+        readAllMentors();
+        if(!mentorsList.contains(mentor)) {
+            mentorsList.add(mentor);
+            saveAllMentors();
+        }
+    }
+
+    public void saveAllMentors() {
+
+        saveAllData(this.mentorsList, FILE_PATH);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void readAllMentors() {
+
+        if (readAllData(FILE_PATH) != null) {
+            this.mentorsList = (ArrayList<Mentor>) readAllData(FILE_PATH);
+        } else {
+            this.mentorsList = new ArrayList<>();
+        }
+    }
+
+    public List<Mentor> getMentors() {
+        readAllMentors();
+        return this.mentorsList;
+    }
+
+    public boolean removeMentor(Mentor mentor) {
+
+        readAllMentors();
+        if (this.mentorsList.contains(mentor)) {
+            this.mentorsList.remove(mentor);
+            saveAllMentors();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Mentor getMentorBy(String login) {
+
+        readAllMentors();
+        Mentor mentor = null;
+
+        for (Mentor m : mentorsList) {
+            if (m.getLogin().equals(login)) {
+                mentor = m;
+            }
+        }
+        return mentor;
+    }
+}
