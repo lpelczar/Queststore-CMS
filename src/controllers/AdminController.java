@@ -22,7 +22,7 @@ public class AdminController {
             }
 
             if (option == 1) {
-                ;
+                handlePromoteBlankUser();
             }
             else if (option == 2) {
                 // Edit user profile
@@ -59,7 +59,7 @@ public class AdminController {
             String userLogin = askForLoginToPromote();
             BlankUser user = BlankUserDAO.getUserByLogin(userLogin);
 
-            Admin addAdmin = Admin( user.name,
+            Mentor addMentor = Mentor( user.name,
                                     user.login,
                                     user.password,
                                     user.email,
