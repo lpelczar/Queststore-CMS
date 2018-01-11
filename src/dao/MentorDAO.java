@@ -24,4 +24,19 @@ public class MentorDAO extends AbstractDAO {
 
         saveAllData(this.mentorsList, FILE_PATH);
     }
+
+    @SuppressWarnings("unchecked")
+    private void readAllMentors() {
+
+        if (readAllData(FILE_PATH) != null) {
+            this.mentorsList = (ArrayList<Mentor>) readAllData(FILE_PATH);
+        } else {
+            this.mentorsList = new ArrayList<>();
+        }
+    }
+
+    public List<Mentor> getMentors() {
+        readAllMentors();
+        return this.mentorsList;
+    }
 }
