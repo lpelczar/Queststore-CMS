@@ -26,4 +26,9 @@ public class MentorView {
         }
     }
 
+    public void handleMentorMenu() {
+        prepareMentorMenu();
+        displayMentorMenu();
+    }
+
 }
