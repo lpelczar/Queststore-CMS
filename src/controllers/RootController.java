@@ -53,11 +53,14 @@ public class RootController {
         String login;
         String password;
         User user;
+        final String QUIT_OPTION = "q";
 
         while(!isLoggedIn) {
 
             login = rootView.getUserLogin();
+            if (login.equals(QUIT_OPTION)) return;
             password = rootView.getUserPassword();
+            if (password.equals(QUIT_OPTION)) return;
             user = usersDAO.getUserByLoginAndPassword(login, password);
 
             if(user != null) {

@@ -17,10 +17,10 @@ public class AdminController {
     private UsersDAO usersDAO = new UsersDAO();
     private LevelThresholdDAO levelDAO = new LevelThresholdDAO();
     private List<BlankUser> blankUsersContainer;
-    private boolean isRunning = true;
 
     public void start() {
         int option = 0;
+        boolean isRunning = true;
 
         while (isRunning) {
             blankUsersContainer = blankUserDAO.getBlankUsers();

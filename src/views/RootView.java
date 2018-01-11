@@ -29,12 +29,12 @@ public class RootView {
     }
 
     public String getUserLogin() {
-        System.out.print("Enter login: ");
+        System.out.print("Enter login (or q to quit): ");
         return getStringInput();
     }
 
     public String getUserPassword() {
-        System.out.print("Enter password: ");
+        System.out.print("Enter password (or q to quit): ");
         return getStringInput();
     }
 

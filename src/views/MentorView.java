@@ -65,6 +65,7 @@ public class MentorView extends UserView {
         }
     }
 
+    @SuppressWarnings("deprecation")
     public Date askForDeadline() {
         System.out.println("\nDeadline:");
         try {
