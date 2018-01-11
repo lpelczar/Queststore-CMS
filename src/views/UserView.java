@@ -15,4 +15,15 @@ abstract class UserView {
         return option;
     }
 
+    public String askForInput() throws InputMismatchException {
+
+        String option = "";
+
+        while(!scanner.hasNextLine()) {
+            System.out.println("\nEnter option: ");
+            option = scanner.nextLine();
+        }
+        return option;
+    }
+
 }
