@@ -5,7 +5,10 @@ import dao.*;
 
 public class AdminController {
     AdminView view = new AdminView();
-    BlankUser blankUserDAO = new BlankUser();
+    BlankUserDAO blankUserDAO = new BlankUserDAO();
+    MentorDAO mentorDAO = new MentroDAO();
+    StudentDAO studentDAO = new StudentDAO();
+
     List<BlankUser> blankUsersContainer = blankUserDAO.getBlankUsers();
 
     private boolean isRunning = true;
@@ -77,12 +80,17 @@ public class AdminController {
                                             user.password,
                                             user.email,
                                             user.phoneNumber );
+
+                mentorDAO.addMentor(mentor);
+
             } else {
                 Student student = new Student( user.name,
                                                user.login,
                                                user.password,
                                                user.email,
                                                user.phoneNumber );
+
+                studentDAO.addStudent(student);
             }
 
             blankUserDAO.removeBlankUser(user);
