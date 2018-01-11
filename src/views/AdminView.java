@@ -5,7 +5,7 @@ import java.util.*;
 
 public class AdminView {
 
-    private Map<Integer, String> menu;
+    private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
 
     public void prepareAdminMenu() {
@@ -19,7 +19,7 @@ public class AdminView {
 
     public void displayAdminMenu() {
         for (Integer option : menu.keySet()) {
-            System.out.println(option + ". " + menu.get(option) + "\n");
+            System.out.println(option + ". " + menu.get(option));
         }
     }
 
