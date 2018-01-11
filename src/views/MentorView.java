@@ -1,5 +1,6 @@
 package views;
 import models.Team;
+import models.Student;
 
 import java.util.*;
 
@@ -35,8 +36,8 @@ public class MentorView extends UserView {
         for (Team team : teams) System.out.println(team.getTeamName());
     }
     
-    public void displayStudentsInGroup(Group group) {
-        for (Student student : group.getAllStudents()) System.out.println(student.toString());
+    public void displayStudentsInGroup(Team group) {
+        for (Student student : group.getAllMembers()) System.out.println(student.toString());
     }
     
     public void displaySummaryOfStudentsCoins(List<Student> students) {
@@ -44,7 +45,7 @@ public class MentorView extends UserView {
     }
     
     public void displayStudentsItemsList(List<Student> students) {
-        for (Student student : students) System.out.println(student.backpackToString());//?
+        //for (Student student : students) System.out.println(student.backpackToString());//?
     }
     
     public void displayCreatingTask() {
@@ -54,7 +55,7 @@ public class MentorView extends UserView {
     public String askForCategory() {
         char option = "q";
 
-        while() {
+        while(true) {
             System.out.println("\nBasic or extra(b/e):");
             option = scanner.next();
             if (option == "b") return "Basic";
@@ -70,6 +71,7 @@ public class MentorView extends UserView {
         catch (InputMismatchException e) {
             System.err.println("You type wrong sign!");
         }
+    }
     
     public int askForPoints() throws InputMismatchException {
 

@@ -3,7 +3,7 @@ package controllers;
 
 import views.MentorView;
 import dao.TaskDAO;
-import dao.ItemDAO;
+import models.Task;
 import java.util.Date;
 
 import java.util.InputMismatchException;
@@ -29,7 +29,7 @@ public class MentorController {
             if (option == 1) {
                 //Promote blank user to Student, add argument (list with users) to display method
                 //view.displayBlankUsers();
-                String userLogin = view.askForLoginToPromote();
+                //String userLogin = view.askForLoginToPromote();
                 ;
             }
             else if (option == 2) {
@@ -68,29 +68,32 @@ public class MentorController {
     
     public void createTask() {
         
+        TaskDAO taskdao = new TaskDAO();
         view.displayCreatingTask();
         String name = view.askForInput();
         String category = view.askForCategory();
         String description = view.askForInput();
         Date deadline = view.askForDeadline();
+        int points = 0;
         try {
-            int points = view.askForPoints();
+            points = view.askForPoints();
         }
         catch (InputMismatchException e) {
             System.err.println("You type wrong sign!");
         }
         Task task = new Task(name, category, description, deadline, points);
         
-        TaskDAO.addTask(task);
+        taskdao.addTask(task);
     
     }
     
-    createItem() {
+    public void createItem() {
     
         view.displayCreatingItem();
         String name = view.askForInput();
+        int price = 0;
         try {
-            int price = view.askForPrice();
+            price = view.askForPrice();
         }
         catch (InputMismatchException e) {
             System.err.println("You type wrong sign!");
