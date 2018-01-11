@@ -46,7 +46,7 @@ public class AdminController {
         }
     }
 
-    public void promoteUser(BlankUser userToPromote) {
+    public void promote(BlankUser user) {
         try {
             boolean isPromoteToMentor = view.typeOfPromotion();
 
@@ -72,8 +72,9 @@ public class AdminController {
     public void handlePromoteBlankUser() {
         if (isBlankUsersExist()) {
             view.displayBlankUsers(blankUsersContainer);
-            String userLogin = askForLoginToPromote();
-            BlankUser userToPromote = BlankUserDAO.getUserByLogin(userLogin);
+            String login = askForLoginToPromote();
+            BlankUser user = BlankUserDAO.getUserBy(login);
+            promote(user);
         }
         else {
             view.displayEmptyListMsg();
