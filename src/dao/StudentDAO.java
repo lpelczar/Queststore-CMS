@@ -24,4 +24,20 @@ public class StudentDAO extends AbstractDAO {
 
         saveAllData(this.studentsList, FILE_PATH);
     }
+
+    @SuppressWarnings("unchecked")
+    private void readAllStudents() {
+
+        if (readAllData(FILE_PATH) != null) {
+            this.studentsList = (ArrayList<Student>) readAllData(FILE_PATH);
+        } else {
+            this.studentsList = new ArrayList<>();
+        }
+    }
+
+    public List<Student> getStudents() {
+        readAllStudents();
+        return this.studentsList;
+    }
+
 }
