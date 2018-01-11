@@ -54,12 +54,12 @@ public class RootView {
     }
 
     public String getNewUserEmail() {
-        System.out.print("Enter email in format (000-000-000): ");
+        System.out.print("Enter email: ");
         return getStringInput();
     }
 
     public String getNewUserPhoneNumber() {
-        System.out.print("Enter phone number: ");
+        System.out.print("Enter phone number in format (000-000-000): ");
         return getStringInput();
     }
 
