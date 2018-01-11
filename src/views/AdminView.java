@@ -100,6 +100,24 @@ public class AdminView extends UserView {
         return askForOption();
     }
 
+    public void displayGroupAdded() {
+        System.out.println("Group has been added!");
+    }
+
+    public void displayGroupWithThisNameAlreadyExists() {
+        System.out.println("Group with this name already exists!");
+    }
+
+    public String getGroupNameInput() {
+        System.out.print("Enter group name: ");
+        return getStringInput();
+    }
+
+    private String getStringInput() {
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextLine();
+    }
+
     public void displayEmptyListMsg() {
         System.out.println("List is empty!");
     }
