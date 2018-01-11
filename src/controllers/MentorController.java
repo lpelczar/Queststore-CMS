@@ -14,7 +14,8 @@ public class MentorController {
 
     private boolean isRunning = true;
 
-    public void start(){}
+    public void start(){
+        int option = 0;
 
         while (isRunning) {
             view.handleMentorMenu();
@@ -65,9 +66,9 @@ public class MentorController {
             }
         }
     }
-    
+
     public void createTask() {
-        
+
         TaskDAO taskdao = new TaskDAO();
         view.displayCreatingTask();
         String name = view.askForInput();
@@ -82,13 +83,13 @@ public class MentorController {
             System.err.println("You type wrong sign!");
         }
         Task task = new Task(name, category, description, deadline, points);
-        
+
         taskdao.addTask(task);
-    
+
     }
-    
+
     public void createItem() {
-    
+
         view.displayCreatingItem();
         String name = view.askForInput();
         int price = 0;
@@ -99,8 +100,8 @@ public class MentorController {
             System.err.println("You type wrong sign!");
         }
         String description = view.askForInput();
-        
+
         //we need dao for shop!
-    
+
     }
 }

@@ -20,14 +20,10 @@ public class AdminController {
         int option = 0;
 
         while (isRunning) {
+            view.clearConsole();
             view.handleAdminMenu();
 
-            try {
-                option = view.askForOption();
-            }
-            catch (InputMismatchException e) {
-                System.err.println("You type wrong sign!");
-            }
+            option = view.askForOption();
 
             if (option == 1) {
                 handlePromoteBlankUser();
