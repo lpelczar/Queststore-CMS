@@ -44,7 +44,7 @@ public class AdminView extends UserView {
 
         System.out.println("Type 'm' if you want promote user to mentor or 's' to student");
 
-        while (!Arrays.asList(promoteOptions).contains(playerChoose.toLowerCase())) {
+        while (!Arrays.asList(promoteOptions).contains(userChoose.toLowerCase())) {
             userChoose = scanner.next();
 
             if (userChoose.equals("m")) {
@@ -61,7 +61,7 @@ public class AdminView extends UserView {
         System.out.println("Available mentors to edit: \n");
 
         for (Mentor mentor : mentorContainer) {
-            System.out.prinln(mentor.toString());
+            System.out.println(mentor.toString());
         }
     }
 
@@ -73,7 +73,7 @@ public class AdminView extends UserView {
         }
     }
 
-    public String askForChangeInProfile(User profile) {
+    public int askForChangeInProfile(User profile) {
         System.out.println(profile.toString());
         System.out.println("What would you like to change in profile:" +
                             "\n1. Name" +
@@ -89,6 +89,6 @@ public class AdminView extends UserView {
     }
 
     public void displayWrongSignError() {
-        System.out.prinln("You type wrong sign!");
+        System.out.println("You type wrong sign!");
     }
 }

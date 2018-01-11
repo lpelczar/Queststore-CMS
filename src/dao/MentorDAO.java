@@ -20,7 +20,7 @@ public class MentorDAO extends AbstractDAO {
         }
     }
 
-    private void saveAllMentors() {
+    public void saveAllMentors() {
 
         saveAllData(this.mentorsList, FILE_PATH);
     }

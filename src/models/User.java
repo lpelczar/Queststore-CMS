@@ -43,4 +43,24 @@ public abstract class User implements Serializable{
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }

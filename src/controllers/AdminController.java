@@ -1,18 +1,19 @@
 package controllers;
 import java.util.InputMismatchException;
+import java.util.List;
+
 import views.AdminView;
 import models.*;
 import dao.*;
 
 public class AdminController {
-    AdminView view = new AdminView();
-    BlankUserDAO blankUserDAO = new BlankUserDAO();
-    MentorDAO mentorDAO = new MentorDAO();
-    StudentDAO studentDAO = new StudentDAO();
-    UsersDAO usersDAO = new UsersDAO();
 
-    List<BlankUser> blankUsersContainer = blankUserDAO.getBlankUsers();
-
+    private AdminView view = new AdminView();
+    private BlankUserDAO blankUserDAO = new BlankUserDAO();
+    private MentorDAO mentorDAO = new MentorDAO();
+    private StudentDAO studentDAO = new StudentDAO();
+    private UsersDAO usersDAO = new UsersDAO();
+    private List<BlankUser> blankUsersContainer = blankUserDAO.getBlankUsers();
     private boolean isRunning = true;
 
     public void start() {
@@ -34,19 +35,19 @@ public class AdminController {
 
             else if (option == 2) {
                 handleEditProfile();
-                ;
+
             }
             else if (option == 3) {
                 // Create new group
-                ;
+
             }
             else if (option == 4) {
                 // Edit level treshold
-                ;
+
             }
             else if (option == 5) {
                 // Show all accounts with details
-                ;
+
             }
             else if (option == 6) {
                 isRunning = false;
@@ -54,13 +55,13 @@ public class AdminController {
         }
     }
 
-    public void handlePromoteBlankUser() {
+    private void handlePromoteBlankUser() {
         if (isBlankUsersExist()) {
 
             view.displayBlankUsers(blankUsersContainer);
             String login = view.askForLogin();
 
-            User user = usersDAO.getUserBy(login);
+            BlankUser user = blankUserDAO.getBlankUserBy(login);
             promote(user);
         }
         else {
@@ -68,14 +69,14 @@ public class AdminController {
         }
     }
 
-    public boolean isBlankUsersExist() {
+    private boolean isBlankUsersExist() {
         if (blankUsersContainer != null) {
             return true;
         }
         return false;
     }
 
-    public void promote(User user) {
+    private void promote(BlankUser user) {
         try {
             boolean isPromoteToMentor = view.typeOfPromotion();
 
@@ -99,14 +100,14 @@ public class AdminController {
                 studentDAO.addStudent(student);
             }
 
-            blankUserDAO.removeUser(user);
+            blankUserDAO.removeBlankUser(user);
 
         } catch (InputMismatchException e) {
             view.displayWrongSignError();
         }
     }
 
-    public void handleEditProfile() {
+    private void handleEditProfile() {
         List<Mentor> mentorContainer = mentorDAO.getMentors();
         List<Student> studentContainer = studentDAO.getStudents();
 
@@ -121,8 +122,8 @@ public class AdminController {
         mentorDAO.saveAllMentors();
     }
 
-    public void updateProfileAttribute(User profile) {
-        toChange = view.askForChangeInProfile(profile);
+    private void updateProfileAttribute(User profile) {
+        int toChange = view.askForChangeInProfile(profile);
 
         if (toChange == 1) {
             String name = view.askForInput();
@@ -138,7 +139,7 @@ public class AdminController {
         }
         else if (toChange == 4) {
             String phoneNumber = view.askForInput();
-            profile.setPhoneNumber(setPhoneNumber);
+            profile.setPhoneNumber(phoneNumber);
         }
         else {
             view.displayWrongSignError();
