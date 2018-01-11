@@ -1,6 +1,8 @@
 package models;
 
-public class Student extends User {
+import java.io.Serializable;
+
+public class Student extends User implements Serializable {
     private Inventory backpack;
     private Integer levelGrade;
     private Integer coolCoins;
