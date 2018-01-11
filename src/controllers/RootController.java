@@ -88,7 +88,7 @@ public class RootController {
 
         while(!isUserCreated) {
             login = createUserLogin();
-            user = usersDAO.getUserByLogin(login);
+            user = usersDAO.getUserBy(login);
             if (user != null) {
                 rootView.displayUserWithThisNameAlreadyExists();
             } else {

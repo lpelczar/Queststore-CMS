@@ -1,14 +1,15 @@
 package controllers;
 import java.util.InputMismatchException;
-import src.views.AdminView;
+import views.AdminView;
 import models.*;
 import dao.*;
 
 public class AdminController {
     AdminView view = new AdminView();
     BlankUserDAO blankUserDAO = new BlankUserDAO();
-    MentorDAO mentorDAO = new MentroDAO();
+    MentorDAO mentorDAO = new MentorDAO();
     StudentDAO studentDAO = new StudentDAO();
+    UsersDAO usersDAO = new UsersDAO();
 
     List<BlankUser> blankUsersContainer = blankUserDAO.getBlankUsers();
 
@@ -57,9 +58,9 @@ public class AdminController {
         if (isBlankUsersExist()) {
 
             view.displayBlankUsers(blankUsersContainer);
-            String login = askForLoginToPromote();
+            String login = view.askForLogin();
 
-            BlankUser user = blankUserDAO.getUserBy(login);
+            User user = usersDAO.getUserBy(login);
             promote(user);
         }
         else {
@@ -74,30 +75,31 @@ public class AdminController {
         return false;
     }
 
-    public void promote(BlankUser user) {
+    public void promote(User user) {
         try {
             boolean isPromoteToMentor = view.typeOfPromotion();
 
             if (isPromoteToMentor) {
-                Mentor mentor = new Mentor( user.name,
-                                            user.login,
-                                            user.password,
-                                            user.email,
-                                            user.phoneNumber );
+                Mentor mentor = new Mentor( user.getName(),
+                                            user.getLogin(),
+                                            user.getPassword(),
+                                            user.getEmail(),
+                                            user.getPhoneNumber() );
 
                 mentorDAO.addMentor(mentor);
 
             } else {
-                Student student = new Student( user.name,
-                                               user.login,
-                                               user.password,
-                                               user.email,
-                                               user.phoneNumber );
+                Student student = new Student( user.getName(),
+                                               user.getLogin(),
+                                               user.getPassword(),
+                                               user.getEmail(),
+                                               user.getPhoneNumber(),
+                                               0 );
 
                 studentDAO.addStudent(student);
             }
 
-            blankUserDAO.removeBlankUser(user);
+            blankUserDAO.removeUser(user);
 
         } catch (InputMismatchException e) {
             view.displayWrongSignError();
@@ -105,6 +107,41 @@ public class AdminController {
     }
 
     public void handleEditProfile() {
+        List<Mentor> mentorContainer = mentorDAO.getMentors();
+        List<Student> studentContainer = studentDAO.getStudents();
 
+        view.displayMentors(mentorContainer);
+        view.displayStudents(studentContainer);
+
+        String login = view.askForLogin();
+        User profileToEdit = usersDAO.getUserBy(login);
+        updateProfileAttribute(profileToEdit);
+
+        studentDAO.saveAllStudents();
+        mentorDAO.saveAllMentors();
+    }
+
+    public void updateProfileAttribute(User profile) {
+        toChange = view.askForChangeInProfile(profile);
+
+        if (toChange == 1) {
+            String name = view.askForInput();
+            profile.setName(name);
+        }
+        else if (toChange == 2) {
+            String login = view.askForInput();
+            profile.setLogin(login);
+        }
+        else if (toChange == 3) {
+            String email = view.askForInput();
+            profile.setEmail(email);
+        }
+        else if (toChange == 4) {
+            String phoneNumber = view.askForInput();
+            profile.setPhoneNumber(setPhoneNumber);
+        }
+        else {
+            view.displayWrongSignError();
+        }
     }
 }
