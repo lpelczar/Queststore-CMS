@@ -6,7 +6,7 @@ import dao.*;
 public class AdminController {
     AdminView view = new AdminView();
     BlankUser BlankUserDAO = new BlankUser();
-    List<BlankUser> users = BlankUserDAO.getBlankUsers();
+    List<BlankUser> blankUsersContainer = BlankUserDAO.getBlankUsers();
 
     private boolean isRunning = true;
 
@@ -46,11 +46,11 @@ public class AdminController {
         }
     }
 
-    public void promoteUser() {
+    public void promoteUser(BlankUser userToPromote) {
         try {
-            boolean userTypePromote = view.typeOfPromotion();
+            boolean isPromoteToMentor = view.typeOfPromotion();
 
-            if (userTypePromote) {
+            if (isPromoteToMentor) {
                 Mentor addMentor = Mentor( user.name,
                                            user.login,
                                            user.password,
@@ -71,11 +71,9 @@ public class AdminController {
 
     public void handlePromoteBlankUser() {
         if (isBlankUsersExist()) {
-            view.displayBlankUsers(users);
+            view.displayBlankUsers(blankUsersContainer);
             String userLogin = askForLoginToPromote();
-            BlankUser user = BlankUserDAO.getUserByLogin(userLogin);
-
-
+            BlankUser userToPromote = BlankUserDAO.getUserByLogin(userLogin);
         }
         else {
             view.displayEmptyListMsg();
@@ -83,7 +81,7 @@ public class AdminController {
     }
 
     public boolean isBlankUsersExist() {
-        if (users != null) {
+        if (blankUsersContainer != null) {
             return true;
         }
         return false;
