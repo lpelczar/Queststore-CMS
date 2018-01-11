@@ -1,6 +1,8 @@
 package models;
 
-public class Admin extends User {
+import java.io.Serializable;
+
+public class Admin extends User implements Serializable {
     private static int generateID = 1;
     private final int adminID;
 

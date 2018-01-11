@@ -54,7 +54,7 @@ public class RootView {
     }
 
     public String getNewUserEmail() {
-        System.out.print("Enter email: ");
+        System.out.print("Enter email in format (000-000-000): ");
         return getStringInput();
     }
 
@@ -84,8 +84,7 @@ public class RootView {
     }
 
     public void displayUserNotExistsMessage() {
-        System.out.println("\nUser not exists!");
-        displayPressAnyKeyToContinueMessage();
+        System.out.println("\nUser not exists!\n");
     }
 
     private void displayPressAnyKeyToContinueMessage() {
