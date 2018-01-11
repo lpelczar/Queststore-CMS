@@ -1,4 +1,5 @@
 package controllers;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -109,16 +110,28 @@ public class AdminController {
     }
 
     private void handleShowingMentorProfile() {
-        view.displayMentors(mentorDAO.getMentors());
-        String login = view.askForLogin();
 
+        view.displayMentors(mentorDAO.getMentors());
+        if (mentorDAO.getMentors().isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String login = view.getMentorLoginToShow();
         Mentor mentor = mentorDAO.getMentorBy(login);
 
         if (mentor != null) {
             view.displayMentorProfile(mentor);
-            // Display mentor class info!!
+            showMentorGroups(mentor);
         } else {
             view.displayNoMentorMessage();
+        }
+    }
+
+    private void showMentorGroups(Mentor mentor) {
+
+        List<Integer> groupsIDs = mentor.getGroupsIDs();
+        if (groupsIDs.isEmpty()) {
+            view.displayMentorHasNoGroupsAssigned();
         }
     }
 

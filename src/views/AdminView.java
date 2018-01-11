@@ -65,14 +65,15 @@ public class AdminView extends UserView {
 
     public void displayNoMentorMessage() {
         System.out.println("There is no mentor with this login!");
+        displayPressAnyKeyToContinueMessage();
     }
 
     public void displayMentorProfile(Mentor mentor) {
-        System.out.println(mentor);
+        System.out.println("\n" + mentor);
     }
 
     public void displayMentors(List<Mentor> mentorContainer) {
-        System.out.println("Mentors list: \n");
+        System.out.println("\nMentors list:");
 
         if(!mentorContainer.isEmpty()) {
             for (Mentor mentor : mentorContainer) {
@@ -126,8 +127,18 @@ public class AdminView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
+    public void displayMentorHasNoGroupsAssigned() {
+        System.out.println("Mentor has no groups assigned!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
     public String getMentorLoginToAssignGroup() {
         System.out.print("Enter mentor login: ");
+        return getStringInput();
+    }
+
+    public String getMentorLoginToShow() {
+        System.out.print("Enter login of the mentor: ");
         return getStringInput();
     }
 
@@ -156,7 +167,7 @@ public class AdminView extends UserView {
         return scanner.nextInt();
     }
 
-    private void displayPressAnyKeyToContinueMessage() {
+    public void displayPressAnyKeyToContinueMessage() {
         System.out.print("\nPress any key to continue.");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
@@ -189,10 +200,5 @@ public class AdminView extends UserView {
 
     public void displayWrongSignError() {
         System.out.println("You type wrong sign!");
-    }
-
-    public int askForThreshold() {
-        System.out.println("Level threshold:");
-        return askForOption();
     }
 }
