@@ -8,7 +8,7 @@ public class LevelThresholdDAO extends AbstractDAO {
 
     public void setThreshold(String level, Integer threshold) {
         levelThreshold.put(level, threshold);
-        saveAllData(this.getLevelThresholds(), FILE_PATH);
+        saveAllData(LevelThresholdDAO.levelThreshold, FILE_PATH);
     }
 
     public Map<String, Integer> getLevelThresholds() {
