@@ -24,7 +24,7 @@ public class TaskDAO extends AbstractDAO {
         return task;
     }
 
-    public addTask(Task task) {
+    public void addTask(Task task) {
 
         readAllTasks();
         if(!tasksList.contains(task)) {
@@ -58,5 +58,4 @@ public class TaskDAO extends AbstractDAO {
 
         saveAllData(this.tasksList, FILE_PATH);
     }
-
 }
