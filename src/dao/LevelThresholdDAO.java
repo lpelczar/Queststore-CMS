@@ -17,7 +17,7 @@ public class LevelThresholdDAO extends AbstractDAO {
     }
 
     @SuppressWarnings("unchecked")
-    private Map<String, Integer> readThreshold() {
+    private void readThreshold() {
 
         if (readAllData(FILE_PATH) != null) {
             LevelThresholdDAO.levelThreshold = (Map<String, Integer>) readAllData(FILE_PATH);
