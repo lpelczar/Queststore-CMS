@@ -4,10 +4,11 @@ import java.util.*;
 
 abstract class UserView {
 
-    private Scanner scanner = new Scanner(System.in);
+    private Scanner scanner;
 
     public int askForOption() {
         int option = 0;
+        scanner = new Scanner(System.in);
 
         try {
             System.out.println("\nEnter option: ");
