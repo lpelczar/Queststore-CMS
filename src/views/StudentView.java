@@ -16,5 +16,10 @@ public class StudentView {
         menu.put(5, "Log out.");
     }
 
+    public void displayStudentMenu() {
+        for (Integer option : menu.keySet()) {
+            System.out.println(option + ". " + menu.get(option) + "\n");
+        }
+    }
 
 }
