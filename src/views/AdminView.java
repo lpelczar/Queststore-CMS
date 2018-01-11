@@ -147,6 +147,11 @@ public class AdminView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
+    public void displayMentorAssignedToThisGroup() {
+        System.out.println("Mentor has been assigned to this group!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
     public void displayUserNotExists() {
         System.out.println("User not exists!");
         displayPressAnyKeyToContinueMessage();

@@ -102,6 +102,7 @@ public class AdminController {
         String mentorLogin = view.getMentorLoginToAssignGroup();
         if (mentorDAO.getMentorBy(mentorLogin) != null) {
             mentorDAO.getMentorBy(mentorLogin).addGroup(group.getID());
+            view.displayMentorAssignedToThisGroup();
         } else {
             view.displayThereIsNoMentorWithThisLogin();
         }
