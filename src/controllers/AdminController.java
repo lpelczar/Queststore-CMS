@@ -34,6 +34,7 @@ public class AdminController {
             }
 
             else if (option == 2) {
+                //Edit mentor data and his class
                 handleEditProfile();
 
             }
