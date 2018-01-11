@@ -46,6 +46,7 @@ public class BlankUserDAO extends AbstractDAO {
         readAllBlankUsers();
         if (this.blankUserList.contains(blankUser)) {
             this.blankUserList.remove(blankUser);
+            saveAllBlankUsers();
             return true;
         } else {
             return false;

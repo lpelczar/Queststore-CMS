@@ -38,6 +38,7 @@ public class GroupDAO extends AbstractDAO {
         readAllGroups();
         if (this.groupsList.contains(group)) {
             this.groupsList.remove(group);
+            saveAllGroups();
             return true;
         } else {
             return false;

@@ -21,6 +21,8 @@ public class AdminController {
         int option = 0;
 
         while (isRunning) {
+            blankUsersContainer = blankUserDAO.getBlankUsers();
+
             view.clearConsole();
             view.handleAdminMenu();
             
@@ -36,6 +38,7 @@ public class AdminController {
 
             }
             else if (option == 3) {
+                handleCreatingClass();
                 // I want to create a class,
                 // So I can assign Mentors to their classes.
 
@@ -57,6 +60,10 @@ public class AdminController {
         }
     }
 
+    private void handleCreatingClass() {
+
+    }
+
     private void handleShowingMentorProfile() {
         view.displayMentors(mentorDAO.getMentors());
         String login = view.askForLogin();
@@ -72,25 +79,25 @@ public class AdminController {
     }
 
     private void handlePromoteBlankUser() {
-        blankUsersContainer = blankUserDAO.getBlankUsers();
-        if (isBlankUsersExist()) {
+        boolean isEmpty = checkIfBlankUsersExist();
 
+        if (isEmpty == false) {
             view.displayBlankUsers(blankUsersContainer);
             String login = view.askForLogin();
 
             BlankUser user = blankUserDAO.getBlankUserBy(login);
             promote(user);
         }
-        else {
+        else if (isEmpty) {
             view.displayEmptyListMsg();
         }
     }
 
-    private boolean isBlankUsersExist() {
+    private boolean checkIfBlankUsersExist() {
         if (blankUsersContainer != null) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     private void promote(BlankUser user) {
