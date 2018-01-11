@@ -65,6 +65,22 @@ public class AdminView {
                 return false;
             }
         }
+<<<<<<< HEAD
         return false;
+=======
+        throw new InputMismatchException();
+    }
+
+    public void displayUsers(List<Mentor> mentorContainer, List<Student> studentContainer) {
+        ;
+    }
+
+    public void displayEmptyListMsg() {
+        System.out.println("List is empty!");
+    }
+
+    public void displayWrongSignError() {
+        System.out.prinln("You type wrong sign!");
+>>>>>>> admin
     }
 }

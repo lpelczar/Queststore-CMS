@@ -1,12 +1,16 @@
 package controllers;
-
-
-import views.AdminView;
-
 import java.util.InputMismatchException;
+import src.views.AdminView;
+import models.*;
+import dao.*;
 
 public class AdminController {
     AdminView view = new AdminView();
+    BlankUserDAO blankUserDAO = new BlankUserDAO();
+    MentorDAO mentorDAO = new MentroDAO();
+    StudentDAO studentDAO = new StudentDAO();
+
+    List<BlankUser> blankUsersContainer = blankUserDAO.getBlankUsers();
 
     private boolean isRunning = true;
 
@@ -24,13 +28,11 @@ public class AdminController {
             }
 
             if (option == 1) {
-                //Promote blank user, add argument (list with users) to display method
-                //view.displayBlankUsers();
-                String userLogin = view.askForLoginToPromote();
-                ;
+                handlePromoteBlankUser();
             }
+
             else if (option == 2) {
-                // Edit user profile
+                handleEditProfile();
                 ;
             }
             else if (option == 3) {
@@ -51,10 +53,58 @@ public class AdminController {
         }
     }
 
-    public void promoteUser() {
-        boolean userTypePromote = view.typeOfPromotion();
-        if (userTypePromote) {
-            
+    public void handlePromoteBlankUser() {
+        if (isBlankUsersExist()) {
+
+            view.displayBlankUsers(blankUsersContainer);
+            String login = askForLoginToPromote();
+
+            BlankUser user = blankUserDAO.getUserBy(login);
+            promote(user);
         }
+        else {
+            view.displayEmptyListMsg();
+        }
+    }
+
+    public boolean isBlankUsersExist() {
+        if (blankUsersContainer != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public void promote(BlankUser user) {
+        try {
+            boolean isPromoteToMentor = view.typeOfPromotion();
+
+            if (isPromoteToMentor) {
+                Mentor mentor = new Mentor( user.name,
+                                            user.login,
+                                            user.password,
+                                            user.email,
+                                            user.phoneNumber );
+
+                mentorDAO.addMentor(mentor);
+
+            } else {
+                Student student = new Student( user.name,
+                                               user.login,
+                                               user.password,
+                                               user.email,
+                                               user.phoneNumber );
+
+                studentDAO.addStudent(student);
+            }
+
+            blankUserDAO.removeBlankUser(user);
+
+        } catch (InputMismatchException e) {
+            view.displayWrongSignError();
+        }
+    }
+
+    public void handleEditProfile() {
+
     }
 }

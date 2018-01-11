@@ -1,9 +1,9 @@
 package views;
-import models.BlankUser;
+import models.Team;
 
 import java.util.*;
 
-public class MentorView {
+public class MentorView extends UserView {
 
     private Map<Integer, String> menu;
     private Scanner scanner = new Scanner(System.in);
@@ -31,25 +31,16 @@ public class MentorView {
         displayMentorMenu();
     }
 
-    public int askForOption() throws InputMismatchException {
-
-        int option = 0;
-
-        while(!scanner.hasNextInt()) {
-            System.out.println("\nEnter option: ");
-            option = scanner.nextInt();
-        }
-        return option;
-    }
-
-    public void displayBlankUsers(List<BlankUser> blankUsers) {
-        for (BlankUser user : blankUsers) {
-            System.out.println(user.toString());
-        }
+    public void displayTeams(List<Team> teams) {
+        for (Team team : teams) System.out.println(team.getTeamName());
     }
     
-    public String askForLoginToPromote() {
-        return scanner.next();
+    public void displayStudentsInGroup(Group group) {
+        for (Student student : group.getAllStudents()) System.out.println(student.toString());
+    }
+    
+    public void displaySummaryOfStudentsCoins(List<Student> students) {
+        for (Student student : students) System.out.println(student.toString());
     }
 
 }
