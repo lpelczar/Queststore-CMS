@@ -2,6 +2,7 @@ package views;
 import java.util.*;
 import models.*;
 
+
 public class AdminView extends UserView {
 
     private Map<Integer, String> menu = new HashMap<>();
@@ -138,14 +139,18 @@ public class AdminView extends UserView {
         System.out.println("List is empty!");
     }
 
+    public void displayUserDosentExist() {
+        System.out.println("This user dosent exist!");
+    }
+
     public void displayWrongSignError() {
         System.out.println("You type wrong sign!");
     }
-    
+
     public void displayLevelCreation() {
         System.out.println("Create new level:\nLevel name:");
     }
-    
+
     public int askForThreshold() {
         System.out.println("Level threshold:");
         return askForOption();
