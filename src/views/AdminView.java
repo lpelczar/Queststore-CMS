@@ -108,6 +108,22 @@ public class AdminView extends UserView {
 
     public void displayGroupWithThisNameAlreadyExists() {
         System.out.println("Group with this name already exists!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayThereIsNoMentorsMessage() {
+        System.out.println("There are no mentors in database to assign to group, you need to add one!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayThereIsNoMentorWithThisLogin() {
+        System.out.println("There is no mentor with this login!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public String getMentorLoginToAssignGroup() {
+        System.out.print("Enter mentor login: ");
+        return getStringInput();
     }
 
     public String getGroupNameInput() {
