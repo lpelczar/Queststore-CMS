@@ -7,31 +7,31 @@ CREATE TABLE User (
     );
 
 CREATE TABLE BlankUserData (
-    ID INTEGER PRIMARY KEY,
-    id_user INTEGER FOREIGN KEY NOT NULL,
-    role VARCHAR (10)
+    id_user INTEGER,
+    role VARCHAR (10),
+    FOREIGN KEY (id_user) REFERENCES User(ID)
     );
 
 CREATE TABLE AdminData (
-    ID INTEGER PRIMARY KEY,
-    id_user INTEGER FOREIGN KEY NOT NULL,
-    role VARCHAR (10)
+    id_user INTEGER,
+    role VARCHAR (10),
+    FOREIGN KEY (id_user) REFERENCES User(ID)
     );
 
 CREATE TABLE MentorData (
-    ID INTEGER PRIMARY KEY,
-    id_user INTEGER FOREIGN KEY NOT NULL,
+    id_user INTEGER FOREIGN KEY,
     role VARCHAR (10)
     );
 
 CREATE TABLE StudentData (
-    ID INTEGER PRIMARY KEY,
-    id_user INTEGER FOREIGN KEY NOT NULL,
-    id_group INTEGER FOREIGN KEY NOT NULL,
+    id_user INTEGER,
+    id_group INTEGER,
     team_name VARCHAR (20),
     level VARCHAR (20),
     balance INTEGER,
-    role VARCHAR (10)
+    role VARCHAR (10),
+    FOREIGN KEY (id_user) REFERENCES User(ID),
+    FOREIGN KEY (id_group) REFERENCES Group(ID)
     );
 
 CREATE TABLE Group (
@@ -40,13 +40,17 @@ CREATE TABLE Group (
     );
 
 CREATE TABLE MentorGroup (
-    id_mentor INTEGER FOREIGN KEY NOT NULL,
-    id_group INTEGER FOREIGN KEY NOT NULL
+    id_mentor INTEGER,
+    id_group INTEGER,
+    FOREIGN KEY (id_mentor) REFERENCES MentorData(id_user),
+    FOREIGN KEY (id_group) REFERENCES Group(ID)
     );
 
 CREATE TABLE StudentTask (
-    id_student INTEGER FOREIGN KEY NOT NULL,
-    id_task INTEGER FOREIGN KEY NOT NULL
+    id_student INTEGER,
+    id_task INTEGER,
+    FOREIGN KEY (id_student) REFERENCES StudentData(id_user),
+    FOREIGN KEY (id_task) REFERENCES Task(ID)
     );
 
 CREATE TABLE Task (
@@ -58,8 +62,10 @@ CREATE TABLE Task (
     );
 
 CREATE TABLE StudentItem (
-    id_student INTEGER FOREIGN KEY NOT NULL,
-    id_item INTEGER FOREIGN KEY NOT NULL
+    id_student INTEGER,
+    id_item INTEGER,
+    FOREIGN KEY (id_student) REFERENCES StudentData(id_user),
+    FOREIGN KEY (id_item) REFERENCES Item(ID)
     );
 
 CREATE TABLE Item (
