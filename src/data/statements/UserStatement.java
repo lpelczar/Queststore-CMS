@@ -49,4 +49,10 @@ public class UserStatement {
         return "DELETE FROM " + UserEntry.TABLE_NAME +
                 " WHERE " + UserEntry.ID + " = " + user.getId() + ";" ;
     }
+
+    public String selectUserByLoginAndPassword(String login, String password) {
+        return "SELECT * FROM " + UserEntry.TABLE_NAME +
+                " WHERE " + UserEntry.LOGIN + " = '" + login + "' AND " +
+                UserEntry.PASSWORD + " = '" + password + "';" ;
+    }
 }

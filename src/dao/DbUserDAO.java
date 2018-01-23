@@ -42,10 +42,20 @@ public class DbUserDAO extends DbHelper implements UserDAO {
     public User getById(int id) {
 
         String statement = userStatement.selectUserById(id);
+        return getUser(statement);
+    }
+
+    public User getByLoginAndPassword(String login, String password) {
+
+        String statement = userStatement.selectUserByLoginAndPassword(login, password);
+        return getUser(statement);
+    }
+
+    public User getUser(String sqlStatement) {
 
         User user = null;
         try {
-            ResultSet resultSet = query(statement);
+            ResultSet resultSet = query(sqlStatement);
             while (resultSet.next())
                 user = new User(
                         resultSet.getInt(UserEntry.ID),
