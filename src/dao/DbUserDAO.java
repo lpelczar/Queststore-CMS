@@ -1,16 +1,44 @@
 package dao;
 
+import data.contracts.UserContract;
+import data.statements.UserStatement;
 import models.User;
+import data.DbHelper;
+import data.contracts.UserContract.UserEntry;
 
-import javax.jws.soap.SOAPBinding;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DbUserDAO implements UserDAO {
+public class DbUserDAO extends DbHelper implements UserDAO {
+
+    private UserStatement userStatement = new UserStatement();
 
     @Override
     public List<User> getAll() {
-        return null;
+
+        String statement = userStatement.selectAllUsers();
+
+        List<User> users = new ArrayList<>();
+        try {
+            ResultSet resultSet = query(statement);
+            while (resultSet.next())
+                users.add(new User(
+                        resultSet.getInt(UserEntry.ID),
+                        resultSet.getString(UserEntry.NAME),
+                        resultSet.getString(UserEntry.LOGIN),
+                        resultSet.getString(UserEntry.EMAIL),
+                        resultSet.getString(UserEntry.PASSWORD),
+                        resultSet.getString(UserEntry.PHONE_NUMBER),
+                        resultSet.getString(UserEntry.ROLE)));
+            resultSet.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return users;
     }
 
     @Override
