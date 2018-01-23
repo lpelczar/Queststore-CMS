@@ -4,6 +4,7 @@ CREATE TABLE User (
   login VARCHAR (20) NOT NULL,
   password VARCHAR (20) NOT NULL,
   phone_number VARCHAR (20) NOT NULL,
+  email VARCHAR (20) NOT NULL,
   role VARCHAR (10)
   );
 
