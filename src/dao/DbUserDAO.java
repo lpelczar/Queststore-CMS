@@ -51,7 +51,13 @@ public class DbUserDAO extends DbHelper implements UserDAO {
         return getUser(statement);
     }
 
-    public User getUser(String sqlStatement) {
+    public User getByLogin(String login) {
+
+        String statement = userStatement.selectUserByLogin(login);
+        return getUser(statement);
+    }
+
+    private User getUser(String sqlStatement) {
 
         User user = null;
         try {
