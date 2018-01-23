@@ -1,10 +1,9 @@
 package data.contracts;
 
-public class MentorDataContract {
+public class MentorContract {
 
-    public static final class MentorDataEntry {
+    public static final class MentorEntry {
 
-        public static final String TABLE_NAME = "MentorData";
-        public static final String ID_USER = "id_user";
+        public static final String ROLE = "Mentor";
     }
 }
