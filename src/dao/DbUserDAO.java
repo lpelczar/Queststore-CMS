@@ -16,7 +16,16 @@ public class DbUserDAO extends DbHelper implements UserDAO {
     public List<User> getAll() {
 
         String statement = userStatement.selectAllUsers();
+        return getUsers(statement);
+    }
 
+    @Override
+    public List<User> getAllByRole(String role) {
+        String statement = userStatement.selectAllUsersByRole(role);
+        return getUsers(statement);
+    }
+
+    private List<User> getUsers(String statement) {
         List<User> users = new ArrayList<>();
         try {
             ResultSet resultSet = query(statement);
@@ -48,6 +57,12 @@ public class DbUserDAO extends DbHelper implements UserDAO {
     public User getByLoginAndPassword(String login, String password) {
 
         String statement = userStatement.selectUserByLoginAndPassword(login, password);
+        return getUser(statement);
+    }
+
+    public User getByLoginAndRole(String login, String role) {
+
+        String statement = userStatement.selectUserByLoginAndRole(login, role);
         return getUser(statement);
     }
 
