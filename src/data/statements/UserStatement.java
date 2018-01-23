@@ -17,7 +17,6 @@ public class UserStatement {
 
     public String insertUserStatement(User user) {
         return "INSERT INTO " + UserEntry.TABLE_NAME + " (" +
-                UserEntry.ID + "," +
                 UserEntry.NAME + "," +
                 UserEntry.LOGIN + "," +
                 UserEntry.EMAIL + "," +
@@ -25,7 +24,6 @@ public class UserStatement {
                 UserEntry.PHONE_NUMBER + "," +
                 UserEntry.ROLE + ")" +
                 " VALUES (" +
-                "'" + user.getId() + "'," +
                 "'" + user.getName() + "'," +
                 "'" + user.getLogin() + "'," +
                 "'" + user.getEmail() + "'," +
