@@ -66,11 +66,11 @@ public class RootController {
                 if (user.getRole().equals("Blank")) {
                     rootView.displayUserNotAssignedMessage();
                 } else if (user.getRole().equals("Student")) {
-                    studentController.start();
+//                    studentController.start();
                 } else if (user.getRole().equals("Mentor")) {
 //                    mentorController.start();
                 } else if (user.getRole().equals("Admin")) {
-//                    adminController.start();
+                    adminController.start();
                 }
             } else {
                 rootView.displayUserNotExistsMessage();
