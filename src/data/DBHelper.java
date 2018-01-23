@@ -30,4 +30,28 @@ class DbHelper {
                 statement.close();
             } catch (SQLException e) { /*ignored*/ }
     }
+
+    ResultSet query(String sqlStatement) throws SQLException {
+
+        openConnection();
+        statement = connection.createStatement();
+        return statement.executeQuery(sqlStatement);
+    }
+
+    boolean update(String sqlStatement) {
+
+        try {
+            openConnection();
+            connection.setAutoCommit(false);
+            statement = connection.createStatement();
+            statement.executeUpdate(sqlStatement);
+            connection.commit();
+            return true;
+        } catch (SQLException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+        } finally {
+            closeConnection();
+        }
+        return false;
+    }
 }
