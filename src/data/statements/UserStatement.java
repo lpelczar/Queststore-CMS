@@ -33,4 +33,15 @@ public class UserStatement {
                 "'" + user.getPhoneNumber() + "'," +
                 user.getRole() + ");" ;
     }
+
+    public String updateUserStatement(User user) {
+        return "UPDATE " + UserEntry.TABLE_NAME + " SET " +
+        UserEntry.NAME + " = '" + user.getName() + "'," +
+        UserEntry.LOGIN + " = '" + user.getLogin() + "'," +
+        UserEntry.EMAIL + " = '" + user.getEmail() + "'," +
+        UserEntry.PASSWORD + " = '" + user.getPassword() + "'," +
+        UserEntry.PHONE_NUMBER + " = '" + user.getPhoneNumber() + "'," +
+        UserEntry.ROLE + " = '" + user.getRole() +
+        "' WHERE " + UserEntry.ID + " = " + user.getId() + ";";
+    }
 }

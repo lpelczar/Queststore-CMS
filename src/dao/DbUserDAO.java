@@ -72,7 +72,8 @@ public class DbUserDAO extends DbHelper implements UserDAO {
 
     @Override
     public boolean update(User user) {
-        return false;
+        String statement = userStatement.updateUserStatement(user);
+        return update(statement);
     }
 
     @Override
