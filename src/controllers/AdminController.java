@@ -2,6 +2,10 @@ package controllers;
 
 import java.util.List;
 
+import data.contracts.MentorContract.MentorEntry;
+import data.contracts.BlankUserContract.BlankUserEntry;
+import data.contracts.StudentContract.StudentEntry;
+import data.contracts.StudentContract;
 import views.AdminView;
 import models.*;
 import dao.*;
@@ -9,11 +13,7 @@ import dao.*;
 public class AdminController {
 
     private AdminView view = new AdminView();
-    private BlankUserDAO blankUserDAO = new BlankUserDAO();
-    private GroupDAO groupDAO = new GroupDAO();
-    private MentorDAO mentorDAO = new MentorDAO();
-    private StudentDAO studentDAO = new StudentDAO();
-    private LevelThresholdDAO levelDAO = new LevelThresholdDAO();
+    private UserDAO dbUserDAO = new DbUserDAO();
 
     public void start() {
 
@@ -43,10 +43,10 @@ public class AdminController {
 
     private void handlePromoteBlankUser() {
 
-        if (blankUserDAO.getBlankUsers().size() > 0) {
-            view.displayBlankUsers(blankUserDAO.getBlankUsers());
+        if (dbUserDAO.getAllByRole(BlankUserEntry.ROLE).size() > 0) {
+            view.displayBlankUsers(dbUserDAO.getAllByRole(BlankUserEntry.ROLE));
             String login = view.askForLogin();
-            BlankUser user = blankUserDAO.getBlankUserBy(login);
+            User user = dbUserDAO.getByLoginAndRole(login, BlankUserEntry.ROLE);
 
             if (user != null) {
                 promote(user);
@@ -58,21 +58,19 @@ public class AdminController {
         }
     }
 
-    private void promote(BlankUser user) {
+    private void promote(User user) {
 
         boolean isPromoteToMentor = view.getTypeOfPromotion();
+        boolean isPromoted;
 
         if (isPromoteToMentor) {
-            Mentor mentor = new Mentor( user.getName(),user.getLogin(),user.getPassword(),
-                    user.getEmail(), user.getPhoneNumber() );
-            mentorDAO.addMentor(mentor);
+            user.setRole(MentorEntry.ROLE);
+            isPromoted = dbUserDAO.update(user);
         } else {
-            Student student = new Student( user.getName(),user.getLogin(),user.getPassword(),
-                    user.getEmail(),user.getPhoneNumber(),0 );
-            studentDAO.addStudent(student);
+            user.setRole(StudentEntry.ROLE);
+            isPromoted = dbUserDAO.update(user);
         }
-
-        if (blankUserDAO.removeBlankUser(user.getLogin())) {
+        if (isPromoted) {
             view.displayHasBeenPromoted();
         } else {
             view.displayUserNotExists();
