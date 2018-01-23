@@ -2,7 +2,7 @@ package data.contracts;
 
 public class ItemContract {
 
-    public static final ItemEntry {
+    public static final class ItemEntry {
 
         public static final String TABLE_NAME = "Item";
         public static final String ID = "ID";
