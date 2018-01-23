@@ -7,7 +7,7 @@ import views.RootView;
 
 public class RootController {
 
-    private DbUserDAO dbUserDAO;
+    private UserDAO dbUserDAO;
     private RootView rootView;
     private AdminController adminController;
     private StudentController studentController;
