@@ -54,8 +54,19 @@ public class UserStatement {
                 UserEntry.PASSWORD + " = '" + password + "';" ;
     }
 
+    public String selectUserByLoginAndRole(String login, String role) {
+        return "SELECT * FROM " + UserEntry.TABLE_NAME +
+                " WHERE " + UserEntry.LOGIN + " = '" + login + "' AND " +
+                UserEntry.ROLE + " = '" + role + "';";
+    }
+
     public String selectUserByLogin(String login) {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
                 " WHERE " + UserEntry.LOGIN + " = '" + login + "';";
+    }
+
+    public String selectAllUsersByRole(String role) {
+        return "SELECT * FROM " + UserEntry.TABLE_NAME +
+                " WHERE " + UserEntry.ROLE + " = '" + role + "';";
     }
 }
