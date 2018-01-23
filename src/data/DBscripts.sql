@@ -2,9 +2,9 @@ CREATE TABLE User (
   ID INTEGER PRIMARY KEY,
   name VARCHAR (20) NOT NULL,
   login VARCHAR (20) NOT NULL,
+  email VARCHAR (20) NOT NULL,
   password VARCHAR (20) NOT NULL,
   phone_number VARCHAR (20) NOT NULL,
-  email VARCHAR (20) NOT NULL,
   role VARCHAR (10)
   );
 
