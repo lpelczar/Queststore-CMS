@@ -29,9 +29,9 @@ public class AdminView extends UserView {
         displayAdminMenu();
     }
 
-    public void displayBlankUsers(List<BlankUser> blankUsers) {
+    public void displayBlankUsers(List<User> blankUsers) {
         System.out.println("\nBlank users list: ");
-        for (BlankUser user : blankUsers) {
+        for (User user : blankUsers) {
             System.out.println(user.toString());
         }
     }
