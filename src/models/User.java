@@ -21,6 +21,15 @@ public class User {
         this.role = role;
     }
 
+    public User(String name, String login, String email, String password, String phoneNumber, String role) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+    }
+
     public String toString(){
         return  "Name: " + name +
                 " | Login: " + login +

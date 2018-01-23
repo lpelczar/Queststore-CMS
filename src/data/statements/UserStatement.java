@@ -31,7 +31,7 @@ public class UserStatement {
                 "'" + user.getEmail() + "'," +
                 "'" + user.getPassword() + "'," +
                 "'" + user.getPhoneNumber() + "'," +
-                user.getRole() + ");" ;
+                "'" + user.getRole() + "');" ;
     }
 
     public String updateUserStatement(User user) {
@@ -48,5 +48,16 @@ public class UserStatement {
     public String deleteUserStatement(User user) {
         return "DELETE FROM " + UserEntry.TABLE_NAME +
                 " WHERE " + UserEntry.ID + " = " + user.getId() + ";" ;
+    }
+
+    public String selectUserByLoginAndPassword(String login, String password) {
+        return "SELECT * FROM " + UserEntry.TABLE_NAME +
+                " WHERE " + UserEntry.LOGIN + " = '" + login + "' AND " +
+                UserEntry.PASSWORD + " = '" + password + "';" ;
+    }
+
+    public String selectUserByLogin(String login) {
+        return "SELECT * FROM " + UserEntry.TABLE_NAME +
+                " WHERE " + UserEntry.LOGIN + " = '" + login + "';";
     }
 }
