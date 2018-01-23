@@ -1,4 +1,4 @@
-package data.dbhelpers;
+package data;
 
 import java.sql.*;
 
@@ -19,7 +19,7 @@ public class DbHelper {
         }
     }
 
-    void closeConnection() {
+    public void closeConnection() {
 
         if (connection != null)
             try {
@@ -31,14 +31,14 @@ public class DbHelper {
             } catch (SQLException e) { /*ignored*/ }
     }
 
-    ResultSet query(String sqlStatement) throws SQLException {
+    public ResultSet query(String sqlStatement) throws SQLException {
 
         openConnection();
         statement = connection.createStatement();
         return statement.executeQuery(sqlStatement);
     }
 
-    boolean update(String sqlStatement) {
+    public boolean update(String sqlStatement) {
 
         try {
             openConnection();
