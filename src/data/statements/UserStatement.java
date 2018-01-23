@@ -44,4 +44,9 @@ public class UserStatement {
         UserEntry.ROLE + " = '" + user.getRole() +
         "' WHERE " + UserEntry.ID + " = " + user.getId() + ";";
     }
+
+    public String deleteUserStatement(User user) {
+        return "DELETE FROM " + UserEntry.TABLE_NAME +
+                " WHERE " + UserEntry.ID + " = " + user.getId() + ";" ;
+    }
 }

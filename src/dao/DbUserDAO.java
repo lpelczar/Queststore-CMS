@@ -78,6 +78,7 @@ public class DbUserDAO extends DbHelper implements UserDAO {
 
     @Override
     public boolean delete(User user) {
-        return false;
+        String statement = userStatement.deleteUserStatement(user);
+        return update(statement);
     }
 }
