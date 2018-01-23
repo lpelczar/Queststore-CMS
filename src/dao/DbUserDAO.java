@@ -2,46 +2,34 @@ package dao;
 
 import models.User;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersDAO extends AbstractDAO {
+public class DbUserDAO implements UserDAO {
 
-    private List<User> usersList = new ArrayList<>();
-
-    public UsersDAO() { readAllUsers();}
-
-    @SuppressWarnings("unchecked")
-    private void readAllUsers() {
-
-        this.usersList.addAll(new BlankUserDAO().getBlankUsers());
-        this.usersList.addAll(new AdminDAO().getAdmins());
-
+    @Override
+    public List<User> getAll() {
+        return null;
     }
 
-    public User getUserByLoginAndPassword(String login, String password) {
-
-        readAllUsers();
-        User user = null;
-
-        for (User u : usersList) {
-            if (u.getLogin().equals(login) && u.getPassword().equals(password)) {
-                user = u;
-            }
-        }
-        return user;
+    @Override
+    public User getById(int id) {
+        return null;
     }
 
-    public User getUserBy(String login) {
+    @Override
+    public boolean add(User user) {
+        return false;
+    }
 
-        readAllUsers();
-        User user = null;
+    @Override
+    public boolean update(User user) {
+        return false;
+    }
 
-        for (User u : usersList) {
-            if (u.getLogin().equals(login)) {
-                user = u;
-            }
-        }
-        return user;
+    @Override
+    public boolean delete(User user) {
+        return false;
     }
 }

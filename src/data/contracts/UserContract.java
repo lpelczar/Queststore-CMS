@@ -1,4 +1,4 @@
 package data.contracts;
 
-class UserContract {}
+public class UserContract {}
 

@@ -1,4 +1,4 @@
-package data.dbhelpers;
+package data;
 
 import java.sql.*;
 
