@@ -5,10 +5,8 @@ import models.User;
 import data.DbHelper;
 import data.contracts.UserContract.UserEntry;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
 public class DbUserDAO extends DbHelper implements UserDAO {
 
@@ -68,7 +66,8 @@ public class DbUserDAO extends DbHelper implements UserDAO {
 
     @Override
     public boolean add(User user) {
-        return false;
+        String statement = userStatement.insertUserStatement(user);
+        return update(statement);
     }
 
     @Override
