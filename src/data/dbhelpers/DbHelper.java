@@ -1,8 +1,8 @@
-package data;
+package data.dbhelpers;
 
 import java.sql.*;
 
-class DbHelper {
+public class DbHelper {
 
     private static final String DATABASE_NAME = "queststore.db";
     private Connection connection;
