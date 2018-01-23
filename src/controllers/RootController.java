@@ -7,7 +7,7 @@ import views.RootView;
 
 public class RootController {
 
-    private UsersDAO usersDAO;
+    private DbUserDAO dbUserDAO;
     private BlankUserDAO blankUserDAO;
     private RootView rootView;
     private AdminController adminController;
@@ -16,7 +16,7 @@ public class RootController {
 
     public RootController() {
 
-        this.usersDAO = new UsersDAO();
+        this.dbUserDAO = new DbUserDAO();
         this.blankUserDAO = new BlankUserDAO();
         this.rootView = new RootView();
         this.adminController = new AdminController();
@@ -61,7 +61,7 @@ public class RootController {
             if (login.equals(QUIT_OPTION)) return;
             password = rootView.getUserPassword();
             if (password.equals(QUIT_OPTION)) return;
-            user = usersDAO.getUserByLoginAndPassword(login, password);
+            user = dbUserDAO.getUserByLoginAndPassword(login, password);
 
             if(user != null) {
                 isLoggedIn = true;
@@ -92,7 +92,7 @@ public class RootController {
 
         while(!isUserCreated) {
             login = createUserLogin();
-            user = usersDAO.getUserBy(login);
+            user = dbUserDAO.getUserBy(login);
             if (user != null) {
                 rootView.displayUserWithThisNameAlreadyExists();
             } else {
