@@ -1,6 +1,5 @@
 package dao;
 
-import data.contracts.UserContract;
 import data.statements.UserStatement;
 import models.User;
 import data.DbHelper;
@@ -43,7 +42,28 @@ public class DbUserDAO extends DbHelper implements UserDAO {
 
     @Override
     public User getById(int id) {
-        return null;
+
+        String statement = userStatement.selectUserById(id);
+
+        User user = null;
+        try {
+            ResultSet resultSet = query(statement);
+            while (resultSet.next())
+                user = new User(
+                        resultSet.getInt(UserEntry.ID),
+                        resultSet.getString(UserEntry.NAME),
+                        resultSet.getString(UserEntry.LOGIN),
+                        resultSet.getString(UserEntry.EMAIL),
+                        resultSet.getString(UserEntry.PASSWORD),
+                        resultSet.getString(UserEntry.PHONE_NUMBER),
+                        resultSet.getString(UserEntry.ROLE));
+            resultSet.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return user;
     }
 
     @Override
