@@ -1,4 +1,4 @@
-package database.contracts;
+package data.contracts;
 
 public class MentorDataContract {
 }
