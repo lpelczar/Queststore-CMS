@@ -76,6 +76,16 @@ public class AdminView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
+    public void displayEntriesNoInput(List<Entry> entries) {
+        if(!entries.isEmpty()) {
+            for (Entry entry : entries) {
+                System.out.println(entry);
+            }
+        } else {
+            System.out.println("List is empty!");
+        }
+    }
+
     public int askForChangeInProfile(User profile) {
         System.out.println("\n" + profile.toString());
         System.out.println("\nWhat would you like to change in profile:" +
@@ -205,6 +215,21 @@ public class AdminView extends UserView {
 
     public void displayErrorChangingTheValue() {
         System.out.println("Error changing the value!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayGroupConnectionAdded() {
+        System.out.println("Group connection has been added!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayErrorAddingGroupConncection() {
+        System.out.println("Error adding a connection!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayThereIsNoGroupWithThisName() {
+        System.out.println("There is no group with this name!");
         displayPressAnyKeyToContinueMessage();
     }
 }

@@ -15,6 +15,7 @@ public class AdminController {
     private UserDAO dbUserDAO = new DbUserDAO();
     private GroupDAO dbGroupDAO = new DbGroupDAO();
     private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
+    private MentorGroupDAO dbMentorGroupDAO = new DbMentorGroupDAO();
 
     public void start() {
 
@@ -31,7 +32,7 @@ public class AdminController {
             } else if (option == 2) {
                 createGroup();
             } else if (option == 3) {
-//                assignMentorToGroup();
+                assignMentorToGroup();
             } else if (option == 4) {
                 editMentorData();
             } else if (option == 5) {
@@ -96,16 +97,36 @@ public class AdminController {
         }
     }
 
-//    private void addGroupToMentor(Group group) {
-//        view.displayMentors(mentorDAO.getMentors());
-//        String mentorLogin = view.getMentorLoginToAssignGroup();
-//        if (mentorDAO.getMentorBy(mentorLogin) != null) {
-//            mentorDAO.getMentorBy(mentorLogin).addGroup(group.getID());
-//            view.displayMentorAssignedToThisGroup();
-//        } else {
-//            view.displayThereIsNoMentorWithThisLogin();
-//        }
-//    }
+    private void assignMentorToGroup() {
+        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        view.displayEntriesNoInput(mentors);
+
+        String mentorLogin = view.getMentorLoginToAssignGroup();
+        if (dbUserDAO.getByLogin(mentorLogin) != null) {
+            choseGroupAndAssignToMentor(mentorLogin);
+        } else {
+            view.displayThereIsNoMentorWithThisLogin();
+        }
+    }
+
+    private void choseGroupAndAssignToMentor(String mentorLogin) {
+        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
+        view.displayEntriesNoInput(groups);
+
+        String groupName = view.getGroupNameInput();
+        if (dbGroupDAO.getByName(groupName) != null) {
+            Group group = dbGroupDAO.getByName(groupName);
+            User mentor = dbUserDAO.getByLogin(mentorLogin);
+            boolean isAdded = dbMentorGroupDAO.add(group.getId(), mentor.getId());
+            if (isAdded) {
+                view.displayGroupConnectionAdded();
+            } else {
+                view.displayErrorAddingGroupConncection();
+            }
+        } else {
+            view.displayThereIsNoGroupWithThisName();
+        }
+    }
 //
 //    private void handleShowingMentorProfile() {
 //
@@ -137,8 +158,8 @@ public class AdminController {
 
         final String QUIT_OPTION = "q";
 
-        List<Entry> users = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
-        view.displayEntries(users);
+        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        view.displayEntries(mentors);
         if (dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE).isEmpty()) {
             view.displayPressAnyKeyToContinueMessage();
             return;

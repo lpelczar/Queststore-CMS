@@ -12,4 +12,13 @@ public class GroupStatement {
                 " VALUES (" +
                 "'" + group.getGroupName() + "');" ;
     }
+
+    public String selectAllGroups() {
+        return "SELECT * FROM " + GroupTableEntry.TABLE_NAME + ";" ;
+    }
+
+    public String selectGroupByName(String name) {
+        return "SELECT * FROM " + GroupTableEntry.TABLE_NAME +
+                " WHERE " + GroupTableEntry.GROUP_NAME + " = '" + name + "';" ;
+    }
 }
