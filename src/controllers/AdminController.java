@@ -11,6 +11,7 @@ public class AdminController {
     private AdminView view = new AdminView();
     private UserDAO dbUserDAO = new DbUserDAO();
     private GroupDAO dbGroupDAO = new DbGroupDAO();
+    private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
 
     public void start() {
 
@@ -35,7 +36,7 @@ public class AdminController {
             } else if (option == 6) {
 //                showMentorProfileWithAllHisGroups();
             } else if (option == 7) {
-//                addLevelOfExperience();
+                addLevelOfExperience();
             } else if (option == 8) {
 //                showAllLevelsOfExperience();
             } else if (option == 9) {
@@ -178,14 +179,16 @@ public class AdminController {
             view.displayErrorChangingTheValue();
         }
     }
-//
-//    private void handleCreateLevel() {
-//
-//        String levelName = view.getLevelNameInput();
-//        int value = view.getLevelValueInput();
-//
-//        levelDAO.setThreshold(levelName, value);
-//        view.displayLevelSetMessage();
-//
-//    }
+
+    private void addLevelOfExperience() {
+
+        String levelName = view.getLevelNameInput();
+        int value = view.getLevelValueInput();
+
+        if (dbExpLevelsDAO.add(levelName, value)) {
+            view.displayLevelSetMessage();
+        } else {
+            view.displayErrorChangingTheValue();
+        }
+    }
 }
