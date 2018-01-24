@@ -12,12 +12,14 @@ public class AdminView extends UserView {
         menu.put(1, "Promote blank user.");
         menu.put(2, "Create new group.");
         menu.put(3, "Assign mentor to group.");
-        menu.put(4, "Edit mentor profile.");
-        menu.put(5, "Edit mentor groups.");
-        menu.put(6, "Show mentor profile and all his codecoolers.");
-        menu.put(7, "Add level of experience.");
-        menu.put(8, "Show all levels of experience.");
-        menu.put(9, "Log out.");
+        menu.put(4, "Revoke mentor from group.");
+        menu.put(5, "Delete group and all its associations.");
+        menu.put(6, "Delete mentor and all his associations.");
+        menu.put(7, "Edit mentor profile.");
+        menu.put(8, "Show mentor profile and all his students.");
+        menu.put(9, "Add level of experience.");
+        menu.put(10, "Show all levels of experience.");
+        menu.put(11, "Log out.");
     }
 
     private void displayAdminMenu() {
