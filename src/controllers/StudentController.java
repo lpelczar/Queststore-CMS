@@ -3,6 +3,9 @@ package controllers;
 
 import views.StudentView;
 import java.util.InputMismatchException;
+import java.util.List;
+import models.Item;
+import models.StudentData;
 import dao.DbItemDAO;
 import dao.DbStudentDataDAO;
 
@@ -30,7 +33,7 @@ public class StudentController {
             if (option == 1) {
                 // See Student's backpack
                 List<Item> backpack = dbItemDAO.getItemsBy(student_id);
-                displayStudentBackpack(backpack);
+                view.displayStudentBackpack(backpack);
                 ;
             }
             else if (option == 2) {
@@ -45,7 +48,7 @@ public class StudentController {
                 // See Student's level
                 StudentData student = dbStudentDataDAO.getStudentLevelBy(student_id);
                 String level = student.getLevel();
-                view.displaStudentLevel(level);
+                view.displayStudentLevel(level);
             }
             else if (option == 5) {
                 isRunning = false;
