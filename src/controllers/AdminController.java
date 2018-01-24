@@ -20,9 +20,9 @@ public class AdminController {
     public void start() {
 
         int option;
-        boolean isRunning = true;
+        boolean isAppRunning = true;
 
-        while (isRunning) {
+        while (isAppRunning) {
             view.clearConsole();
             view.handleAdminMenu();
             option = view.askForOption();
@@ -34,17 +34,21 @@ public class AdminController {
             } else if (option == 3) {
                 assignMentorToGroup();
             } else if (option == 4) {
-                editMentorData();
+                revokeMentorFromGroup();
             } else if (option == 5) {
-//                editMentorGroups();
+//                deleteGroup();
             } else if (option == 6) {
-//                showMentorProfileWithAllHisGroups();
+//                deleteMentor();
             } else if (option == 7) {
-                addLevelOfExperience();
+                editMentorData();
             } else if (option == 8) {
-                showAllLevelsOfExperience();
+//                showMentorProfileAndHisGroup();
             } else if (option == 9) {
-                isRunning = false;
+                addLevelOfExperience();
+            } else if (option == 10) {
+                showAllLevelsOfExperience();
+            } else if (option == 11) {
+                isAppRunning = false;
             }
         }
     }
