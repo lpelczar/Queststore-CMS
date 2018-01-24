@@ -2,10 +2,11 @@ package models;
 
 public class StudentData extends User {
 
-    private Level level;
-    private Inventory backpack;
-    private Integer balance = 0;
+    private String level;
     private String group_name;
+    private int exp
+    private int balance;
+
 
 
     public Level getLevel() {
@@ -18,5 +19,9 @@ public class StudentData extends User {
 
     public Integer getBalance() {
         return balance;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }

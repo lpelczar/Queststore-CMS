@@ -44,4 +44,8 @@ public class StudentView {
         }
     }
 
+    public void displayStudentLevel(String level) {
+        System.out.println("Your level is " + level + ".");
+    }
+
 }
