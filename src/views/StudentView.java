@@ -1,6 +1,7 @@
 package views;
 
 import java.util.*;
+import models.Item;
 
 public class StudentView {
 
@@ -39,8 +40,8 @@ public class StudentView {
 
     public void displayStudentBackpack(List<Item> backpack) {
         for (Item item : backpack) {
-            System.out.println(item.name);
-            System.out.println(item.description + "\n");
+            System.out.println(item.getName());
+            System.out.println(item.getDescription() + "\n");
         }
     }
 
