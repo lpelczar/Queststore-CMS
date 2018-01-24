@@ -1,10 +1,11 @@
 package views;
 
 import java.util.*;
+import models.Item;
 
 public class StudentView {
 
-    private Map<Integer, String> menu;
+    private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
 
     public void prepareStudentMenu() {
@@ -16,8 +17,9 @@ public class StudentView {
     }
 
     public void displayStudentMenu() {
+        System.out.println();
         for (Integer option : menu.keySet()) {
-            System.out.println(option + ". " + menu.get(option) + "\n");
+            System.out.println(option + ". " + menu.get(option));
         }
     }
 
@@ -27,20 +29,15 @@ public class StudentView {
     }
 
     public int askForOption() throws InputMismatchException {
-
-        int option = 0;
-
-        while(!scanner.hasNextInt()) {
-            System.out.println("\nEnter option: ");
-            option = scanner.nextInt();
-        }
+        System.out.println("\nEnter option: ");
+        int option = scanner.nextInt();
         return option;
     }
 
     public void displayStudentBackpack(List<Item> backpack) {
         for (Item item : backpack) {
-            System.out.println(item.name);
-            System.out.println(item.description + "\n");
+            System.out.println(item.getName());
+            System.out.println(item.getDescription() + "\n");
         }
     }
 

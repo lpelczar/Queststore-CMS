@@ -1,11 +1,12 @@
 package dao;
 
+import java.sql.*;
 import models.StudentData;
 import data.DbHelper;
 import data.statements.StudentDataStatement;
 import data.contracts.StudentDataContract.StudentDataEntry;
 
-public class DbStudentDataDAO extends DbHelper implements StudentDAO {
+public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     @Override
     public StudentData getStudentLevelBy(int student_id) {
@@ -14,13 +15,13 @@ public class DbStudentDataDAO extends DbHelper implements StudentDAO {
     }
 
     public StudentData getStudentLevelBy(String sqlStatement) {
-        StudentData student;
+        StudentData student = new StudentData();
 
         try {
             ResultSet resultSet = query(sqlStatement);
 
+
             while (resultSet.next()) {
-                student = new StudentData();
 
                 String level = resultSet.getString(StudentDataEntry.LEVEL);
                 student.setLevel(level);
