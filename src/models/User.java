@@ -1,7 +1,7 @@
 package models;
 
 
-public class User {
+public class User implements Entry {
 
     private int id;
     private String name;

@@ -1,6 +1,6 @@
 package models;
 
-public class Group {
+public class Group implements Entry {
 
     private String groupName;
 
