@@ -42,7 +42,7 @@ public class AdminController {
             } else if (option == 7) {
                 editMentorData();
             } else if (option == 8) {
-//                showMentorProfileAndHisGroup();
+                showMentorProfileAndHisGroups();
             } else if (option == 9) {
                 addLevelOfExperience();
             } else if (option == 10) {
@@ -162,33 +162,30 @@ public class AdminController {
             view.displayThereIsNoGroupWithThisName();
         }
     }
-//
-//    private void handleShowingMentorProfile() {
-//
-//        view.displayMentors(mentorDAO.getMentors());
-//        if (mentorDAO.getMentors().isEmpty()) {
-//            view.displayPressAnyKeyToContinueMessage();
-//            return;
-//        }
-//        String login = view.getMentorLoginToShow();
-//        Mentor mentor = mentorDAO.getMentorBy(login);
-//
-//        if (mentor != null) {
-//            view.displayMentorProfile(mentor);
-//            showMentorGroups(mentor);
-//        } else {
-//            view.displayNoMentorMessage();
-//        }
-//    }
-//
-//    private void showMentorGroups(Mentor mentor) {
-//
-//        List<Integer> groupsIDs = mentor.getGroupsIDs();
-//        if (groupsIDs.isEmpty()) {
-//            view.displayMentorHasNoGroupsAssigned();
-//        }
-//    }
-//
+
+    private void showMentorProfileAndHisGroups() {
+        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        view.displayEntriesNoInput(mentors);
+        if (mentors.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String login = view.getMentorLoginToShow();
+        User mentor = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
+
+        if (mentor != null) {
+            view.displayMentorProfile(mentor);
+            showMentorGroups(mentor.getId());
+        } else {
+            view.displayNoMentorMessage();
+        }
+    }
+
+    private void showMentorGroups(int mentorID) {
+
+        //Get all groups by from mentor ID
+    }
+
     private void editMentorData() {
 
         final String QUIT_OPTION = "q";

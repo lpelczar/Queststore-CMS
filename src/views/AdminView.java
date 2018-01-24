@@ -67,7 +67,7 @@ public class AdminView extends UserView {
     }
 
     public void displayEntries(List<Entry> entries) {
-        System.out.println("\n");
+        System.out.println("");
         if(!entries.isEmpty()) {
             for (Entry entry : entries) {
                 System.out.println(entry);
@@ -79,6 +79,7 @@ public class AdminView extends UserView {
     }
 
     public void displayEntriesNoInput(List<Entry> entries) {
+        System.out.println("");
         if(!entries.isEmpty()) {
             for (Entry entry : entries) {
                 System.out.println(entry);
@@ -109,11 +110,6 @@ public class AdminView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
-    public void displayThereIsNoMentorsMessage() {
-        System.out.println("There are no mentors in database to assign to group, you need to add one!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
     public void displayThereIsNoMentorWithThisLogin() {
         System.out.println("There is no mentor with this login!");
         displayPressAnyKeyToContinueMessage();
@@ -132,6 +128,11 @@ public class AdminView extends UserView {
     public void displayMentorHasNoGroupsAssigned() {
         System.out.println("Mentor has no groups assigned!");
         displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayMentorProfile(User mentor) {
+        System.out.println("");
+        System.out.println(mentor);
     }
 
     public String getMentorLoginToAssignGroup() {
@@ -187,11 +188,6 @@ public class AdminView extends UserView {
 
     public void displayHasBeenPromoted() {
         System.out.println("User has been promoted!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public void displayMentorAssignedToThisGroup() {
-        System.out.println("Mentor has been assigned to this group!");
         displayPressAnyKeyToContinueMessage();
     }
 
