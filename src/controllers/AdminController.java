@@ -2,10 +2,7 @@ package controllers;
 
 import java.util.List;
 
-import data.contracts.MentorContract.MentorEntry;
-import data.contracts.BlankUserContract.BlankUserEntry;
-import data.contracts.StudentContract.StudentEntry;
-import data.contracts.StudentContract;
+import data.contracts.UserContract.UserEntry;
 import views.AdminView;
 import models.*;
 import dao.*;
@@ -43,10 +40,10 @@ public class AdminController {
 
     private void handlePromoteBlankUser() {
 
-        if (dbUserDAO.getAllByRole(BlankUserEntry.ROLE).size() > 0) {
-            view.displayBlankUsers(dbUserDAO.getAllByRole(BlankUserEntry.ROLE));
+        if (dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE).size() > 0) {
+            view.displayBlankUsers(dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
             String login = view.askForLogin();
-            User user = dbUserDAO.getByLoginAndRole(login, BlankUserEntry.ROLE);
+            User user = dbUserDAO.getByLoginAndRole(login, UserEntry.BLANK_USER_ROLE);
 
             if (user != null) {
                 promote(user);
@@ -64,10 +61,10 @@ public class AdminController {
         boolean isPromoted;
 
         if (isPromoteToMentor) {
-            user.setRole(MentorEntry.ROLE);
+            user.setRole(UserEntry.MENTOR_ROLE);
             isPromoted = dbUserDAO.update(user);
         } else {
-            user.setRole(StudentEntry.ROLE);
+            user.setRole(UserEntry.STUDENT_ROLE);
             isPromoted = dbUserDAO.update(user);
         }
         if (isPromoted) {
