@@ -10,11 +10,14 @@ public class AdminView extends UserView {
 
     private void prepareAdminMenu() {
         menu.put(1, "Promote blank user.");
-        menu.put(2, "Create new group and assign mentor.");
-        menu.put(3, "Edit mentor profile and his groups.");
-        menu.put(4, "Show mentor profile and all his Codecoolers.");
-        menu.put(5, "Edit experience levels.");
-        menu.put(6, "Log out.");
+        menu.put(2, "Create new group.");
+        menu.put(3, "Assign mentor to group.");
+        menu.put(4, "Edit mentor profile.");
+        menu.put(5, "Edit mentor groups.");
+        menu.put(6, "Show mentor profile and all his codecoolers.");
+        menu.put(7, "Add level of experience.");
+        menu.put(8, "Show all levels of experience.");
+        menu.put(9, "Log out.");
     }
 
     private void displayAdminMenu() {
@@ -27,13 +30,6 @@ public class AdminView extends UserView {
     public void handleAdminMenu() {
         prepareAdminMenu();
         displayAdminMenu();
-    }
-
-    public void displayBlankUsers(List<User> blankUsers) {
-        System.out.println("\nBlank users list: ");
-        for (User user : blankUsers) {
-            System.out.println(user.toString());
-        }
     }
 
     public String askForLogin() {
@@ -68,28 +64,16 @@ public class AdminView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
-    public void displayMentorProfile(Mentor mentor) {
-        System.out.println("\n" + mentor);
-    }
-
-    public void displayMentors(List<Mentor> mentorContainer) {
-        System.out.println("\nMentors list:");
-
-        if(!mentorContainer.isEmpty()) {
-            for (Mentor mentor : mentorContainer) {
-                System.out.println(mentor.toString());
+    public void displayEntries(List<Entry> entries) {
+        System.out.println("\n");
+        if(!entries.isEmpty()) {
+            for (Entry entry : entries) {
+                System.out.println(entry);
             }
         } else {
             System.out.println("List is empty!");
         }
-    }
-
-    public void displayStudents(List<Student> studentContainer) {
-        System.out.println("Available students to edit: \n");
-
-        for (Student student : studentContainer) {
-            System.out.println(student.toString());
-        }
+        displayPressAnyKeyToContinueMessage();
     }
 
     public int askForChangeInProfile(User profile) {
@@ -105,6 +89,7 @@ public class AdminView extends UserView {
 
     public void displayGroupAdded() {
         System.out.println("Group has been added!");
+        displayPressAnyKeyToContinueMessage();
     }
 
     public void displayGroupWithThisNameAlreadyExists() {
@@ -214,7 +199,12 @@ public class AdminView extends UserView {
     }
 
     public void displayWrongSignError() {
-        System.out.println("You type wrong sign!");
+        System.out.println("There is no such option!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayErrorChangingTheValue() {
+        System.out.println("Error changing the value!");
         displayPressAnyKeyToContinueMessage();
     }
 }

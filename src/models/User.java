@@ -1,7 +1,7 @@
 package models;
 
 
-public class User {
+public class User implements Entry {
 
     private int id;
     private String name;
@@ -67,5 +67,21 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
