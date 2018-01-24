@@ -1,6 +1,5 @@
 package controllers;
 
-import java.util.List;
 
 import data.contracts.UserContract.UserEntry;
 import views.AdminView;
@@ -24,25 +23,31 @@ public class AdminController {
             option = view.askForOption();
 
             if (option == 1) {
-                handlePromoteBlankUser();
+                promoteBlankUser();
             } else if (option == 2) {
-                handleCreatingGroup();
+                createGroup();
             } else if (option == 3) {
-//                handleEditProfile();
+//                assignMentorToGroup();
             } else if (option == 4) {
-//                handleShowingMentorProfile();
+                editMentorData();
             } else if (option == 5) {
-//                handleCreateLevel();
+//                editMentorGroups();
             } else if (option == 6) {
+//                showMentorProfileWithAllHisGroups();
+            } else if (option == 7) {
+//                addLevelOfExperience();
+            } else if (option == 8) {
+//                showAllLevelsOfExperience();
+            } else if (option == 9) {
                 isRunning = false;
             }
         }
     }
 
-    private void handlePromoteBlankUser() {
+    private void promoteBlankUser() {
 
         if (dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE).size() > 0) {
-            view.displayBlankUsers(dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
+            view.displayUsers(dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
             String login = view.askForLogin();
             User user = dbUserDAO.getByLoginAndRole(login, UserEntry.BLANK_USER_ROLE);
 
@@ -75,7 +80,7 @@ public class AdminController {
         }
     }
 
-    private void handleCreatingGroup() {
+    private void createGroup() {
 
         String name = view.getGroupNameInput();
         Group group = new Group(name);
@@ -123,49 +128,56 @@ public class AdminController {
 //        }
 //    }
 //
-//    private void handleEditProfile() {
-//
-//        final String QUIT_OPTION = "q";
-//
-//        view.displayMentors(mentorDAO.getMentors());
-//        if (mentorDAO.getMentors().isEmpty()) {
-//            view.displayPressAnyKeyToContinueMessage();
-//            return;
-//        }
-//        String login = view.getMentorLoginToEdit();
-//        if (login.equals(QUIT_OPTION)) return;
-//        Mentor profileToEdit = mentorDAO.getMentorBy(login);
-//        if (profileToEdit != null) {
-//            updateProfileAttribute(profileToEdit);
-//            mentorDAO.saveAllMentors();
-//        } else {
-//            view.displayThereIsNoMentorWithThisLogin();
-//        }
-//    }
-//
-//    private void updateProfileAttribute(Mentor profile) {
-//
-//        int toChange = view.askForChangeInProfile(profile);
-//        if (toChange == 1) {
-//            String name = view.askForNewValue();
-//            profile.setName(name);
-//            view.displayValueHasBeenChanged();
-//        } else if (toChange == 2) {
-//            String login = view.askForNewValue();
-//            profile.setLogin(login);
-//            view.displayValueHasBeenChanged();
-//        } else if (toChange == 3) {
-//            String email = view.askForNewValue();
-//            profile.setEmail(email);
-//            view.displayValueHasBeenChanged();
-//        } else if (toChange == 4) {
-//            String phoneNumber = view.askForNewValue();
-//            profile.setPhoneNumber(phoneNumber);
-//            view.displayValueHasBeenChanged();
-//        } else {
-//            view.displayWrongSignError();
-//        }
-//    }
+    private void editMentorData() {
+
+        final String QUIT_OPTION = "q";
+
+        view.displayUsers(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        if (dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE).isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String login = view.getMentorLoginToEdit();
+        if (login.equals(QUIT_OPTION)) return;
+        User mentorToEdit = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
+        if (mentorToEdit != null) {
+            updateProfileAttribute(mentorToEdit);
+        } else {
+            view.displayThereIsNoMentorWithThisLogin();
+        }
+    }
+
+    private void updateProfileAttribute(User user) {
+
+        int toChange = view.askForChangeInProfile(user);
+        if (toChange == 1) {
+            String name = view.askForNewValue();
+            user.setName(name);
+            showEditResultMessage(dbUserDAO.update(user));
+        } else if (toChange == 2) {
+            String login = view.askForNewValue();
+            user.setLogin(login);
+            showEditResultMessage(dbUserDAO.update(user));
+        } else if (toChange == 3) {
+            String email = view.askForNewValue();
+            user.setEmail(email);
+            showEditResultMessage(dbUserDAO.update(user));
+        } else if (toChange == 4) {
+            String phoneNumber = view.askForNewValue();
+            user.setPhoneNumber(phoneNumber);
+            showEditResultMessage(dbUserDAO.update(user));
+        } else {
+            view.displayWrongSignError();
+        }
+    }
+
+    private void showEditResultMessage(boolean isEdit) {
+        if (isEdit) {
+            view.displayValueHasBeenChanged();
+        } else {
+            view.displayErrorChangingTheValue();
+        }
+    }
 //
 //    private void handleCreateLevel() {
 //
