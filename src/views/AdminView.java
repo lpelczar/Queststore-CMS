@@ -64,28 +64,17 @@ public class AdminView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
-//    public void displayMentorProfile(Mentor mentor) {
-//        System.out.println("\n" + mentor);
-//    }
-//
-    public void displayUsers(List<User> users) {
-        System.out.println("\nResult:");
-        if(!users.isEmpty()) {
-            for (User user : users) {
-                System.out.println(user);
+    public void displayEntries(List<Entry> entries) {
+        System.out.println("\n");
+        if(!entries.isEmpty()) {
+            for (Entry entry : entries) {
+                System.out.println(entry);
             }
         } else {
             System.out.println("List is empty!");
         }
+        displayPressAnyKeyToContinueMessage();
     }
-//
-//    public void displayStudents(List<Student> studentContainer) {
-//        System.out.println("Available students to edit: \n");
-//
-//        for (Student student : studentContainer) {
-//            System.out.println(student.toString());
-//        }
-//    }
 
     public int askForChangeInProfile(User profile) {
         System.out.println("\n" + profile.toString());
