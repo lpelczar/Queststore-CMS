@@ -11,6 +11,7 @@ public class AdminController {
 
     private AdminView view = new AdminView();
     private UserDAO dbUserDAO = new DbUserDAO();
+    private GroupDAO dbGroupDAO = new DbGroupDAO();
 
     public void start() {
 
@@ -27,11 +28,11 @@ public class AdminController {
             } else if (option == 2) {
                 handleCreatingGroup();
             } else if (option == 3) {
-                handleEditProfile();
+//                handleEditProfile();
             } else if (option == 4) {
-                handleShowingMentorProfile();
+//                handleShowingMentorProfile();
             } else if (option == 5) {
-                handleCreateLevel();
+//                handleCreateLevel();
             } else if (option == 6) {
                 isRunning = false;
             }
@@ -78,106 +79,101 @@ public class AdminController {
 
         String name = view.getGroupNameInput();
         Group group = new Group(name);
-        if (groupDAO.add(group)) {
+        if (dbGroupDAO.add(group)) {
             view.displayGroupAdded();
-            if (mentorDAO.getMentors().size() > 0) {
-                addGroupToMentor(group);
-            } else {
-                view.displayThereIsNoMentorsMessage();
-            }
         } else {
             view.displayGroupWithThisNameAlreadyExists();
         }
     }
 
-    private void addGroupToMentor(Group group) {
-        view.displayMentors(mentorDAO.getMentors());
-        String mentorLogin = view.getMentorLoginToAssignGroup();
-        if (mentorDAO.getMentorBy(mentorLogin) != null) {
-            mentorDAO.getMentorBy(mentorLogin).addGroup(group.getID());
-            view.displayMentorAssignedToThisGroup();
-        } else {
-            view.displayThereIsNoMentorWithThisLogin();
-        }
-    }
-
-    private void handleShowingMentorProfile() {
-
-        view.displayMentors(mentorDAO.getMentors());
-        if (mentorDAO.getMentors().isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String login = view.getMentorLoginToShow();
-        Mentor mentor = mentorDAO.getMentorBy(login);
-
-        if (mentor != null) {
-            view.displayMentorProfile(mentor);
-            showMentorGroups(mentor);
-        } else {
-            view.displayNoMentorMessage();
-        }
-    }
-
-    private void showMentorGroups(Mentor mentor) {
-
-        List<Integer> groupsIDs = mentor.getGroupsIDs();
-        if (groupsIDs.isEmpty()) {
-            view.displayMentorHasNoGroupsAssigned();
-        }
-    }
-
-    private void handleEditProfile() {
-
-        final String QUIT_OPTION = "q";
-
-        view.displayMentors(mentorDAO.getMentors());
-        if (mentorDAO.getMentors().isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String login = view.getMentorLoginToEdit();
-        if (login.equals(QUIT_OPTION)) return;
-        Mentor profileToEdit = mentorDAO.getMentorBy(login);
-        if (profileToEdit != null) {
-            updateProfileAttribute(profileToEdit);
-            mentorDAO.saveAllMentors();
-        } else {
-            view.displayThereIsNoMentorWithThisLogin();
-        }
-    }
-
-    private void updateProfileAttribute(Mentor profile) {
-
-        int toChange = view.askForChangeInProfile(profile);
-        if (toChange == 1) {
-            String name = view.askForNewValue();
-            profile.setName(name);
-            view.displayValueHasBeenChanged();
-        } else if (toChange == 2) {
-            String login = view.askForNewValue();
-            profile.setLogin(login);
-            view.displayValueHasBeenChanged();
-        } else if (toChange == 3) {
-            String email = view.askForNewValue();
-            profile.setEmail(email);
-            view.displayValueHasBeenChanged();
-        } else if (toChange == 4) {
-            String phoneNumber = view.askForNewValue();
-            profile.setPhoneNumber(phoneNumber);
-            view.displayValueHasBeenChanged();
-        } else {
-            view.displayWrongSignError();
-        }
-    }
-
-    private void handleCreateLevel() {
-
-        String levelName = view.getLevelNameInput();
-        int value = view.getLevelValueInput();
-
-        levelDAO.setThreshold(levelName, value);
-        view.displayLevelSetMessage();
-
-    }
+//    private void addGroupToMentor(Group group) {
+//        view.displayMentors(mentorDAO.getMentors());
+//        String mentorLogin = view.getMentorLoginToAssignGroup();
+//        if (mentorDAO.getMentorBy(mentorLogin) != null) {
+//            mentorDAO.getMentorBy(mentorLogin).addGroup(group.getID());
+//            view.displayMentorAssignedToThisGroup();
+//        } else {
+//            view.displayThereIsNoMentorWithThisLogin();
+//        }
+//    }
+//
+//    private void handleShowingMentorProfile() {
+//
+//        view.displayMentors(mentorDAO.getMentors());
+//        if (mentorDAO.getMentors().isEmpty()) {
+//            view.displayPressAnyKeyToContinueMessage();
+//            return;
+//        }
+//        String login = view.getMentorLoginToShow();
+//        Mentor mentor = mentorDAO.getMentorBy(login);
+//
+//        if (mentor != null) {
+//            view.displayMentorProfile(mentor);
+//            showMentorGroups(mentor);
+//        } else {
+//            view.displayNoMentorMessage();
+//        }
+//    }
+//
+//    private void showMentorGroups(Mentor mentor) {
+//
+//        List<Integer> groupsIDs = mentor.getGroupsIDs();
+//        if (groupsIDs.isEmpty()) {
+//            view.displayMentorHasNoGroupsAssigned();
+//        }
+//    }
+//
+//    private void handleEditProfile() {
+//
+//        final String QUIT_OPTION = "q";
+//
+//        view.displayMentors(mentorDAO.getMentors());
+//        if (mentorDAO.getMentors().isEmpty()) {
+//            view.displayPressAnyKeyToContinueMessage();
+//            return;
+//        }
+//        String login = view.getMentorLoginToEdit();
+//        if (login.equals(QUIT_OPTION)) return;
+//        Mentor profileToEdit = mentorDAO.getMentorBy(login);
+//        if (profileToEdit != null) {
+//            updateProfileAttribute(profileToEdit);
+//            mentorDAO.saveAllMentors();
+//        } else {
+//            view.displayThereIsNoMentorWithThisLogin();
+//        }
+//    }
+//
+//    private void updateProfileAttribute(Mentor profile) {
+//
+//        int toChange = view.askForChangeInProfile(profile);
+//        if (toChange == 1) {
+//            String name = view.askForNewValue();
+//            profile.setName(name);
+//            view.displayValueHasBeenChanged();
+//        } else if (toChange == 2) {
+//            String login = view.askForNewValue();
+//            profile.setLogin(login);
+//            view.displayValueHasBeenChanged();
+//        } else if (toChange == 3) {
+//            String email = view.askForNewValue();
+//            profile.setEmail(email);
+//            view.displayValueHasBeenChanged();
+//        } else if (toChange == 4) {
+//            String phoneNumber = view.askForNewValue();
+//            profile.setPhoneNumber(phoneNumber);
+//            view.displayValueHasBeenChanged();
+//        } else {
+//            view.displayWrongSignError();
+//        }
+//    }
+//
+//    private void handleCreateLevel() {
+//
+//        String levelName = view.getLevelNameInput();
+//        int value = view.getLevelValueInput();
+//
+//        levelDAO.setThreshold(levelName, value);
+//        view.displayLevelSetMessage();
+//
+//    }
 }

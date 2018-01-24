@@ -10,7 +10,7 @@ public class AdminView extends UserView {
 
     private void prepareAdminMenu() {
         menu.put(1, "Promote blank user.");
-        menu.put(2, "Create new group and assign mentor.");
+        menu.put(2, "Create new group.");
         menu.put(3, "Edit mentor profile and his groups.");
         menu.put(4, "Show mentor profile and all his Codecoolers.");
         menu.put(5, "Edit experience levels.");
@@ -68,29 +68,29 @@ public class AdminView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
-    public void displayMentorProfile(Mentor mentor) {
-        System.out.println("\n" + mentor);
-    }
-
-    public void displayMentors(List<Mentor> mentorContainer) {
-        System.out.println("\nMentors list:");
-
-        if(!mentorContainer.isEmpty()) {
-            for (Mentor mentor : mentorContainer) {
-                System.out.println(mentor.toString());
-            }
-        } else {
-            System.out.println("List is empty!");
-        }
-    }
-
-    public void displayStudents(List<Student> studentContainer) {
-        System.out.println("Available students to edit: \n");
-
-        for (Student student : studentContainer) {
-            System.out.println(student.toString());
-        }
-    }
+//    public void displayMentorProfile(Mentor mentor) {
+//        System.out.println("\n" + mentor);
+//    }
+//
+//    public void displayMentors(List<Mentor> mentorContainer) {
+//        System.out.println("\nMentors list:");
+//
+//        if(!mentorContainer.isEmpty()) {
+//            for (Mentor mentor : mentorContainer) {
+//                System.out.println(mentor.toString());
+//            }
+//        } else {
+//            System.out.println("List is empty!");
+//        }
+//    }
+//
+//    public void displayStudents(List<Student> studentContainer) {
+//        System.out.println("Available students to edit: \n");
+//
+//        for (Student student : studentContainer) {
+//            System.out.println(student.toString());
+//        }
+//    }
 
     public int askForChangeInProfile(User profile) {
         System.out.println("\n" + profile.toString());
@@ -105,6 +105,7 @@ public class AdminView extends UserView {
 
     public void displayGroupAdded() {
         System.out.println("Group has been added!");
+        displayPressAnyKeyToContinueMessage();
     }
 
     public void displayGroupWithThisNameAlreadyExists() {
