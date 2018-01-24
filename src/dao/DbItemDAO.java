@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import data.statements.StudentItemStatement;
 import data.contracts.ItemContract.ItemEntry;
+import java.sql.*;
 import data.DbHelper;
 import models.Item;
 
@@ -15,7 +16,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
     @Override
     public List<Item> getItemsBy(int student_id) {
         String statement = studentItemStatement.getStudentItemsId(student_id);
-        return getItems(statement);
+        return getItemsBy(statement);
     }
 
     public List<Item> getItemsBy(String sqlStatement) {
@@ -27,7 +28,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
 
             while (resultSet.next()) {
                 item = new Item (
-                        resultSet.getString(ItemEntry.NAME),
+                        resultSet.getString(ItemEntry.ITEM_NAME),
                         resultSet.getInt(ItemEntry.PRICE),
                         resultSet.getString(ItemEntry.DESCRIPTION)
                 );
