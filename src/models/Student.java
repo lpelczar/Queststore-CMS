@@ -12,4 +12,16 @@ public class Student extends User {
 
         super(id, name, login, email, password, phoneNumber, role);
     }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public Inventory getBackpack() {
+        return backpack;
+    }
+
+    public Integer getBalance() {
+        return balance;
+    }
 }
