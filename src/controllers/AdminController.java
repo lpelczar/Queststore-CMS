@@ -6,6 +6,9 @@ import views.AdminView;
 import models.*;
 import dao.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AdminController {
 
     private AdminView view = new AdminView();
@@ -38,7 +41,7 @@ public class AdminController {
             } else if (option == 7) {
                 addLevelOfExperience();
             } else if (option == 8) {
-//                showAllLevelsOfExperience();
+                showAllLevelsOfExperience();
             } else if (option == 9) {
                 isRunning = false;
             }
@@ -48,7 +51,8 @@ public class AdminController {
     private void promoteBlankUser() {
 
         if (dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE).size() > 0) {
-            view.displayUsers(dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
+            List<Entry> users = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
+            view.displayEntries(users);
             String login = view.askForLogin();
             User user = dbUserDAO.getByLoginAndRole(login, UserEntry.BLANK_USER_ROLE);
 
@@ -133,7 +137,8 @@ public class AdminController {
 
         final String QUIT_OPTION = "q";
 
-        view.displayUsers(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        List<Entry> users = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        view.displayEntries(users);
         if (dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE).isEmpty()) {
             view.displayPressAnyKeyToContinueMessage();
             return;
@@ -185,10 +190,16 @@ public class AdminController {
         String levelName = view.getLevelNameInput();
         int value = view.getLevelValueInput();
 
-        if (dbExpLevelsDAO.add(levelName, value)) {
+        if (dbExpLevelsDAO.add(new ExpLevel(levelName, value))) {
             view.displayLevelSetMessage();
         } else {
             view.displayErrorChangingTheValue();
         }
+    }
+
+    private void showAllLevelsOfExperience() {
+
+        List<Entry> expLevels = new ArrayList<>(dbExpLevelsDAO.getAll());
+        view.displayEntries(expLevels);
     }
 }
