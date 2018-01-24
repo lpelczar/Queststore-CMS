@@ -12,6 +12,10 @@ public class UserContract {
         public static final String PASSWORD = "password";
         public static final String PHONE_NUMBER = "phone_number";
         public static final String ROLE = "role";
+        public static final String BLANK_USER_ROLE = "Blank";
+        public static final String STUDENT_ROLE = "Student";
+        public static final String MENTOR_ROLE = "Mentor";
+        public static final String ADMIN_ROLE = "Admin";
     }
 }
 
