@@ -5,6 +5,7 @@ public class Student extends User {
     private Level level = new Level();
     private Inventory backpack = new Inventory();
     private Integer balance = 0;
+    private String group_name;
 
     public Student (int id, String name, String login,
                     String email, String password,
