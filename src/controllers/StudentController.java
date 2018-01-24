@@ -34,7 +34,6 @@ public class StudentController {
                 // See Student's backpack
                 List<Item> backpack = dbItemDAO.getItemsBy(student_id);
                 view.displayStudentBackpack(backpack);
-                ;
             }
             else if (option == 2) {
                 // Buy item
