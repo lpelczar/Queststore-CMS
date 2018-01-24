@@ -78,7 +78,7 @@ public class AdminController {
 
         String name = view.getGroupNameInput();
         Group group = new Group(name);
-        if (groupDAO.addGroup(group)) {
+        if (groupDAO.add(group)) {
             view.displayGroupAdded();
             if (mentorDAO.getMentors().size() > 0) {
                 addGroupToMentor(group);
