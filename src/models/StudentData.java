@@ -1,20 +1,16 @@
 package models;
 
-public class StudentData extends User {
+public class StudentData {
 
     private String level;
     private String group_name;
-    private int exp
+    private int exp;
     private int balance;
 
 
 
-    public Level getLevel() {
+    public String getLevel() {
         return level;
-    }
-
-    public Inventory getBackpack() {
-        return backpack;
     }
 
     public Integer getBalance() {
