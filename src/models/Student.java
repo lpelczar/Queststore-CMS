@@ -2,9 +2,9 @@ package models;
 
 public class Student extends User {
 
-    Level level = new Level();
-    Inventory backpack = new Inventory();
-    Integer balance = 0;
+    private Level level = new Level();
+    private Inventory backpack = new Inventory();
+    private Integer balance = 0;
 
     public Student (int id, String name, String login,
                     String email, String password,
