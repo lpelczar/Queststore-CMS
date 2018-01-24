@@ -12,4 +12,10 @@ public class MentorGroupStatement {
                 "" + groupID + "," +
                 "" + mentorID + ");" ;
     }
+
+    public String deleteConnectionStatement(int groupID, int mentorID) {
+        return "DELETE FROM " + MentorGroupEntry.TABLE_NAME +
+                " WHERE " + MentorGroupEntry.ID_GROUP + " = " + groupID + " AND "
+                + MentorGroupEntry.ID_MENTOR + " = " + mentorID + ";" ;
+    }
 }

@@ -125,7 +125,38 @@ public class AdminController {
             if (isAdded) {
                 view.displayGroupConnectionAdded();
             } else {
-                view.displayErrorAddingGroupConncection();
+                view.displayErrorAddingGroupConnection();
+            }
+        } else {
+            view.displayThereIsNoGroupWithThisName();
+        }
+    }
+
+    private void revokeMentorFromGroup() {
+        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        view.displayEntriesNoInput(mentors);
+
+        String mentorLogin = view.getMentorLoginToRevokeFromGroup();
+        if (dbUserDAO.getByLogin(mentorLogin) != null) {
+            choseGroupAndRevokeMentor(mentorLogin);
+        } else {
+            view.displayThereIsNoMentorWithThisLogin();
+        }
+    }
+
+    private void choseGroupAndRevokeMentor(String mentorLogin) {
+        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
+        view.displayEntriesNoInput(groups);
+
+        String groupName = view.getGroupNameInput();
+        if (dbGroupDAO.getByName(groupName) != null) {
+            Group group = dbGroupDAO.getByName(groupName);
+            User mentor = dbUserDAO.getByLogin(mentorLogin);
+            boolean isRemoved = dbMentorGroupDAO.delete(group.getId(), mentor.getId());
+            if (isRemoved) {
+                view.displayGroupConnectionRemoved();
+            } else {
+                view.displayErrorRemovingGroupConnection();
             }
         } else {
             view.displayThereIsNoGroupWithThisName();

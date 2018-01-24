@@ -13,4 +13,10 @@ public class DbMentorGroupDAO extends DbHelper implements MentorGroupDAO {
         String statement = mentorGroupStatement.insertConnectionStatement(groupID, mentorID);
         return update(statement);
     }
+
+    @Override
+    public boolean delete(int groupID, int mentorID) {
+        String statement = mentorGroupStatement.deleteConnectionStatement(groupID, mentorID);
+        return update(statement);
+    }
 }

@@ -225,13 +225,28 @@ public class AdminView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
-    public void displayErrorAddingGroupConncection() {
+    public void displayErrorAddingGroupConnection() {
         System.out.println("Error adding a connection!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayGroupConnectionRemoved() {
+        System.out.println("Group connection has been removed!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayErrorRemovingGroupConnection() {
+        System.out.println("Error removing a group connection!");
         displayPressAnyKeyToContinueMessage();
     }
 
     public void displayThereIsNoGroupWithThisName() {
         System.out.println("There is no group with this name!");
         displayPressAnyKeyToContinueMessage();
+    }
+
+    public String getMentorLoginToRevokeFromGroup() {
+        System.out.print("Enter mentor login to revoke him from group: ");
+        return getStringInput();
     }
 }
