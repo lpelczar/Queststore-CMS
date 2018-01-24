@@ -4,11 +4,13 @@ package controllers;
 import views.StudentView;
 import java.util.InputMismatchException;
 import dao.DbItemDAO;
+import dao.DbStudentDataDAO;
 
 public class StudentController {
 
     private StudentView view = new StudentView();
     private DbItemDAO dbItemDAO = new DbItemDAO();
+    private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
 
     private boolean isRunning = true;
 
@@ -41,7 +43,9 @@ public class StudentController {
             }
             else if (option == 4) {
                 // See Student's level
-                ;
+                StudentData student = dbStudentDataDAO.getStudentLevelBy(student_id);
+                String level = student.getLevel();
+                view.displaStudentLevel(level);
             }
             else if (option == 5) {
                 isRunning = false;
