@@ -2,16 +2,17 @@ package controllers;
 
 
 import views.StudentView;
-
 import java.util.InputMismatchException;
+import dao.DbItemDAO;
 
 public class StudentController {
 
-    StudentView view = new StudentView();
+    private StudentView view = new StudentView();
+    private DbItemDAO dbItemDAO = new DbItemDAO();
 
     private boolean isRunning = true;
 
-    public void start() {
+    public void start(int student_id) {
         int option = 0;
 
         while (isRunning) {
@@ -26,6 +27,8 @@ public class StudentController {
 
             if (option == 1) {
                 // See Student's backpack
+                List<Item> backpack = dbItemDAO.getItemsBy(student_id);
+                displayStudentBackpack(backpack);
                 ;
             }
             else if (option == 2) {

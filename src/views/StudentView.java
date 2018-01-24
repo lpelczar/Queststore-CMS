@@ -8,10 +8,10 @@ public class StudentView {
     private Scanner scanner = new Scanner(System.in);
 
     public void prepareStudentMenu() {
-        menu.put(1, "See your wallet.");
+        menu.put(1, "Show your wallet.");
         menu.put(2, "Buy artifact.");
-        menu.put(3, "Buy artifact with your teammates.");
-        menu.put(4, "See your level.");
+        menu.put(3, "Buy artifact for you and your teammates.");
+        menu.put(4, "Show your level.");
         menu.put(5, "Log out.");
     }
 
@@ -35,6 +35,13 @@ public class StudentView {
             option = scanner.nextInt();
         }
         return option;
+    }
+
+    public void displayStudentBackpack(List<Item> backpack) {
+        for (Item item : backpack) {
+            System.out.println(item.name);
+            System.out.println(item.description + "\n");
+        }
     }
 
 }
