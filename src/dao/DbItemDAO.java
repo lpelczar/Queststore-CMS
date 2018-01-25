@@ -89,4 +89,9 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
         String statement = ItemStatement.addItem(item);
         return update(statement);
     }
+
+    public boolean updateItem(Item item) {
+        String statement = ItemStatement.updateQuery(item);
+        return update(statement)
+    }
 }

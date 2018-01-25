@@ -10,5 +10,6 @@ public interface ItemDAO {
     List<Item> getAllItemsInStore();
     Item getItemBy(int id);
     boolean addItem(Item item);
+    boolean updateItem(Item item);
 
 }
