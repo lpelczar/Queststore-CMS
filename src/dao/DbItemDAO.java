@@ -54,12 +54,12 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
     public boolean newBonus(String sqlStatement) {
         try {
             update(sqlStatement);
-
+            return true;
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
-        return true;
+        return false;
     }
 }
