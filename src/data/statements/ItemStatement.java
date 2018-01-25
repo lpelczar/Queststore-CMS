@@ -5,7 +5,7 @@ import models.Item;
 
 public class ItemStatement {
 
-    public static addItem(Item item) {
+    public static String addItem(Item item) {
         return "INSERT INTO " + ItemEntry.TABLE_NAME +
                 "VALUES (" +
                 item.getName() + ", " +
