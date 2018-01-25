@@ -1,20 +1,32 @@
 package models;
 
-import java.io.Serializable;
+public class User implements Entry {
 
-public abstract class User implements Serializable{
+    private int id;
     private String name;
     private String login;
-    private String password;
     private String email;
+    private String password;
     private String phoneNumber;
+    private String role;
 
-    User(String name, String login, String password, String email, String phoneNumber) {
+    public User(int id, String name, String login, String email, String password, String phoneNumber, String role) {
+        this.id = id;
         this.name = name;
         this.login = login;
-        this.password = password;
         this.email = email;
+        this.password = password;
         this.phoneNumber = phoneNumber;
+        this.role = role;
+    }
+
+    public User(String name, String login, String email, String password, String phoneNumber, String role) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
     }
 
     public String toString(){
@@ -24,16 +36,20 @@ public abstract class User implements Serializable{
                 " | Phone number: " + phoneNumber;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public String getLogin() {
         return login;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {
@@ -44,16 +60,20 @@ public abstract class User implements Serializable{
         return phoneNumber;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setEmail(String email) {

@@ -1,65 +1,14 @@
 package dao;
 
+import models.Entry;
 import models.Group;
 
-import java.util.*;
+import java.util.List;
 
-public class GroupDAO extends AbstractDAO {
+public interface GroupDAO {
 
-    private List<Group> groupsList = new ArrayList<>();
-    private final String FILE_PATH = "src/data/groups.ser";
-
-    public GroupDAO() { readAllGroups();}
-
-    public Group getGroupBy(int id) {
-
-        readAllGroups();
-        Group group = null;
-
-        for (Group g : groupsList) {
-            if (g.getID() == id) {
-                group = g;
-            }
-        }
-        return group;
-    }
-
-    public boolean addGroup(Group group) {
-
-        readAllGroups();
-        if(!groupsList.contains(group)) {
-            groupsList.add(group);
-            saveAllGroups();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean removeGroup(Group group) {
-
-        readAllGroups();
-        if (this.groupsList.contains(group)) {
-            this.groupsList.remove(group);
-            saveAllGroups();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private void readAllGroups() {
-
-        if (readAllData(FILE_PATH) != null) {
-            this.groupsList = (ArrayList<Group>) readAllData(FILE_PATH);
-        } else {
-            this.groupsList = new ArrayList<>();
-        }
-    }
-
-    private void saveAllGroups() {
-
-        saveAllData(this.groupsList, FILE_PATH);
-    }
+    List<Entry> getAll();
+    Group getByName(String name);
+    boolean add(Group group);
+    boolean delete(Group group);
 }

@@ -1,78 +1,151 @@
 package controllers;
 
 
-import models.Task;
-import views.MentorView;
-import dao.TaskDAO;
-import models.Task;
-import java.util.Date;
-
 import java.util.InputMismatchException;
+import java.util.List;
 
-public class MentorController {
-    MentorView view = new MentorView();
+import data.contracts.UserContract.UserEntry;
+import dao.DbUserDAO;
+import dao.UserDAO;
+import models.User;
+import views.MentorView;
+import dao.DbItemDAO;
+import models.Item;
 
-    private boolean isRunning = true;
+public class MentorController extends UserController {
+
+    private MentorView view = new MentorView();
+    private UserDAO dbUserDAO = new DbUserDAO();
+    private DbItemDAO dbItemDAO = new DbItemDAO();
 
     public void start(){
+        int option;
+        boolean isAppRunning = true;
 
-        while (isRunning) {
+        while (isAppRunning) {
+            view.clearConsole();
             view.handleMentorMenu();
-            int option = 0;
-            try {
-                option = view.askForOption();
-            } catch (InputMismatchException e) {
-                System.err.println("You type wrong sign!");
-            }
+            option = view.askForOption();
 
             if (option == 1) {
+                promoteBlankUser();
             } else if (option == 2) {
-                createTask();
+//                addStudentToGroup();
             } else if (option == 3) {
-                createItem();
+//                addNewQuest();
             } else if (option == 4) {
+                addNewItem();
             } else if (option == 5) {
+//                editQuest();
             } else if (option == 6) {
+                editItem();
             } else if (option == 7) {
+//                markStudentQuest();
             } else if (option == 8) {
+//                markStudentItem();
             } else if (option == 9) {
-                isRunning = false;
+//                showStudentSummary();
+            } else if (option == 10) {
+                isAppRunning = false;
             }
         }
     }
 
-    public void createTask() {
+    @Override
+    void promote(User user) {
 
-        TaskDAO taskdao = new TaskDAO();
-        view.displayCreatingTask();
+        user.setRole(UserEntry.STUDENT_ROLE);
+        boolean isPromoted = dbUserDAO.update(user);
+
+        if (isPromoted) {
+            view.displayHasBeenPromoted();
+        } else {
+            view.displayUserNotExists();
+        }
+    }
+
+    private void addNewItem() {
+        DbItemDAO dbItemDAO = new DbItemDAO();
+    
+        view.clearConsole();
+        view.displayCreatingItem();
         String name = view.askForInput();
-        String category = view.askForCategory();
+        int price = priceCheck();
         String description = view.askForInput();
-        Date deadline = view.askForDeadline();
-        int points = 0;
-        try {
-            points = view.askForPoints();
-        }
-        catch (InputMismatchException e) {
-            System.err.println("You type wrong sign!");
-        }
-        Task task = new Task(name, category, description, deadline, points);
+        String category = view.askForItemCategory();
 
-        taskdao.addTask(task);
+        Item item = new Item(name, price, description, category);
+
+        if (dbItemDAO.addItem(item)) {
+            view.displayOperationSuccessful();
+        }
+        else {
+            view.displayOperationFailed();
+        }
+    }
+
+  private void editItem() {
+        view.clearConsole();
+
+        List<Item> items = dbItemDAO.getAllItemsInStore();
+        view.displayItemsInStore(items);
+        int id = view.askForInt();
+
+        view.clearConsole();
+
+        Item item = dbItemDAO.getItemBy(id);
+        view.displayItemInfo(item);
+
+        int updateOption = view.askForChange(item);
+        handleUpdateBonus(updateOption, item);
 
     }
 
-    public void createItem() {
+    private void handleUpdateBonus(int updateOption, Item item) {
+        int UPDATE_NAME = 1;
+        int UPDATE_PRICE = 2;
+        int UPDATE_CATEGORY = 3;
+        int UPDATE_DESCRIPTION = 4;
 
-        view.displayCreatingItem();
-        String name = view.askForInput();
-        int price = 0;
-        try {
-            price = view.askForPrice();
+        if (updateOption == UPDATE_NAME) {
+            view.displayUpdateName();
+            item.setName(view.askForString());
         }
-        catch (InputMismatchException e) {
+        else if (updateOption == UPDATE_PRICE) {
+            view.displayUpdatePrice();
+            item.setPrice(view.askForInt());
+        }
+        else if (updateOption == UPDATE_CATEGORY) {
+            item.setCategory(view.askForItemCategory());
+        }
+        else if (updateOption == UPDATE_DESCRIPTION) {
+            view.displayUpdateDescription();
+            item.setDescription(view.askForString());
+        }
+        else {
+            view.displayOperationFailed();
+        }
+
+        boolean isUpdate = dbItemDAO.updateItem(item);
+        if (isUpdate) {
+            view.displayOperationSuccessful();
+        }
+    }
+
+    private Integer priceCheck() {
+        Integer price = 0;
+        boolean incorrect = true;
+
+        try {
+            while(incorrect) {
+                price = view.askForPrice();
+                if (price != null) {
+                    incorrect = false;
+                }
+            }
+        } catch (InputMismatchException e) {
             System.err.println("You type wrong sign!");
         }
-        String description = view.askForInput();
+        return price;
     }
 }

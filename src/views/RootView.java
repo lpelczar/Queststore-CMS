@@ -7,7 +7,7 @@ public class RootView {
     public void displayMenu() {
 
         clearConsole();
-        System.out.println("Welcome to QuestStore v.0.1" +
+        System.out.println("Welcome to QuestStore v.0.2" +
                 "\nWhat do you want to do?\n" +
                 " 1. Sign in\n" +
                 " 2. Sign up\n" +

@@ -1,14 +1,14 @@
 package controllers;
 
 import dao.*;
+import data.contracts.UserContract.UserEntry;
 import models.*;
-import services.*;
+import utils.*;
 import views.RootView;
 
 public class RootController {
 
-    private UsersDAO usersDAO;
-    private BlankUserDAO blankUserDAO;
+    private UserDAO dbUserDAO;
     private RootView rootView;
     private AdminController adminController;
     private StudentController studentController;
@@ -16,8 +16,7 @@ public class RootController {
 
     public RootController() {
 
-        this.usersDAO = new UsersDAO();
-        this.blankUserDAO = new BlankUserDAO();
+        this.dbUserDAO = new DbUserDAO();
         this.rootView = new RootView();
         this.adminController = new AdminController();
         this.studentController = new StudentController();
@@ -26,9 +25,9 @@ public class RootController {
 
 
     public void start() {
-        boolean shouldExit = false;
+        boolean isAppRunning = true;
 
-        while (!shouldExit) {
+        while (isAppRunning) {
             rootView.displayMenu();
             String userInput = rootView.getUserInput();
             switch (userInput) {
@@ -39,7 +38,7 @@ public class RootController {
                     signUp();
                     break;
                 case "0":
-                    shouldExit = true;
+                    isAppRunning = false;
                     break;
                 default:
                     rootView.displayWrongInputMessage();
@@ -49,11 +48,11 @@ public class RootController {
 
     private void signIn() {
 
+        final String QUIT_OPTION = "q";
         boolean isLoggedIn = false;
         String login;
         String password;
         User user;
-        final String QUIT_OPTION = "q";
 
         while(!isLoggedIn) {
 
@@ -61,17 +60,17 @@ public class RootController {
             if (login.equals(QUIT_OPTION)) return;
             password = rootView.getUserPassword();
             if (password.equals(QUIT_OPTION)) return;
-            user = usersDAO.getUserByLoginAndPassword(login, password);
+            user = dbUserDAO.getByLoginAndPassword(login, password);
 
             if(user != null) {
                 isLoggedIn = true;
-                if (user instanceof BlankUser) {
+                if (user.getRole().equals(UserEntry.BLANK_USER_ROLE)) {
                     rootView.displayUserNotAssignedMessage();
-                } else if (user instanceof Student) {
-                    studentController.start();
-                } else if (user instanceof Mentor) {
+                } else if (user.getRole().equals(UserEntry.STUDENT_ROLE)) {
+                    studentController.start(user.getId());
+                } else if (user.getRole().equals(UserEntry.MENTOR_ROLE)) {
                     mentorController.start();
-                } else if (user instanceof Admin) {
+                } else if (user.getRole().equals(UserEntry.ADMIN_ROLE)) {
                     adminController.start();
                 }
             } else {
@@ -83,16 +82,16 @@ public class RootController {
     private void signUp() {
 
         boolean isUserCreated = false;
-        String login;
         String name;
+        String login;
         String email;
-        String phoneNumber;
         String password;
+        String phoneNumber;
         User user;
 
         while(!isUserCreated) {
             login = createUserLogin();
-            user = usersDAO.getUserBy(login);
+            user = dbUserDAO.getByLogin(login);
             if (user != null) {
                 rootView.displayUserWithThisNameAlreadyExists();
             } else {
@@ -100,7 +99,7 @@ public class RootController {
                 name = createUserName();
                 email = createUserEmail();
                 phoneNumber = createUserPhoneNumber();
-                this.blankUserDAO.addBlankUser(new BlankUser(name, login, password, email, phoneNumber));
+                this.dbUserDAO.add(new User(name, login, email, password, phoneNumber, "Blank"));
                 rootView.displayUserCreated(login, name, email, phoneNumber);
                 isUserCreated = true;
             }
