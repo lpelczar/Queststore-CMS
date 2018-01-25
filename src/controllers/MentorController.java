@@ -11,7 +11,7 @@ import views.MentorView;
 import dao.DbItemDAO;
 import models.Item;
 
-public class MentorController implements UserController {
+public class MentorController extends UserController {
 
     private MentorView view = new MentorView();
     private UserDAO dbUserDAO = new DbUserDAO();
@@ -61,27 +61,6 @@ public class MentorController implements UserController {
             view.displayUserNotExists();
         }
     }
-
-    //    public void createTask() {
-//
-//        TaskDAO taskdao = new TaskDAO();
-//        view.displayCreatingTask();
-//        String name = view.askForInput();
-//        String category = view.askForCategory();
-//        String description = view.askForInput();
-//        Date deadline = view.askForDeadline();
-//        int points = 0;
-//        try {
-//            points = view.askForPoints();
-//        }
-//        catch (InputMismatchException e) {
-//            System.err.println("You type wrong sign!");
-//        }
-//        Task task = new Task(name, category, description, deadline, points);
-//
-//        taskdao.addTask(task);
-//
-//    }
 
     private void createItem() {
         DbItemDAO dbItemDAO = new DbItemDAO();
