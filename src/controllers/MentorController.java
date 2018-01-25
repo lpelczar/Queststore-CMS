@@ -65,7 +65,7 @@ public class MentorController {
 
         view.displayCreatingItem();
         String name = view.askForInput();
-        int price priceCheck();
+        int price = priceCheck();
         String description = view.askForInput();
         String category = askForItemCategory();
 
@@ -77,7 +77,6 @@ public class MentorController {
         else {
             view.displayOperationFailed();
         }
-
     }
 
     public int priceCheck() {
