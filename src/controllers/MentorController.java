@@ -2,6 +2,7 @@ package controllers;
 
 
 import java.util.InputMismatchException;
+import views.MentorView;
 import dao.DbItemDAO;
 
 public class MentorController {
@@ -24,7 +25,8 @@ public class MentorController {
 
             if (option == 1) {
             } else if (option == 2) {
-                createTask();
+                // createTask();
+                ;
             } else if (option == 3) {
                 createItem();
             } else if (option == 4) {
