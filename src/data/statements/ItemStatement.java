@@ -14,4 +14,8 @@ public class ItemStatement {
                 item.getCategory()  + "); ";
 
     }
+
+    public static String getAllItemsInStore() {
+        return "SELECT * FROM " + ItemEntry.TABLE_NAME + "; ";
+    }
 }
