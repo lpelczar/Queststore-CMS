@@ -3,7 +3,7 @@ package views;
 import java.util.*;
 import models.Item;
 
-public class StudentView {
+public class StudentView extends UserView{
 
     private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
@@ -41,7 +41,7 @@ public class StudentView {
         }
     }
 
-    public void displayItemsInStore(List<Item> itemsStore) {
+    public void displayBonusInStore(List<Item> itemsStore) {
         for (Item item : itemsStore) {
             displayItemInfo(item);
         }
