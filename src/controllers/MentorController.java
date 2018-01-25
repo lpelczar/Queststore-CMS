@@ -96,14 +96,40 @@ public class MentorController {
         Item item = dbItemDAO.getItemBy(id);
         view.displayItemInfo(item);
 
-        int changeOption = view.askForChange();
-        handleChangeItem(changeOption, item);
-
+        int updateOption = view.askForChange(item);
+        handleUpdateBonus(updateOption, item);
 
     }
 
-    public void handleChangeItem(int changeOption, Item item) {
+    public void handleUpdateBonus(int updateOption, Item item) {
+        int UPDATE_NAME = 1;
+        int UPDATE_PRICE = 2;
+        int UPDATE_CATEGORY = 3;
+        int UPDATE_DESCRIPTION = 4;
 
+        if (updateOption == UPDATE_NAME) {
+            view.displayUpdateName();
+            item.setName(view.askForString());
+        }
+        else if (updateOption == UPDATE_PRICE) {
+            view.displayUpdatePrice();
+            item.setPrice(view.askForInt());
+        }
+        else if (updateOption == UPDATE_CATEGORY) {
+            item.setCategory(view.askForItemCategory());
+        }
+        else if (updateOption == UPDATE_DESCRIPTION) {
+            view.displayUpdateDescription();
+            item.setDescription(view.askForString());
+        }
+        else {
+            view.displayOperationFailed();
+        }
+
+        boolean isUpdate = dbItemDAO.updateItem(item);
+        if (isUpdate) {
+            view.displayOperationSuccesfull();
+        }
     }
 
     public Integer priceCheck() {
