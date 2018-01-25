@@ -1,10 +1,12 @@
 package dao;
 
+import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
+
 import data.statements.StudentItemStatement;
 import data.contracts.ItemContract.ItemEntry;
-import java.sql.*;
+import data.statements.ItemStatement;
 import data.DbHelper;
 import models.Item;
 
@@ -42,5 +44,22 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
             closeConnection();
         }
         return backpack;
+    }
+
+    public boolean addItem(Item item) {
+        String statement = ItemStatement.addItem(item);
+        return addItem(statement);
+    }
+
+    public boolean newBonus(String sqlStatement) {
+        try {
+            update(sqlStatement);
+            return true;
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return false;
     }
 }
