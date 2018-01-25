@@ -38,12 +38,6 @@ public class UserView {
         return option;
     }
 
-    public void displayMessage(String message) {
-
-        System.out.println(message);
-
-    }
-
     public Boolean getTypeOfPromotion() {
         String userChoose = "";
         String[] promoteOptions = {"m", "s"};
@@ -91,6 +85,17 @@ public class UserView {
             System.out.println("List is empty!");
         }
         displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayEntriesNoInput(List<Entry> entries) {
+        System.out.println("");
+        if(!entries.isEmpty()) {
+            for (Entry entry : entries) {
+                System.out.println(entry);
+            }
+        } else {
+            System.out.println("List is empty!");
+        }
     }
 
     public void displayPressAnyKeyToContinueMessage() {

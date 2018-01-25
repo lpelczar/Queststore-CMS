@@ -4,7 +4,7 @@ import java.util.*;
 
 public class MentorView extends UserView {
 
-    private Map<Integer, String> menu;
+    private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
 
     private void prepareMentorMenu() {
@@ -22,50 +22,13 @@ public class MentorView extends UserView {
 
     private void displayMentorMenu() {
         for (Integer option : menu.keySet()) {
-            System.out.println(option + ". " + menu.get(option) + "\n");
+            System.out.println(option + ". " + menu.get(option));
         }
     }
 
     public void handleMentorMenu() {
         prepareMentorMenu();
         displayMentorMenu();
-    }
-
-    public void displayCreatingTask() {
-        System.out.println("Create new task:\nName:");
-    }
-
-    public String askForCategory() {
-        char option = 'q';
-
-        while (true) {
-            System.out.println("\nBasic or extra(b/e):");
-            option = scanner.next().charAt(0);
-            if (option == 'b') return "Basic";
-            else if (option == 'e') return "Extra";
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    public Date askForDeadline() {
-        System.out.println("\nDeadline:");
-        try {
-            return new Date(askForOption(), askForOption(), askForOption());
-        } catch (InputMismatchException e) {
-            System.err.println("You type wrong sign!");
-        }
-        return null;
-    }
-
-    public int askForPoints() throws InputMismatchException {
-
-        int points = 0;
-
-        while (!scanner.hasNextInt()) {
-            System.out.println("\nPoints:");
-            points = scanner.nextInt();
-        }
-        return points;
     }
 
     public void displayCreatingItem() {
