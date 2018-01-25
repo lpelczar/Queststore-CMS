@@ -5,7 +5,7 @@ import models.Item;
 
 public class MentorView extends UserView {
 
-    private Map<Integer, String> menu;
+    private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
 
     public void prepareMentorMenu() {
@@ -22,12 +22,13 @@ public class MentorView extends UserView {
 
     public void displayMentorMenu() {
         for (Integer option : menu.keySet()) {
-            System.out.println(option + ". " + menu.get(option) + "\n");
+            System.out.println(option + ". " + menu.get(option));
         }
     }
 
     public void handleMentorMenu() {
         prepareMentorMenu();
+        clearConsole();
         displayMentorMenu();
     }
 
@@ -92,13 +93,15 @@ public class MentorView extends UserView {
     }
 
     public void displayCreatingItem() {
-        System.out.println("Create new Item:\nName:");
+
+        System.out.println("Create new bonus menu: ");
+        displayUpdateName();
     }
 
     public Integer askForPrice() throws InputMismatchException {
 
         Integer price = 0;
-        System.out.println("\nPrice: ");
+        System.out.println("Price: ");
         price = scanner.nextInt();
         return price;
     }
@@ -108,11 +111,19 @@ public class MentorView extends UserView {
 
         String userCategoryChoose = "";
 
-        while (itemCategories.contains(userCategoryChoose)) {
+        while (!itemCategories.contains(userCategoryChoose)) {
             System.out.println("Choose category of bonus, type \'basic\' or \'advance\': ");
             userCategoryChoose = scanner.next();
         }
         return userCategoryChoose;
+    }
+
+    public boolean isUserAccept() {
+        System.out.println("If you want add this bonus to store type \'yes\' otherwise it will be deleted.");
+        String isAccepted = askForString().toLowerCase();
+
+        if (isAccepted.equals("yes")) { return true; }
+        else { return false; }
     }
 
     public void displayUpdateName() {
@@ -134,4 +145,5 @@ public class MentorView extends UserView {
     public void displayOperationFailed() {
         System.out.println("Operation has been failed!");
     }
+
 }
