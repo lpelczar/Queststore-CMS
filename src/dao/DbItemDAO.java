@@ -21,8 +21,14 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
         return getItemsBy(statement);
     }
 
+    @Override
+    public List<Item> getAllItemsInStore() {
+        String statement = ItemStatement.getAllItemsInStore();
+        return getItemsBy(statement);
+    }
+
     public List<Item> getItemsBy(String sqlStatement) {
-        List<Item> backpack = new ArrayList<>();
+        List<Item> itemSet = new ArrayList<>();
         Item item;
 
         try {
@@ -35,7 +41,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
                         resultSet.getString(ItemEntry.DESCRIPTION),
                         resultSet.getString(ItemEntry.CATEGORY)
                 );
-                backpack.add(item);
+                itemSet.add(item);
             }
             resultSet.close();
 
@@ -44,7 +50,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
         } finally {
             closeConnection();
         }
-        return backpack;
+        return itemSet;
     }
 
     public boolean addItem(Item item) {
