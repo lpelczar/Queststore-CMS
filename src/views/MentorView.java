@@ -1,6 +1,7 @@
 package views;
 
 import java.util.*;
+import models.Item;
 
 public class MentorView extends UserView {
 
@@ -31,6 +32,44 @@ public class MentorView extends UserView {
         displayMentorMenu();
     }
 
+    public void displayCreatingTask() {
+        System.out.println("Create new task:\nName:");
+    }
+  
+    public void displayItemsInStore(List<Item> itemsStore) {
+        for (Item item : itemsStore) {
+            displayItemInfo(item);
+        }
+        System.out.println("Enter ID of item to edit: ");
+    }
+
+    public void displayItemInfo(Item item) {
+        System.out.println("ID: " + item.getID() + item.toString());
+        System.out.println();
+    }
+
+    public int askForChange(Item item) {
+        System.out.println("\n" + item.toString());
+        System.out.println("\nWhat would you like to update:" +
+                "\n1. Name" +
+                "\n2. Price" +
+                "\n3. Category" +
+                "\n4. Description");
+
+        return askForOption();
+    }
+
+    public int askForPoints() throws InputMismatchException {
+
+        int points = 0;
+
+        while (!scanner.hasNextInt()) {
+            System.out.println("\nPoints:");
+            points = scanner.nextInt();
+        }
+        return points;
+    }
+
     public void displayCreatingItem() {
         System.out.println("Create new Item:\nName:");
     }
@@ -53,7 +92,20 @@ public class MentorView extends UserView {
         return userCategoryChoose;
     }
 
+    public void displayUpdateName() {
+        System.out.println("Enter new name: ");
+    }
+
+    public void displayUpdatePrice() {
+        System.out.println("Enter new price: ");
+    }
+
+    public void displayUpdateDescription() {
+        System.out.println("Enter new description: ");
+    }
+
     public void displayOperationSuccessful() {
+
         System.out.println("Item has been added to DB succesfully!");
     }
 

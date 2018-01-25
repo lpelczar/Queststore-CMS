@@ -2,6 +2,7 @@ package controllers;
 
 
 import java.util.InputMismatchException;
+import java.util.List;
 
 import data.contracts.UserContract.UserEntry;
 import dao.DbUserDAO;
@@ -12,6 +13,8 @@ import dao.DbItemDAO;
 import models.Item;
 
 public class MentorController extends UserController {
+    MentorView view = new MentorView();
+    DbItemDAO dbItemDAO = new DbItemDAO();
 
     private MentorView view = new MentorView();
     private UserDAO dbUserDAO = new DbUserDAO();
@@ -64,8 +67,8 @@ public class MentorController extends UserController {
 
     private void createItem() {
         DbItemDAO dbItemDAO = new DbItemDAO();
+    
         view.clearConsole();
-
         view.displayCreatingItem();
         String name = view.askForInput();
         int price = priceCheck();
@@ -82,6 +85,53 @@ public class MentorController extends UserController {
         }
     }
 
+  public void editBonus() {
+        view.clearConsole();
+
+        List<Item> items = dbItemDAO.getAllItemsInStore();
+        view.displayItemsInStore(items);
+        int id = view.askForInt();
+
+        view.clearConsole();
+
+        Item item = dbItemDAO.getItemBy(id);
+        view.displayItemInfo(item);
+
+        int updateOption = view.askForChange(item);
+        handleUpdateBonus(updateOption, item);
+
+    }
+
+    public void handleUpdateBonus(int updateOption, Item item) {
+        int UPDATE_NAME = 1;
+        int UPDATE_PRICE = 2;
+        int UPDATE_CATEGORY = 3;
+        int UPDATE_DESCRIPTION = 4;
+
+        if (updateOption == UPDATE_NAME) {
+            view.displayUpdateName();
+            item.setName(view.askForString());
+        }
+        else if (updateOption == UPDATE_PRICE) {
+            view.displayUpdatePrice();
+            item.setPrice(view.askForInt());
+        }
+        else if (updateOption == UPDATE_CATEGORY) {
+            item.setCategory(view.askForItemCategory());
+        }
+        else if (updateOption == UPDATE_DESCRIPTION) {
+            view.displayUpdateDescription();
+            item.setDescription(view.askForString());
+        }
+        else {
+            view.displayOperationFailed();
+        }
+
+        boolean isUpdate = dbItemDAO.updateItem(item);
+        if (isUpdate) {
+            view.displayOperationSuccesfull();
+        }
+    }
 
     public Integer priceCheck() {
         Integer price = 0;
