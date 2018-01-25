@@ -37,7 +37,10 @@ public class StudentController {
             }
             else if (option == 2) {
                 // Buy item
-                ;
+                List<Item> items = dbItemDAO.getAllItemsInStore();
+                view.displayBonusInStore(items);
+                int id = view.askForInt();
+
             }
             else if (option == 3) {
                 // Buy item with team
