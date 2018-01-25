@@ -49,18 +49,6 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
 
     public boolean addItem(Item item) {
         String statement = ItemStatement.addItem(item);
-        return addItem(statement);
-    }
-
-    public boolean addItem(String sqlStatement) {
-        try {
-            update(sqlStatement);
-            return true;
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        } finally {
-            closeConnection();
-        }
-        return false;
+        return update(statement);
     }
 }
