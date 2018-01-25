@@ -69,7 +69,7 @@ public class MentorView extends UserView {
         System.out.println();
     }
 
-    public int askForChange() {
+    public int askForChange(Item item) {
         System.out.println("\n" + item.toString());
         System.out.println("\nWhat would you like to update:" +
                 "\n1. Name" +
