@@ -68,7 +68,7 @@ public class RootController {
                 } else if (user.getRole().equals("Student")) {
                     studentController.start(user.getId());
                 } else if (user.getRole().equals("Mentor")) {
-//                    mentorController.start();
+                    mentorController.start();
                 } else if (user.getRole().equals("Admin")) {
                     adminController.start();
                 }
