@@ -59,4 +59,10 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
         String statement = groupStatement.insertGroupStatement(group);
         return update(statement);
     }
+
+    @Override
+    public boolean delete(Group group) {
+        String statement = groupStatement.deleteGroupStatement(group);
+        return update(statement);
+    }
 }

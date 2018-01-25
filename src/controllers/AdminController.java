@@ -20,9 +20,9 @@ public class AdminController {
     public void start() {
 
         int option;
-        boolean isRunning = true;
+        boolean isAppRunning = true;
 
-        while (isRunning) {
+        while (isAppRunning) {
             view.clearConsole();
             view.handleAdminMenu();
             option = view.askForOption();
@@ -34,17 +34,21 @@ public class AdminController {
             } else if (option == 3) {
                 assignMentorToGroup();
             } else if (option == 4) {
-                editMentorData();
+                revokeMentorFromGroup();
             } else if (option == 5) {
-//                editMentorGroups();
+                deleteGroup();
             } else if (option == 6) {
-//                showMentorProfileWithAllHisGroups();
+                deleteMentor();
             } else if (option == 7) {
-                addLevelOfExperience();
+                editMentorData();
             } else if (option == 8) {
-                showAllLevelsOfExperience();
+                showMentorProfileAndHisGroups();
             } else if (option == 9) {
-                isRunning = false;
+                addLevelOfExperience();
+            } else if (option == 10) {
+                showAllLevelsOfExperience();
+            } else if (option == 11) {
+                isAppRunning = false;
             }
         }
     }
@@ -121,39 +125,104 @@ public class AdminController {
             if (isAdded) {
                 view.displayGroupConnectionAdded();
             } else {
-                view.displayErrorAddingGroupConncection();
+                view.displayErrorAddingGroupConnection();
             }
         } else {
             view.displayThereIsNoGroupWithThisName();
         }
     }
-//
-//    private void handleShowingMentorProfile() {
-//
-//        view.displayMentors(mentorDAO.getMentors());
-//        if (mentorDAO.getMentors().isEmpty()) {
-//            view.displayPressAnyKeyToContinueMessage();
-//            return;
-//        }
-//        String login = view.getMentorLoginToShow();
-//        Mentor mentor = mentorDAO.getMentorBy(login);
-//
-//        if (mentor != null) {
-//            view.displayMentorProfile(mentor);
-//            showMentorGroups(mentor);
-//        } else {
-//            view.displayNoMentorMessage();
-//        }
-//    }
-//
-//    private void showMentorGroups(Mentor mentor) {
-//
-//        List<Integer> groupsIDs = mentor.getGroupsIDs();
-//        if (groupsIDs.isEmpty()) {
-//            view.displayMentorHasNoGroupsAssigned();
-//        }
-//    }
-//
+
+    private void revokeMentorFromGroup() {
+        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        view.displayEntriesNoInput(mentors);
+
+        String mentorLogin = view.getMentorLoginToRevokeFromGroup();
+        if (dbUserDAO.getByLogin(mentorLogin) != null) {
+            choseGroupAndRevokeMentor(mentorLogin);
+        } else {
+            view.displayThereIsNoMentorWithThisLogin();
+        }
+    }
+
+    private void choseGroupAndRevokeMentor(String mentorLogin) {
+        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
+        view.displayEntriesNoInput(groups);
+
+        String groupName = view.getGroupNameInput();
+        if (dbGroupDAO.getByName(groupName) != null) {
+            Group group = dbGroupDAO.getByName(groupName);
+            User mentor = dbUserDAO.getByLogin(mentorLogin);
+            boolean isRemoved = dbMentorGroupDAO.delete(group.getId(), mentor.getId());
+            if (isRemoved) {
+                view.displayGroupConnectionRemoved();
+            } else {
+                view.displayErrorRemovingGroupConnection();
+            }
+        } else {
+            view.displayThereIsNoGroupWithThisName();
+        }
+    }
+
+    private void deleteGroup() {
+        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
+        view.displayEntriesNoInput(groups);
+        if (groups.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+
+        String groupName = view.getGroupNameInput();
+        Group group = dbGroupDAO.getByName(groupName);
+
+        if (group != null) {
+            dbGroupDAO.delete(group);
+            view.displayGroupDeleted();
+        } else {
+            view.displayThereIsNoGroupWithThisName();
+        }
+    }
+
+    private void deleteMentor() {
+        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        view.displayEntriesNoInput(mentors);
+        if (mentors.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String login = view.getMentorLoginToDelete();
+        User mentor = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
+
+        if (mentor != null) {
+            dbUserDAO.delete(mentor);
+            view.displayMentorDeletedMessage();
+        } else {
+            view.displayNoMentorMessage();
+        }
+    }
+
+    private void showMentorProfileAndHisGroups() {
+        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        view.displayEntriesNoInput(mentors);
+        if (mentors.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String login = view.getMentorLoginToShow();
+        User mentor = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
+
+        if (mentor != null) {
+            view.displayMentorProfile(mentor);
+            showMentorGroups(mentor.getId());
+        } else {
+            view.displayNoMentorMessage();
+        }
+    }
+
+    private void showMentorGroups(int mentorID) {
+
+        //Get all groups by from mentor ID
+    }
+
     private void editMentorData() {
 
         final String QUIT_OPTION = "q";
