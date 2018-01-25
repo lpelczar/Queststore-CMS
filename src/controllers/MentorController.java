@@ -2,12 +2,14 @@ package controllers;
 
 
 import java.util.InputMismatchException;
+import java.util.List;
 import views.MentorView;
 import dao.DbItemDAO;
 import models.Item;
 
 public class MentorController {
     MentorView view = new MentorView();
+    DbItemDAO dbItemDAO = new DbItemDAO();
 
     private boolean isRunning = true;
 
@@ -32,6 +34,7 @@ public class MentorController {
                 createItem();
             } else if (option == 4) {
             } else if (option == 5) {
+                editBonus();
             } else if (option == 6) {
             } else if (option == 7) {
             } else if (option == 8) {
@@ -63,7 +66,6 @@ public class MentorController {
 //    }
 
     public void createItem() {
-        DbItemDAO dbItemDAO = new DbItemDAO();
         view.clearConsole();
 
         view.displayCreatingItem();
@@ -80,6 +82,28 @@ public class MentorController {
         else {
             view.displayOperationFailed();
         }
+    }
+
+    public void editBonus() {
+        view.clearConsole();
+
+        List<Item> items = dbItemDAO.getAllItemsInStore();
+        view.displayItemsInStore(items);
+        int id = view.askForInt();
+
+        view.clearConsole();
+
+        Item item = dbItemDAO.getItemBy(id);
+        view.displayItemInfo(item);
+
+        int changeOption = view.askForChange();
+        handleChangeItem(changeOption, item);
+
+
+    }
+
+    public void handleChangeItem(int changeOption, Item item) {
+
     }
 
     public Integer priceCheck() {
