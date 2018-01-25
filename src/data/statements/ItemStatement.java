@@ -14,8 +14,12 @@ public class ItemStatement {
                 item.getCategory()  + "); ";
 
     }
-
     public static String getAllItemsInStore() {
         return "SELECT * FROM " + ItemEntry.TABLE_NAME + "; ";
+    }
+
+    public static String findItemBy(int id) {
+        return "SELECT * FROM " + ItemEntry.TABLE_NAME +
+                " WHERE " + ItemEntry.ID + " = " + id + "; ";
     }
 }
