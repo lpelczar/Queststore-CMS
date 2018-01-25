@@ -1,20 +1,17 @@
 package controllers;
 
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
-import java.util.List;
 
 import data.contracts.UserContract.UserEntry;
 import dao.DbUserDAO;
 import dao.UserDAO;
-import models.Entry;
 import models.User;
 import views.MentorView;
 import dao.DbItemDAO;
 import models.Item;
 
-public class MentorController {
+public class MentorController implements UserController {
 
     private MentorView view = new MentorView();
     private UserDAO dbUserDAO = new DbUserDAO();
@@ -29,7 +26,7 @@ public class MentorController {
             option = view.askForOption();
 
             if (option == 1) {
-//                promoteBlankUser();
+                promoteBlankUser();
             } else if (option == 2) {
 //                addStudentToGroup();
             } else if (option == 3) {
@@ -52,7 +49,20 @@ public class MentorController {
         }
     }
 
-//    public void createTask() {
+    @Override
+    void promote(User user) {
+
+        user.setRole(UserEntry.STUDENT_ROLE);
+        boolean isPromoted = dbUserDAO.update(user);
+
+        if (isPromoted) {
+            view.displayHasBeenPromoted();
+        } else {
+            view.displayUserNotExists();
+        }
+    }
+
+    //    public void createTask() {
 //
 //        TaskDAO taskdao = new TaskDAO();
 //        view.displayCreatingTask();

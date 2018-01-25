@@ -9,14 +9,13 @@ import dao.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminController {
+public class AdminController extends UserController {
 
     private AdminView view = new AdminView();
     private UserDAO dbUserDAO = new DbUserDAO();
     private GroupDAO dbGroupDAO = new DbGroupDAO();
     private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
     private MentorGroupDAO dbMentorGroupDAO = new DbMentorGroupDAO();
-    private UserController userController = new UserController();
 
     public void start() {
 
@@ -52,10 +51,6 @@ public class AdminController {
                 isAppRunning = false;
             }
         }
-    }
-
-    private void promoteBlankUser() {
-        userController.promoteBlankUser();
     }
 
     private void createGroup() {
