@@ -6,12 +6,16 @@ import models.Item;
 public class ItemStatement {
 
     public static String addItem(Item item) {
-        return "INSERT INTO " + ItemEntry.TABLE_NAME +
-                "VALUES (" +
-                item.getName() + ", " +
-                item.getDescription()  + ", " +
-                item.getPrice()  + ", " +
-                item.getCategory()  + "); ";
+        return "INSERT INTO " + ItemEntry.TABLE_NAME + " (" +
+                ItemEntry.ITEM_NAME + ", " +
+                ItemEntry.DESCRIPTION + ", " +
+                ItemEntry.PRICE + ", " +
+                ItemEntry.CATEGORY + ") " +
+                " VALUES ( \'" +
+                item.getName() + "\', \'" +
+                item.getDescription()  + "\', " +
+                item.getPrice()  + ", \'" +
+                item.getCategory()  + "\'); ";
 
     }
     public static String getAllItemsInStore() {
