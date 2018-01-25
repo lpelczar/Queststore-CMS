@@ -9,7 +9,7 @@ public class StudentView {
     private Scanner scanner = new Scanner(System.in);
 
     public void prepareStudentMenu() {
-        menu.put(1, "Show your wallet.");
+        menu.put(1, "Show your items.");
         menu.put(2, "Buy artifact.");
         menu.put(3, "Buy artifact for you and your teammates.");
         menu.put(4, "Show your level.");
@@ -39,6 +39,18 @@ public class StudentView {
             System.out.println(item.getName());
             System.out.println(item.getDescription() + "\n");
         }
+    }
+
+    public void displayItemsInStore(List<Item> itemsStore) {
+        for (Item item : itemsStore) {
+            displayItemInfo(item);
+        }
+        System.out.println("Enter ID of item to edit: ");
+    }
+
+    public void displayItemInfo(Item item) {
+        System.out.println("ID: " + item.getID() + item.toString());
+        System.out.println();
     }
 
     public void displayStudentLevel(String level) {
