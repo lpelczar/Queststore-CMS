@@ -16,6 +16,7 @@ public class AdminController {
     private GroupDAO dbGroupDAO = new DbGroupDAO();
     private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
     private MentorGroupDAO dbMentorGroupDAO = new DbMentorGroupDAO();
+    private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
 
     public void start() {
 
@@ -82,6 +83,9 @@ public class AdminController {
         } else {
             user.setRole(UserEntry.STUDENT_ROLE);
             isPromoted = dbUserDAO.update(user);
+
+            StudentData student = new StudentData();
+            dbStudentDataDAO.add(student, user);
         }
         if (isPromoted) {
             view.displayHasBeenPromoted();

@@ -30,8 +30,11 @@ CREATE TABLE StudentData (
   team_name VARCHAR (20),
   level VARCHAR (20),
   balance INTEGER,
-  FOREIGN KEY (id_user) REFERENCES User(ID),
+  PRIMARY KEY (id_user, id_group),
   FOREIGN KEY (id_group) REFERENCES GroupTable(ID)
+    ON DELETE CASCADE ON UPDATE NO ACTION,
+  FOREIGN KEY (id_user) REFERENCES User(ID)
+    ON DELETE CASCADE ON UPDATE NO ACTION
   );
 
 CREATE TABLE GroupTable (

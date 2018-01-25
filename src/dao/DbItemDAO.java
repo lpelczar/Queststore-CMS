@@ -21,8 +21,20 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
         return getItemsBy(statement);
     }
 
+    @Override
+    public List<Item> getAllItemsInStore() {
+        String statement = ItemStatement.getAllItemsInStore();
+        return getItemsBy(statement);
+    }
+
+    @Override
+    public Item getItemBy(int id) {
+        String statement = ItemStatement.findItemBy(id);
+        return getItemFromStore(statement);
+    }
+
     public List<Item> getItemsBy(String sqlStatement) {
-        List<Item> backpack = new ArrayList<>();
+        List<Item> itemSet = new ArrayList<>();
         Item item;
 
         try {
@@ -30,12 +42,13 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
 
             while (resultSet.next()) {
                 item = new Item (
+                        resultSet.getInt(ItemEntry.ID),
                         resultSet.getString(ItemEntry.ITEM_NAME),
                         resultSet.getInt(ItemEntry.PRICE),
                         resultSet.getString(ItemEntry.DESCRIPTION),
                         resultSet.getString(ItemEntry.CATEGORY)
                 );
-                backpack.add(item);
+                itemSet.add(item);
             }
             resultSet.close();
 
@@ -44,11 +57,41 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
         } finally {
             closeConnection();
         }
-        return backpack;
+        return itemSet;
+    }
+
+    public Item getItemFromStore(String sqlStatement) {
+        Item item = null;
+
+        try {
+            ResultSet resultSet = query(sqlStatement);
+
+            while (resultSet.next()) {
+                item = new Item (
+                        resultSet.getInt(ItemEntry.ID),
+                        resultSet.getString(ItemEntry.ITEM_NAME),
+                        resultSet.getInt(ItemEntry.PRICE),
+                        resultSet.getString(ItemEntry.DESCRIPTION),
+                        resultSet.getString(ItemEntry.CATEGORY)
+                );
+            }
+            resultSet.close();
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return item;
     }
 
     public boolean addItem(Item item) {
         String statement = ItemStatement.addItem(item);
+        return update(statement);
+    }
+
+    public boolean updateItem(Item item) {
+        String statement = ItemStatement.updateQuery(item);
         return update(statement);
     }
 }

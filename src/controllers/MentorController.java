@@ -2,12 +2,14 @@ package controllers;
 
 
 import java.util.InputMismatchException;
+import java.util.List;
 import views.MentorView;
 import dao.DbItemDAO;
 import models.Item;
 
 public class MentorController {
     MentorView view = new MentorView();
+    DbItemDAO dbItemDAO = new DbItemDAO();
 
     private boolean isRunning = true;
 
@@ -25,13 +27,15 @@ public class MentorController {
             }
 
             if (option == 1) {
-            } else if (option == 2) {
+            }
+            else if (option == 2) {
                 // createTask();
                 ;
             } else if (option == 3) {
-                createItem();
+                handleCreateBonus();
             } else if (option == 4) {
             } else if (option == 5) {
+                editBonus();
             } else if (option == 6) {
             } else if (option == 7) {
             } else if (option == 8) {
@@ -62,23 +66,90 @@ public class MentorController {
 //
 //    }
 
-    public void createItem() {
-        DbItemDAO dbItemDAO = new DbItemDAO();
-        view.clearConsole();
+    public void handleCreateBonus() {
+        Item item = isCreateBonus();
 
-        view.displayCreatingItem();
-        String name = view.askForInput();
-        int price = priceCheck();
-        String description = view.askForInput();
-        String category = view.askForItemCategory();
+        if (item != null) {
 
-        Item item = new Item(name, price, description, category);
-
-        if (dbItemDAO.addItem(item)) {
-            view.displayOperationSuccesfull();
+            if (dbItemDAO.addItem(item)) {
+                view.displayOperationSuccesfull();
+            }
+            else {
+                view.displayOperationFailed();
+            }
         }
         else {
             view.displayOperationFailed();
+        }
+    }
+
+    public Item isCreateBonus() {
+        view.clearConsole();
+
+        view.displayCreatingItem();
+        String name = view.askForString();
+
+        int price = priceCheck();
+
+        String category = view.askForItemCategory();
+
+        view.displayUpdateDescription();
+        String description = view.askForString();
+
+        Item item = new Item(name, price, description, category);
+
+        view.clearConsole();
+        view.displayItemInfo(item);
+
+        if (view.isUserAccept()) { return item; }
+        else { return null; }
+    }
+
+    public void editBonus() {
+        view.clearConsole();
+
+        List<Item> items = dbItemDAO.getAllItemsInStore();
+        view.displayItemsInStore(items);
+        int id = view.askForInt();
+
+        view.clearConsole();
+
+        Item item = dbItemDAO.getItemBy(id);
+        view.displayItemInfo(item);
+
+        int updateOption = view.askForChange(item);
+        handleUpdateBonus(updateOption, item);
+
+    }
+
+    public void handleUpdateBonus(int updateOption, Item item) {
+        int UPDATE_NAME = 1;
+        int UPDATE_PRICE = 2;
+        int UPDATE_CATEGORY = 3;
+        int UPDATE_DESCRIPTION = 4;
+
+        if (updateOption == UPDATE_NAME) {
+            view.displayUpdateName();
+            item.setName(view.askForString());
+        }
+        else if (updateOption == UPDATE_PRICE) {
+            view.displayUpdatePrice();
+            item.setPrice(view.askForInt());
+        }
+        else if (updateOption == UPDATE_CATEGORY) {
+            item.setCategory(view.askForItemCategory());
+        }
+        else if (updateOption == UPDATE_DESCRIPTION) {
+            view.displayUpdateDescription();
+            item.setDescription(view.askForString());
+        }
+        else {
+            view.displayOperationFailed();
+        }
+
+        boolean isUpdate = dbItemDAO.updateItem(item);
+        if (isUpdate) {
+            view.displayOperationSuccesfull();
         }
     }
 

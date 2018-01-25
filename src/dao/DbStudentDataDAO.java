@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.*;
 import models.StudentData;
+import models.User;
 import data.DbHelper;
 import data.statements.StudentDataStatement;
 import data.contracts.StudentDataContract.StudentDataEntry;
@@ -34,5 +35,10 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
             closeConnection();
         }
         return student;
+    }
+
+    public boolean add(StudentData student, User user) {
+        String statement = StudentDataStatement.createStudentData(student, user);
+        return update(statement);
     }
 }
