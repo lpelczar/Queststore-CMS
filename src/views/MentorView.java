@@ -58,12 +58,14 @@ public class MentorView extends UserView {
 
     public void displayItemsInStore(List<Item> itemsStore) {
         for (Item item : itemsStore) {
-            System.out.prinln("Name: " + item.getName()  +
+            System.out.prinln("ID: " + getID() +
+                               "Name: " + item.getName()  +
                               "\nPrice: " + item.getPrice()  +
                               "\nCategory: " + item.getCategory() +
                               "\nDescription: \n" + item.getDescription());
             System.out.println();
         }
+        System.out.println("Enter ID of item to edit: ");
     }
 
     public int askForPoints() throws InputMismatchException {
