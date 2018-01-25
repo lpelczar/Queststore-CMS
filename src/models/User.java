@@ -1,6 +1,5 @@
 package models;
 
-
 public class User implements Entry {
 
     private int id;

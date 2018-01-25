@@ -7,8 +7,6 @@ public class StudentData {
     private int exp;
     private int balance;
 
-
-
     public String getLevel() {
         return level;
     }

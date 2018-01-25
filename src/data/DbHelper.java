@@ -1,25 +1,31 @@
 package data;
 
+
+import org.sqlite.SQLiteConfig;
+
 import java.sql.*;
 
 public class DbHelper {
 
-    private static final String DATABASE_NAME = "queststore.db";
+    private static final String DB_URL = "jdbc:sqlite:queststore.db";
+    private static final String DRIVER = "org.sqlite.JDBC";
     private Connection connection;
     private Statement statement;
 
     private void openConnection() {
 
         try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+            SQLiteConfig config = new SQLiteConfig();
+            config.enforceForeignKeys(true);
+            Class.forName(DRIVER);
+            connection = DriverManager.getConnection(DB_URL, config.toProperties());
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
     }
 
-    public void closeConnection() {
+    protected void closeConnection() {
 
         if (connection != null)
             try {
@@ -31,7 +37,7 @@ public class DbHelper {
             } catch (SQLException e) { /*ignored*/ }
     }
 
-    public ResultSet query(String sqlStatement) throws SQLException {
+    protected ResultSet query(String sqlStatement) throws SQLException {
 
         openConnection();
         statement = connection.createStatement();

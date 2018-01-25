@@ -21,4 +21,9 @@ public class GroupStatement {
         return "SELECT * FROM " + GroupTableEntry.TABLE_NAME +
                 " WHERE " + GroupTableEntry.GROUP_NAME + " = '" + name + "';" ;
     }
+
+    public String deleteGroupStatement(Group group) {
+        return "DELETE FROM " + GroupTableEntry.TABLE_NAME +
+                " WHERE " + GroupTableEntry.ID + " = " + group.getId() + ";" ;
+    }
 }

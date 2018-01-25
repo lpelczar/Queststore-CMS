@@ -8,17 +8,6 @@ CREATE TABLE User (
   role VARCHAR (10)
   );
 
-CREATE TABLE BlankUserData (
-  id_user INTEGER,
-  role VARCHAR (10),
-  FOREIGN KEY (id_user) REFERENCES User(ID)
-  );
-
-CREATE TABLE AdminData (
-  id_user INTEGER,
-  FOREIGN KEY (id_user) REFERENCES User(ID)
-  );
-
 CREATE TABLE MentorData (
   id_user INTEGER,
   FOREIGN KEY (id_user) REFERENCES User(ID)
@@ -42,8 +31,9 @@ CREATE TABLE GroupTable (
 CREATE TABLE MentorGroup (
   id_mentor INTEGER,
   id_group INTEGER,
-  FOREIGN KEY (id_mentor) REFERENCES MentorData(id_user),
-  FOREIGN KEY (id_group) REFERENCES GroupTable(ID)
+  PRIMARY KEY (id_mentor, id_group),
+  FOREIGN KEY (id_mentor) REFERENCES User(ID) ON DELETE CASCADE,
+  FOREIGN KEY (id_group) REFERENCES GroupTable(ID) ON DELETE CASCADE
   );
 
 CREATE TABLE StudentTask (

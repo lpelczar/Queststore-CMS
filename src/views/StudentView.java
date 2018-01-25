@@ -8,7 +8,7 @@ public class StudentView {
     private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
 
-    public void prepareStudentMenu() {
+    private void prepareStudentMenu() {
         menu.put(1, "Show your wallet.");
         menu.put(2, "Buy artifact.");
         menu.put(3, "Buy artifact for you and your teammates.");
@@ -16,7 +16,7 @@ public class StudentView {
         menu.put(5, "Log out.");
     }
 
-    public void displayStudentMenu() {
+    private void displayStudentMenu() {
         System.out.println();
         for (Integer option : menu.keySet()) {
             System.out.println(option + ". " + menu.get(option));
@@ -30,8 +30,7 @@ public class StudentView {
 
     public int askForOption() throws InputMismatchException {
         System.out.println("\nEnter option: ");
-        int option = scanner.nextInt();
-        return option;
+        return scanner.nextInt();
     }
 
     public void displayStudentBackpack(List<Item> backpack) {

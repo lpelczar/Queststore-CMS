@@ -5,24 +5,25 @@ import models.Item;
 
 public class MentorView extends UserView {
 
-    private Map<Integer, String> menu;
+    private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
 
-    public void prepareMentorMenu() {
+    private void prepareMentorMenu() {
         menu.put(1, "Promote blank user to student.");
-        menu.put(2, "Add new quest.");
-        menu.put(3, "Add new bonus to store.");
-        menu.put(4, "Edit quest.");
-        menu.put(5, "Edit bonus.");
-        menu.put(6, "Mark Codecooler's quest.");
-        menu.put(7, "Mark Codecooler's bought artifacts.");
-        menu.put(8, "See Codecooler's wallet.");
-        menu.put(9, "Log out.");
+        menu.put(2, "Add student to group.");
+        menu.put(3, "Add new quest.");
+        menu.put(4, "Add new artifact.");
+        menu.put(5, "Edit quest.");
+        menu.put(6, "Edit artifact.");
+        menu.put(7, "Mark student achieved quest.");
+        menu.put(8, "Mark student bought artifact.");
+        menu.put(9, "Show student balance and all his artifacts.");
+        menu.put(10, "Log out.");
     }
 
-    public void displayMentorMenu() {
+    private void displayMentorMenu() {
         for (Integer option : menu.keySet()) {
-            System.out.println(option + ". " + menu.get(option) + "\n");
+            System.out.println(option + ". " + menu.get(option));
         }
     }
 
@@ -34,29 +35,7 @@ public class MentorView extends UserView {
     public void displayCreatingTask() {
         System.out.println("Create new task:\nName:");
     }
-
-//    public String askForCategory() {
-//        char option = 'q';
-//
-//        while (true) {
-//            System.out.println("\nBasic or extra(b/e):");
-//            option = scanner.next().charAt(0);
-//            if (option == 'b') return "Basic";
-//            else if (option == 'e') return "Extra";
-//        }
-//    }
-//
-//    @SuppressWarnings("deprecation")
-//    public Date askForDeadline() {
-//        System.out.println("\nDeadline:");
-//        try {
-//            return new Date(askForOption(), askForOption(), askForOption());
-//        } catch (InputMismatchException e) {
-//            System.err.println("You type wrong sign!");
-//        }
-//        return null;
-//    }
-
+  
     public void displayItemsInStore(List<Item> itemsStore) {
         for (Item item : itemsStore) {
             displayItemInfo(item);
@@ -97,10 +76,8 @@ public class MentorView extends UserView {
 
     public Integer askForPrice() throws InputMismatchException {
 
-        Integer price = 0;
         System.out.println("\nPrice: ");
-        price = scanner.nextInt();
-        return price;
+        return scanner.nextInt();
     }
 
     public String askForItemCategory() throws InputMismatchException {
@@ -127,7 +104,8 @@ public class MentorView extends UserView {
         System.out.println("Enter new description: ");
     }
 
-    public void displayOperationSuccesfull() {
+    public void displayOperationSuccessful() {
+
         System.out.println("Item has been added to DB succesfully!");
     }
 

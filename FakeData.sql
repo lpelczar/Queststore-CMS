@@ -39,7 +39,7 @@ INSERT INTO User (
     role
 ) VALUES (
     "Mentor",
-    "Mentor123",
+    "Mentor",
     "mentor@codecool.com",
     "mentor123",
     "123-456-789",
