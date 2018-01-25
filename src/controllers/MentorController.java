@@ -13,11 +13,10 @@ import dao.DbItemDAO;
 import models.Item;
 
 public class MentorController extends UserController {
-    MentorView view = new MentorView();
-    DbItemDAO dbItemDAO = new DbItemDAO();
 
     private MentorView view = new MentorView();
     private UserDAO dbUserDAO = new DbUserDAO();
+    private DbItemDAO dbItemDAO = new DbItemDAO();
 
     public void start(){
         int option;
@@ -35,11 +34,11 @@ public class MentorController extends UserController {
             } else if (option == 3) {
 //                addNewQuest();
             } else if (option == 4) {
-//                addNewItem();
+                addNewItem();
             } else if (option == 5) {
 //                editQuest();
             } else if (option == 6) {
-//                editItem();
+                editItem();
             } else if (option == 7) {
 //                markStudentQuest();
             } else if (option == 8) {
@@ -65,7 +64,7 @@ public class MentorController extends UserController {
         }
     }
 
-    private void createItem() {
+    private void addNewItem() {
         DbItemDAO dbItemDAO = new DbItemDAO();
     
         view.clearConsole();
@@ -85,7 +84,7 @@ public class MentorController extends UserController {
         }
     }
 
-  public void editBonus() {
+  private void editItem() {
         view.clearConsole();
 
         List<Item> items = dbItemDAO.getAllItemsInStore();
@@ -102,7 +101,7 @@ public class MentorController extends UserController {
 
     }
 
-    public void handleUpdateBonus(int updateOption, Item item) {
+    private void handleUpdateBonus(int updateOption, Item item) {
         int UPDATE_NAME = 1;
         int UPDATE_PRICE = 2;
         int UPDATE_CATEGORY = 3;
@@ -129,18 +128,18 @@ public class MentorController extends UserController {
 
         boolean isUpdate = dbItemDAO.updateItem(item);
         if (isUpdate) {
-            view.displayOperationSuccesfull();
+            view.displayOperationSuccessful();
         }
     }
 
-    public Integer priceCheck() {
+    private Integer priceCheck() {
         Integer price = 0;
         boolean incorrect = true;
 
         try {
             while(incorrect) {
                 price = view.askForPrice();
-                if (price instanceof Integer) {
+                if (price != null) {
                     incorrect = false;
                 }
             }
