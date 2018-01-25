@@ -7,4 +7,6 @@ public interface ItemDAO {
 
     List<Item> getItemsBy(int student_id);
     List<Item> getItemsBy(String sqlStatement);
+    boolean addItem(Item item);
+    boolean addItem(String sqlStatement);
 }
