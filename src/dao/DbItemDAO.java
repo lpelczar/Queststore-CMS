@@ -52,7 +52,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
         return addItem(statement);
     }
 
-    public boolean newBonus(String sqlStatement) {
+    public boolean addItem(String sqlStatement) {
         try {
             update(sqlStatement);
             return true;
