@@ -27,11 +27,12 @@ public class MentorController {
             }
 
             if (option == 1) {
-            } else if (option == 2) {
+            }
+            else if (option == 2) {
                 // createTask();
                 ;
             } else if (option == 3) {
-                createItem();
+                handleCreateBonus();
             } else if (option == 4) {
             } else if (option == 5) {
                 editBonus();
@@ -65,23 +66,43 @@ public class MentorController {
 //
 //    }
 
-    public void createItem() {
-        view.clearConsole();
+    public void handleCreateBonus() {
+        Item item = isCreateBonus();
 
-        view.displayCreatingItem();
-        String name = view.askForInput();
-        int price = priceCheck();
-        String description = view.askForInput();
-        String category = view.askForItemCategory();
+        if (item != null) {
 
-        Item item = new Item(name, price, description, category);
-
-        if (dbItemDAO.addItem(item)) {
-            view.displayOperationSuccesfull();
+            if (dbItemDAO.addItem(item)) {
+                view.displayOperationSuccesfull();
+            }
+            else {
+                view.displayOperationFailed();
+            }
         }
         else {
             view.displayOperationFailed();
         }
+    }
+
+    public Item isCreateBonus() {
+        view.clearConsole();
+
+        view.displayCreatingItem();
+        String name = view.askForString();
+
+        int price = priceCheck();
+
+        String category = view.askForItemCategory();
+
+        view.displayUpdateDescription();
+        String description = view.askForString();
+
+        Item item = new Item(name, price, description, category);
+
+        view.clearConsole();
+        view.displayItemInfo(item);
+
+        if (view.isUserAccept()) { return item; }
+        else { return null; }
     }
 
     public void editBonus() {
