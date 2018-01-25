@@ -1,7 +1,7 @@
 package views;
 
 import java.util.*;
-import model.Item;
+import models.Item;
 
 public class MentorView extends UserView {
 
@@ -59,7 +59,7 @@ public class MentorView extends UserView {
 
     public void displayItemsInStore(List<Item> itemsStore) {
         for (Item item : itemsStore) {
-            System.out.prinln("ID: " + item.getID() +
+            System.out.println("ID: " + item.getID() +
                               " Name: " + item.getName()  +
                               "\nPrice: " + item.getPrice()  +
                               "\nCategory: " + item.getCategory() +
