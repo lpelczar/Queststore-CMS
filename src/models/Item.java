@@ -12,7 +12,7 @@ public class Item implements Serializable {
         this.name = name;
         this.price = price;
         this.description = description;
-        this.category = category
+        this.category = category;
 
     }
 
