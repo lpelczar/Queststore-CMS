@@ -32,7 +32,8 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
                 item = new Item (
                         resultSet.getString(ItemEntry.ITEM_NAME),
                         resultSet.getInt(ItemEntry.PRICE),
-                        resultSet.getString(ItemEntry.DESCRIPTION)
+                        resultSet.getString(ItemEntry.DESCRIPTION),
+                        resultSet.getString(ItemEntry.CATEGORY)
                 );
                 backpack.add(item);
             }
