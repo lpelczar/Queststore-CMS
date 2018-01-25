@@ -36,6 +36,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
 
             while (resultSet.next()) {
                 item = new Item (
+                        resultSet.getInt(ItemEntry.ID),
                         resultSet.getString(ItemEntry.ITEM_NAME),
                         resultSet.getInt(ItemEntry.PRICE),
                         resultSet.getString(ItemEntry.DESCRIPTION),
