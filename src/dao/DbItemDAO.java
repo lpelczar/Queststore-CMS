@@ -27,6 +27,12 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
         return getItemsBy(statement);
     }
 
+    @Override
+    public Item getItemBy(int id) {
+        String statement = ItemStatement.findItemBy(id);
+        return getItemFromStore(statement)
+    }
+
     public List<Item> getItemsBy(String sqlStatement) {
         List<Item> itemSet = new ArrayList<>();
         Item item;
@@ -52,6 +58,31 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
             closeConnection();
         }
         return itemSet;
+    }
+
+    public Item getItemFromStore(String sqlStatement) {
+        Item item;
+
+        try {
+            ResultSet resultSet = query(sqlStatement);
+
+            while (resultSet.next()) {
+                item = new Item (
+                        resultSet.getInt(ItemEntry.ID),
+                        resultSet.getString(ItemEntry.ITEM_NAME),
+                        resultSet.getInt(ItemEntry.PRICE),
+                        resultSet.getString(ItemEntry.DESCRIPTION),
+                        resultSet.getString(ItemEntry.CATEGORY)
+                )
+            }
+            resultSet.close();
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return item;
     }
 
     public boolean addItem(Item item) {
