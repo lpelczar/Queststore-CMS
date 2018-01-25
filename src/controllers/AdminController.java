@@ -182,7 +182,7 @@ public class AdminController extends UserController {
     }
 
     private void showMentorGroups(int mentorID) {
-
+        view.displayPressAnyKeyToContinueMessage();
         //Get all groups by from mentor ID
     }
 
