@@ -16,6 +16,7 @@ public class AdminController {
     private GroupDAO dbGroupDAO = new DbGroupDAO();
     private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
     private MentorGroupDAO dbMentorGroupDAO = new DbMentorGroupDAO();
+    private UserController userController = new UserController();
 
     public void start() {
 
@@ -54,40 +55,7 @@ public class AdminController {
     }
 
     private void promoteBlankUser() {
-
-        if (dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE).size() > 0) {
-            List<Entry> users = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
-            view.displayEntries(users);
-            String login = view.askForLogin();
-            User user = dbUserDAO.getByLoginAndRole(login, UserEntry.BLANK_USER_ROLE);
-
-            if (user != null) {
-                promote(user);
-            } else {
-                view.displayUserDoesNotExist();
-            }
-        } else {
-            view.displayEmptyListMsg();
-        }
-    }
-
-    private void promote(User user) {
-
-        boolean isPromoteToMentor = view.getTypeOfPromotion();
-        boolean isPromoted;
-
-        if (isPromoteToMentor) {
-            user.setRole(UserEntry.MENTOR_ROLE);
-            isPromoted = dbUserDAO.update(user);
-        } else {
-            user.setRole(UserEntry.STUDENT_ROLE);
-            isPromoted = dbUserDAO.update(user);
-        }
-        if (isPromoted) {
-            view.displayHasBeenPromoted();
-        } else {
-            view.displayUserNotExists();
-        }
+        userController.promoteBlankUser();
     }
 
     private void createGroup() {

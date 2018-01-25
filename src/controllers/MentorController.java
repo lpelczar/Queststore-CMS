@@ -1,7 +1,15 @@
 package controllers;
 
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
+
+import data.contracts.UserContract.UserEntry;
+import dao.DbUserDAO;
+import dao.UserDAO;
+import models.Entry;
+import models.User;
 import views.MentorView;
 import dao.DbItemDAO;
 import models.Item;
@@ -9,6 +17,7 @@ import models.Item;
 public class MentorController {
 
     private MentorView view = new MentorView();
+    private UserDAO dbUserDAO = new DbUserDAO();
 
     public void start(){
         int option;

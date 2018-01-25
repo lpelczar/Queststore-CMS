@@ -34,47 +34,8 @@ public class AdminView extends UserView {
         displayAdminMenu();
     }
 
-    public String askForLogin() {
-        scanner = new Scanner(System.in);
-
-        System.out.print("\nEnter login of profile to change: ");
-        return scanner.next();
-    }
-
-    public Boolean getTypeOfPromotion() {
-        String userChoose = "";
-        String[] promoteOptions = {"m", "s"};
-        scanner = new Scanner(System.in);
-
-        System.out.println("Type 'm' if you want promote user to mentor or 's' to student");
-
-        while (!Arrays.asList(promoteOptions).contains(userChoose.toLowerCase())) {
-            userChoose = scanner.next();
-
-            if (userChoose.equals("m")) {
-                return true;
-            }
-            else if (userChoose.equals("s")) {
-                return false;
-            }
-        }
-        return null;
-    }
-
     public void displayNoMentorMessage() {
         System.out.println("There is no mentor with this login!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public void displayEntries(List<Entry> entries) {
-        System.out.println("");
-        if(!entries.isEmpty()) {
-            for (Entry entry : entries) {
-                System.out.println(entry);
-            }
-        } else {
-            System.out.println("List is empty!");
-        }
         displayPressAnyKeyToContinueMessage();
     }
 
@@ -170,30 +131,9 @@ public class AdminView extends UserView {
         return getIntInput();
     }
 
-    private String getStringInput() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-    }
-
     private int getIntInput() {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
-    }
-
-    public void displayPressAnyKeyToContinueMessage() {
-        System.out.print("\nPress any key to continue.");
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
-    }
-
-    public void displayHasBeenPromoted() {
-        System.out.println("User has been promoted!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public void displayUserNotExists() {
-        System.out.println("User not exists!");
-        displayPressAnyKeyToContinueMessage();
     }
 
     public void displayEmptyListMsg() {
