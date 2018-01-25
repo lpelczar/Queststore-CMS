@@ -42,8 +42,9 @@ CREATE TABLE GroupTable (
 CREATE TABLE MentorGroup (
   id_mentor INTEGER,
   id_group INTEGER,
-  FOREIGN KEY (id_mentor) REFERENCES MentorData(id_user),
-  FOREIGN KEY (id_group) REFERENCES GroupTable(ID)
+  PRIMARY KEY (id_mentor, id_group),
+  FOREIGN KEY (id_mentor) REFERENCES User(ID) ON DELETE CASCADE,
+  FOREIGN KEY (id_group) REFERENCES GroupTable(ID) ON DELETE CASCADE
   );
 
 CREATE TABLE StudentTask (
