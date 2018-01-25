@@ -4,6 +4,7 @@ package controllers;
 import java.util.InputMismatchException;
 import views.MentorView;
 import dao.DbItemDAO;
+import models.Item;
 
 public class MentorController {
     MentorView view = new MentorView();
