@@ -7,36 +7,38 @@ import dao.DbItemDAO;
 import models.Item;
 
 public class MentorController {
-    MentorView view = new MentorView();
 
-    private boolean isRunning = true;
+    private MentorView view = new MentorView();
 
     public void start(){
+        int option;
+        boolean isAppRunning = true;
 
-        while (isRunning) {
+        while (isAppRunning) {
+            view.clearConsole();
             view.handleMentorMenu();
-
-            int option = 0;
-
-            try {
-                option = view.askForOption();
-            } catch (InputMismatchException e) {
-                System.err.println("You type wrong sign!");
-            }
+            option = view.askForOption();
 
             if (option == 1) {
+//                promoteBlankUser();
             } else if (option == 2) {
-                // createTask();
-                ;
+//                addStudentToGroup();
             } else if (option == 3) {
-                createItem();
+//                addNewQuest();
             } else if (option == 4) {
+//                addNewItem();
             } else if (option == 5) {
+//                editQuest();
             } else if (option == 6) {
+//                editItem();
             } else if (option == 7) {
+//                markStudentQuest();
             } else if (option == 8) {
+//                markStudentItem();
             } else if (option == 9) {
-                isRunning = false;
+//                showStudentSummary();
+            } else if (option == 10) {
+                isAppRunning = false;
             }
         }
     }
@@ -62,7 +64,7 @@ public class MentorController {
 //
 //    }
 
-    public void createItem() {
+    private void createItem() {
         DbItemDAO dbItemDAO = new DbItemDAO();
         view.clearConsole();
 
@@ -82,7 +84,7 @@ public class MentorController {
         }
     }
 
-    public int priceCheck() {
+    private int priceCheck() {
         int price;
 
         try {
