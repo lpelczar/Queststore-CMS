@@ -57,7 +57,7 @@ abstract class UserView {
 
     public String askForString() {
         scanner = new Scanner(System.in);
-        input = scanner.next();
+        String input = scanner.next();
         return input;
     }
 
