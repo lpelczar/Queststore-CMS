@@ -8,17 +8,6 @@ CREATE TABLE User (
   role VARCHAR (10)
   );
 
-CREATE TABLE BlankUserData (
-  id_user INTEGER,
-  role VARCHAR (10),
-  FOREIGN KEY (id_user) REFERENCES User(ID)
-  );
-
-CREATE TABLE AdminData (
-  id_user INTEGER,
-  FOREIGN KEY (id_user) REFERENCES User(ID)
-  );
-
 CREATE TABLE MentorData (
   id_user INTEGER,
   FOREIGN KEY (id_user) REFERENCES User(ID)
