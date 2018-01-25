@@ -69,7 +69,7 @@ public class MentorController {
         String name = view.askForInput();
         int price = priceCheck();
         String description = view.askForInput();
-        String category = askForItemCategory();
+        String category = view.askForItemCategory();
 
         Item item = new Item(name, price, description, category);
 
