@@ -30,7 +30,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
     @Override
     public Item getItemBy(int id) {
         String statement = ItemStatement.findItemBy(id);
-        return getItemFromStore(statement)
+        return getItemFromStore(statement);
     }
 
     public List<Item> getItemsBy(String sqlStatement) {
@@ -73,7 +73,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
                         resultSet.getInt(ItemEntry.PRICE),
                         resultSet.getString(ItemEntry.DESCRIPTION),
                         resultSet.getString(ItemEntry.CATEGORY)
-                )
+                );
             }
             resultSet.close();
 
@@ -92,6 +92,6 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
 
     public boolean updateItem(Item item) {
         String statement = ItemStatement.updateQuery(item);
-        return update(statement)
+        return update(statement);
     }
 }
