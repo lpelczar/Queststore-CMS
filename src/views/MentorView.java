@@ -30,21 +30,6 @@ public class MentorView extends UserView {
         displayMentorMenu();
     }
 
-    public void displayTeams(List<Team> teams) {
-        for (Team team : teams) System.out.println(team.getTeamName());
-    }
-
-    public void displayStudentsInGroup(Team group) {
-        for (Student student : group.getAllMembers()) System.out.println(student.toString());
-    }
-
-    public void displaySummaryOfStudentsCoins(List<Student> students) {
-        for (Student student : students) System.out.println(student.toString());
-    }
-
-    public void displayStudentsItemsList(List<Student> students) {
-    }
-
     public void displayCreatingTask() {
         System.out.println("Create new task:\nName:");
     }
