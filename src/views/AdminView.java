@@ -6,7 +6,6 @@ import models.*;
 public class AdminView extends UserView {
 
     private Map<Integer, String> menu = new HashMap<>();
-    private Scanner scanner;
 
     private void prepareAdminMenu() {
         menu.put(1, "Promote blank user.");
@@ -83,11 +82,6 @@ public class AdminView extends UserView {
 
     public void displayLevelSetMessage() {
         System.out.println("Level has been set!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public void displayMentorHasNoGroupsAssigned() {
-        System.out.println("Mentor has no groups assigned!");
         displayPressAnyKeyToContinueMessage();
     }
 

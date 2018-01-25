@@ -37,10 +37,8 @@ public class MentorView extends UserView {
 
     public Integer askForPrice() throws InputMismatchException {
 
-        Integer price = 0;
         System.out.println("\nPrice: ");
-        price = scanner.nextInt();
-        return price;
+        return scanner.nextInt();
     }
 
     public String askForItemCategory() throws InputMismatchException {
@@ -55,7 +53,7 @@ public class MentorView extends UserView {
         return userCategoryChoose;
     }
 
-    public void displayOperationSuccesfull() {
+    public void displayOperationSuccessful() {
         System.out.println("Item has been added to DB succesfully!");
     }
 
