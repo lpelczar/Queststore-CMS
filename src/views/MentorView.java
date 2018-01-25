@@ -71,7 +71,7 @@ public class MentorView extends UserView {
 
     public int askForChange() {
         System.out.println("\n" + item.toString());
-        System.out.println("\nWhat would you like to change:" +
+        System.out.println("\nWhat would you like to update:" +
                 "\n1. Name" +
                 "\n2. Price" +
                 "\n3. Category" +
@@ -113,6 +113,18 @@ public class MentorView extends UserView {
             userCategoryChoose = scanner.next();
         }
         return userCategoryChoose;
+    }
+
+    public void displayUpdateName() {
+        System.out.println("Enter new name: ");
+    }
+
+    public void displayUpdatePrice() {
+        System.out.println("Enter new price: ");
+    }
+
+    public void displayUpdateDescription() {
+        System.out.println("Enter new description: ");
     }
 
     public void displayOperationSuccesfull() {
