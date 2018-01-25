@@ -36,7 +36,7 @@ public class AdminController {
             } else if (option == 4) {
                 revokeMentorFromGroup();
             } else if (option == 5) {
-//                deleteGroup();
+                deleteGroup();
             } else if (option == 6) {
                 deleteMentor();
             } else if (option == 7) {
@@ -158,6 +158,25 @@ public class AdminController {
             } else {
                 view.displayErrorRemovingGroupConnection();
             }
+        } else {
+            view.displayThereIsNoGroupWithThisName();
+        }
+    }
+
+    private void deleteGroup() {
+        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
+        view.displayEntriesNoInput(groups);
+        if (groups.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+
+        String groupName = view.getGroupNameInput();
+        Group group = dbGroupDAO.getByName(groupName);
+
+        if (group != null) {
+            dbGroupDAO.delete(group);
+            view.displayGroupDeleted();
         } else {
             view.displayThereIsNoGroupWithThisName();
         }

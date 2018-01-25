@@ -255,4 +255,9 @@ public class AdminView extends UserView {
         System.out.println("Mentor has been deleted!");
         displayPressAnyKeyToContinueMessage();
     }
+
+    public void displayGroupDeleted() {
+        System.out.println("Group has been deleted!");
+        displayPressAnyKeyToContinueMessage();
+    }
 }
