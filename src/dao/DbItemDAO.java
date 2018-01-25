@@ -61,7 +61,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
     }
 
     public Item getItemFromStore(String sqlStatement) {
-        Item item;
+        Item item = null;
 
         try {
             ResultSet resultSet = query(sqlStatement);
