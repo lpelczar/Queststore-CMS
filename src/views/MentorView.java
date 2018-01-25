@@ -71,16 +71,17 @@ public class MentorView extends UserView {
         System.out.println("Create new Item:\nName:");
     }
 
-    public int askForPrice() throws InputMismatchException {
+    public Integer askForPrice() throws InputMismatchException {
 
-        int price = 0;
+        Integer price = 0;
         System.out.println("\nPrice: ");
         price = scanner.nextInt();
         return price;
     }
 
     public String askForItemCategory() throws InputMismatchException {
-        List<String> itemCategories = new List<>("basic", "advanced");
+        List<String> itemCategories = new ArrayList<>(Arrays.asList("basic", "advanced"));
+
         String userCategoryChoose = "";
 
         while (itemCategories.contains(userCategoryChoose)) {
