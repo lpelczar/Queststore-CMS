@@ -6,11 +6,14 @@ public class Item implements Serializable {
     private String name;
     private Integer price;
     private String description;
+    private String category;
 
-    public Item(String name, Integer price, String description) {
+    public Item(String name, Integer price, String description, String category) {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.category = category
+
     }
 
     public String getName() {
@@ -36,4 +39,8 @@ public class Item implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getCategory() { return category; }
+
+    public void setCategory(String category) { this.category = category; }
 }
