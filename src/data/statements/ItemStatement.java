@@ -28,7 +28,7 @@ public class ItemStatement {
                 ItemEntry.ITEM_NAME + " = \'" + item.getName() + "\', " +
                 ItemEntry.PRICE + " = \'" + item.getPrice() + "\', " +
                 ItemEntry.CATEGORY + " = \'" + item.getCategory() + "\', " +
-                ItemEntry.DESCRIPTION + " = \'" + item.getDescription + "\' " +
+                ItemEntry.DESCRIPTION + " = \'" + item.getDescription() + "\' " +
                 "WHERE " + ItemEntry.ID + " = " + item.getID() + "; ";
     }
 }
