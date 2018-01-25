@@ -80,7 +80,8 @@ public class MentorView extends UserView {
     }
 
     public String askForItemCategory() throws InputMismatchException {
-        List<String> itemCategories = new List<>("basic", "advanced");
+        List<String> itemCategories = new ArrayList<>(Arrays.asList("basic", "advanced"));
+
         String userCategoryChoose = "";
 
         while (itemCategories.contains(userCategoryChoose)) {
