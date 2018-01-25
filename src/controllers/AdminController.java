@@ -38,7 +38,7 @@ public class AdminController {
             } else if (option == 5) {
 //                deleteGroup();
             } else if (option == 6) {
-//                deleteMentor();
+                deleteMentor();
             } else if (option == 7) {
                 editMentorData();
             } else if (option == 8) {
@@ -160,6 +160,24 @@ public class AdminController {
             }
         } else {
             view.displayThereIsNoGroupWithThisName();
+        }
+    }
+
+    private void deleteMentor() {
+        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        view.displayEntriesNoInput(mentors);
+        if (mentors.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String login = view.getMentorLoginToDelete();
+        User mentor = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
+
+        if (mentor != null) {
+            dbUserDAO.delete(mentor);
+            view.displayMentorDeletedMessage();
+        } else {
+            view.displayNoMentorMessage();
         }
     }
 

@@ -245,4 +245,14 @@ public class AdminView extends UserView {
         System.out.print("Enter mentor login to revoke him from group: ");
         return getStringInput();
     }
+
+    public String getMentorLoginToDelete() {
+        System.out.print("Enter mentor login to delete all his data: ");
+        return getStringInput();
+    }
+
+    public void displayMentorDeletedMessage() {
+        System.out.println("Mentor has been deleted!");
+        displayPressAnyKeyToContinueMessage();
+    }
 }
