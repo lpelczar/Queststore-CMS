@@ -25,7 +25,7 @@ public class ItemStatement {
 
     public static String updateQuery(Item item) {
         return "UPDATE " + ItemEntry.TABLE_NAME + " SET " +
-                ItemEntry.NAME + " = \'" + item.getName() + "\', " +
+                ItemEntry.ITEM_NAME + " = \'" + item.getName() + "\', " +
                 ItemEntry.PRICE + " = \'" + item.getPrice() + "\', " +
                 ItemEntry.CATEGORY + " = \'" + item.getCategory() + "\', " +
                 ItemEntry.DESCRIPTION + " = \'" + item.getDescription + "\' " +
