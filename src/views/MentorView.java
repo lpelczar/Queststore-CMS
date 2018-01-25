@@ -10,9 +10,9 @@ public class MentorView extends UserView {
     public void prepareMentorMenu() {
         menu.put(1, "Promote blank user to student.");
         menu.put(2, "Add new quest.");
-        menu.put(3, "Add new artifact to store.");
+        menu.put(3, "Add new bonus to store.");
         menu.put(4, "Edit quest.");
-        menu.put(5, "Edit artifact.");
+        menu.put(5, "Edit bonus.");
         menu.put(6, "Mark Codecooler's quest.");
         menu.put(7, "Mark Codecooler's bought artifacts.");
         menu.put(8, "See Codecooler's wallet.");
@@ -34,26 +34,36 @@ public class MentorView extends UserView {
         System.out.println("Create new task:\nName:");
     }
 
-    public String askForCategory() {
-        char option = 'q';
+//    public String askForCategory() {
+//        char option = 'q';
+//
+//        while (true) {
+//            System.out.println("\nBasic or extra(b/e):");
+//            option = scanner.next().charAt(0);
+//            if (option == 'b') return "Basic";
+//            else if (option == 'e') return "Extra";
+//        }
+//    }
+//
+//    @SuppressWarnings("deprecation")
+//    public Date askForDeadline() {
+//        System.out.println("\nDeadline:");
+//        try {
+//            return new Date(askForOption(), askForOption(), askForOption());
+//        } catch (InputMismatchException e) {
+//            System.err.println("You type wrong sign!");
+//        }
+//        return null;
+//    }
 
-        while (true) {
-            System.out.println("\nBasic or extra(b/e):");
-            option = scanner.next().charAt(0);
-            if (option == 'b') return "Basic";
-            else if (option == 'e') return "Extra";
+    public void displayItemsInStore(List<Item> itemsStore) {
+        for (Item item : itemsStore) {
+            System.out.prinln("Name: " + item.getName()  +
+                              "\nPrice: " + item.getPrice()  +
+                              "\nCategory: " + item.getCategory() +
+                              "\nDescription: \n" + item.getDescription());
+            System.out.println();
         }
-    }
-
-    @SuppressWarnings("deprecation")
-    public Date askForDeadline() {
-        System.out.println("\nDeadline:");
-        try {
-            return new Date(askForOption(), askForOption(), askForOption());
-        } catch (InputMismatchException e) {
-            System.err.println("You type wrong sign!");
-        }
-        return null;
     }
 
     public int askForPoints() throws InputMismatchException {
