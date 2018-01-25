@@ -9,13 +9,13 @@ public class StudentData {
     private int balance;
 
     public StudentData() {
-        this.level = 0;
+        this.level = "beginner";
         this.group_name = "Not assign yet.";
         this.team_name = "Not assign yet.";
         this.exp = 0;
         this.balance = 0;
     }
-    
+
     public String getLevel() {
         return level;
     }
