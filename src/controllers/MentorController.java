@@ -75,7 +75,7 @@ public class MentorController extends UserController {
         Item item = new Item(name, price, description, category);
 
         if (dbItemDAO.addItem(item)) {
-            view.displayOperationSuccesfull();
+            view.displayOperationSuccessful();
         }
         else {
             view.displayOperationFailed();

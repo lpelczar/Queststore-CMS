@@ -19,7 +19,7 @@ class UserController {
 
         if (dbUserDAO.getAllByRole(UserContract.UserEntry.BLANK_USER_ROLE).size() > 0) {
             List<Entry> users = new ArrayList<>(dbUserDAO.getAllByRole(UserContract.UserEntry.BLANK_USER_ROLE));
-            view.displayEntries(users);
+            view.displayEntriesNoInput(users);
             String login = view.askForLogin();
             User user = dbUserDAO.getByLoginAndRole(login, UserContract.UserEntry.BLANK_USER_ROLE);
 

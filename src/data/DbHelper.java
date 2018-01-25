@@ -25,7 +25,7 @@ public class DbHelper {
         }
     }
 
-    public void closeConnection() {
+    protected void closeConnection() {
 
         if (connection != null)
             try {
@@ -37,7 +37,7 @@ public class DbHelper {
             } catch (SQLException e) { /*ignored*/ }
     }
 
-    public ResultSet query(String sqlStatement) throws SQLException {
+    protected ResultSet query(String sqlStatement) throws SQLException {
 
         openConnection();
         statement = connection.createStatement();
