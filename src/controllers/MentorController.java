@@ -82,15 +82,21 @@ public class MentorController extends UserController {
         }
     }
 
-    private int priceCheck() {
-        int price;
+
+    public Integer priceCheck() {
+        Integer price = 0;
+        boolean incorrect = true;
 
         try {
-            while(!scanner.hasNextInt()) {
-                price = askForPrice();
+            while(incorrect) {
+                price = view.askForPrice();
+                if (price instanceof Integer) {
+                    incorrect = false;
+                }
             }
         } catch (InputMismatchException e) {
             System.err.println("You type wrong sign!");
         }
+        return price;
     }
 }
