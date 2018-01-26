@@ -20,10 +20,8 @@ CREATE TABLE StudentData (
   level VARCHAR (20),
   balance INTEGER,
   PRIMARY KEY (id_user, id_group),
-  FOREIGN KEY (id_group) REFERENCES User(ID)
-    ON DELETE CASCADE ON UPDATE NO ACTION,
+  FOREIGN KEY (id_user) REFERENCES User(ID) /* Change to id group */,
   FOREIGN KEY (id_user) REFERENCES User(ID)
-    ON DELETE CASCADE ON UPDATE NO ACTION
   );
 
 CREATE TABLE GroupTable (
@@ -57,7 +55,7 @@ CREATE TABLE Task (
 CREATE TABLE StudentItem (
   id_student INTEGER,
   id_item INTEGER,
-  FOREIGN KEY (id_student) REFERENCES StudentData(id_user),
+  FOREIGN KEY (id_student) REFERENCES User(ID),
   FOREIGN KEY (id_item) REFERENCES Item(ID)
   );
 
