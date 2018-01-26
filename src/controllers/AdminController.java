@@ -9,7 +9,7 @@ import dao.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminController {
+public class AdminController extends UserController {
 
     private AdminView view = new AdminView();
     private UserDAO dbUserDAO = new DbUserDAO();
@@ -54,45 +54,6 @@ public class AdminController {
         }
     }
 
-    private void promoteBlankUser() {
-
-        if (dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE).size() > 0) {
-            List<Entry> users = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
-            view.displayEntries(users);
-            String login = view.askForLogin();
-            User user = dbUserDAO.getByLoginAndRole(login, UserEntry.BLANK_USER_ROLE);
-
-            if (user != null) {
-                promote(user);
-            } else {
-                view.displayUserDoesNotExist();
-            }
-        } else {
-            view.displayEmptyListMsg();
-        }
-    }
-
-    private void promote(User user) {
-
-        boolean isPromoteToMentor = view.getTypeOfPromotion();
-        boolean isPromoted;
-
-        if (isPromoteToMentor) {
-            user.setRole(UserEntry.MENTOR_ROLE);
-            isPromoted = dbUserDAO.update(user);
-        } else {
-            user.setRole(UserEntry.STUDENT_ROLE);
-            isPromoted = dbUserDAO.update(user);
-
-            StudentData student = new StudentData();
-            dbStudentDataDAO.add(student, user);
-        }
-        if (isPromoted) {
-            view.displayHasBeenPromoted();
-        } else {
-            view.displayUserNotExists();
-        }
-    }
 
     private void createGroup() {
 
@@ -223,7 +184,7 @@ public class AdminController {
     }
 
     private void showMentorGroups(int mentorID) {
-
+        view.displayPressAnyKeyToContinueMessage();
         //Get all groups by from mentor ID
     }
 

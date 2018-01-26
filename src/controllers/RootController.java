@@ -1,8 +1,9 @@
 package controllers;
 
 import dao.*;
+import data.contracts.UserContract.UserEntry;
 import models.*;
-import services.*;
+import utils.*;
 import views.RootView;
 
 public class RootController {
@@ -63,13 +64,13 @@ public class RootController {
 
             if(user != null) {
                 isLoggedIn = true;
-                if (user.getRole().equals("Blank")) {
+                if (user.getRole().equals(UserEntry.BLANK_USER_ROLE)) {
                     rootView.displayUserNotAssignedMessage();
-                } else if (user.getRole().equals("Student")) {
+                } else if (user.getRole().equals(UserEntry.STUDENT_ROLE)) {
                     studentController.start(user.getId());
-                } else if (user.getRole().equals("Mentor")) {
+                } else if (user.getRole().equals(UserEntry.MENTOR_ROLE)) {
                     mentorController.start();
-                } else if (user.getRole().equals("Admin")) {
+                } else if (user.getRole().equals(UserEntry.ADMIN_ROLE)) {
                     adminController.start();
                 }
             } else {

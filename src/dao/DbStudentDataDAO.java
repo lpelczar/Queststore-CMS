@@ -15,7 +15,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
         return getStudentLevelBy(statement);
     }
 
-    public StudentData getStudentLevelBy(String sqlStatement) {
+    private StudentData getStudentLevelBy(String sqlStatement) {
         StudentData student = new StudentData();
 
         try {

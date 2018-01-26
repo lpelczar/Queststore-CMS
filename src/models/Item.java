@@ -1,8 +1,7 @@
 package models;
 
-import java.io.Serializable;
 
-public class Item implements Serializable {
+public class Item {
     private String name;
     private Integer price;
     private String description;
