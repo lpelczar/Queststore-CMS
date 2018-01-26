@@ -32,10 +32,6 @@ public class MentorView extends UserView {
         clearConsole();
         displayMentorMenu();
     }
-
-    public void displayCreatingTask() {
-        System.out.println("Create new task:\nName:");
-    }
   
     public void displayItemsInStore(List<Item> itemsStore) {
         for (Item item : itemsStore) {
@@ -60,17 +56,6 @@ public class MentorView extends UserView {
         return askForOption();
     }
 
-    public int askForPoints() throws InputMismatchException {
-
-        int points = 0;
-
-        while (!scanner.hasNextInt()) {
-            System.out.println("\nPoints:");
-            points = scanner.nextInt();
-        }
-        return points;
-    }
-
     public void displayCreatingItem() {
 
         System.out.println("Create new bonus menu: ");
@@ -85,23 +70,15 @@ public class MentorView extends UserView {
     }
 
     public String askForItemCategory() throws InputMismatchException {
-        List<String> itemCategories = new ArrayList<>(Arrays.asList("basic", "advance"));
+        List<String> itemCategories = new ArrayList<>(Arrays.asList("basic", "advanced"));
 
         String userCategoryChoose = "";
 
         while (!itemCategories.contains(userCategoryChoose)) {
-            System.out.println("Choose category of bonus, type \'basic\' or \'advance\': ");
+            System.out.println("Choose category of bonus, type \'basic\' or \'advanced\': ");
             userCategoryChoose = scanner.next();
         }
         return userCategoryChoose;
-    }
-
-    public boolean isUserAccept() {
-        System.out.println("If you want add this bonus to store type \'yes\' otherwise it will be deleted.");
-        String isAccepted = askForString().toLowerCase();
-
-        if (isAccepted.equals("yes")) { return true; }
-        else { return false; }
     }
 
     public void displayUpdateName() { System.out.println("Enter new name: "); }
