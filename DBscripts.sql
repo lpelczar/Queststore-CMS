@@ -20,7 +20,7 @@ CREATE TABLE StudentData (
   level VARCHAR (20),
   balance INTEGER,
   PRIMARY KEY (id_user, id_group),
-  FOREIGN KEY (id_group) REFERENCES GroupTable(ID)
+  FOREIGN KEY (id_group) REFERENCES User(ID)
     ON DELETE CASCADE ON UPDATE NO ACTION,
   FOREIGN KEY (id_user) REFERENCES User(ID)
     ON DELETE CASCADE ON UPDATE NO ACTION
