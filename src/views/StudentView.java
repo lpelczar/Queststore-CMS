@@ -40,7 +40,7 @@ public class StudentView extends UserView{
         }
     }
 
-    public void displayBonusInStore(List<Item> itemsStore) {
+    public void showItemsInStore(List<Item> itemsStore) {
         for (Item item : itemsStore) {
             displayItemInfo(item);
         }
