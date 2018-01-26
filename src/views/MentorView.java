@@ -89,5 +89,4 @@ public class MentorView extends UserView {
 
     public void displayOperationSuccessful() { System.out.println("Item has been added to DB succesfully!" ); }
 
-    public void displayOperationFailed() { System.out.println("Operation has been failed!"); }
 }

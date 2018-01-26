@@ -142,4 +142,6 @@ public class UserView {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
+    public void displayOperationFailed() { System.out.println("Operation has been failed!"); }
 }
