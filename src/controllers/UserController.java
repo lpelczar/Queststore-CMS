@@ -6,6 +6,8 @@ import data.contracts.UserContract;
 import models.Entry;
 import models.User;
 import views.UserView;
+import models.StudentData;
+import dao.DbStudentDataDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ class UserController {
 
     private UserDAO dbUserDAO = new DbUserDAO();
     private UserView view = new UserView();
+    private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
 
     void promoteBlankUser() {
 
@@ -44,6 +47,9 @@ class UserController {
         } else {
             user.setRole(UserContract.UserEntry.STUDENT_ROLE);
             isPromoted = dbUserDAO.update(user);
+
+            StudentData student = new StudentData();
+            dbStudentDataDAO.add(student, user);
         }
         if (isPromoted) {
             view.displayHasBeenPromoted();
