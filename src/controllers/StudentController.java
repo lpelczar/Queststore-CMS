@@ -10,8 +10,7 @@ import dao.DbItemDAO;
 import dao.DbStudentDataDAO;
 
 public class StudentController {
-    StudentData student;
-
+    private StudentData student;
     private StudentView view = new StudentView();
     private DbItemDAO dbItemDAO = new DbItemDAO();
     private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
@@ -110,7 +109,7 @@ public class StudentController {
     private void updateStudentBalance(Item item) {
         int transactionBalance = student.getBalance() - item.getPrice();
         student.setBalance(transactionBalance);
-        dbStudentDataDAO.upddateStudentData(student);
+        dbStudentDataDAO.updateStudentData(student);
     }
 
     private StudentData getStudentDataBy(int student_id) {

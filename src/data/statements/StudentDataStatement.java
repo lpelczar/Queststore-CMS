@@ -14,7 +14,7 @@ public class StudentDataStatement {
                 " WHERE " + student_id + " = " + StudentDataEntry.ID_USER + "; ";
     }
 
-    public static String createStudentData(StudentData student, User user) {
+    public static String createStudentData(StudentData student) {
         return "INSERT INTO " + StudentDataEntry.TABLE_NAME + " ( " +
                 StudentDataEntry.ID_USER + ", " +
                 StudentDataEntry.ID_GROUP + ", " +
@@ -24,7 +24,7 @@ public class StudentDataStatement {
                 StudentDataEntry.EXPERIENCE + ") " +
                 "VALUES (" +
                 student.getId() + ", " +
-                user.getId() + ", \'" +
+                student.getId() + ", \'" +
                 student.getTeamName() + "\', \'" +
                 student.getLevel() + "\', " +
                 student.getBalance() + ", " +

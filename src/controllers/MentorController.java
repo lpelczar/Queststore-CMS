@@ -60,8 +60,8 @@ public class MentorController extends UserController {
         user.setRole(UserEntry.STUDENT_ROLE);
         boolean isPromoted = dbUserDAO.update(user);
 
-        StudentData student = new StudentData();
-        dbStudentDataDAO.add(student, user);
+        StudentData student = createStudent(user);
+        dbStudentDataDAO.add(student);
 
         if (isPromoted) {
             view.displayHasBeenPromoted();
