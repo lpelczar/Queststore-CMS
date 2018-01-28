@@ -16,6 +16,14 @@ public class StudentData {
         this.balance = 0;
     }
 
+    public StudentData(String level, String group_name, String team_name, int exp, int balance) {
+        this.level = level;
+        this.group_name = group_name;
+        this.team_name = team_name;
+        this.exp = exp;
+        this.balance = balance;
+    }
+
     public String getLevel() {
         return level;
     }
