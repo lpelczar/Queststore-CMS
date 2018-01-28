@@ -58,7 +58,7 @@ class UserController {
         }
     }
 
-    private StudentData createStudent(User user) {
+    protected StudentData createStudent(User user) {
         StudentData student = new StudentData();
         student.setStudentId(user.getId());
         return student;
