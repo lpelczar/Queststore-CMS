@@ -10,8 +10,7 @@ import dao.DbItemDAO;
 import dao.DbStudentDataDAO;
 
 public class StudentController {
-    StudentData student;
-
+    private StudentData student;
     private StudentView view = new StudentView();
     private DbItemDAO dbItemDAO = new DbItemDAO();
     private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
