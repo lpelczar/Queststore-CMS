@@ -9,9 +9,8 @@ import models.User;
 
 public class StudentDataStatement {
 
-    public static String getLevelQuery(int student_id) {
-        return "SELECT " + StudentDataEntry.LEVEL +
-                " FROM " + StudentDataEntry.TABLE_NAME +
+    public static String getStudentData(int student_id) {
+        return "SELECT * FROM " + StudentDataEntry.TABLE_NAME +
                 " WHERE " + student_id + " = " + StudentDataEntry.ID_USER + "; ";
     }
 
