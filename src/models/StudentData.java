@@ -47,4 +47,6 @@ public class StudentData {
     public int getExperience() { return experience; }
 
     public int getId() { return student_id; }
+
+    public Integer getGroupId() { return group_id; }
 }
