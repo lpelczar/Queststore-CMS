@@ -5,23 +5,23 @@ public class StudentData {
     private String level;
     private String group_name;
     private String team_name;
-    private int exp;
     private int balance;
+    private int exp;
 
     public StudentData() {
         this.level = "beginner";
         this.group_name = "Not assign yet.";
         this.team_name = "Not assign yet.";
-        this.exp = 0;
         this.balance = 0;
+        this.exp = 0;
     }
 
-    public StudentData(String level, String group_name, String team_name, int exp, int balance) {
+    public StudentData(String level, String group_name, String team_name, int balance, int exp) {
         this.level = level;
         this.group_name = group_name;
         this.team_name = team_name;
-        this.exp = exp;
         this.balance = balance;
+        this.exp = exp;
     }
 
     public String getLevel() {
