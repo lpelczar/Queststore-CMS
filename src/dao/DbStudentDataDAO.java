@@ -12,22 +12,27 @@ import data.contracts.StudentDataContract.StudentDataEntry;
 public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     @Override
-    public StudentData getStudentLevelBy(int student_id) {
-        String statement = StudentDataStatement.getLevelQuery(student_id);
-        return getStudentLevelBy(statement);
+    public StudentData getStudentDataBy(int student_id) {
+        String statement = StudentDataStatement.getStudentData(student_id);
+        return getStudentDataBy(statement);
     }
 
-    private StudentData getStudentLevelBy(String sqlStatement) {
-        StudentData student = new StudentData();
+    private StudentData getStudentDataBy(String sqlStatement) {
+        StudentData student = null;
 
         try {
             ResultSet resultSet = query(sqlStatement);
 
 
             while (resultSet.next()) {
-
-                String level = resultSet.getString(StudentDataEntry.LEVEL);
-                student.setLevel(level);
+                student = new StudentData(
+                        resultSet.getInt(StudentDataEntry.ID_USER),
+                        resultSet.getInt(StudentDataEntry.ID_GROUP),
+                        resultSet.getString(StudentDataEntry.TEAM_NAME),
+                        resultSet.getString(StudentDataEntry.LEVEL),
+                        resultSet.getInt(StudentDataEntry.BALANCE),
+                        resultSet.getInt(StudentDataEntry.EXPERIENCE)
+                );
             }
             resultSet.close();
 
@@ -46,6 +51,12 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     public boolean add(int student_id, Item item) {
         String statement = StudentDataStatement.addItemToBackpack(student_id, item);
+        return update(statement);
+    }
+
+    @Override
+    public boolean updateStudentData(StudentData student) {
+        String statement = StudentDataStatement.updateStudentData(student);
         return update(statement);
     }
 }

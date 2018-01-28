@@ -22,21 +22,6 @@ public class UserView {
         return option;
     }
 
-    public String askForInput() throws InputMismatchException {
-
-        String option = "";
-
-        scanner = new Scanner(System.in);
-
-        try {
-            System.out.print("\nEnter option: ");
-            option = scanner.nextLine();
-
-        } catch (InputMismatchException e) {
-            System.out.println("You type wrong sign!");
-        }
-        return option;
-    }
 
     public Boolean getTypeOfPromotion() {
         String userChoose = "";

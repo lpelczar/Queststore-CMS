@@ -9,9 +9,8 @@ import models.User;
 
 public class StudentDataStatement {
 
-    public static String getLevelQuery(int student_id) {
-        return "SELECT " + StudentDataEntry.LEVEL +
-                " FROM " + StudentDataEntry.TABLE_NAME +
+    public static String getStudentData(int student_id) {
+        return "SELECT * FROM " + StudentDataEntry.TABLE_NAME +
                 " WHERE " + student_id + " = " + StudentDataEntry.ID_USER + "; ";
     }
 
@@ -21,13 +20,15 @@ public class StudentDataStatement {
                 StudentDataEntry.ID_GROUP + ", " +
                 StudentDataEntry.TEAM_NAME + ", " +
                 StudentDataEntry.LEVEL + ", " +
-                StudentDataEntry.BALANCE + ") " +
+                StudentDataEntry.BALANCE + ", " +
+                StudentDataEntry.EXPERIENCE + ") " +
                 "VALUES (" +
-                user.getId() + ", " +
+                student.getId() + ", " +
                 user.getId() + ", \'" +
                 student.getTeamName() + "\', \'" +
                 student.getLevel() + "\', " +
-                student.getBalance() + "); ";
+                student.getBalance() + ", " +
+                student.getExperience() + "); ";
     }
 
     public static String addItemToBackpack(int student_id, Item item) {
@@ -37,5 +38,15 @@ public class StudentDataStatement {
                 "VALUES (" +
                 student_id  + ", " +
                 item.getID() + " ); ";
+    }
+
+    public static String updateStudentData(StudentData student) {
+        return "UPDATE " + StudentDataEntry.TABLE_NAME + " SET " +
+                StudentDataEntry.ID_GROUP + " = " + student.getGroupId() + ", " +
+                StudentDataEntry.TEAM_NAME + " = " + student.getTeamName() + ", " +
+                StudentDataEntry.LEVEL + " = " + student.getLevel() + ", " +
+                StudentDataEntry.BALANCE + " = " + student.getBalance() + ", " +
+                StudentDataEntry.EXPERIENCE + " = " + student.getExperience() +
+                " WHERE " + StudentDataEntry.ID_USER + " = " + student.getId() + "; ";
     }
 }
