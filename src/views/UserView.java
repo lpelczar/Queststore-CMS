@@ -144,4 +144,6 @@ public class UserView {
     }
 
     public void displayOperationFailed() { System.out.println("Operation has been failed!"); }
+
+    public void displayOperationSuccesfull() { System.out.println(" Operation succesfull!"); }
 }

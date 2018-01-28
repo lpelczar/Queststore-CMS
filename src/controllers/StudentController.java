@@ -31,7 +31,7 @@ public class StudentController {
             if (option == 1) {
                 showStudentBackPack(student_id);
             } else if (option == 2) {
-                buyArtifact();
+                buyArtifact(student_id);
             } else if (option == 3) {
             } else if (option == 4) {
                 showStudentLevel(student_id);
@@ -52,16 +52,23 @@ public class StudentController {
         view.displayStudentLevel(level);
     }
 
-    private void buyArtifact() {
+    private void buyArtifact(int student_id) {
+        boolean isItemSuccesfullAdded;
         List<Item> items = dbItemDAO.getAllItemsInStore();
 
         if (items != null) {
             view.showItemsInStore(items);
             int item_id = view.askForInt();
             Item item = dbItemDAO.getItemBy(item_id);
-//            dbStudentItemDAO.add(item);
-        }
-        else {
+            isItemSuccesfullAdded = dbStudentDataDAO.add(student_id, item);
+
+            if (isItemSuccesfullAdded) {
+                view.displayOperationSuccesfull();
+            } else {
+                view.displayOperationFailed();
+            }
+
+        } else {
             view.displayOperationFailed();
         }
     }
