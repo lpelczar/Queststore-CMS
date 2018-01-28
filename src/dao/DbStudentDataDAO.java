@@ -12,12 +12,12 @@ import data.contracts.StudentDataContract.StudentDataEntry;
 public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     @Override
-    public StudentData getStudentLevelBy(int student_id) {
-        String statement = StudentDataStatement.getLevelQuery(student_id);
-        return getStudentLevelBy(statement);
+    public StudentData getStudentDataBy(int student_id) {
+        String statement = StudentDataStatement.getStudentData(student_id);
+        return getStudentDataBy(statement);
     }
 
-    private StudentData getStudentLevelBy(String sqlStatement) {
+    private StudentData getStudentDataBy(String sqlStatement) {
         StudentData student = new StudentData();
 
         try {
