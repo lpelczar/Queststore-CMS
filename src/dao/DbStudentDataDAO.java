@@ -1,6 +1,8 @@
 package dao;
 
 import java.sql.*;
+
+import models.Item;
 import models.StudentData;
 import models.User;
 import data.DbHelper;
@@ -39,6 +41,11 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     public boolean add(StudentData student, User user) {
         String statement = StudentDataStatement.createStudentData(student, user);
+        return update(statement);
+    }
+
+    public boolean add(int student_id, Item item) {
+        String statement = StudentDataStatement.addItemToBackpack(student_id, item);
         return update(statement);
     }
 }
