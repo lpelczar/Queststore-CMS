@@ -45,4 +45,6 @@ public class StudentData {
     public void setBalance(int balance) { this.balance = balance; }
 
     public int getExperience() { return experience; }
+
+    public int getId() { return student_id; }
 }
