@@ -23,7 +23,7 @@ public class StudentDataStatement {
                 StudentDataEntry.BALANCE + ", " +
                 StudentDataEntry.EXPERIENCE + ") " +
                 "VALUES (" +
-                user.getId() + ", " +
+                student.getId() + ", " +
                 user.getId() + ", \'" +
                 student.getTeamName() + "\', \'" +
                 student.getLevel() + "\', " +
@@ -40,8 +40,13 @@ public class StudentDataStatement {
                 item.getID() + " ); ";
     }
 
-    public static String updateStudentDate(StudentData student) {
+    public static String updateStudentData(StudentData student) {
         return "UPDATE " + StudentDataEntry.TABLE_NAME + " SET " +
-                //StudentDataEntry.ID_USER + " = " + student.getID
+                StudentDataEntry.ID_GROUP + " = " + student.getGroupId() + ", " +
+                StudentDataEntry.TEAM_NAME + " = " + student.getTeamName() + ", " +
+                StudentDataEntry.LEVEL + " = " + student.getLevel() + ", " +
+                StudentDataEntry.BALANCE + " = " + student.getBalance() + ", " +
+                StudentDataEntry.EXPERIENCE + " = " + student.getExperience() +
+                " WHERE " + StudentDataEntry.ID_USER + " = " + student.getId() + "; ";
     }
 }
