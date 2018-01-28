@@ -28,6 +28,12 @@ public class StudentView extends UserView{
         displayStudentMenu();
     }
 
+    public void displayInfoBar(int balance, String level) {
+        clearConsole();
+        System.out.format("%-10s%-30d%-8s%-30s", "Balance: ", balance , "Level: ", level);
+        System.out.println();
+    }
+
     public int askForOption() throws InputMismatchException {
         System.out.println("\nEnter option: ");
         return scanner.nextInt();
@@ -56,4 +62,5 @@ public class StudentView extends UserView{
         System.out.println("Your level is " + level + ".");
     }
 
+    public void displayNoMoney() { System.out.println("You don\'t have enough balance!"); }
 }
