@@ -20,13 +20,15 @@ public class StudentDataStatement {
                 StudentDataEntry.ID_GROUP + ", " +
                 StudentDataEntry.TEAM_NAME + ", " +
                 StudentDataEntry.LEVEL + ", " +
-                StudentDataEntry.BALANCE + ") " +
+                StudentDataEntry.BALANCE + ", " +
+                StudentDataEntry.EXPERIENCE + ") " +
                 "VALUES (" +
                 user.getId() + ", " +
                 user.getId() + ", \'" +
                 student.getTeamName() + "\', \'" +
                 student.getLevel() + "\', " +
-                student.getBalance() + "); ";
+                student.getBalance() + ", " +
+                student.getExperience() + "); ";
     }
 
     public static String addItemToBackpack(int student_id, Item item) {
@@ -36,5 +38,10 @@ public class StudentDataStatement {
                 "VALUES (" +
                 student_id  + ", " +
                 item.getID() + " ); ";
+    }
+
+    public static String updateStudentDate(StudentData student) {
+        return "UPDATE " + StudentDataEntry.TABLE_NAME + " SET " +
+                //StudentDataEntry.ID_USER + " = " + student.getID
     }
 }
