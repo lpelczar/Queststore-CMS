@@ -48,13 +48,20 @@ class UserController {
             user.setRole(UserContract.UserEntry.STUDENT_ROLE);
             isPromoted = dbUserDAO.update(user);
 
-            StudentData student = new StudentData();
-            dbStudentDataDAO.add(student, user);
+            StudentData student = createStudent(user);
+            dbStudentDataDAO.add(student);
         }
         if (isPromoted) {
             view.displayHasBeenPromoted();
         } else {
             view.displayUserNotExists();
         }
+    }
+
+    private StudentData createStudent(User user) {
+        StudentData student = new StudentData();
+        student.setStudentId(user.getId());
+        return student;
+
     }
 }

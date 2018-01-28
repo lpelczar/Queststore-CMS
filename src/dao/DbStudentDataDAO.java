@@ -44,8 +44,8 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
         return student;
     }
 
-    public boolean add(StudentData student, User user) {
-        String statement = StudentDataStatement.createStudentData(student, user);
+    public boolean add(StudentData student) {
+        String statement = StudentDataStatement.createStudentData(student);
         return update(statement);
     }
 
