@@ -10,16 +10,18 @@ import dao.DbItemDAO;
 import dao.DbStudentDataDAO;
 
 public class StudentController {
+    StudentData student;
 
     private StudentView view = new StudentView();
     private DbItemDAO dbItemDAO = new DbItemDAO();
     private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
 
     public void start(int student_id) {
+        student = getStudentDataBy(student_id);
+        boolean isLoopEnd = false;
         int option = 0;
-        boolean isAppRunning = true;
 
-        while (isAppRunning) {
+        while (!isLoopEnd) {
             view.handleStudentMenu();
 
             try {
@@ -34,9 +36,9 @@ public class StudentController {
                 buyArtifact(student_id);
             } else if (option == 3) {
             } else if (option == 4) {
-                showStudentLevel(student_id);
+                showStudentLevel();
             } else if (option == 5) {
-                isAppRunning = false;
+                isLoopEnd = true;
             }
         }
     }
@@ -46,31 +48,56 @@ public class StudentController {
         view.displayStudentBackpack(backpack);
     }
 
-    private void showStudentLevel(int student_id) {
-        StudentData student = dbStudentDataDAO.getStudentLevelBy(student_id);
+    private void showStudentLevel() {
         String level = student.getLevel();
         view.displayStudentLevel(level);
     }
 
     private void buyArtifact(int student_id) {
+        Item item = chooseItemToBuy();
+
+
+
         boolean isItemSuccesfullAdded;
-        List<Item> items = dbItemDAO.getAllItemsInStore();
 
-        if (items != null) {
-            view.showItemsInStore(items);
-            int item_id = view.askForInt();
-            Item item = dbItemDAO.getItemBy(item_id);
-            isItemSuccesfullAdded = dbStudentDataDAO.add(student_id, item);
+        isItemSuccesfullAdded = dbStudentDataDAO.add(student_id, item);
 
-            if (isItemSuccesfullAdded) {
-                view.displayOperationSuccesfull();
-            } else {
-                view.displayOperationFailed();
-            }
-
+        if (isItemSuccesfullAdded) {
+            view.displayOperationSuccesfull();
         } else {
             view.displayOperationFailed();
         }
     }
 
+    private Item chooseItemToBuy() {
+        List<Item> items = dbItemDAO.getAllItemsInStore();
+
+        if (items != null) {
+            view.showItemsInStore(items);
+            int item_id = view.askForInt();
+
+            Item item = dbItemDAO.getItemBy(item_id);
+            return item;
+
+        } else {
+            view.displayOperationFailed();
+            return null;
+        }
+    }
+
+    private boolean isStudentHaveEnoughBalanceForItem(StudentData studentData, Item item) {
+        int studentBalance = studentData.getBalance();
+        int itemPrice = item.getPrice();
+
+        if (studentBalance > itemPrice) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private StudentData getStudentDataBy(int student_id) {
+        return dbStudentDataDAO.getStudentDataBy(student_id);
+    }
 }
