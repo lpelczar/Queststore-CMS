@@ -39,4 +39,6 @@ public class StudentData {
     public void setLevel(String level) {
         this.level = level;
     }
+
+    public void setBalance(int balance) { this.balance = balance; }
 }
