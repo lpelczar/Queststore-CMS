@@ -53,4 +53,9 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
         String statement = StudentDataStatement.addItemToBackpack(student_id, item);
         return update(statement);
     }
+
+    public boolean upddateStudentData(StudentData student) {
+        String statement = StudentDataStatement.updateStudentData(student);
+        return update(statement);
+    }
 }
