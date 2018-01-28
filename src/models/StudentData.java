@@ -2,26 +2,28 @@ package models;
 
 public class StudentData {
 
+    private int student_id;
     private String level;
-    private String group_name;
+    private Integer group_id;
     private String team_name;
     private int balance;
-    private int exp;
+    private int experience;
 
     public StudentData() {
         this.level = "beginner";
-        this.group_name = "Not assign yet.";
+        this.group_id = null;
         this.team_name = "Not assign yet.";
         this.balance = 0;
-        this.exp = 0;
+        this.experience = 0;
     }
 
-    public StudentData(String level, String group_name, String team_name, int balance, int exp) {
-        this.level = level;
-        this.group_name = group_name;
+    public StudentData(int student_id, Integer group_id, String team_name, String level, int balance, int experience) {
+        this.student_id = student_id;
+        this.group_id = group_id;
         this.team_name = team_name;
+        this.level = level;
         this.balance = balance;
-        this.exp = exp;
+        this.experience = experience;
     }
 
     public String getLevel() {
@@ -32,7 +34,7 @@ public class StudentData {
         return balance;
     }
 
-    public String getGroupName() { return group_name; }
+    public Integer getGroupName() { return group_id; }
 
     public String getTeamName() { return team_name; }
 
@@ -41,4 +43,6 @@ public class StudentData {
     }
 
     public void setBalance(int balance) { this.balance = balance; }
+
+    public int getExperience() { return experience; }
 }
