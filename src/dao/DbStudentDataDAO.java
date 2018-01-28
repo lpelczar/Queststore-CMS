@@ -54,7 +54,8 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
         return update(statement);
     }
 
-    public boolean upddateStudentData(StudentData student) {
+    @Override
+    public boolean updateStudentData(StudentData student) {
         String statement = StudentDataStatement.updateStudentData(student);
         return update(statement);
     }
