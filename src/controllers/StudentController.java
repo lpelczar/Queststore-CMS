@@ -22,6 +22,7 @@ public class StudentController {
         int option = 0;
 
         while (!isLoopEnd) {
+            view.displayInfoBar(student.getBalance(), student.getLevel());
             view.handleStudentMenu();
 
             try {
@@ -56,16 +57,15 @@ public class StudentController {
     private void buyArtifact(int student_id) {
         Item item = chooseItemToBuy();
 
+        if (item != null) {
 
+            if (isStudentAffordToBuy(item)) {
+                updateStudentBackpack(student_id, item);
+                updateStudentBalance(item);
 
-        boolean isItemSuccesfullAdded;
-
-        isItemSuccesfullAdded = dbStudentDataDAO.add(student_id, item);
-
-        if (isItemSuccesfullAdded) {
-            view.displayOperationSuccesfull();
-        } else {
-            view.displayOperationFailed();
+            } else {
+                view.displayNoMoney();
+            }
         }
     }
 
@@ -85,8 +85,8 @@ public class StudentController {
         }
     }
 
-    private boolean isStudentHaveEnoughBalanceForItem(StudentData studentData, Item item) {
-        int studentBalance = studentData.getBalance();
+    private boolean isStudentAffordToBuy(Item item) {
+        int studentBalance = student.getBalance();
         int itemPrice = item.getPrice();
 
         if (studentBalance > itemPrice) {
@@ -95,6 +95,22 @@ public class StudentController {
         else {
             return false;
         }
+    }
+
+    private void updateStudentBackpack(int student_id, Item item) {
+        boolean isItemSuccesfullAdded = dbStudentDataDAO.add(student_id, item);
+
+        if (isItemSuccesfullAdded) {
+            view.displayOperationSuccesfull();
+        } else {
+            view.displayOperationFailed();
+        }
+    }
+
+    private void updateStudentBalance(Item item) {
+        int transactionBalance = student.getBalance() - item.getPrice();
+        student.setBalance(transactionBalance);
+        dbStudentDataDAO.upddateStudentData(student);
     }
 
     private StudentData getStudentDataBy(int student_id) {
