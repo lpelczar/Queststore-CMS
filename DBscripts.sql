@@ -19,6 +19,7 @@ CREATE TABLE StudentData (
   team_name VARCHAR (20),
   level VARCHAR (20),
   balance INTEGER,
+  experience INTEGER, /* New column exp added to existing table after created */
   PRIMARY KEY (id_user, id_group),
   FOREIGN KEY (id_user) REFERENCES User(ID) /* Change to id group */,
   FOREIGN KEY (id_user) REFERENCES User(ID)

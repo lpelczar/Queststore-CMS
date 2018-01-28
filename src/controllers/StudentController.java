@@ -10,16 +10,19 @@ import dao.DbItemDAO;
 import dao.DbStudentDataDAO;
 
 public class StudentController {
+    StudentData student;
 
     private StudentView view = new StudentView();
     private DbItemDAO dbItemDAO = new DbItemDAO();
     private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
 
     public void start(int student_id) {
+        student = getStudentDataBy(student_id);
+        boolean isLoopEnd = false;
         int option = 0;
-        boolean isAppRunning = true;
 
-        while (isAppRunning) {
+        while (!isLoopEnd) {
+            view.displayInfoBar(student.getBalance(), student.getLevel());
             view.handleStudentMenu();
 
             try {
@@ -34,9 +37,9 @@ public class StudentController {
                 buyArtifact(student_id);
             } else if (option == 3) {
             } else if (option == 4) {
-                showStudentLevel(student_id);
+                showStudentLevel();
             } else if (option == 5) {
-                isAppRunning = false;
+                isLoopEnd = true;
             }
         }
     }
@@ -46,31 +49,71 @@ public class StudentController {
         view.displayStudentBackpack(backpack);
     }
 
-    private void showStudentLevel(int student_id) {
-        StudentData student = dbStudentDataDAO.getStudentLevelBy(student_id);
+    private void showStudentLevel() {
         String level = student.getLevel();
         view.displayStudentLevel(level);
     }
 
     private void buyArtifact(int student_id) {
-        boolean isItemSuccesfullAdded;
+        Item item = chooseItemToBuy();
+
+        if (item != null) {
+
+            if (isStudentAffordToBuy(item)) {
+                updateStudentBackpack(student_id, item);
+                updateStudentBalance(item);
+
+            } else {
+                view.displayNoMoney();
+            }
+        }
+    }
+
+    private Item chooseItemToBuy() {
         List<Item> items = dbItemDAO.getAllItemsInStore();
 
         if (items != null) {
             view.showItemsInStore(items);
             int item_id = view.askForInt();
+
             Item item = dbItemDAO.getItemBy(item_id);
-            isItemSuccesfullAdded = dbStudentDataDAO.add(student_id, item);
+            return item;
 
-            if (isItemSuccesfullAdded) {
-                view.displayOperationSuccesfull();
-            } else {
-                view.displayOperationFailed();
-            }
+        } else {
+            view.displayOperationFailed();
+            return null;
+        }
+    }
 
+    private boolean isStudentAffordToBuy(Item item) {
+        int studentBalance = student.getBalance();
+        int itemPrice = item.getPrice();
+
+        if (studentBalance > itemPrice) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    private void updateStudentBackpack(int student_id, Item item) {
+        boolean isItemSuccesfullAdded = dbStudentDataDAO.add(student_id, item);
+
+        if (isItemSuccesfullAdded) {
+            view.displayOperationSuccesfull();
         } else {
             view.displayOperationFailed();
         }
     }
 
+    private void updateStudentBalance(Item item) {
+        int transactionBalance = student.getBalance() - item.getPrice();
+        student.setBalance(transactionBalance);
+        dbStudentDataDAO.upddateStudentData(student);
+    }
+
+    private StudentData getStudentDataBy(int student_id) {
+        return dbStudentDataDAO.getStudentDataBy(student_id);
+    }
 }
