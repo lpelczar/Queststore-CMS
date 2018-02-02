@@ -1,6 +1,6 @@
-package main.java.com.example.queststore.main;
+package com.example.queststore.app;
 
-import main.java.com.example.queststore.controllers.RootController;
+import com.example.queststore.controllers.RootController;
 
 public class Application {
 

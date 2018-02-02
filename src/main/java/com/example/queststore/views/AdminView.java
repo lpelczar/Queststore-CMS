@@ -1,7 +1,13 @@
-package main.java.com.example.queststore.views;
-import java.util.*;
-import models.*;
+package com.example.queststore.views;
 
+
+import com.example.queststore.models.Entry;
+import com.example.queststore.models.User;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class AdminView extends UserView {
 

@@ -1,13 +1,14 @@
-package main.java.com.example.queststore.controllers;
+package com.example.queststore.controllers;
 
 
-import views.StudentView;
+import com.example.queststore.dao.DbItemDAO;
+import com.example.queststore.dao.DbStudentDataDAO;
+import com.example.queststore.models.Item;
+import com.example.queststore.models.StudentData;
+import com.example.queststore.views.StudentView;
+
 import java.util.InputMismatchException;
 import java.util.List;
-import models.Item;
-import models.StudentData;
-import dao.DbItemDAO;
-import dao.DbStudentDataDAO;
 
 public class StudentController {
     private StudentData student;

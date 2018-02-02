@@ -1,8 +1,7 @@
-package main.java.com.example.queststore.dao;
+package com.example.queststore.dao;
 
-import main.java.com.example.queststore.models.Item;
-import main.java.com.example.queststore.models.StudentData;
-import main.java.com.example.queststore.models.User;
+import com.example.queststore.models.Item;
+import com.example.queststore.models.StudentData;
 
 public interface StudentDataDAO {
 

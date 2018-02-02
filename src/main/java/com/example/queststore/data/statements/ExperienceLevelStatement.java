@@ -1,7 +1,8 @@
-package main.java.com.example.queststore.data.statements;
+package com.example.queststore.data.statements;
 
-import data.contracts.ExperienceLevelContract.ExperienceLevelEntry;
-import main.java.com.example.queststore.models.ExpLevel;
+
+import com.example.queststore.data.contracts.ExperienceLevelContract.ExperienceLevelEntry;
+import com.example.queststore.models.ExpLevel;
 
 public class ExperienceLevelStatement {
 

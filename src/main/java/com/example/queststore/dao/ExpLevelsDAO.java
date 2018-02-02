@@ -1,6 +1,6 @@
-package main.java.com.example.queststore.dao;
+package com.example.queststore.dao;
 
-import main.java.com.example.queststore.models.ExpLevel;
+import com.example.queststore.models.ExpLevel;
 
 import java.util.List;
 

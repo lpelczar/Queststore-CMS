@@ -1,4 +1,4 @@
-package main.java.com.example.queststore.models;
+package com.example.queststore.models;
 
 public class ExpLevel implements Entry {
 

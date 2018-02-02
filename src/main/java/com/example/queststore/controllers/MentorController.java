@@ -1,18 +1,18 @@
-package main.java.com.example.queststore.controllers;
+package com.example.queststore.controllers;
 
+
+import com.example.queststore.dao.DbItemDAO;
+import com.example.queststore.dao.DbStudentDataDAO;
+import com.example.queststore.dao.DbUserDAO;
+import com.example.queststore.dao.UserDAO;
+import com.example.queststore.data.contracts.UserContract.UserEntry;
+import com.example.queststore.models.Item;
+import com.example.queststore.models.StudentData;
+import com.example.queststore.models.User;
+import com.example.queststore.views.MentorView;
 
 import java.util.InputMismatchException;
 import java.util.List;
-
-import data.contracts.UserContract.UserEntry;
-import dao.DbUserDAO;
-import dao.UserDAO;
-import models.User;
-import views.MentorView;
-import dao.DbItemDAO;
-import models.Item;
-import models.StudentData;
-import dao.DbStudentDataDAO;
 
 public class MentorController extends UserController {
 

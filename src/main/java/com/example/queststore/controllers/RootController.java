@@ -1,10 +1,13 @@
-package main.java.com.example.queststore.controllers;
+package com.example.queststore.controllers;
 
-import dao.*;
-import data.contracts.UserContract.UserEntry;
-import models.*;
-import utils.*;
-import views.RootView;
+
+import com.example.queststore.dao.DbUserDAO;
+import com.example.queststore.dao.UserDAO;
+import com.example.queststore.data.contracts.UserContract.UserEntry;
+import com.example.queststore.models.User;
+import com.example.queststore.utils.EmailValidator;
+import com.example.queststore.utils.PhoneValidator;
+import com.example.queststore.views.RootView;
 
 public class RootController {
 

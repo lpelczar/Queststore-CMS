@@ -1,4 +1,4 @@
-package main.java.com.example.queststore.dao;
+package com.example.queststore.dao;
 
 public interface MentorGroupDAO {
 

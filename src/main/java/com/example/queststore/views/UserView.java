@@ -1,8 +1,11 @@
-package main.java.com.example.queststore.views;
+package com.example.queststore.views;
 
-import main.java.com.example.queststore.models.Entry;
+import com.example.queststore.models.Entry;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
 
 public class UserView {
 

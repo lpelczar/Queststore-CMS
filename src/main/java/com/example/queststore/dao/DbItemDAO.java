@@ -1,14 +1,15 @@
-package main.java.com.example.queststore.dao;
+package com.example.queststore.dao;
 
-import java.sql.*;
-import java.util.List;
+import com.example.queststore.data.DbHelper;
+import com.example.queststore.data.contracts.ItemContract.ItemEntry;
+import com.example.queststore.data.statements.ItemStatement;
+import com.example.queststore.data.statements.StudentItemStatement;
+import com.example.queststore.models.Item;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-
-import main.java.com.example.queststore.data.statements.StudentItemStatement;
-import main.java.com.example.queststore.data.contracts.ItemContract.ItemEntry;
-import main.java.com.example.queststore.data.statements.ItemStatement;
-import main.java.com.example.queststore.data.DbHelper;
-import main.java.com.example.queststore.models.Item;
+import java.util.List;
 
 
 public class DbItemDAO extends DbHelper implements ItemDAO {

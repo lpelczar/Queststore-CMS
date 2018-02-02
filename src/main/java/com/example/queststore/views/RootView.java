@@ -1,4 +1,4 @@
-package main.java.com.example.queststore.views;
+package com.example.queststore.views;
 
 import java.util.Scanner;
 

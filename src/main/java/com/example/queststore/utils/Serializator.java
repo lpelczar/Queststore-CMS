@@ -1,4 +1,4 @@
-package main.java.com.example.queststore.utils;
+package com.example.queststore.utils;
 
 import java.io.*;
 

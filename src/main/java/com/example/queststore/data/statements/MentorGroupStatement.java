@@ -1,6 +1,7 @@
-package main.java.com.example.queststore.data.statements;
+package com.example.queststore.data.statements;
 
-import data.contracts.MentorGroupContract.MentorGroupEntry;
+
+import com.example.queststore.data.contracts.MentorGroupContract.MentorGroupEntry;
 
 public class MentorGroupStatement {
 

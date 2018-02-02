@@ -1,7 +1,8 @@
-package main.java.com.example.queststore.views;
+package com.example.queststore.views;
+
+import com.example.queststore.models.Item;
 
 import java.util.*;
-import main.java.com.example.queststore.models.Item;
 
 public class MentorView extends UserView {
 

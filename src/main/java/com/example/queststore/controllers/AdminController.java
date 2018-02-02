@@ -1,10 +1,13 @@
-package main.java.com.example.queststore.controllers;
+package com.example.queststore.controllers;
 
 
-import data.contracts.UserContract.UserEntry;
-import views.AdminView;
-import models.*;
-import dao.*;
+import com.example.queststore.dao.*;
+import com.example.queststore.data.contracts.UserContract.UserEntry;
+import com.example.queststore.models.Entry;
+import com.example.queststore.models.ExpLevel;
+import com.example.queststore.models.Group;
+import com.example.queststore.models.User;
+import com.example.queststore.views.AdminView;
 
 import java.util.ArrayList;
 import java.util.List;

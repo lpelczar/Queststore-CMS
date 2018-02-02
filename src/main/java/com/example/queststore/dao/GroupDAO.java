@@ -1,7 +1,7 @@
-package main.java.com.example.queststore.dao;
+package com.example.queststore.dao;
 
-import main.java.com.example.queststore.models.Entry;
-import main.java.com.example.queststore.models.Group;
+import com.example.queststore.models.Entry;
+import com.example.queststore.models.Group;
 
 import java.util.List;
 

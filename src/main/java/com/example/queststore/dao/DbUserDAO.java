@@ -1,9 +1,9 @@
-package main.java.com.example.queststore.dao;
+package com.example.queststore.dao;
 
-import main.java.com.example.queststore.data.statements.UserStatement;
-import main.java.com.example.queststore.models.User;
-import main.java.com.example.queststore.data.DbHelper;
-import main.java.com.example.queststore.data.contracts.UserContract.UserEntry;
+import com.example.queststore.data.statements.UserStatement;
+import com.example.queststore.models.User;
+import com.example.queststore.data.DbHelper;
+import com.example.queststore.data.contracts.UserContract.UserEntry;
 
 import java.sql.*;
 import java.util.*;

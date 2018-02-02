@@ -1,13 +1,14 @@
-package main.java.com.example.queststore.controllers;
+package com.example.queststore.controllers;
 
-import dao.DbUserDAO;
-import dao.UserDAO;
-import data.contracts.UserContract;
-import models.Entry;
-import models.User;
-import views.UserView;
-import models.StudentData;
-import dao.DbStudentDataDAO;
+
+import com.example.queststore.dao.DbStudentDataDAO;
+import com.example.queststore.dao.DbUserDAO;
+import com.example.queststore.dao.UserDAO;
+import com.example.queststore.data.contracts.UserContract;
+import com.example.queststore.models.Entry;
+import com.example.queststore.models.StudentData;
+import com.example.queststore.models.User;
+import com.example.queststore.views.UserView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package main.java.com.example.queststore.data;
+package com.example.queststore.data;
 
 
 import org.sqlite.SQLiteConfig;

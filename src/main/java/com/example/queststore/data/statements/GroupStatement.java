@@ -1,7 +1,8 @@
-package main.java.com.example.queststore.data.statements;
+package com.example.queststore.data.statements;
 
-import data.contracts.GroupTableContract.GroupTableEntry;
-import main.java.com.example.queststore.models.Group;
+
+import com.example.queststore.data.contracts.GroupTableContract.GroupTableEntry;
+import com.example.queststore.models.Group;
 
 public class GroupStatement {
 

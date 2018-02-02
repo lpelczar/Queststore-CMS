@@ -1,7 +1,8 @@
-package main.java.com.example.queststore.data.statements;
+package com.example.queststore.data.statements;
 
-import data.contracts.ItemContract.ItemEntry;
-import main.java.com.example.queststore.models.Item;
+
+import com.example.queststore.data.contracts.ItemContract.ItemEntry;
+import com.example.queststore.models.Item;
 
 public class ItemStatement {
 

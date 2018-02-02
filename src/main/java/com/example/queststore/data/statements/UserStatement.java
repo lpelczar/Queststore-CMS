@@ -1,8 +1,8 @@
-package main.java.com.example.queststore.data.statements;
+package com.example.queststore.data.statements;
 
 
-import data.contracts.UserContract.UserEntry;
-import main.java.com.example.queststore.models.User;
+import com.example.queststore.data.contracts.UserContract.UserEntry;
+import com.example.queststore.models.User;
 
 public class UserStatement {
 

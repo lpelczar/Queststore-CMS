@@ -1,7 +1,8 @@
-package main.java.com.example.queststore.dao;
+package com.example.queststore.dao;
+
+import com.example.queststore.models.Item;
 
 import java.util.List;
-import main.java.com.example.queststore.models.Item;
 
 public interface ItemDAO {
 

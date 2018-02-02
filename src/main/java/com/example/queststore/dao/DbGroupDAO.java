@@ -1,10 +1,10 @@
-package main.java.com.example.queststore.dao;
+package com.example.queststore.dao;
 
-import main.java.com.example.queststore.data.DbHelper;
-import main.java.com.example.queststore.data.contracts.GroupTableContract.GroupTableEntry;
-import main.java.com.example.queststore.data.statements.GroupStatement;
-import main.java.com.example.queststore.models.Entry;
-import main.java.com.example.queststore.models.Group;
+import com.example.queststore.data.DbHelper;
+import com.example.queststore.data.contracts.GroupTableContract.GroupTableEntry;
+import com.example.queststore.data.statements.GroupStatement;
+import com.example.queststore.models.Entry;
+import com.example.queststore.models.Group;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

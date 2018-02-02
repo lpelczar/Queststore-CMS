@@ -1,4 +1,4 @@
-package main.java.com.example.queststore.data.contracts;
+package com.example.queststore.data.contracts;
 
 public class StudentItemContract {
 
