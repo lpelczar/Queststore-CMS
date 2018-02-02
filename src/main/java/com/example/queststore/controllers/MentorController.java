@@ -5,7 +5,7 @@ import com.example.queststore.dao.DbItemDAO;
 import com.example.queststore.dao.DbStudentDataDAO;
 import com.example.queststore.dao.DbUserDAO;
 import com.example.queststore.dao.UserDAO;
-import com.example.queststore.data.contracts.UserContract.UserEntry;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.models.User;

@@ -1,7 +1,7 @@
 package com.example.queststore.dao;
 
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.contracts.GroupTableContract.GroupTableEntry;
+import com.example.queststore.data.contracts.GroupTableEntry;
 import com.example.queststore.data.statements.GroupStatement;
 import com.example.queststore.models.Entry;
 import com.example.queststore.models.Group;

@@ -1,7 +1,7 @@
 package com.example.queststore.data.statements;
 
 
-import com.example.queststore.data.contracts.MentorGroupContract.MentorGroupEntry;
+import com.example.queststore.data.contracts.MentorGroupEntry;
 
 public class MentorGroupStatement {
 

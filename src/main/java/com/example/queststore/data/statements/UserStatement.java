@@ -1,7 +1,7 @@
 package com.example.queststore.data.statements;
 
 
-import com.example.queststore.data.contracts.UserContract.UserEntry;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.User;
 
 public class UserStatement {

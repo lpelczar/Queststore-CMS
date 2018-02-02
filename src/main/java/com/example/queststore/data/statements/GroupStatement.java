@@ -1,7 +1,7 @@
 package com.example.queststore.data.statements;
 
 
-import com.example.queststore.data.contracts.GroupTableContract.GroupTableEntry;
+import com.example.queststore.data.contracts.GroupTableEntry;
 import com.example.queststore.models.Group;
 
 public class GroupStatement {

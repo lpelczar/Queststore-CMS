@@ -1,7 +1,7 @@
 package com.example.queststore.dao;
 
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.contracts.StudentDataContract.StudentDataEntry;
+import com.example.queststore.data.contracts.StudentDataEntry;
 import com.example.queststore.data.statements.StudentDataStatement;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.StudentData;

@@ -1,7 +1,7 @@
 package com.example.queststore.data.statements;
 
 
-import com.example.queststore.data.contracts.ExperienceLevelContract.ExperienceLevelEntry;
+import com.example.queststore.data.contracts.ExperienceLevelEntry;
 import com.example.queststore.models.ExpLevel;
 
 public class ExperienceLevelStatement {

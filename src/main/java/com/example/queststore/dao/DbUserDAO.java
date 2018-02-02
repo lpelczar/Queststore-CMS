@@ -1,12 +1,14 @@
 package com.example.queststore.dao;
 
+import com.example.queststore.data.DbHelper;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.statements.UserStatement;
 import com.example.queststore.models.User;
-import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.contracts.UserContract.UserEntry;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DbUserDAO extends DbHelper implements UserDAO {
 

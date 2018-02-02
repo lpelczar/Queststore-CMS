@@ -2,7 +2,7 @@ package com.example.queststore.controllers;
 
 
 import com.example.queststore.dao.*;
-import com.example.queststore.data.contracts.UserContract.UserEntry;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Entry;
 import com.example.queststore.models.ExpLevel;
 import com.example.queststore.models.Group;

@@ -4,7 +4,7 @@ package com.example.queststore.controllers;
 import com.example.queststore.dao.DbStudentDataDAO;
 import com.example.queststore.dao.DbUserDAO;
 import com.example.queststore.dao.UserDAO;
-import com.example.queststore.data.contracts.UserContract;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Entry;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.models.User;
@@ -21,11 +21,11 @@ class UserController {
 
     void promoteBlankUser() {
 
-        if (dbUserDAO.getAllByRole(UserContract.UserEntry.BLANK_USER_ROLE).size() > 0) {
-            List<Entry> users = new ArrayList<>(dbUserDAO.getAllByRole(UserContract.UserEntry.BLANK_USER_ROLE));
+        if (dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE).size() > 0) {
+            List<Entry> users = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
             view.displayEntriesNoInput(users);
             String login = view.askForLogin();
-            User user = dbUserDAO.getByLoginAndRole(login, UserContract.UserEntry.BLANK_USER_ROLE);
+            User user = dbUserDAO.getByLoginAndRole(login, UserEntry.BLANK_USER_ROLE);
 
             if (user != null) {
                 promote(user);
@@ -43,10 +43,10 @@ class UserController {
         boolean isPromoted;
 
         if (isPromoteToMentor) {
-            user.setRole(UserContract.UserEntry.MENTOR_ROLE);
+            user.setRole(UserEntry.MENTOR_ROLE);
             isPromoted = dbUserDAO.update(user);
         } else {
-            user.setRole(UserContract.UserEntry.STUDENT_ROLE);
+            user.setRole(UserEntry.STUDENT_ROLE);
             isPromoted = dbUserDAO.update(user);
 
             StudentData student = createStudent(user);

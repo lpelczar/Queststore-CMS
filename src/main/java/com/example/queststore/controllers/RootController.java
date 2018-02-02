@@ -3,7 +3,7 @@ package com.example.queststore.controllers;
 
 import com.example.queststore.dao.DbUserDAO;
 import com.example.queststore.dao.UserDAO;
-import com.example.queststore.data.contracts.UserContract.UserEntry;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.User;
 import com.example.queststore.utils.EmailValidator;
 import com.example.queststore.utils.PhoneValidator;

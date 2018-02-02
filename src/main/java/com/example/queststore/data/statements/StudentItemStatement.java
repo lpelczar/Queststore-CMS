@@ -1,7 +1,7 @@
 package com.example.queststore.data.statements;
 
 
-import com.example.queststore.data.contracts.StudentItemContract.StudentItemEntry;
+import com.example.queststore.data.contracts.StudentItemEntry;
 
 public class StudentItemStatement {
 
