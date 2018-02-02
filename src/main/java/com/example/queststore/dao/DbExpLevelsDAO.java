@@ -1,7 +1,7 @@
 package com.example.queststore.dao;
 
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.contracts.ExperienceLevelContract.ExperienceLevelEntry;
+import com.example.queststore.data.contracts.ExperienceLevelEntry;
 import com.example.queststore.data.statements.ExperienceLevelStatement;
 import com.example.queststore.models.ExpLevel;
 

@@ -1,8 +1,6 @@
 package com.example.queststore.data.contracts;
 
-public class TaskContract {
-
-    public static final class TaskEntry {
+public class TaskEntry {
 
         public static final String TABLE_NAME = "Taks";
         public static final String ID = "ID";
@@ -11,5 +9,4 @@ public class TaskContract {
         public static final String DESCRIPTION = "description";
         public static final String CATEGORY = "category";
 
-    }
 }
