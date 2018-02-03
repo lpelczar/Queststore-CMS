@@ -1,75 +1,77 @@
-CREATE TABLE User (
-  ID INTEGER PRIMARY KEY AUTOINCREMENT,
-  name VARCHAR (20) NOT NULL,
-  login VARCHAR (20) NOT NULL,
-  email VARCHAR (20) NOT NULL,
-  password VARCHAR (20) NOT NULL,
-  phone_number VARCHAR (20) NOT NULL,
-  role VARCHAR (10)
+CREATE TABLE users (
+  ID INTEGER PRIMARY KEY,
+  name TEXT NOT NULL,
+  login TEXT NOT NULL UNIQUE,
+  email TEXT NOT NULL UNIQUE,
+  password TEXT NOT NULL,
+  phone_number TEXT NOT NULL UNIQUE,
+  role TEXT
   );
 
-CREATE TABLE MentorData (
+CREATE TABLE mentors_data (
   id_user INTEGER,
-  FOREIGN KEY (id_user) REFERENCES User(ID)
+  FOREIGN KEY (id_user) REFERENCES users(ID)
   );
 
-CREATE TABLE StudentData (
+CREATE TABLE students_data (
   id_user INTEGER,
   id_group INTEGER,
-  team_name VARCHAR (20),
-  level VARCHAR (20),
+  team_name TEXT,
+  level TEXT,
   balance INTEGER,
-  experience INTEGER, /* New column exp added to existing table after created */
+  experience INTEGER,
   PRIMARY KEY (id_user, id_group),
-  FOREIGN KEY (id_user) REFERENCES User(ID) /* Change to id group */,
-  FOREIGN KEY (id_user) REFERENCES User(ID)
+  FOREIGN KEY (id_user) REFERENCES users(ID) ON DELETE CASCADE,
+  FOREIGN KEY (id_group) REFERENCES groups(ID)
   );
 
-CREATE TABLE GroupTable (
-  ID INTEGER PRIMARY KEY AUTOINCREMENT,
-  group_name VARCHAR (20) NOT NULL
+CREATE TABLE groups (
+  ID INTEGER PRIMARY KEY,
+  group_name TEXT NOT NULL UNIQUE
   );
 
-CREATE TABLE MentorGroup (
+CREATE TABLE mentors_groups (
   id_mentor INTEGER,
   id_group INTEGER,
   PRIMARY KEY (id_mentor, id_group),
-  FOREIGN KEY (id_mentor) REFERENCES User(ID) ON DELETE CASCADE,
-  FOREIGN KEY (id_group) REFERENCES GroupTable(ID) ON DELETE CASCADE
+  FOREIGN KEY (id_mentor) REFERENCES users(ID) ON DELETE CASCADE,
+  FOREIGN KEY (id_group) REFERENCES groups(ID) ON DELETE CASCADE
   );
 
-CREATE TABLE StudentTask (
+CREATE TABLE students_tasks (
   id_student INTEGER,
   id_task INTEGER,
-  FOREIGN KEY (id_student) REFERENCES StudentData(id_user),
-  FOREIGN KEY (id_task) REFERENCES Task(ID)
+  PRIMARY KEY (id_student, id_task),
+  FOREIGN KEY (id_student) REFERENCES students_data(id_user) ON DELETE CASCADE,
+  FOREIGN KEY (id_task) REFERENCES tasks(ID) ON DELETE CASCADE
   );
 
-CREATE TABLE Task (
+CREATE TABLE tasks (
   ID INTEGER PRIMARY KEY,
-  name VARCHAR (20) NOT NULL,
+  name TEXT NOT NULL UNIQUE,
   points INTEGER NOT NULL,
   description TEXT,
-  category VARCHAR (20)
+  category TEXT
   );
 
-CREATE TABLE StudentItem (
+CREATE TABLE students_items (
   id_student INTEGER,
   id_item INTEGER,
-  FOREIGN KEY (id_student) REFERENCES User(ID),
-  FOREIGN KEY (id_item) REFERENCES Item(ID)
+  PRIMARY KEY (id_student, id_item),
+  FOREIGN KEY (id_student) REFERENCES students_data(id_user) ON DELETE CASCADE,
+  FOREIGN KEY (id_item) REFERENCES items(ID) ON DELETE CASCADE
   );
 
-CREATE TABLE Item (
-  ID INTEGER PRIMARY KEY AUTOINCREMENT,
-  item_name VARCHAR (20) NOT NULL,
-  description VARCHAR (20) NOT NULL,
+CREATE TABLE items (
+  ID INTEGER PRIMARY KEY,
+  item_name TEXT NOT NULL,
+  description TEXT NOT NULL,
   price INTEGER NOT NULL,
-  category VARCHAR (20)
+  category TEXT
   );
 
-CREATE TABLE ExperienceLevel (
-  name VARCHAR (20) PRIMARY KEY,
+CREATE TABLE experience_levels (
+  name TEXT PRIMARY KEY UNIQUE,
   level INTEGER NOT NULL
   );
 
