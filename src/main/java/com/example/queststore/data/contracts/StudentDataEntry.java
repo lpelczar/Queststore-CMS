@@ -2,7 +2,7 @@ package com.example.queststore.data.contracts;
 
 public class StudentDataEntry {
 
-    public static final String TABLE_NAME = "StudentData";
+    public static final String TABLE_NAME = "students_data";
     public static final String EXPERIENCE = "experience";
     public static final String LEVEL = "level";
     public static final String TEAM_NAME = "team_name";

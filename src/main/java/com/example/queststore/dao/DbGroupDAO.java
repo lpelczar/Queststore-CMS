@@ -1,7 +1,7 @@
 package com.example.queststore.dao;
 
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.contracts.GroupTableEntry;
+import com.example.queststore.data.contracts.GroupEntry;
 import com.example.queststore.data.statements.GroupStatement;
 import com.example.queststore.models.Entry;
 import com.example.queststore.models.Group;
@@ -24,7 +24,7 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 groups.add(new Group(
-                        resultSet.getString(GroupTableEntry.GROUP_NAME)));
+                        resultSet.getString(GroupEntry.GROUP_NAME)));
             resultSet.close();
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -43,8 +43,8 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 group = new Group(
-                        resultSet.getInt(GroupTableEntry.ID),
-                        resultSet.getString(GroupTableEntry.GROUP_NAME));
+                        resultSet.getInt(GroupEntry.ID),
+                        resultSet.getString(GroupEntry.GROUP_NAME));
             resultSet.close();
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
