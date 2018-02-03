@@ -10,9 +10,9 @@ public class UserStatement {
         return "SELECT * FROM " + UserEntry.TABLE_NAME + ";" ;
     }
 
-    public String selectUserById(int id) {
+    public String selectUserById() {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.ID + " = " + id + ";" ;
+                " WHERE " + UserEntry.ID + " = ?;" ;
     }
 
     public String insertUserStatement(User user) {
@@ -48,25 +48,25 @@ public class UserStatement {
                 " WHERE " + UserEntry.ID + " = " + user.getId() + ";" ;
     }
 
-    public String selectUserByLoginAndPassword(String login, String password) {
+    public String selectUserByLoginAndPassword() {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.LOGIN + " = '" + login + "' AND " +
-                UserEntry.PASSWORD + " = '" + password + "';" ;
+                " WHERE " + UserEntry.LOGIN + " = ? AND " +
+                UserEntry.PASSWORD + " = ?;" ;
     }
 
-    public String selectUserByLoginAndRole(String login, String role) {
+    public String selectUserByLoginAndRole() {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.LOGIN + " = '" + login + "' AND " +
-                UserEntry.ROLE + " = '" + role + "';";
+                " WHERE " + UserEntry.LOGIN + " = ? AND " +
+                UserEntry.ROLE + " = ?;";
     }
 
-    public String selectUserByLogin(String login) {
+    public String selectUserByLogin() {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.LOGIN + " = '" + login + "';";
+                " WHERE " + UserEntry.LOGIN + " = ?;";
     }
 
-    public String selectAllUsersByRole(String role) {
+    public String selectAllUsersByRole() {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.ROLE + " = '" + role + "';";
+                " WHERE " + UserEntry.ROLE + " = ?;";
     }
 }
