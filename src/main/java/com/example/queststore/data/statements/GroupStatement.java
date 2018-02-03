@@ -18,9 +18,9 @@ public class GroupStatement {
         return "SELECT * FROM " + GroupEntry.TABLE_NAME + ";" ;
     }
 
-    public String selectGroupByName(String name) {
+    public String selectGroupByName() {
         return "SELECT * FROM " + GroupEntry.TABLE_NAME +
-                " WHERE " + GroupEntry.GROUP_NAME + " = '" + name + "';" ;
+                " WHERE " + GroupEntry.GROUP_NAME + " = ?;" ;
     }
 
     public String deleteGroupStatement(Group group) {
