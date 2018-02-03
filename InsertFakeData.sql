@@ -1,4 +1,4 @@
-INSERT INTO User (
+INSERT INTO users (
     name,
     login,
     email,
@@ -14,7 +14,7 @@ INSERT INTO User (
     "Admin"
 );
 
-INSERT INTO User (
+INSERT INTO users (
     name,
     login,
     email,
@@ -30,7 +30,7 @@ INSERT INTO User (
     "Student"
 );
 
-INSERT INTO User (
+INSERT INTO users (
     name,
     login,
     email,
