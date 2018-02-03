@@ -37,11 +37,13 @@ public class DbHelper {
             } catch (SQLException e) { /*ignored*/ }
     }
 
-    protected ResultSet query(String sqlStatement) throws SQLException {
-
+    protected PreparedStatement getPreparedStatement(String sqlStatement) throws SQLException {
         openConnection();
-        statement = connection.createStatement();
-        return statement.executeQuery(sqlStatement);
+        return connection.prepareStatement(sqlStatement);
+    }
+
+    protected ResultSet query(PreparedStatement statement) throws SQLException {
+        return statement.executeQuery();
     }
 
     public boolean update(String sqlStatement) {
