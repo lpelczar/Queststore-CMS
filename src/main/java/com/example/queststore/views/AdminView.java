@@ -3,11 +3,11 @@ package com.example.queststore.views;
 
 import com.example.queststore.models.Entry;
 import com.example.queststore.models.User;
+import com.example.queststore.utils.InputGetter;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class AdminView extends UserView {
 
@@ -117,8 +117,7 @@ public class AdminView extends UserView {
     }
 
     public String getLevelNameInput() {
-        System.out.print("Enter level of experience name to set: ");
-        return getStringInput();
+        return InputGetter.getStringInputFromConsole("Enter level of experience name to set: ");
     }
 
     public String askForNewValue() {
@@ -127,13 +126,7 @@ public class AdminView extends UserView {
     }
 
     public int getLevelValueInput() {
-        System.out.print("Enter value of experience to set: ");
-        return getIntInput();
-    }
-
-    private int getIntInput() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
+        return InputGetter.getIntInputFromConsole("Enter value of experience to set: ");
     }
 
     public void displayEmptyListMsg() {
