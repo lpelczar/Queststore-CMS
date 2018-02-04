@@ -3,7 +3,6 @@ package com.example.queststore.dao;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.data.contracts.StudentDataEntry;
 import com.example.queststore.data.statements.StudentDataStatement;
-import com.example.queststore.models.Item;
 import com.example.queststore.models.StudentData;
 
 import java.sql.PreparedStatement;
@@ -43,19 +42,39 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
         return studentData;
     }
 
+    @Override
     public boolean add(StudentData student) {
-        String statement = StudentDataStatement.createStudentData(student);
-        return update(statement);
-    }
-
-    public boolean add(int student_id, Item item) {
-        String statement = StudentDataStatement.addItemToBackpack(student_id, item);
+        String sqlStatement = studentDataStatement.createStudentData();
+        PreparedStatement statement = null;
+        try {
+            statement = getPreparedStatement(sqlStatement);
+            statement.setInt(1, student.getId());
+            statement.setInt(2, student.getGroupId());
+            statement.setString(3, student.getTeamName());
+            statement.setString(4, student.getLevel());
+            statement.setInt(5, student.getBalance());
+            statement.setInt(6, student.getExperience());
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         return update(statement);
     }
 
     @Override
     public boolean updateStudentData(StudentData student) {
-        String statement = StudentDataStatement.updateStudentData(student);
+        String sqlStatement = studentDataStatement.updateStudentData();
+        PreparedStatement statement = null;
+        try {
+            statement = getPreparedStatement(sqlStatement);
+            statement.setInt(1, student.getGroupId());
+            statement.setString(2, student.getTeamName());
+            statement.setString(3, student.getLevel());
+            statement.setInt(4, student.getBalance());
+            statement.setInt(5, student.getExperience());
+            statement.setInt(6, student.getId());
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         return update(statement);
     }
 }
