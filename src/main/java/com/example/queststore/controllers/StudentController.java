@@ -45,7 +45,7 @@ public class StudentController {
     }
 
     private void showStudentBackPack(int student_id) {
-        List<Item> backpack = dbItemDAO.getItemsBy(student_id);
+        List<Item> backpack = dbItemDAO.getItemsByStudentId(student_id);
         view.displayStudentBackpack(backpack);
     }
 
@@ -76,7 +76,7 @@ public class StudentController {
             view.showItemsInStore(items);
             int item_id = view.askForInt();
 
-            Item item = dbItemDAO.getItemBy(item_id);
+            Item item = dbItemDAO.getItemById(item_id);
             return item;
 
         } else {

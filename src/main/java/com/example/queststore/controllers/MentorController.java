@@ -103,7 +103,7 @@ public class MentorController extends UserController {
 
         view.clearConsole();
 
-        Item item = dbItemDAO.getItemBy(id);
+        Item item = dbItemDAO.getItemById(id);
         view.displayItemInfo(item);
 
         int updateOption = view.askForChange(item);
