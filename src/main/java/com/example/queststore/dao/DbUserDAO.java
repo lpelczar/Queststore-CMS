@@ -1,6 +1,7 @@
 package com.example.queststore.dao;
 
 import com.example.queststore.data.DbHelper;
+import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.statements.UserStatement;
 import com.example.queststore.models.User;
@@ -14,17 +15,13 @@ import java.util.List;
 public class DbUserDAO extends DbHelper implements UserDAO {
 
     private UserStatement userStatement = new UserStatement();
+    private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
     public List<User> getAll() {
 
         String sqlStatement = userStatement.selectAllUsers();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        PreparedStatement statement = psc.getPreparedStatementBy(sqlStatement);
         return getUsers(statement);
     }
 
@@ -32,13 +29,7 @@ public class DbUserDAO extends DbHelper implements UserDAO {
     public List<User> getAllByRole(String role) {
 
         String sqlStatement = userStatement.selectAllUsersByRole();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, role);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        PreparedStatement statement = psc.getPreparedStatementBy(role, sqlStatement);
         return getUsers(statement);
     }
 
@@ -69,52 +60,28 @@ public class DbUserDAO extends DbHelper implements UserDAO {
     public User getById(int id) {
 
         String sqlStatement = userStatement.selectUserById();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setInt(1, id);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        PreparedStatement statement = psc.getPreparedStatementBy(id, sqlStatement);
         return getUser(statement);
     }
 
     public User getByLoginAndPassword(String login, String password) {
 
         String sqlStatement = userStatement.selectUserByLoginAndPassword();
-        PreparedStatement statement = getPreparedStatementBy(login, password, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(login, password, sqlStatement);
         return getUser(statement);
-    }
-
-    private PreparedStatement getPreparedStatementBy(String param1, String param2, String sqlStatement) {
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, param1);
-            statement.setString(2, param2);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-        return statement;
     }
 
     public User getByLoginAndRole(String login, String role) {
 
         String sqlStatement = userStatement.selectUserByLoginAndRole();
-        PreparedStatement statement = getPreparedStatementBy(login, role, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(login, role, sqlStatement);
         return getUser(statement);
     }
 
     public User getByLogin(String login) {
 
         String sqlStatement = userStatement.selectUserByLogin();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, login);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        PreparedStatement statement = psc.getPreparedStatementBy(login, sqlStatement);
         return getUser(statement);
     }
 
@@ -181,13 +148,7 @@ public class DbUserDAO extends DbHelper implements UserDAO {
     @Override
     public boolean delete(User user) {
         String sqlStatement = userStatement.deleteUserStatement();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setInt(1, user.getId());
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        PreparedStatement statement = psc.getPreparedStatementBy(user.getId(), sqlStatement);
         return update(statement);
     }
 }

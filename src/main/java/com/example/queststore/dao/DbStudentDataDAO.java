@@ -1,6 +1,7 @@
 package com.example.queststore.dao;
 
 import com.example.queststore.data.DbHelper;
+import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.StudentDataEntry;
 import com.example.queststore.data.statements.StudentDataStatement;
 import com.example.queststore.models.StudentData;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     private StudentDataStatement studentDataStatement = new StudentDataStatement();
+    private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
     public StudentData getStudentDataBy(int student_id) {

@@ -1,6 +1,7 @@
 package com.example.queststore.dao;
 
 import com.example.queststore.data.DbHelper;
+import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.ItemEntry;
 import com.example.queststore.data.statements.ItemStatement;
 import com.example.queststore.models.Item;
@@ -15,29 +16,19 @@ import java.util.List;
 public class DbItemDAO extends DbHelper implements ItemDAO {
 
     private ItemStatement itemStatement = new ItemStatement();
+    private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
     public List<Item> getItemsByStudentId(int student_id) {
         String sqlStatement = itemStatement.getItemsByStudentId();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setInt(1, student_id);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        PreparedStatement statement = psc.getPreparedStatementBy(student_id, sqlStatement);
         return getItemsBy(statement);
     }
 
     @Override
     public List<Item> getAllItems() {
         String sqlStatement = itemStatement.getAllItems();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        PreparedStatement statement = psc.getPreparedStatementBy(sqlStatement);
         return getItemsBy(statement);
     }
 
@@ -67,13 +58,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
     @Override
     public Item getItemById(int id) {
         String sqlStatement = itemStatement.getItemById();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setInt(1, id);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        PreparedStatement statement = psc.getPreparedStatementBy(id, sqlStatement);
         return getItemFromStore(statement);
     }
 

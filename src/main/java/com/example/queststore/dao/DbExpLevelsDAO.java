@@ -1,6 +1,7 @@
 package com.example.queststore.dao;
 
 import com.example.queststore.data.DbHelper;
+import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.ExperienceLevelEntry;
 import com.example.queststore.data.statements.ExperienceLevelStatement;
 import com.example.queststore.models.ExpLevel;
@@ -14,6 +15,7 @@ import java.util.List;
 public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
 
     private ExperienceLevelStatement expStatement = new ExperienceLevelStatement();
+    private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
     public List<ExpLevel> getAll() {
@@ -40,14 +42,7 @@ public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
     @Override
     public boolean add(ExpLevel expLevel) {
         String sqlStatement = expStatement.insertLevelStatement();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, expLevel.getName());
-            statement.setInt(2, expLevel.getValue());
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        PreparedStatement statement = psc.getPreparedStatementBy(expLevel.getName(), expLevel.getValue(), sqlStatement);
         return update(statement);
     }
 }
