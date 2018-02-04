@@ -89,12 +89,7 @@ public class StudentController {
         int studentBalance = student.getBalance();
         int itemPrice = item.getPrice();
 
-        if (studentBalance > itemPrice) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return studentBalance > itemPrice;
     }
 
     private void updateStudentBackpack(int student_id, Item item) {
