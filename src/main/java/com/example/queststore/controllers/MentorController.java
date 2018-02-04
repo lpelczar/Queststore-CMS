@@ -11,10 +11,7 @@ import com.example.queststore.models.StudentData;
 import com.example.queststore.models.User;
 import com.example.queststore.views.MentorView;
 
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class MentorController extends UserController {
 
@@ -174,7 +171,9 @@ public class MentorController extends UserController {
     }
 
     private Map<String, String> rerollStudentsTeam(List<User> students) {
-        // 1. conut numbres of team.
+        int numberOfTeams = countNumbersOfTeams(students);
+         Map<String, String> teamNames = createTeamNames(numberOfTeams);
+
         // 2. create map with key - team name
         // 3. assign students to key - team names
 
@@ -196,5 +195,20 @@ public class MentorController extends UserController {
 
     private boolean sizeIsEven(int numberOfStudents, int NUMBER_OF_TEAM_MEMBERS) {
         return numberOfStudents % NUMBER_OF_TEAM_MEMBERS == 0;
+    }
+
+    private Map<String, String> createTeamNames(int numberOfTeams) {
+        Map<String, String> teamNames = new HashMap<>();
+
+        for (int i=0; i > numberOfTeams; i++) {
+            String signOfTeam = String.valueOf(convertNumberToChar(i));
+            teamNames.put(signOfTeam, null);
+        }
+        return teamNames;
+    }
+
+    private char convertNumberToChar(int number) {
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        return alphabet.charAt(number);
     }
 }
