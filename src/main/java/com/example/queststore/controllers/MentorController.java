@@ -13,6 +13,8 @@ import com.example.queststore.views.MentorView;
 
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class MentorController extends UserController {
 
@@ -20,6 +22,7 @@ public class MentorController extends UserController {
     private UserDAO dbUserDAO = new DbUserDAO();
     private DbItemDAO dbItemDAO = new DbItemDAO();
     private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
+    private Random randomGenerator;
 
     public void start(){
         int option;
@@ -49,6 +52,8 @@ public class MentorController extends UserController {
             } else if (option == 9) {
 //                showStudentSummary();
             } else if (option == 10) {
+                hadnleRerollStudentsTeams();
+            } else if (option == 11) {
                 isAppRunning = false;
             }
         }
@@ -157,5 +162,39 @@ public class MentorController extends UserController {
             System.err.println("You type wrong sign!");
         }
         return price;
+    }
+
+    private void hadnleRerollStudentsTeams() {
+        List<User> students = dbUserDAO.getAllByRole("student");
+
+
+        // 1. Pick all records with Student role
+        // 2. Method to assing students to teams
+        // 3. Update records of students
+    }
+
+    private Map<String, String> rerollStudentsTeam(List<User> students) {
+        // 1. conut numbres of team.
+        // 2. create map with key - team name
+        // 3. assign students to key - team names
+
+    }
+
+    private int countNumbersOfTeams(List<User> students) {
+        final int NUMBER_OF_TEAM_MEMBERS = 3;
+        int numberOfStudents = students.size();
+        int numberOfTeams;
+
+        if (sizeIsEven(numberOfStudents, NUMBER_OF_TEAM_MEMBERS)) {
+            numberOfTeams = numberOfStudents / NUMBER_OF_TEAM_MEMBERS;
+        }
+        else {
+            numberOfTeams = numberOfStudents / NUMBER_OF_TEAM_MEMBERS + 1;
+        }
+        return numberOfTeams;
+    }
+
+    private boolean sizeIsEven(int numberOfStudents, int NUMBER_OF_TEAM_MEMBERS) {
+        return numberOfStudents % NUMBER_OF_TEAM_MEMBERS == 0;
     }
 }
