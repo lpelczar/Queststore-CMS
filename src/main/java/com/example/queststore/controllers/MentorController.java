@@ -161,24 +161,17 @@ public class MentorController extends UserController {
     }
 
     private void hadnleRerollStudentsTeams() {
-        List<User> students = dbUserDAO.getAllByRole("student");
-
-
-        // 1. Pick all records with Student role
-        // 2. Method to assing students to teams
-        // 3. Update records of students
+        List<StudentData> students = dbStudentDataDAO.getAllStudents();
+        List<StudentData> teams = rerollStudentsTeam(students);
+        updateDbStudentsTeam(teams);
     }
 
-    private Map<String, List<Integer>> rerollStudentsTeam(List<User> students) {
+    private List<StudentData> rerollStudentsTeam(List<StudentData> students) {
         int numberOfTeams = countNumbersOfTeams(students);
-         Map<String, List<Integer>> teamNames = createTeamNames(numberOfTeams);
-         assignStudentsToTeams(students, teamNames);
-
-        // 3. assign students to key - team names
-
+        return assignStudentsToTeams(students, numberOfTeams);
     }
 
-    private int countNumbersOfTeams(List<User> students) {
+    private int countNumbersOfTeams(List<StudentData> students) {
         final int NUMBER_OF_TEAM_MEMBERS = 3;
         int numberOfStudents = students.size();
         int numberOfTeams;
@@ -196,38 +189,28 @@ public class MentorController extends UserController {
         return numberOfStudents % NUMBER_OF_TEAM_MEMBERS == 0;
     }
 
-    private Map<String, List<Integer>> createTeamNames(int numberOfTeams) {
-        Map<String, List<Integer>> teamNames = new HashMap<>();
-
-        for (int i=0; i > numberOfTeams; i++) {
-            String signOfTeam = String.valueOf(convertNumberToChar(i));
-            teamNames.put(signOfTeam, null);
-        }
-        return teamNames;
-    }
-
     private char convertNumberToChar(int number) {
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         return alphabet.charAt(number);
     }
 
-    private Map<String, List<Integer>> assignStudentsToTeams(List<User> students, Map<String, List<Integer>> teamNames) {
-        for (int i=0; students.size() == 0; i++) {
-            User student = pickRandomStudent(students);
-            if (i > teamNames.size()) i = 0;
+    private List<StudentData> assignStudentsToTeams(List<StudentData> students, int numberOfTeams) {
+        int count = 0;
 
-            String key = String.valueOf(convertNumberToChar(i));
-            List<Integer> teamMembers = teamNames.get(key);
+        for (int i=0; i > students.size(); i++) {
+            StudentData student = students.get(i);
+            String team = String.valueOf(convertNumberToChar(count));
+            student.setTeamName(team);
 
-            if (teamMembers == null) teamMembers = new ArrayList<>();
-            teamMembers.add(student.getId());
-            }
-            return teamNames;
+            ++count;
+            if (count > numberOfTeams) count = 0;
+        }
+        return students;
     }
 
-    private User pickRandomStudent(List<User> students) {
-        Random randomGenerator = new Random();
-        int STUDENT_INDEX = randomGenerator.nextInt(students.size());
-        return students.get(STUDENT_INDEX);
+    private void updateDbStudentsTeam(List<StudentData> students) {
+        for (StudentData student : students) {
+            dbStudentDataDAO.updateStudentData(student);
+        }
     }
 }
