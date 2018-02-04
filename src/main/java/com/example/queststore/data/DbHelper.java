@@ -46,13 +46,12 @@ public class DbHelper {
         return statement.executeQuery();
     }
 
-    public boolean update(String sqlStatement) {
+    public boolean update(PreparedStatement statement) {
 
         try {
             openConnection();
             connection.setAutoCommit(false);
-            statement = connection.createStatement();
-            statement.executeUpdate(sqlStatement);
+            statement.executeUpdate();
             connection.commit();
             return true;
         } catch (SQLException e) {
