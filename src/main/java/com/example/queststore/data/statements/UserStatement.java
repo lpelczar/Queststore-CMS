@@ -15,7 +15,7 @@ public class UserStatement {
                 " WHERE " + UserEntry.ID + " = ?;" ;
     }
 
-    public String insertUserStatement(User user) {
+    public String insertUserStatement() {
         return "INSERT INTO " + UserEntry.TABLE_NAME + " (" +
                 UserEntry.NAME + "," +
                 UserEntry.LOGIN + "," +
@@ -23,13 +23,7 @@ public class UserStatement {
                 UserEntry.PASSWORD + "," +
                 UserEntry.PHONE_NUMBER + "," +
                 UserEntry.ROLE + ")" +
-                " VALUES (" +
-                "'" + user.getName() + "'," +
-                "'" + user.getLogin() + "'," +
-                "'" + user.getEmail() + "'," +
-                "'" + user.getPassword() + "'," +
-                "'" + user.getPhoneNumber() + "'," +
-                "'" + user.getRole() + "');" ;
+                " VALUES (?,?,?,?,?,?);" ;
     }
 
     public String updateUserStatement(User user) {
