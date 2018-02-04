@@ -70,7 +70,7 @@ public class StudentController {
     }
 
     private Item chooseItemToBuy() {
-        List<Item> items = dbItemDAO.getAllItemsInStore();
+        List<Item> items = dbItemDAO.getAllItems();
 
         if (items != null) {
             view.showItemsInStore(items);

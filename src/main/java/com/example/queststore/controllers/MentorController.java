@@ -97,7 +97,7 @@ public class MentorController extends UserController {
   private void editItem() {
         view.clearConsole();
 
-        List<Item> items = dbItemDAO.getAllItemsInStore();
+        List<Item> items = dbItemDAO.getAllItems();
         view.displayItemsInStore(items);
         int id = view.askForInt();
 

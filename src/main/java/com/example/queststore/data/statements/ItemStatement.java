@@ -6,6 +6,20 @@ import com.example.queststore.models.Item;
 
 public class ItemStatement {
 
+    public String getAllItems() {
+        return "SELECT * FROM " + ItemEntry.TABLE_NAME + "; ";
+    }
+
+    public String getItemsByStudentId() {
+        // TODO 1: Join two tables and get items!
+        return "";
+    }
+
+    public String getItemById() {
+        return "SELECT * FROM " + ItemEntry.TABLE_NAME +
+                " WHERE " + ItemEntry.ID + " = ?; ";
+    }
+
     public static String addItem(Item item) {
         return "INSERT INTO " + ItemEntry.TABLE_NAME + " (" +
                 ItemEntry.ITEM_NAME + ", " +
@@ -18,14 +32,6 @@ public class ItemStatement {
                 item.getPrice()  + ", \'" +
                 item.getCategory()  + "\'); ";
 
-    }
-    public static String getAllItemsInStore() {
-        return "SELECT * FROM " + ItemEntry.TABLE_NAME + "; ";
-    }
-
-    public static String findItemBy(int id) {
-        return "SELECT * FROM " + ItemEntry.TABLE_NAME +
-                " WHERE " + ItemEntry.ID + " = " + id + "; ";
     }
 
     public static String updateQuery(Item item) {
