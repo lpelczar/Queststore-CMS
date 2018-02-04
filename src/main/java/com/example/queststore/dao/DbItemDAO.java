@@ -102,12 +102,33 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
     }
 
     public boolean addItem(Item item) {
-        String statement = ItemStatement.addItem(item);
+        String sqlStatement = itemStatement.addItemStatement();
+        PreparedStatement statement = null;
+        try {
+            statement = getPreparedStatement(sqlStatement);
+            statement.setString(1, item.getName());
+            statement.setString(2, item.getDescription());
+            statement.setInt(3, item.getPrice());
+            statement.setString(4, item.getCategory());
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         return update(statement);
     }
 
     public boolean updateItem(Item item) {
-        String statement = ItemStatement.updateQuery(item);
+        String sqlStatement = itemStatement.updateQueryStatement();
+        PreparedStatement statement = null;
+        try {
+            statement = getPreparedStatement(sqlStatement);
+            statement.setString(1, item.getName());
+            statement.setString(2, item.getDescription());
+            statement.setInt(3, item.getPrice());
+            statement.setString(4, item.getCategory());
+            statement.setInt(5, item.getID());
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         return update(statement);
     }
 }

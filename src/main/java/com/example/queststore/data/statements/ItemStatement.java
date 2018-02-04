@@ -2,7 +2,6 @@ package com.example.queststore.data.statements;
 
 
 import com.example.queststore.data.contracts.ItemEntry;
-import com.example.queststore.models.Item;
 
 public class ItemStatement {
 
@@ -20,26 +19,20 @@ public class ItemStatement {
                 " WHERE " + ItemEntry.ID + " = ?; ";
     }
 
-    public static String addItem(Item item) {
+    public String addItemStatement() {
         return "INSERT INTO " + ItemEntry.TABLE_NAME + " (" +
                 ItemEntry.ITEM_NAME + ", " +
                 ItemEntry.DESCRIPTION + ", " +
                 ItemEntry.PRICE + ", " +
-                ItemEntry.CATEGORY + ") " +
-                " VALUES ( \'" +
-                item.getName() + "\', \'" +
-                item.getDescription()  + "\', " +
-                item.getPrice()  + ", \'" +
-                item.getCategory()  + "\'); ";
-
+                ItemEntry.CATEGORY + ") VALUES (?,?,?,?); ";
     }
 
-    public static String updateQuery(Item item) {
+    public String updateQueryStatement() {
         return "UPDATE " + ItemEntry.TABLE_NAME + " SET " +
-                ItemEntry.ITEM_NAME + " = \'" + item.getName() + "\', " +
-                ItemEntry.PRICE + " = \'" + item.getPrice() + "\', " +
-                ItemEntry.CATEGORY + " = \'" + item.getCategory() + "\', " +
-                ItemEntry.DESCRIPTION + " = \'" + item.getDescription() + "\' " +
-                "WHERE " + ItemEntry.ID + " = " + item.getID() + "; ";
+                ItemEntry.ITEM_NAME + " = ?, " +
+                ItemEntry.PRICE + " = ?, " +
+                ItemEntry.CATEGORY + " = ?, " +
+                ItemEntry.DESCRIPTION + " = ? " +
+                "WHERE " + ItemEntry.ID + " = ?; ";
     }
 }
