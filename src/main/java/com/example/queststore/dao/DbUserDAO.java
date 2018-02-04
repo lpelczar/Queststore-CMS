@@ -161,7 +161,20 @@ public class DbUserDAO extends DbHelper implements UserDAO {
 
     @Override
     public boolean update(User user) {
-        String statement = userStatement.updateUserStatement(user);
+        String sqlStatement = userStatement.updateUserStatement();
+        PreparedStatement statement = null;
+        try {
+            statement = getPreparedStatement(sqlStatement);
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getLogin());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getPassword());
+            statement.setString(5, user.getPhoneNumber());
+            statement.setString(6, user.getRole());
+            statement.setInt(7, user.getId());
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         return update(statement);
     }
 

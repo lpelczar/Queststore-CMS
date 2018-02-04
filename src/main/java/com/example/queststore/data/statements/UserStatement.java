@@ -26,15 +26,14 @@ public class UserStatement {
                 " VALUES (?,?,?,?,?,?);" ;
     }
 
-    public String updateUserStatement(User user) {
+    public String updateUserStatement() {
         return "UPDATE " + UserEntry.TABLE_NAME + " SET " +
-        UserEntry.NAME + " = '" + user.getName() + "'," +
-        UserEntry.LOGIN + " = '" + user.getLogin() + "'," +
-        UserEntry.EMAIL + " = '" + user.getEmail() + "'," +
-        UserEntry.PASSWORD + " = '" + user.getPassword() + "'," +
-        UserEntry.PHONE_NUMBER + " = '" + user.getPhoneNumber() + "'," +
-        UserEntry.ROLE + " = '" + user.getRole() +
-        "' WHERE " + UserEntry.ID + " = " + user.getId() + ";";
+        UserEntry.NAME + " = ?," +
+        UserEntry.LOGIN + " = ?," +
+        UserEntry.EMAIL + " = ?," +
+        UserEntry.PASSWORD + " = ?," +
+        UserEntry.PHONE_NUMBER + " = ?," +
+        UserEntry.ROLE + " = ? WHERE " + UserEntry.ID + " = ?;";
     }
 
     public String deleteUserStatement(User user) {
