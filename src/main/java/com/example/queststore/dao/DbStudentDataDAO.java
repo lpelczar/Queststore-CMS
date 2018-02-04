@@ -8,6 +8,8 @@ import com.example.queststore.models.StudentData;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
 
@@ -42,6 +44,39 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
             closeConnection();
         }
         return student;
+    }
+
+    @Override
+    public List<StudentData> getAllStudents() {
+        String statement = StudentDataStatement.getAllStudents();
+        return getAllStudents(statement);
+    }
+
+    private List<StudentData> getAllStudents(String sqlStatement) {
+        List<StudentData> students = new ArrayList<>();
+        StudentData student;
+
+        try {
+            ResultSet resultSet = query(sqlStatement);
+
+            while (resultSet.next()) {
+                student = new StudentData(
+                        resultSet.getInt(StudentDataEntry.ID_USER),
+                        resultSet.getInt(StudentDataEntry.ID_GROUP),
+                        resultSet.getString(StudentDataEntry.TEAM_NAME),
+                        resultSet.getString(StudentDataEntry.LEVEL),
+                        resultSet.getInt(StudentDataEntry.BALANCE),
+                        resultSet.getInt(StudentDataEntry.EXPERIENCE)
+                );
+                students.add(student);
+            }
+            resultSet.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return students;
     }
 
     public boolean add(StudentData student) {
