@@ -20,7 +20,7 @@ public class QueryLogger {
             fh.setFormatter(formatter);
             logger.setUseParentHandlers(false);
             logger.log(Level.INFO ,message);
-
+            fh.close();
         } catch (SecurityException | IOException e) {
             e.printStackTrace();
         }
