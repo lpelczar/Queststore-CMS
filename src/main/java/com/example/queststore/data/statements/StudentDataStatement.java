@@ -7,9 +7,9 @@ import com.example.queststore.models.StudentData;
 
 public class StudentDataStatement {
 
-    public static String getStudentData(int student_id) {
+    public String getStudentDataById() {
         return "SELECT * FROM " + StudentDataEntry.TABLE_NAME +
-                " WHERE " + student_id + " = " + StudentDataEntry.ID_USER + "; ";
+                " WHERE " + StudentDataEntry.ID_USER + " = ?; ";
     }
 
     public static String createStudentData(StudentData student) {
