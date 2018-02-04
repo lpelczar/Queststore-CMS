@@ -61,13 +61,27 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
 
     @Override
     public boolean add(Group group) {
-        String statement = groupStatement.insertGroupStatement(group);
+        String sqlStatement = groupStatement.insertGroupStatement();
+        PreparedStatement statement = null;
+        try {
+            statement = getPreparedStatement(sqlStatement);
+            statement.setString(1, group.getGroupName());
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         return update(statement);
     }
 
     @Override
     public boolean delete(Group group) {
-        String statement = groupStatement.deleteGroupStatement(group);
+        String sqlStatement = groupStatement.deleteGroupStatement();
+        PreparedStatement statement = null;
+        try {
+            statement = getPreparedStatement(sqlStatement);
+            statement.setInt(1, group.getId());
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         return update(statement);
     }
 }
