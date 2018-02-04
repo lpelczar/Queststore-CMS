@@ -2,7 +2,6 @@ package com.example.queststore.data.statements;
 
 
 import com.example.queststore.data.contracts.UserEntry;
-import com.example.queststore.models.User;
 
 public class UserStatement {
 
@@ -36,9 +35,9 @@ public class UserStatement {
         UserEntry.ROLE + " = ? WHERE " + UserEntry.ID + " = ?;";
     }
 
-    public String deleteUserStatement(User user) {
+    public String deleteUserStatement() {
         return "DELETE FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.ID + " = " + user.getId() + ";" ;
+                " WHERE " + UserEntry.ID + " = ?;" ;
     }
 
     public String selectUserByLoginAndPassword() {

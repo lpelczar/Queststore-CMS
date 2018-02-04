@@ -180,7 +180,14 @@ public class DbUserDAO extends DbHelper implements UserDAO {
 
     @Override
     public boolean delete(User user) {
-        String statement = userStatement.deleteUserStatement(user);
+        String sqlStatement = userStatement.deleteUserStatement();
+        PreparedStatement statement = null;
+        try {
+            statement = getPreparedStatement(sqlStatement);
+            statement.setInt(1, user.getId());
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         return update(statement);
     }
 }
