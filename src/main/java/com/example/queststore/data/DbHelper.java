@@ -37,20 +37,21 @@ public class DbHelper {
             } catch (SQLException e) { /*ignored*/ }
     }
 
-    protected ResultSet query(String sqlStatement) throws SQLException {
-
+    protected PreparedStatement getPreparedStatement(String sqlStatement) throws SQLException {
         openConnection();
-        statement = connection.createStatement();
-        return statement.executeQuery(sqlStatement);
+        return connection.prepareStatement(sqlStatement);
     }
 
-    public boolean update(String sqlStatement) {
+    protected ResultSet query(PreparedStatement statement) throws SQLException {
+        return statement.executeQuery();
+    }
+
+    public boolean update(PreparedStatement statement) {
 
         try {
             openConnection();
             connection.setAutoCommit(false);
-            statement = connection.createStatement();
-            statement.executeUpdate(sqlStatement);
+            statement.executeUpdate();
             connection.commit();
             return true;
         } catch (SQLException e) {

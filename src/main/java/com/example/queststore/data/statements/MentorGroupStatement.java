@@ -5,18 +5,16 @@ import com.example.queststore.data.contracts.MentorGroupEntry;
 
 public class MentorGroupStatement {
 
-    public String insertConnectionStatement(int groupID, int mentorID) {
+    public String insertConnectionStatement() {
         return "INSERT INTO " + MentorGroupEntry.TABLE_NAME + " (" +
                 MentorGroupEntry.ID_GROUP + "," +
                 MentorGroupEntry.ID_MENTOR + ")" +
-                " VALUES (" +
-                "" + groupID + "," +
-                "" + mentorID + ");" ;
+                " VALUES (?,?);" ;
     }
 
-    public String deleteConnectionStatement(int groupID, int mentorID) {
+    public String deleteConnectionStatement() {
         return "DELETE FROM " + MentorGroupEntry.TABLE_NAME +
-                " WHERE " + MentorGroupEntry.ID_GROUP + " = " + groupID + " AND "
-                + MentorGroupEntry.ID_MENTOR + " = " + mentorID + ";" ;
+                " WHERE " + MentorGroupEntry.ID_GROUP + " = ? AND "
+                + MentorGroupEntry.ID_MENTOR + " = ?;" ;
     }
 }

@@ -2,7 +2,6 @@ package com.example.queststore.data.statements;
 
 
 import com.example.queststore.data.contracts.UserEntry;
-import com.example.queststore.models.User;
 
 public class UserStatement {
 
@@ -10,12 +9,12 @@ public class UserStatement {
         return "SELECT * FROM " + UserEntry.TABLE_NAME + ";" ;
     }
 
-    public String selectUserById(int id) {
+    public String selectUserById() {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.ID + " = " + id + ";" ;
+                " WHERE " + UserEntry.ID + " = ?;" ;
     }
 
-    public String insertUserStatement(User user) {
+    public String insertUserStatement() {
         return "INSERT INTO " + UserEntry.TABLE_NAME + " (" +
                 UserEntry.NAME + "," +
                 UserEntry.LOGIN + "," +
@@ -23,50 +22,43 @@ public class UserStatement {
                 UserEntry.PASSWORD + "," +
                 UserEntry.PHONE_NUMBER + "," +
                 UserEntry.ROLE + ")" +
-                " VALUES (" +
-                "'" + user.getName() + "'," +
-                "'" + user.getLogin() + "'," +
-                "'" + user.getEmail() + "'," +
-                "'" + user.getPassword() + "'," +
-                "'" + user.getPhoneNumber() + "'," +
-                "'" + user.getRole() + "');" ;
+                " VALUES (?,?,?,?,?,?);" ;
     }
 
-    public String updateUserStatement(User user) {
+    public String updateUserStatement() {
         return "UPDATE " + UserEntry.TABLE_NAME + " SET " +
-        UserEntry.NAME + " = '" + user.getName() + "'," +
-        UserEntry.LOGIN + " = '" + user.getLogin() + "'," +
-        UserEntry.EMAIL + " = '" + user.getEmail() + "'," +
-        UserEntry.PASSWORD + " = '" + user.getPassword() + "'," +
-        UserEntry.PHONE_NUMBER + " = '" + user.getPhoneNumber() + "'," +
-        UserEntry.ROLE + " = '" + user.getRole() +
-        "' WHERE " + UserEntry.ID + " = " + user.getId() + ";";
+        UserEntry.NAME + " = ?," +
+        UserEntry.LOGIN + " = ?," +
+        UserEntry.EMAIL + " = ?," +
+        UserEntry.PASSWORD + " = ?," +
+        UserEntry.PHONE_NUMBER + " = ?," +
+        UserEntry.ROLE + " = ? WHERE " + UserEntry.ID + " = ?;";
     }
 
-    public String deleteUserStatement(User user) {
+    public String deleteUserStatement() {
         return "DELETE FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.ID + " = " + user.getId() + ";" ;
+                " WHERE " + UserEntry.ID + " = ?;" ;
     }
 
-    public String selectUserByLoginAndPassword(String login, String password) {
+    public String selectUserByLoginAndPassword() {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.LOGIN + " = '" + login + "' AND " +
-                UserEntry.PASSWORD + " = '" + password + "';" ;
+                " WHERE " + UserEntry.LOGIN + " = ? AND " +
+                UserEntry.PASSWORD + " = ?;" ;
     }
 
-    public String selectUserByLoginAndRole(String login, String role) {
+    public String selectUserByLoginAndRole() {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.LOGIN + " = '" + login + "' AND " +
-                UserEntry.ROLE + " = '" + role + "';";
+                " WHERE " + UserEntry.LOGIN + " = ? AND " +
+                UserEntry.ROLE + " = ?;";
     }
 
-    public String selectUserByLogin(String login) {
+    public String selectUserByLogin() {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.LOGIN + " = '" + login + "';";
+                " WHERE " + UserEntry.LOGIN + " = ?;";
     }
 
-    public String selectAllUsersByRole(String role) {
+    public String selectAllUsersByRole() {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
-                " WHERE " + UserEntry.ROLE + " = '" + role + "';";
+                " WHERE " + UserEntry.ROLE + " = ?;";
     }
 }
