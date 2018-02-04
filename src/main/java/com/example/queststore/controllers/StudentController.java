@@ -3,6 +3,7 @@ package com.example.queststore.controllers;
 
 import com.example.queststore.dao.DbItemDAO;
 import com.example.queststore.dao.DbStudentDataDAO;
+import com.example.queststore.dao.DbStudentItemDAO;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.views.StudentView;
@@ -15,6 +16,7 @@ public class StudentController {
     private StudentView view = new StudentView();
     private DbItemDAO dbItemDAO = new DbItemDAO();
     private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
+    private DbStudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
 
     public void start(int student_id) {
         student = getStudentDataBy(student_id);
@@ -76,8 +78,7 @@ public class StudentController {
             view.showItemsInStore(items);
             int item_id = view.askForInt();
 
-            Item item = dbItemDAO.getItemById(item_id);
-            return item;
+            return dbItemDAO.getItemById(item_id);
 
         } else {
             view.displayOperationFailed();
@@ -89,18 +90,11 @@ public class StudentController {
         int studentBalance = student.getBalance();
         int itemPrice = item.getPrice();
 
-        if (studentBalance > itemPrice) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return studentBalance > itemPrice;
     }
 
     private void updateStudentBackpack(int student_id, Item item) {
-        boolean isItemSuccesfullAdded = dbStudentDataDAO.add(student_id, item);
-
-        if (isItemSuccesfullAdded) {
+        if (dbStudentItemDAO.add(student_id, item.getID())) {
             view.displayOperationSuccesfull();
         } else {
             view.displayOperationFailed();

@@ -5,9 +5,10 @@ import com.example.queststore.data.contracts.StudentItemEntry;
 
 public class StudentItemStatement {
 
-    public String getStudentItemsId(int student_id) {
-        return "SELECT " + StudentItemEntry.ID_ITEM +
-                " FROM " + StudentItemEntry.TABLE_NAME +
-                " WHERE " + student_id + " = " + StudentItemEntry.ID_STUDENT + "; ";
+    public String addStudentItemConnection() {
+        return "INSERT INTO " + StudentItemEntry.TABLE_NAME + " ( " +
+                StudentItemEntry.ID_STUDENT + ", " +
+                StudentItemEntry.ID_ITEM + " ) " +
+                "VALUES (?,?); ";
     }
 }
