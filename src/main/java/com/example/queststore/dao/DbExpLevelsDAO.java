@@ -39,7 +39,15 @@ public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
 
     @Override
     public boolean add(ExpLevel expLevel) {
-        String statement = expStatement.insertLevelStatement(expLevel);
+        String sqlStatement = expStatement.insertLevelStatement();
+        PreparedStatement statement = null;
+        try {
+            statement = getPreparedStatement(sqlStatement);
+            statement.setString(1, expLevel.getName());
+            statement.setInt(2, expLevel.getValue());
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
         return update(statement);
     }
 }
