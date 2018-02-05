@@ -22,22 +22,6 @@ INSERT INTO users (
     phone_number,
     role
 ) VALUES (
-    "Student",
-    "Student",
-    "student@codecool.com",
-    "student123",
-    "123-456-798",
-    "Student"
-);
-
-INSERT INTO users (
-    name,
-    login,
-    email,
-    password,
-    phone_number,
-    role
-) VALUES (
     "Mentor",
     "Mentor",
     "mentor@codecool.com",

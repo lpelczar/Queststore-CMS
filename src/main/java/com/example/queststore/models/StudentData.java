@@ -53,4 +53,8 @@ public class StudentData {
     public void setStudentId(int studentId) { this.student_id = studentId; }
 
     public void setTeamName(String team_name) { this.team_name = team_name; }
+
+    public void setGroupId(int group_id) {
+        this.group_id = group_id;
+    }
 }
