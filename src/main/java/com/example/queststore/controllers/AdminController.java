@@ -78,7 +78,7 @@ public class AdminController extends UserController {
             return;
         }
         String mentorLogin = view.getMentorLoginToAssignGroup();
-        if (dbUserDAO.getByLogin(mentorLogin) != null) {
+        if (dbUserDAO.getByLoginAndRole(mentorLogin, UserEntry.MENTOR_ROLE) != null) {
             choseGroupAndAssignToMentor(mentorLogin);
         } else {
             view.displayThereIsNoMentorWithThisLogin();
@@ -115,7 +115,7 @@ public class AdminController extends UserController {
             return;
         }
         String mentorLogin = view.getMentorLoginToRevokeFromGroup();
-        if (dbUserDAO.getByLogin(mentorLogin) != null) {
+        if (dbUserDAO.getByLoginAndRole(mentorLogin, UserEntry.MENTOR_ROLE) != null) {
             choseGroupAndRevokeMentor(mentorLogin);
         } else {
             view.displayThereIsNoMentorWithThisLogin();
