@@ -173,6 +173,7 @@ public class MentorController extends UserController {
 
     private int countNumbersOfTeams(List<StudentData> students) {
         final int NUMBER_OF_TEAM_MEMBERS = 3;
+        final int createTeam = 1;
         int numberOfStudents = students.size();
         int numberOfTeams;
 
@@ -182,6 +183,9 @@ public class MentorController extends UserController {
         else {
             numberOfTeams = numberOfStudents / NUMBER_OF_TEAM_MEMBERS + 1;
         }
+
+        if (numberOfTeams < 1) numberOfTeams = createTeam;
+
         return numberOfTeams;
     }
 
@@ -195,15 +199,20 @@ public class MentorController extends UserController {
     }
 
     private List<StudentData> assignStudentsToTeams(List<StudentData> students, int numberOfTeams) {
-        int count = 0;
+        if (numberOfTeams > 1) {
+            return assingToRandomTeams();
+        }
+        else {
+            return assingAllToOneTeam(students);
+        }
+    }
 
-        for (int i=0; i > students.size(); i++) {
-            StudentData student = students.get(i);
-            String team = String.valueOf(convertNumberToChar(count));
+    private List<StudentData> assingAllToOneTeam(List<StudentData> students) {
+        int INDEX_OF_TEAM = 0;
+
+        for (StudentData student : students) {
+            String team = String.valueOf(convertNumberToChar(INDEX_OF_TEAM));
             student.setTeamName(team);
-
-            ++count;
-            if (count > numberOfTeams) count = 0;
         }
         return students;
     }
