@@ -32,7 +32,7 @@ public class MentorController extends UserController {
             if (option == 1) {
                 promoteBlankUser();
             } else if (option == 2) {
-//                addStudentToGroup();
+                addStudentToGroup();
             } else if (option == 3) {
 //                addNewQuest();
             } else if (option == 4) {
@@ -60,15 +60,18 @@ public class MentorController extends UserController {
 
         user.setRole(UserEntry.STUDENT_ROLE);
         boolean isPromoted = dbUserDAO.update(user);
-
         StudentData student = createStudent(user);
         dbStudentDataDAO.add(student);
-
         if (isPromoted) {
             view.displayHasBeenPromoted();
         } else {
             view.displayUserNotExists();
         }
+    }
+
+    private void addStudentToGroup() {
+
+
     }
 
     private void addNewItem() {

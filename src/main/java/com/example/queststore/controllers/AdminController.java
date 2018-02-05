@@ -73,7 +73,10 @@ public class AdminController extends UserController {
     private void assignMentorToGroup() {
         List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         view.displayEntriesNoInput(mentors);
-
+        if (mentors.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
         String mentorLogin = view.getMentorLoginToAssignGroup();
         if (dbUserDAO.getByLogin(mentorLogin) != null) {
             choseGroupAndAssignToMentor(mentorLogin);
@@ -85,7 +88,10 @@ public class AdminController extends UserController {
     private void choseGroupAndAssignToMentor(String mentorLogin) {
         List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
         view.displayEntriesNoInput(groups);
-
+        if (groups.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
         String groupName = view.getGroupNameInput();
         if (dbGroupDAO.getByName(groupName) != null) {
             Group group = dbGroupDAO.getByName(groupName);
@@ -104,7 +110,10 @@ public class AdminController extends UserController {
     private void revokeMentorFromGroup() {
         List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         view.displayEntriesNoInput(mentors);
-
+        if (mentors.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
         String mentorLogin = view.getMentorLoginToRevokeFromGroup();
         if (dbUserDAO.getByLogin(mentorLogin) != null) {
             choseGroupAndRevokeMentor(mentorLogin);
@@ -116,7 +125,10 @@ public class AdminController extends UserController {
     private void choseGroupAndRevokeMentor(String mentorLogin) {
         List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
         view.displayEntriesNoInput(groups);
-
+        if (groups.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
         String groupName = view.getGroupNameInput();
         if (dbGroupDAO.getByName(groupName) != null) {
             Group group = dbGroupDAO.getByName(groupName);
@@ -139,10 +151,8 @@ public class AdminController extends UserController {
             view.displayPressAnyKeyToContinueMessage();
             return;
         }
-
         String groupName = view.getGroupNameInput();
         Group group = dbGroupDAO.getByName(groupName);
-
         if (group != null) {
             dbGroupDAO.delete(group);
             view.displayGroupDeleted();
@@ -160,7 +170,6 @@ public class AdminController extends UserController {
         }
         String login = view.getMentorLoginToDelete();
         User mentor = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
-
         if (mentor != null) {
             dbUserDAO.delete(mentor);
             view.displayMentorDeletedMessage();
