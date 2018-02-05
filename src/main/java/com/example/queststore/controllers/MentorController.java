@@ -163,6 +163,7 @@ public class MentorController extends UserController {
     private void hadnleRerollStudentsTeams() {
         List<StudentData> students = dbStudentDataDAO.getAllStudents();
         List<StudentData> teams = rerollStudentsTeam(students);
+        System.out.println(teams);
         updateDbStudentsTeam(teams);
     }
 
@@ -213,24 +214,29 @@ public class MentorController extends UserController {
         for (StudentData student : students) {
             student.setTeamName(null);
         }
+        return students;
     }
 
     private List<StudentData> assignToRandomTeams(List<StudentData> students, int numberOfTeams) {
         Random randomNumber = new Random();
+        boolean isAllAssigned = false;
         int index = 0;
 
-        while (students.size() > 0) {
+        while (!isAllAssigned) {
             int randomIndex = randomNumber.nextInt(numberOfTeams);
             String randomTeam = String.valueOf(randomIndex);
 
-            if (possibilityToAssign(randomTeam)) {
+            if (isPossibilityToAssign(randomTeam)) {
                 students.get(index).setTeamName(randomTeam);
+
+                isAllAssigned = checkIfAllStudentsHaveTeam(students);
                 ++index;
             }
         }
+        return students;
     }
 
-    private boolean possibilityToAssign(String randomTeam) {
+    private boolean isPossibilityToAssign(String randomTeam) {
         Map<String, Integer> usedPossibilities = new HashMap<>();
 
         if (!usedPossibilities.containsKey(randomTeam)) {
@@ -241,6 +247,13 @@ public class MentorController extends UserController {
         }
         else {
             return false;
+        }
+        return true;
+    }
+
+    private boolean checkIfAllStudentsHaveTeam(List<StudentData> students) {
+        for (StudentData student : students) {
+            if (student.getTeamName() == null) return false;
         }
         return true;
     }
