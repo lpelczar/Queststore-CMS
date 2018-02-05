@@ -163,6 +163,7 @@ public class MentorController extends UserController {
     private void hadnleRerollStudentsTeams() {
         List<StudentData> students = dbStudentDataDAO.getAllStudents();
         List<StudentData> teams = rerollStudentsTeam(students);
+        System.out.println(teams);
         updateDbStudentsTeam(teams);
     }
 
@@ -173,6 +174,7 @@ public class MentorController extends UserController {
 
     private int countNumbersOfTeams(List<StudentData> students) {
         final int NUMBER_OF_TEAM_MEMBERS = 3;
+        final int createTeam = 1;
         int numberOfStudents = students.size();
         int numberOfTeams;
 
@@ -182,6 +184,9 @@ public class MentorController extends UserController {
         else {
             numberOfTeams = numberOfStudents / NUMBER_OF_TEAM_MEMBERS + 1;
         }
+
+        if (numberOfTeams < 1) numberOfTeams = createTeam;
+
         return numberOfTeams;
     }
 
@@ -195,15 +200,70 @@ public class MentorController extends UserController {
     }
 
     private List<StudentData> assignStudentsToTeams(List<StudentData> students, int numberOfTeams) {
-        int count = 0;
+        List<StudentData> studentsWithoutTeams = setAllStudentsNotAssignToTeam(students);
 
-        for (int i=0; i > students.size(); i++) {
-            StudentData student = students.get(i);
-            String team = String.valueOf(convertNumberToChar(count));
+        if (numberOfTeams > 1) {
+            return assignToRandomTeams(studentsWithoutTeams, numberOfTeams);
+        }
+        else {
+            return assignAllToOneTeam(studentsWithoutTeams);
+        }
+    }
+
+    private List<StudentData> setAllStudentsNotAssignToTeam(List<StudentData> students) {
+        for (StudentData student : students) {
+            student.setTeamName(null);
+        }
+        return students;
+    }
+
+    private List<StudentData> assignToRandomTeams(List<StudentData> students, int numberOfTeams) {
+        Random randomNumber = new Random();
+        boolean isAllAssigned = false;
+        int index = 0;
+
+        while (!isAllAssigned) {
+            int randomIndex = randomNumber.nextInt(numberOfTeams);
+            String randomTeam = String.valueOf(randomIndex);
+
+            if (isPossibilityToAssign(randomTeam)) {
+                students.get(index).setTeamName(randomTeam);
+
+                isAllAssigned = checkIfAllStudentsHaveTeam(students);
+                ++index;
+            }
+        }
+        return students;
+    }
+
+    private boolean isPossibilityToAssign(String randomTeam) {
+        Map<String, Integer> usedPossibilities = new HashMap<>();
+
+        if (!usedPossibilities.containsKey(randomTeam)) {
+            usedPossibilities.put(randomTeam, 1);
+        }
+        else if (usedPossibilities.get(randomTeam) < 3) {
+            usedPossibilities.put(randomTeam, usedPossibilities.get(randomTeam) + 1);
+        }
+        else {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean checkIfAllStudentsHaveTeam(List<StudentData> students) {
+        for (StudentData student : students) {
+            if (student.getTeamName() == null) return false;
+        }
+        return true;
+    }
+
+    private List<StudentData> assignAllToOneTeam(List<StudentData> students) {
+        int INDEX_OF_TEAM = 0;
+
+        for (StudentData student : students) {
+            String team = String.valueOf(convertNumberToChar(INDEX_OF_TEAM));
             student.setTeamName(team);
-
-            ++count;
-            if (count > numberOfTeams) count = 0;
         }
         return students;
     }
