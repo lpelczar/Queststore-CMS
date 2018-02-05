@@ -3,6 +3,7 @@ package com.example.queststore.controllers;
 
 import com.example.queststore.dao.DbItemDAO;
 import com.example.queststore.dao.DbStudentDataDAO;
+import com.example.queststore.dao.DbStudentItemDAO;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.views.StudentView;
@@ -15,6 +16,7 @@ public class StudentController {
     private StudentView view = new StudentView();
     private DbItemDAO dbItemDAO = new DbItemDAO();
     private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
+    private DbStudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
 
     public void start(int student_id) {
         student = getStudentDataBy(student_id);
@@ -45,7 +47,7 @@ public class StudentController {
     }
 
     private void showStudentBackPack(int student_id) {
-        List<Item> backpack = dbItemDAO.getItemsBy(student_id);
+        List<Item> backpack = dbItemDAO.getItemsByStudentId(student_id);
         view.displayStudentBackpack(backpack);
     }
 
@@ -70,14 +72,13 @@ public class StudentController {
     }
 
     private Item chooseItemToBuy() {
-        List<Item> items = dbItemDAO.getAllItemsInStore();
+        List<Item> items = dbItemDAO.getAllItems();
 
         if (items != null) {
             view.showItemsInStore(items);
             int item_id = view.askForInt();
 
-            Item item = dbItemDAO.getItemBy(item_id);
-            return item;
+            return dbItemDAO.getItemById(item_id);
 
         } else {
             view.displayOperationFailed();
@@ -93,9 +94,7 @@ public class StudentController {
     }
 
     private void updateStudentBackpack(int student_id, Item item) {
-        boolean isItemSuccesfullAdded = dbStudentDataDAO.add(student_id, item);
-
-        if (isItemSuccesfullAdded) {
+        if (dbStudentItemDAO.add(student_id, item.getID())) {
             view.displayOperationSuccesfull();
         } else {
             view.displayOperationFailed();

@@ -26,7 +26,7 @@ INSERT INTO users (
     "Student",
     "student@codecool.com",
     "student123",
-    "123-456-789",
+    "123-456-798",
     "Student"
 );
 
@@ -42,6 +42,6 @@ INSERT INTO users (
     "Mentor",
     "mentor@codecool.com",
     "mentor123",
-    "123-456-789",
+    "123-456-799",
     "Mentor"
 );

@@ -21,7 +21,7 @@ CREATE TABLE students_data (
   balance INTEGER,
   experience INTEGER,
   PRIMARY KEY (id_user, id_group),
-  FOREIGN KEY (id_user) REFERENCES users(ID) ON DELETE CASCADE,
+  FOREIGN KEY (id_user) REFERENCES users(ID),
   FOREIGN KEY (id_group) REFERENCES groups(ID)
   );
 
