@@ -7,7 +7,6 @@ import java.util.List;
 public interface StudentDataDAO {
 
     StudentData getStudentDataBy(int student_id);
-
     List<StudentData> getAllStudents();
     boolean add(StudentData student);
     boolean updateStudentData(StudentData student);

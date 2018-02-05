@@ -48,27 +48,19 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     @Override
     public List<StudentData> getAllStudents() {
-        String statement = StudentDataStatement.getAllStudents();
-        return getAllStudents(statement);
-    }
-
-    private List<StudentData> getAllStudents(String sqlStatement) {
+        String sqlStatement = studentDataStatement.getAllStudents();
         List<StudentData> students = new ArrayList<>();
-        StudentData student;
-
         try {
-            ResultSet resultSet = query(sqlStatement);
-
+            PreparedStatement statement = getPreparedStatement(sqlStatement);
+            ResultSet resultSet = query(statement);
             while (resultSet.next()) {
-                student = new StudentData(
+                students.add(new StudentData(
                         resultSet.getInt(StudentDataEntry.ID_USER),
                         resultSet.getInt(StudentDataEntry.ID_GROUP),
                         resultSet.getString(StudentDataEntry.TEAM_NAME),
                         resultSet.getString(StudentDataEntry.LEVEL),
                         resultSet.getInt(StudentDataEntry.BALANCE),
-                        resultSet.getInt(StudentDataEntry.EXPERIENCE)
-                );
-                students.add(student);
+                        resultSet.getInt(StudentDataEntry.EXPERIENCE)));
             }
             resultSet.close();
         } catch (SQLException e) {
