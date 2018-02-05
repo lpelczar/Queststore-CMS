@@ -53,4 +53,13 @@ public class StudentData {
     public void setStudentId(int studentId) { this.student_id = studentId; }
 
     public void setTeamName(String team_name) { this.team_name = team_name; }
+
+    public String toString() {
+        return "Student Id: " + student_id + "\n" +
+                "Group Id: " + group_id + "\n" +
+                "Team name: " + team_name + "\n" +
+                "Level: " + level + "\n" +
+                "Balance: " + balance + "\n" +
+                "Exp: " + experience;
+    }
 }
