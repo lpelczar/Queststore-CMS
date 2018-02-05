@@ -200,14 +200,44 @@ public class MentorController extends UserController {
 
     private List<StudentData> assignStudentsToTeams(List<StudentData> students, int numberOfTeams) {
         if (numberOfTeams > 1) {
-            return assingToRandomTeams();
+            return assignToRandomTeams(students, numberOfTeams);
         }
         else {
-            return assingAllToOneTeam(students);
+            return assignAllToOneTeam(students);
         }
     }
 
-    private List<StudentData> assingAllToOneTeam(List<StudentData> students) {
+    private List<StudentData> assignToRandomTeams(List<StudentData> students, int numberOfTeams) {
+        Random randomNumber = new Random();
+        int index = 0;
+
+        while (students.size() > 0) {
+            int randomIndex = randomNumber.nextInt(numberOfTeams);
+            String randomTeam = String.valueOf(randomIndex);
+
+            if (possibilityToAssign(randomTeam)) {
+                students.get(index).setTeamName(randomTeam);
+                ++index;
+            }
+        }
+    }
+
+    private boolean possibilityToAssign(String randomTeam) {
+        Map<String, Integer> usedPossibilities = new HashMap<>();
+
+        if (!usedPossibilities.containsKey(randomTeam)) {
+            usedPossibilities.put(randomTeam, 1);
+        }
+        else if (usedPossibilities.get(randomTeam) < 3) {
+            usedPossibilities.put(randomTeam, usedPossibilities.get(randomTeam) + 1);
+        }
+        else {
+            return false;
+        }
+        return true;
+    }
+
+    private List<StudentData> assignAllToOneTeam(List<StudentData> students) {
         int INDEX_OF_TEAM = 0;
 
         for (StudentData student : students) {
