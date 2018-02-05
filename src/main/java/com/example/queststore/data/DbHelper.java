@@ -10,7 +10,6 @@ public class DbHelper {
 
     private static final String DB_URL = "jdbc:sqlite:queststore.db";
     private static final String DRIVER = "org.sqlite.JDBC";
-    private QueryLogger queryLogger = new QueryLogger();
     private Connection connection;
 
     private void openConnection() {

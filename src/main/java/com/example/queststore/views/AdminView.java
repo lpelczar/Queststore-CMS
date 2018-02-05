@@ -23,8 +23,9 @@ public class AdminView extends UserView {
         menu.put(7, "Edit mentor profile.");
         menu.put(8, "Show mentor profile and all his students.");
         menu.put(9, "Add level of experience.");
-        menu.put(10, "Show all levels of experience.");
-        menu.put(11, "Log out.");
+        menu.put(10, "Remove level of experience.");
+        menu.put(11, "Show all levels of experience.");
+        menu.put(12, "Log out.");
     }
 
     private void displayAdminMenu() {
@@ -117,7 +118,7 @@ public class AdminView extends UserView {
     }
 
     public String getLevelNameInput() {
-        return InputGetter.getStringInputFromConsole("Enter level of experience name to set: ");
+        return InputGetter.getStringInputFromConsole("Enter level of experience name: ");
     }
 
     public String askForNewValue() {
@@ -191,6 +192,21 @@ public class AdminView extends UserView {
 
     public void displayGroupDeleted() {
         System.out.println("Group has been deleted!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayLevelDeletedMessage() {
+        System.out.println("Experience level has been deleted!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayDeleteErrorMessage() {
+        System.out.println("Error deleting experience level!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayThereIsNoLevelWithThisNameMessage() {
+        System.out.println("There is no experience level with this name!");
         displayPressAnyKeyToContinueMessage();
     }
 }

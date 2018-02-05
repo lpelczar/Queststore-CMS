@@ -19,7 +19,6 @@ public class AdminController extends UserController {
     private GroupDAO dbGroupDAO = new DbGroupDAO();
     private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
     private MentorGroupDAO dbMentorGroupDAO = new DbMentorGroupDAO();
-    private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
 
     public void start() {
 
@@ -50,8 +49,10 @@ public class AdminController extends UserController {
             } else if (option == 9) {
                 addLevelOfExperience();
             } else if (option == 10) {
-                showAllLevelsOfExperience();
+                removeLevelOfExperience();
             } else if (option == 11) {
+                showAllLevelsOfExperience();
+            } else if (option == 12) {
                 isAppRunning = false;
             }
         }
@@ -252,6 +253,27 @@ public class AdminController extends UserController {
             view.displayLevelSetMessage();
         } else {
             view.displayErrorChangingTheValue();
+        }
+    }
+
+    private void removeLevelOfExperience() {
+
+        List<Entry> levels = new ArrayList<>(dbExpLevelsDAO.getAll());
+        view.displayEntriesNoInput(levels);
+        if (dbExpLevelsDAO.getAll().isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+
+        String levelName = view.getLevelNameInput();
+        if (dbExpLevelsDAO.getByName(levelName) != null) {
+            if (dbExpLevelsDAO.delete(levelName)) {
+                view.displayLevelDeletedMessage();
+            } else {
+                view.displayDeleteErrorMessage();
+            }
+        } else {
+            view.displayThereIsNoLevelWithThisNameMessage();
         }
     }
 

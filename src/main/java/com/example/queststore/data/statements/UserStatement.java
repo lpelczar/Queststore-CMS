@@ -61,4 +61,14 @@ public class UserStatement {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
                 " WHERE " + UserEntry.ROLE + " = ?;";
     }
+
+    public String selectUserByEmail() {
+        return "SELECT * FROM " + UserEntry.TABLE_NAME +
+                " WHERE " + UserEntry.EMAIL + " = ?;";
+    }
+
+    public String selectUserByPhoneNumber() {
+        return "SELECT * FROM " + UserEntry.TABLE_NAME +
+                " WHERE " + UserEntry.PHONE_NUMBER + " = ?;";
+    }
 }
