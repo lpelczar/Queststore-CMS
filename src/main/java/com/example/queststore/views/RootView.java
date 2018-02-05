@@ -97,4 +97,14 @@ public class RootView {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
+    public void displayUserWithThisEmailAlreadyExists() {
+        System.out.println("\nUser with this email already exists.");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayUserWithThisPhoneNumberAlreadyExists() {
+        System.out.println("\nUser with this phone number already exists.");
+        displayPressAnyKeyToContinueMessage();
+    }
 }

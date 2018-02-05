@@ -85,6 +85,20 @@ public class DbUserDAO extends DbHelper implements UserDAO {
         return getUser(statement);
     }
 
+    public User getByEmail(String email) {
+
+        String sqlStatement = userStatement.selectUserByEmail();
+        PreparedStatement statement = psc.getPreparedStatementBy(email, sqlStatement);
+        return getUser(statement);
+    }
+
+    public User getByPhoneNumber(String phoneNumber) {
+
+        String sqlStatement = userStatement.selectUserByPhoneNumber();
+        PreparedStatement statement = psc.getPreparedStatementBy(phoneNumber, sqlStatement);
+        return getUser(statement);
+    }
+
     private User getUser(PreparedStatement statement) {
         User user = null;
         try {

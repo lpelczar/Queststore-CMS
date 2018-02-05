@@ -59,7 +59,7 @@ class UserController {
         }
     }
 
-    protected StudentData createStudent(User user) {
+    StudentData createStudent(User user) {
         StudentData student = new StudentData();
         student.setStudentId(user.getId());
         return student;

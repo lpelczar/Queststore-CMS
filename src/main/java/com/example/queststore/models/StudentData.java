@@ -3,15 +3,15 @@ package com.example.queststore.models;
 public class StudentData {
 
     private int student_id;
-    private String level;
-    private Integer group_id;
+    private int group_id;
     private String team_name;
+    private String level;
     private int balance;
     private int experience;
 
     public StudentData() {
         this.level = "beginner";
-        this.group_id = null;
+        this.group_id = 1;
         this.team_name = "Not assign yet.";
         this.balance = 0;
         this.experience = 0;
