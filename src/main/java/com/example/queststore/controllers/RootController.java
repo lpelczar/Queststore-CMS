@@ -90,22 +90,28 @@ public class RootController {
         String email;
         String password;
         String phoneNumber;
-        User user;
 
         while(!isUserCreated) {
             login = createUserLogin();
-            user = dbUserDAO.getByLogin(login);
-            if (user != null) {
+            if (dbUserDAO.getByLogin(login) != null) {
                 rootView.displayUserWithThisNameAlreadyExists();
-            } else {
-                password = createUserPassword();
-                name = createUserName();
-                email = createUserEmail();
-                phoneNumber = createUserPhoneNumber();
-                this.dbUserDAO.add(new User(name, login, email, password, phoneNumber, "Blank"));
-                rootView.displayUserCreated(login, name, email, phoneNumber);
-                isUserCreated = true;
+                return;
             }
+            email = createUserEmail();
+            if (dbUserDAO.getByEmail(email) != null) {
+                rootView.displayUserWithThisEmailAlreadyExists();
+                return;
+            }
+            phoneNumber = createUserPhoneNumber();
+            if (dbUserDAO.getByPhoneNumber(phoneNumber) != null) {
+                rootView.displayUserWithThisPhoneNumberAlreadyExists();
+                return;
+            }
+            password = createUserPassword();
+            name = createUserName();
+            this.dbUserDAO.add(new User(name, login, email, password, phoneNumber, "Blank"));
+            rootView.displayUserCreated(login, name, email, phoneNumber);
+            isUserCreated = true;
         }
     }
 

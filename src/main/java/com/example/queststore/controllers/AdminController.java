@@ -19,7 +19,6 @@ public class AdminController extends UserController {
     private GroupDAO dbGroupDAO = new DbGroupDAO();
     private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
     private MentorGroupDAO dbMentorGroupDAO = new DbMentorGroupDAO();
-    private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
 
     public void start() {
 
