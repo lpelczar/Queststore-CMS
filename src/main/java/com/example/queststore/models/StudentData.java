@@ -56,6 +56,7 @@ public class StudentData {
 
     public void setGroupId(int group_id) {
         this.group_id = group_id;
+    }
 
     public String toString() {
         return "Student Id: " + student_id + "\n" +
