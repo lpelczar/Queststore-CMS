@@ -199,11 +199,19 @@ public class MentorController extends UserController {
     }
 
     private List<StudentData> assignStudentsToTeams(List<StudentData> students, int numberOfTeams) {
+        List<StudentData> studentsWithoutTeams = setAllStudentsNotAssignToTeam(students);
+
         if (numberOfTeams > 1) {
-            return assignToRandomTeams(students, numberOfTeams);
+            return assignToRandomTeams(studentsWithoutTeams, numberOfTeams);
         }
         else {
-            return assignAllToOneTeam(students);
+            return assignAllToOneTeam(studentsWithoutTeams);
+        }
+    }
+
+    private List<StudentData> setAllStudentsNotAssignToTeam(List<StudentData> students) {
+        for (StudentData student : students) {
+            student.setTeamName(null);
         }
     }
 
