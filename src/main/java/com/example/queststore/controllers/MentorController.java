@@ -163,7 +163,7 @@ public class MentorController extends UserController {
     private void hadnleRerollStudentsTeams() {
         List<StudentData> students = dbStudentDataDAO.getAllStudents();
         List<StudentData> teams = rerollStudentsTeam(students);
-        System.out.println(teams);
+
         updateDbStudentsTeam(teams);
     }
 
@@ -224,7 +224,7 @@ public class MentorController extends UserController {
 
         while (!isAllAssigned) {
             int randomIndex = randomNumber.nextInt(numberOfTeams);
-            String randomTeam = String.valueOf(randomIndex);
+            String randomTeam = String.valueOf(convertNumberToChar(randomIndex));
 
             if (isPossibilityToAssign(randomTeam)) {
                 students.get(index).setTeamName(randomTeam);
