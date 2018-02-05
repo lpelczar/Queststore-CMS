@@ -40,9 +40,37 @@ public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
     }
 
     @Override
+    public ExpLevel getByName(String levelName) {
+        String sqlStatement = expStatement.selectLevelByName();
+        PreparedStatement statement = psc.getPreparedStatementBy(levelName, sqlStatement);
+        ExpLevel level = null;
+        try {
+            ResultSet resultSet = query(statement);
+            while (resultSet.next())
+                level = new ExpLevel(
+                        resultSet.getString(ExperienceLevelEntry.NAME),
+                        resultSet.getInt(ExperienceLevelEntry.LEVEL));
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return level;
+    }
+
+    @Override
     public boolean add(ExpLevel expLevel) {
         String sqlStatement = expStatement.insertLevelStatement();
         PreparedStatement statement = psc.getPreparedStatementBy(expLevel.getName(), expLevel.getValue(), sqlStatement);
+        return update(statement);
+    }
+
+    @Override
+    public boolean delete(String levelName) {
+        String sqlStatement = expStatement.deleteLevelStatement();
+        PreparedStatement statement = psc.getPreparedStatementBy(levelName, sqlStatement);
         return update(statement);
     }
 }

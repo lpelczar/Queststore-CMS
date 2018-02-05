@@ -15,4 +15,14 @@ public class ExperienceLevelStatement {
     public String selectAllExpLevels() {
         return "SELECT * FROM " + ExperienceLevelEntry.TABLE_NAME + ";" ;
     }
+
+    public String selectLevelByName() {
+        return "SELECT * FROM " + ExperienceLevelEntry.TABLE_NAME +
+                " WHERE " + ExperienceLevelEntry.NAME + " = ?;" ;
+    }
+
+    public String deleteLevelStatement() {
+        return "DELETE FROM " + ExperienceLevelEntry.TABLE_NAME +
+                " WHERE " + ExperienceLevelEntry.NAME + " = ?;" ;
+    }
 }
