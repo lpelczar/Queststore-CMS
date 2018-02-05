@@ -6,7 +6,7 @@ import com.example.queststore.data.contracts.GroupEntry;
 public class GroupStatement {
 
     public String selectAllGroups() {
-        return "SELECT * FROM " + GroupEntry.TABLE_NAME + ";" ;
+        return "SELECT * FROM " + GroupEntry.TABLE_NAME + " WHERE group_name != 'No group';" ;
     }
 
     public String selectGroupByName() {
