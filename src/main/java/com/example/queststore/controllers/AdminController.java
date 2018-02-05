@@ -196,7 +196,7 @@ public class AdminController extends UserController {
         final String QUIT_OPTION = "q";
 
         List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
-        view.displayEntries(mentors);
+        view.displayEntriesNoInput(mentors);
         if (dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE).isEmpty()) {
             view.displayPressAnyKeyToContinueMessage();
             return;

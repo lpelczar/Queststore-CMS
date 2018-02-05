@@ -21,6 +21,7 @@
 hs_err_pid*
 
 target/*
+logs/*
 queststore.db
 
 *.idea
