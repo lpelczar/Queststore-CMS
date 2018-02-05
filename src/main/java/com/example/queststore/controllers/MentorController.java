@@ -11,8 +11,7 @@ import com.example.queststore.models.StudentData;
 import com.example.queststore.models.User;
 import com.example.queststore.views.MentorView;
 
-import java.util.InputMismatchException;
-import java.util.List;
+import java.util.*;
 
 public class MentorController extends UserController {
 
@@ -49,6 +48,8 @@ public class MentorController extends UserController {
             } else if (option == 9) {
 //                showStudentSummary();
             } else if (option == 10) {
+                hadnleRerollStudentsTeams();
+            } else if (option == 11) {
                 isAppRunning = false;
             }
         }
@@ -157,5 +158,59 @@ public class MentorController extends UserController {
             System.err.println("You type wrong sign!");
         }
         return price;
+    }
+
+    private void hadnleRerollStudentsTeams() {
+        List<StudentData> students = dbStudentDataDAO.getAllStudents();
+        List<StudentData> teams = rerollStudentsTeam(students);
+        updateDbStudentsTeam(teams);
+    }
+
+    private List<StudentData> rerollStudentsTeam(List<StudentData> students) {
+        int numberOfTeams = countNumbersOfTeams(students);
+        return assignStudentsToTeams(students, numberOfTeams);
+    }
+
+    private int countNumbersOfTeams(List<StudentData> students) {
+        final int NUMBER_OF_TEAM_MEMBERS = 3;
+        int numberOfStudents = students.size();
+        int numberOfTeams;
+
+        if (sizeIsEven(numberOfStudents, NUMBER_OF_TEAM_MEMBERS)) {
+            numberOfTeams = numberOfStudents / NUMBER_OF_TEAM_MEMBERS;
+        }
+        else {
+            numberOfTeams = numberOfStudents / NUMBER_OF_TEAM_MEMBERS + 1;
+        }
+        return numberOfTeams;
+    }
+
+    private boolean sizeIsEven(int numberOfStudents, int NUMBER_OF_TEAM_MEMBERS) {
+        return numberOfStudents % NUMBER_OF_TEAM_MEMBERS == 0;
+    }
+
+    private char convertNumberToChar(int number) {
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        return alphabet.charAt(number);
+    }
+
+    private List<StudentData> assignStudentsToTeams(List<StudentData> students, int numberOfTeams) {
+        int count = 0;
+
+        for (int i=0; i > students.size(); i++) {
+            StudentData student = students.get(i);
+            String team = String.valueOf(convertNumberToChar(count));
+            student.setTeamName(team);
+
+            ++count;
+            if (count > numberOfTeams) count = 0;
+        }
+        return students;
+    }
+
+    private void updateDbStudentsTeam(List<StudentData> students) {
+        for (StudentData student : students) {
+            dbStudentDataDAO.updateStudentData(student);
+        }
     }
 }

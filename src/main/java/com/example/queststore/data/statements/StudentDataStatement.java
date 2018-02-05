@@ -27,4 +27,8 @@ public class StudentDataStatement {
                 StudentDataEntry.BALANCE + " = ?, " +
                 StudentDataEntry.EXPERIENCE + " = ? WHERE " + StudentDataEntry.ID_USER + " = ?; ";
     }
+
+    public static String getAllStudents() {
+        return "SELECT * FROM " + StudentDataEntry.TABLE_NAME + ";";
+    }
 }

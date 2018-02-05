@@ -19,7 +19,8 @@ public class MentorView extends UserView {
         menu.put(7, "Mark student achieved quest.");
         menu.put(8, "Mark student bought artifact.");
         menu.put(9, "Show student balance and all his artifacts.");
-        menu.put(10, "Log out.");
+        menu.put(10, "Reroll students teams.");
+        menu.put(11, "Log out.");
     }
 
     private void displayMentorMenu() {
