@@ -1,6 +1,7 @@
 package com.example.queststore.views;
 
 import com.example.queststore.models.Item;
+import com.example.queststore.utils.InputGetter;
 
 import java.util.*;
 
@@ -91,4 +92,31 @@ public class MentorView extends UserView {
 
     public void displayOperationSuccessful() { System.out.println("Item has been added to DB succesfully!" ); }
 
+    public String getStudentLoginToAssignGroup() {
+        return InputGetter.getStringInputFromConsole("Enter student name to assign him to group: ");
+    }
+
+    public void displayThereIsNoStudentWithThisLogin() {
+        System.out.println("There is no student with this login!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public String getGroupNameInput() {
+        return InputGetter.getStringInputFromConsole("Enter group name: ");
+    }
+
+    public void displayGroupUpdated() {
+        System.out.println("Group has been updated!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayErrorUpdatingGroup() {
+        System.out.println("Error updating group!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayThereIsNoGroupWithThisName() {
+        System.out.println("There is no group with this name!");
+        displayPressAnyKeyToContinueMessage();
+    }
 }

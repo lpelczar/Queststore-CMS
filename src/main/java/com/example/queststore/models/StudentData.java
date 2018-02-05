@@ -54,6 +54,10 @@ public class StudentData {
 
     public void setTeamName(String team_name) { this.team_name = team_name; }
 
+    public void setGroupId(int group_id) {
+        this.group_id = group_id;
+    }
+
     public String toString() {
         return "Student Id: " + student_id + "\n" +
                 "Group Id: " + group_id + "\n" +
@@ -61,5 +65,6 @@ public class StudentData {
                 "Level: " + level + "\n" +
                 "Balance: " + balance + "\n" +
                 "Exp: " + experience;
+
     }
 }

@@ -1,24 +1,22 @@
 package com.example.queststore.controllers;
 
 
-import com.example.queststore.dao.DbItemDAO;
-import com.example.queststore.dao.DbStudentDataDAO;
-import com.example.queststore.dao.DbUserDAO;
-import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.*;
 import com.example.queststore.data.contracts.UserEntry;
-import com.example.queststore.models.Item;
-import com.example.queststore.models.StudentData;
-import com.example.queststore.models.User;
+import com.example.queststore.models.*;
 import com.example.queststore.views.MentorView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
 
 public class MentorController extends UserController {
 
     private MentorView view = new MentorView();
     private UserDAO dbUserDAO = new DbUserDAO();
-    private DbItemDAO dbItemDAO = new DbItemDAO();
-    private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
+    private ItemDAO dbItemDAO = new DbItemDAO();
+    private StudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
+    private GroupDAO dbGroupDAO = new DbGroupDAO();
     private TeamController teamController = new TeamController();
 
     public void start(){
@@ -33,7 +31,7 @@ public class MentorController extends UserController {
             if (option == 1) {
                 promoteBlankUser();
             } else if (option == 2) {
-//                addStudentToGroup();
+                addStudentToGroup();
             } else if (option == 3) {
 //                addNewQuest();
             } else if (option == 4) {
@@ -61,14 +59,53 @@ public class MentorController extends UserController {
 
         user.setRole(UserEntry.STUDENT_ROLE);
         boolean isPromoted = dbUserDAO.update(user);
-
         StudentData student = createStudent(user);
         dbStudentDataDAO.add(student);
-
         if (isPromoted) {
             view.displayHasBeenPromoted();
         } else {
             view.displayUserNotExists();
+        }
+    }
+
+    private void addStudentToGroup() {
+
+        List<Entry> students = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+        view.displayEntriesNoInput(students);
+        if (students.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String studentLogin = view.getStudentLoginToAssignGroup();
+        if (dbUserDAO.getByLoginAndRole(studentLogin, UserEntry.STUDENT_ROLE) != null) {
+            choseGroupAndAssignToStudent(studentLogin);
+        } else {
+            view.displayThereIsNoStudentWithThisLogin();
+        }
+    }
+
+    private void choseGroupAndAssignToStudent(String studentLogin) {
+
+        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
+        view.displayEntriesNoInput(groups);
+        if (groups.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String groupName = view.getGroupNameInput();
+        if (dbGroupDAO.getByName(groupName) != null) {
+            Group group = dbGroupDAO.getByName(groupName);
+            User student = dbUserDAO.getByLogin(studentLogin);
+            StudentData studentData = dbStudentDataDAO.getStudentDataBy(student.getId());
+            studentData.setGroupId(group.getId());
+            boolean isUpdated = dbStudentDataDAO.updateStudentData(studentData);
+            if (isUpdated) {
+                view.displayGroupUpdated();
+            } else {
+                view.displayErrorUpdatingGroup();
+            }
+        } else {
+            view.displayThereIsNoGroupWithThisName();
         }
     }
 
