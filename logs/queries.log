@@ -1,2 +1,0 @@
-Feb 04, 2018 8:30:46 PM com.example.queststore.utils.QueryLogger log
-INFO: SELECT * FROM users WHERE login = ? AND password = ?;
