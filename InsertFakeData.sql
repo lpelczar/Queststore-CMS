@@ -45,3 +45,5 @@ INSERT INTO users (
     "123-456-799",
     "Mentor"
 );
+
+INSERT INTO groups (group_name) VALUES ("No group");
