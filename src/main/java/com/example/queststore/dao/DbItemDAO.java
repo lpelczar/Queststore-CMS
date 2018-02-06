@@ -26,11 +26,19 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
     }
 
     @Override
+    public List<Item> getItemsByCategory(String category) {
+        String sqlStatement = itemStatement.getItemsByCategory();
+        PreparedStatement statement = psc.getPreparedStatementBy(category, sqlStatement);
+        return getItemsBy(statement);
+    }
+
+    @Override
     public List<Item> getAllItems() {
         String sqlStatement = itemStatement.getAllItems();
         PreparedStatement statement = psc.getPreparedStatementBy(sqlStatement);
         return getItemsBy(statement);
     }
+
 
     private List<Item> getItemsBy(PreparedStatement statement) {
 
@@ -85,6 +93,8 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
         }
         return item;
     }
+
+
 
     public boolean addItem(Item item) {
         String sqlStatement = itemStatement.addItemStatement();

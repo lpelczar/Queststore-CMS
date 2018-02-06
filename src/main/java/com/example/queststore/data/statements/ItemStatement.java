@@ -19,6 +19,12 @@ public class ItemStatement {
                 " WHERE " + ItemEntry.ID + " = ?; ";
     }
 
+    public String getItemsByCategory() {
+        return "SELECT * FROM " + ItemEntry.TABLE_NAME +
+                " WHERE " + ItemEntry.CATEGORY + " = ?; ";
+    }
+
+
     public String addItemStatement() {
         return "INSERT INTO " + ItemEntry.TABLE_NAME + " (" +
                 ItemEntry.ITEM_NAME + ", " +

@@ -1,9 +1,7 @@
 package com.example.queststore.controllers;
 
 
-import com.example.queststore.dao.DbItemDAO;
-import com.example.queststore.dao.DbStudentDataDAO;
-import com.example.queststore.dao.DbStudentItemDAO;
+import com.example.queststore.dao.*;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.views.StudentView;
@@ -14,9 +12,9 @@ import java.util.List;
 public class StudentController {
     private StudentData student;
     private StudentView view = new StudentView();
-    private DbItemDAO dbItemDAO = new DbItemDAO();
-    private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
-    private DbStudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
+    private ItemDAO ItemDAO = new DbItemDAO();
+    private StudentDataDAO StudentDataDAO = new DbStudentDataDAO();
+    private StudentItemDAO StudentItemDAO = new DbStudentItemDAO();
 
     public void start(int student_id) {
         student = getStudentDataBy(student_id);
@@ -38,6 +36,7 @@ public class StudentController {
             } else if (option == 2) {
                 buyArtifact(student_id);
             } else if (option == 3) {
+                buyArtifactForTeam();
             } else if (option == 4) {
                 showStudentLevel();
             } else if (option == 5) {
@@ -47,7 +46,7 @@ public class StudentController {
     }
 
     private void showStudentBackPack(int student_id) {
-        List<Item> backpack = dbItemDAO.getItemsByStudentId(student_id);
+        List<Item> backpack = ItemDAO.getItemsByStudentId(student_id);
         view.displayStudentBackpack(backpack);
     }
 
@@ -57,13 +56,15 @@ public class StudentController {
     }
 
     private void buyArtifact(int student_id) {
-        Item item = chooseItemToBuy();
+        final String CATEGORY = "basic";
+        Item item = chooseItemToBuy(CATEGORY);
 
         if (item != null) {
+            int price = item.getPrice();
 
-            if (isStudentAffordToBuy(item)) {
+            if (isStudentAffordToBuy(price)) {
                 updateStudentBackpack(student_id, item);
-                updateStudentBalance(item);
+                updateStudentBalance(price);
 
             } else {
                 view.displayNoMoney();
@@ -71,14 +72,35 @@ public class StudentController {
         }
     }
 
-    private Item chooseItemToBuy() {
-        List<Item> items = dbItemDAO.getAllItems();
+    private void buyArtifactForTeam() {
+        List<StudentData> team = getStudentsInSameTeam();
+
+        final String CATEGORY = "advanced";
+        Item item = chooseItemToBuy(CATEGORY);
+
+        if (item != null) {
+            int priceForEachStudent = item.getPrice() / team.size();
+
+            if (isTeamAffordToBuy(priceForEachStudent, team)) {
+                for (StudentData student : team) {
+                    updateStudentBackpack(student.getId(), item);
+                    updateStudentBalance(priceForEachStudent);
+                }
+            } else {
+                view.displayNoMoney();
+            }
+        }
+    }
+
+    private Item chooseItemToBuy(String category) {
+        List<Item> items = ItemDAO.getItemsByCategory(category);
+        // TODO 2: check if working for basic items for student
 
         if (items != null) {
             view.showItemsInStore(items);
             int item_id = view.askForInt();
 
-            return dbItemDAO.getItemById(item_id);
+            return ItemDAO.getItemById(item_id);
 
         } else {
             view.displayOperationFailed();
@@ -86,28 +108,38 @@ public class StudentController {
         }
     }
 
-    private boolean isStudentAffordToBuy(Item item) {
+    private boolean isStudentAffordToBuy(int price) {
         int studentBalance = student.getBalance();
-        int itemPrice = item.getPrice();
+        return studentBalance > price;
+    }
 
-        return studentBalance > itemPrice;
+    private boolean isTeamAffordToBuy(int itemPriceForEachStudent, List<StudentData> team) {
+
+        for (StudentData student : team) {
+            if (student.getBalance() < itemPriceForEachStudent) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void updateStudentBackpack(int student_id, Item item) {
-        if (dbStudentItemDAO.add(student_id, item.getID())) {
+        if (StudentItemDAO.add(student_id, item.getID())) {
             view.displayOperationSuccesfull();
         } else {
             view.displayOperationFailed();
         }
     }
 
-    private void updateStudentBalance(Item item) {
-        int transactionBalance = student.getBalance() - item.getPrice();
+    private void updateStudentBalance(int price) {
+        int transactionBalance = student.getBalance() - price;
         student.setBalance(transactionBalance);
-        dbStudentDataDAO.updateStudentData(student);
+        StudentDataDAO.updateStudentData(student);
     }
 
     private StudentData getStudentDataBy(int student_id) {
-        return dbStudentDataDAO.getStudentDataBy(student_id);
+        return StudentDataDAO.getStudentDataBy(student_id);
     }
+
+    private List<StudentData> getStudentsInSameTeam() { return StudentDataDAO.getStudentsInSameTeamBy(student.getId());}
 }
