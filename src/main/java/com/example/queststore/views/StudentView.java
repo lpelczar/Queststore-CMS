@@ -64,5 +64,7 @@ public class StudentView extends UserView{
         System.out.println();
     }
 
-    public void displayNoMoney() { System.out.println("You don\'t have enough balance!"); }
+    public void displayItemAlreadyContaining() { System.out.println("You already have this item!"); displayPressAnyKeyToContinueMessage(); }
+
+    public void displayNoMoney() { System.out.println("You don\'t have enough balance!"); displayPressAnyKeyToContinueMessage(); }
 }
