@@ -53,15 +53,16 @@ public class StudentController {
         Item item = chooseItemToBuy(CATEGORY);
 
         if (item != null) {
-            int price = item.getPrice();
 
-            if (isStudentAffordToBuy(price)) {
-                updateStudentBackpack(student_id, item);
-                updateStudentBalance(price, student);
+            if (!isStudentContainItem(student_id, item.getID())) {
+                int price = item.getPrice();
 
-            } else {
-                view.displayNoMoney();
-            }
+                if (isStudentAffordToBuy(price)) {
+                    updateStudentBackpack(student_id, item);
+                    updateStudentBalance(price, student);
+
+                } else { view.displayNoMoney(); }
+            } else { view.displayItemAlreadyContaining(); }
         }
     }
 
@@ -71,17 +72,18 @@ public class StudentController {
         Item item = chooseItemToBuy(CATEGORY);
 
         if (item != null && team != null) {
-            int priceForEachStudent = item.getPrice() / team.size();
 
-            if (isTeamAffordToBuy(priceForEachStudent, team)) {
-                for (StudentData member : team) {
-                    updateStudentBackpack(member.getId(), item);
-                    updateStudentBalance(priceForEachStudent, member);
-                }
-            } else {
-                view.displayNoMoney();
-                view.displayPressAnyKeyToContinueMessage();
-            }
+            if (isTeamMemberContainItem(team, item.getID())) {
+                int priceForEachStudent = item.getPrice() / team.size();
+
+                if (isTeamAffordToBuy(priceForEachStudent, team)) {
+                    for (StudentData member : team) {
+                        updateStudentBackpack(member.getId(), item);
+                        updateStudentBalance(priceForEachStudent, member);
+                    }
+
+                } else { view.displayNoMoney(); }
+            } else { view.displayItemAlreadyContaining(); }
         }
     }
 
@@ -114,7 +116,7 @@ public class StudentController {
         }
         return true;
     }
-
+    // TODO 2: Refactor name of variables student_id to studentID etc.
     private void updateStudentBackpack(int student_id, Item item) {
         if (dbStudentItemDAO.add(student_id, item.getID())) {
             view.displayOperationSuccesfull();
@@ -127,6 +129,25 @@ public class StudentController {
         int transactionBalance = student.getBalance() - price;
         student.setBalance(transactionBalance);
         dbStudentDataDAO.updateStudentData(student);
+    }
+
+    private boolean isStudentContainItem(int studentID, int itemID) {
+        List<Integer> studentsItems = dbStudentItemDAO.getStudentsItemsBy(studentID);
+        for (int studentItemID : studentsItems) {
+            if (itemID == studentItemID) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isTeamMemberContainItem(List<StudentData> team, int itemID) {
+        for (StudentData member : team) {
+            if (isStudentContainItem(member.getId(), itemID)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private StudentData getStudentDataBy(int student_id) {
