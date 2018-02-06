@@ -41,9 +41,15 @@ public class StudentView extends UserView{
     }
 
     public void displayStudentBackpack(List<Item> backpack) {
-        for (Item item : backpack) {
-            System.out.println(item.getName());
-            System.out.println(item.getDescription() + "\n");
+        if (backpack.isEmpty()) {
+            System.out.println("You don\'t have any items!");
+            displayPressAnyKeyToContinueMessage();
+        
+        } else {
+            for (Item item : backpack) {
+                System.out.println(item.getName());
+                System.out.println(item.getDescription() + "\n");
+            }
         }
     }
 
