@@ -139,7 +139,7 @@ public class MentorView extends UserView {
 
     public String getQuestCategory() {
 
-        final String[] CORRECT_OPTIONS = {"l", "w"};
+        final String[] CORRECT_OPTIONS = {"b", "e"};
         String userInput = "";
         boolean userInputInCorrectOptions = false;
 
