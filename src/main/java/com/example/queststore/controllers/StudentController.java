@@ -12,9 +12,9 @@ import java.util.List;
 public class StudentController {
     private StudentData student;
     private StudentView view = new StudentView();
-    private ItemDAO ItemDAO = new DbItemDAO();
-    private StudentDataDAO StudentDataDAO = new DbStudentDataDAO();
-    private StudentItemDAO StudentItemDAO = new DbStudentItemDAO();
+    private ItemDAO dbItemDAO = new DbItemDAO();
+    private StudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
+    private StudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
 
     public void start(int student_id) {
         student = getStudentDataBy(student_id);
@@ -46,7 +46,7 @@ public class StudentController {
     }
 
     private void showStudentBackPack(int student_id) {
-        List<Item> backpack = ItemDAO.getItemsByStudentId(student_id);
+        List<Item> backpack = dbItemDAO.getItemsByStudentId(student_id);
         view.displayStudentBackpack(backpack);
     }
 
@@ -73,12 +73,11 @@ public class StudentController {
     }
 
     private void buyArtifactForTeam() {
-        List<StudentData> team = getStudentsInSameTeam();
-
+        List<StudentData> team = dbStudentDataDAO.getStudentsInSameTeamBy(student.getTeamName());
         final String CATEGORY = "advanced";
         Item item = chooseItemToBuy(CATEGORY);
 
-        if (item != null) {
+        if (item != null && team != null) {
             int priceForEachStudent = item.getPrice() / team.size();
 
             if (isTeamAffordToBuy(priceForEachStudent, team)) {
@@ -93,13 +92,13 @@ public class StudentController {
     }
 
     private Item chooseItemToBuy(String category) {
-        List<Item> items = ItemDAO.getItemsByCategory(category);
+        List<Item> items = dbItemDAO.getItemsByCategory(category);
 
         if (items != null) {
             view.showItemsInStore(items);
             int item_id = view.askForInt();
 
-            return ItemDAO.getItemById(item_id);
+            return dbItemDAO.getItemById(item_id);
 
         } else {
             view.displayOperationFailed();
@@ -123,7 +122,7 @@ public class StudentController {
     }
 
     private void updateStudentBackpack(int student_id, Item item) {
-        if (StudentItemDAO.add(student_id, item.getID())) {
+        if (dbStudentItemDAO.add(student_id, item.getID())) {
             view.displayOperationSuccesfull();
         } else {
             view.displayOperationFailed();
@@ -133,12 +132,10 @@ public class StudentController {
     private void updateStudentBalance(int price) {
         int transactionBalance = student.getBalance() - price;
         student.setBalance(transactionBalance);
-        StudentDataDAO.updateStudentData(student);
+        dbStudentDataDAO.updateStudentData(student);
     }
 
     private StudentData getStudentDataBy(int student_id) {
-        return StudentDataDAO.getStudentDataBy(student_id);
+        return dbStudentDataDAO.getStudentDataBy(student_id);
     }
-
-    private List<StudentData> getStudentsInSameTeam() { return StudentDataDAO.getStudentsInSameTeamBy(student.getId());}
 }
