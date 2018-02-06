@@ -1,6 +1,6 @@
 package com.example.queststore.models;
 
-public class Task {
+public class Task implements Entry {
 
     private int ID;
     private String name;
@@ -61,5 +61,11 @@ public class Task {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Name: %s, Points: %d, Description: %s, Category: %s",
+                name, points, description, category);
     }
 }
