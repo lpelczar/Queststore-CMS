@@ -10,4 +10,5 @@ public interface GroupDAO {
     Group getByName(String name);
     boolean add(Group group);
     boolean delete(Group group);
+    List<String> getGroupsNamesByMentorId(int mentorID);
 }
