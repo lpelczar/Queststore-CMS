@@ -17,6 +17,7 @@ public class MentorController extends UserController {
     private ItemDAO dbItemDAO = new DbItemDAO();
     private StudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
     private GroupDAO dbGroupDAO = new DbGroupDAO();
+    private TaskDAO dbTaskDAO = new DbTaskDAO();
     private TeamController teamController = new TeamController();
 
     public void start(){
@@ -33,7 +34,7 @@ public class MentorController extends UserController {
             } else if (option == 2) {
                 addStudentToGroup();
             } else if (option == 3) {
-//                addNewQuest();
+                addNewQuest();
             } else if (option == 4) {
                 addNewItem();
             } else if (option == 5) {
@@ -106,6 +107,23 @@ public class MentorController extends UserController {
             }
         } else {
             view.displayThereIsNoGroupWithThisName();
+        }
+    }
+
+    private void addNewQuest() {
+        String questName = view.getQuestNameInput();
+        if (dbTaskDAO.getByName(questName) != null) {
+            view.displayQuestAlreadyExists();
+        } else {
+            int points = view.getQuestPointsInput();
+            String description = view.getQuestDescriptionInput();
+            String categoryInput = view.getQuestCategory();
+            String category = categoryInput.equals("b") ? "Basic" : "Extra";
+            if (dbTaskDAO.add(new Task(questName, points, description, category))) {
+                view.displayQuestSuccessfullyAdded();
+            } else {
+                view.displayErrorAddingQuest();
+            }
         }
     }
 

@@ -119,4 +119,47 @@ public class MentorView extends UserView {
         System.out.println("There is no group with this name!");
         displayPressAnyKeyToContinueMessage();
     }
+
+    public String getQuestNameInput() {
+        return InputGetter.getStringInputFromConsole("Enter quest name: ");
+    }
+
+    public void displayQuestAlreadyExists() {
+        System.out.println("Quest with this name already exists!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public int getQuestPointsInput() {
+        return InputGetter.getIntInputFromConsole("Enter points prize: ");
+    }
+
+    public String getQuestDescriptionInput() {
+        return InputGetter.getStringInputFromConsole("Enter quest description: ");
+    }
+
+    public String getQuestCategory() {
+
+        final String[] CORRECT_OPTIONS = {"l", "w"};
+        String userInput = "";
+        boolean userInputInCorrectOptions = false;
+
+        while (!userInputInCorrectOptions) {
+            userInput = InputGetter.getStringInputFromConsole("Enter 'b' to add basic quest or 'e' to add extra quest: ");
+            userInputInCorrectOptions = Arrays.asList(CORRECT_OPTIONS).contains(userInput.toLowerCase());
+            if (!userInputInCorrectOptions) {
+                System.out.println("Wrong input!");
+            }
+        }
+        return userInput;
+    }
+
+    public void displayQuestSuccessfullyAdded() {
+        System.out.println("Quest successfully added!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayErrorAddingQuest() {
+        System.out.println("Error adding quest!");
+        displayPressAnyKeyToContinueMessage();
+    }
 }
