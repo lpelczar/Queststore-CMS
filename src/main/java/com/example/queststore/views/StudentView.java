@@ -13,8 +13,7 @@ public class StudentView extends UserView{
         menu.put(1, "Show your bonuses.");
         menu.put(2, "Buy artifact.");
         menu.put(3, "Buy artifact for you and your teammates.");
-        menu.put(4, "Show your level.");
-        menu.put(5, "Log out.");
+        menu.put(4, "Log out.");
     }
 
     private void displayStudentMenu() {
@@ -41,9 +40,15 @@ public class StudentView extends UserView{
     }
 
     public void displayStudentBackpack(List<Item> backpack) {
-        for (Item item : backpack) {
-            System.out.println(item.getName());
-            System.out.println(item.getDescription() + "\n");
+        if (backpack.isEmpty()) {
+            System.out.println("You don\'t have any items!");
+            displayPressAnyKeyToContinueMessage();
+
+        } else {
+            for (Item item : backpack) {
+                System.out.println(item.getName());
+                System.out.println(item.getDescription() + "\n");
+            }
         }
     }
 
@@ -59,9 +64,7 @@ public class StudentView extends UserView{
         System.out.println();
     }
 
-    public void displayStudentLevel(String level) {
-        System.out.println("Your level is " + level + ".");
-    }
+    public void displayItemAlreadyContaining() { System.out.println("You already have this item!"); displayPressAnyKeyToContinueMessage(); }
 
-    public void displayNoMoney() { System.out.println("You don\'t have enough balance!"); }
+    public void displayNoMoney() { System.out.println("You don\'t have enough balance!"); displayPressAnyKeyToContinueMessage(); }
 }

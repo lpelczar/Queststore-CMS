@@ -72,12 +72,12 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
     }
 
     @Override
-    public List<StudentData> getStudentsInSameTeamBy(int student_id) {
+    public List<StudentData> getStudentsInSameTeamBy(String teamName) {
         String sqlStatement = studentDataStatement.getStudentsInSameTeam();
         List<StudentData> studentsTeam = new ArrayList<>();
         try {
             PreparedStatement statement = getPreparedStatement(sqlStatement);
-            statement.setInt(1, student_id);
+            statement.setString(1, teamName);
             ResultSet resultSet = query(statement);
             while (resultSet.next()) {
                 studentsTeam.add(new StudentData(
