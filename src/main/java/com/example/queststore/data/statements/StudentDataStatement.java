@@ -28,7 +28,13 @@ public class StudentDataStatement {
                 StudentDataEntry.EXPERIENCE + " = ? WHERE " + StudentDataEntry.ID_USER + " = ?; ";
     }
 
+    public String getStudentsInSameTeam() {
+        return "SELECT * FROM " + StudentDataEntry.TABLE_NAME +
+                " WHERE " + StudentDataEntry.TEAM_NAME + " = ?; ";
+    }
+
     public String getAllStudents() {
         return "SELECT * FROM " + StudentDataEntry.TABLE_NAME + ";";
     }
+
 }
