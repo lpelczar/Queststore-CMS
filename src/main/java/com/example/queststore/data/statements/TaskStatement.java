@@ -17,4 +17,15 @@ public class TaskStatement {
                 TaskEntry.CATEGORY + ")" +
                 " VALUES (?,?,?,?);" ;
     }
+
+    public String updateTaskStatement() {
+        return "UPDATE " + TaskEntry.TABLE_NAME + " SET " +
+                TaskEntry.POINTS + " = ?," +
+                TaskEntry.DESCRIPTION + " = ?," +
+                TaskEntry.CATEGORY + " = ? WHERE " + TaskEntry.ID + " = ?;";
+    }
+
+    public String selectAllTasks() {
+        return "SELECT * FROM " + TaskEntry.TABLE_NAME + ";" ;
+    }
 }
