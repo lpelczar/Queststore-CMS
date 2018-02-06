@@ -4,7 +4,6 @@ import com.example.queststore.data.DbHelper;
 import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.GroupEntry;
 import com.example.queststore.data.statements.GroupStatement;
-import com.example.queststore.models.Entry;
 import com.example.queststore.models.Group;
 
 import java.sql.PreparedStatement;
@@ -19,10 +18,10 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
     private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
-    public List<Entry> getAll() {
+    public List<Group> getAll() {
         String sqlStatement = groupStatement.selectAllGroups();
 
-        List<Entry> groups = new ArrayList<>();
+        List<Group> groups = new ArrayList<>();
         try {
             PreparedStatement statement = getPreparedStatement(sqlStatement);
             ResultSet resultSet = query(statement);
