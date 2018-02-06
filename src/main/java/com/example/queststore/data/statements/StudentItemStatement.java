@@ -12,7 +12,7 @@ public class StudentItemStatement {
                 "VALUES (?,?); ";
     }
 
-    public String checkIfStudentContainItem() {
+    public String getStudentsItems() {
         return "SELECT " + StudentItemEntry.ID_ITEM + " FROM " + StudentItemEntry.TABLE_NAME +
                 " WHERE "  + StudentItemEntry.ID_STUDENT + " = ?; ";
     }
