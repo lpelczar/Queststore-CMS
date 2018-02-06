@@ -200,4 +200,22 @@ public class MentorView extends UserView {
         System.out.println("There is no task with this name!");
         displayPressAnyKeyToContinueMessage();
     }
+
+    public String getStudentLoginToMarkQuest() {
+        return InputGetter.getStringInputFromConsole("Enter student login to mark the quest: ");
+    }
+
+    public String getTaskNameInput() {
+        return InputGetter.getStringInputFromConsole("Enter task name: ");
+    }
+
+    public void displayTaskConnectionAdded() {
+        System.out.println("Task student connection has been added!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayErrorAddingTaskConnection() {
+        System.out.println("Error adding task student connection!");
+        displayPressAnyKeyToContinueMessage();
+    }
 }
