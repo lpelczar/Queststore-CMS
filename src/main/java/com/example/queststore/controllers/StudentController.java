@@ -64,7 +64,7 @@ public class StudentController {
 
             if (isStudentAffordToBuy(price)) {
                 updateStudentBackpack(student_id, item);
-                updateStudentBalance(price);
+                updateStudentBalance(price, student);
 
             } else {
                 view.displayNoMoney();
@@ -81,12 +81,13 @@ public class StudentController {
             int priceForEachStudent = item.getPrice() / team.size();
 
             if (isTeamAffordToBuy(priceForEachStudent, team)) {
-                for (StudentData student : team) {
-                    updateStudentBackpack(student.getId(), item);
-                    updateStudentBalance(priceForEachStudent);
+                for (StudentData member : team) {
+                    updateStudentBackpack(member.getId(), item);
+                    updateStudentBalance(priceForEachStudent, member);
                 }
             } else {
                 view.displayNoMoney();
+                view.displayPressAnyKeyToContinueMessage();
             }
         }
     }
@@ -129,7 +130,7 @@ public class StudentController {
         }
     }
 
-    private void updateStudentBalance(int price) {
+    private void updateStudentBalance(int price, StudentData student) {
         int transactionBalance = student.getBalance() - price;
         student.setBalance(transactionBalance);
         dbStudentDataDAO.updateStudentData(student);
