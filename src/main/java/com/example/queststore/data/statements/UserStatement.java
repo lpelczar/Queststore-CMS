@@ -1,6 +1,7 @@
 package com.example.queststore.data.statements;
 
 
+import com.example.queststore.data.contracts.StudentDataEntry;
 import com.example.queststore.data.contracts.UserEntry;
 
 public class UserStatement {
@@ -70,5 +71,20 @@ public class UserStatement {
     public String selectUserByPhoneNumber() {
         return "SELECT * FROM " + UserEntry.TABLE_NAME +
                 " WHERE " + UserEntry.PHONE_NUMBER + " = ?;";
+    }
+
+    public String selectAllStudentsByGroupId() {
+        return "SELECT " +
+                UserEntry.ID + "," +
+                UserEntry.NAME + "," +
+                UserEntry.LOGIN + "," +
+                UserEntry.EMAIL + "," +
+                UserEntry.PASSWORD + "," +
+                UserEntry.PHONE_NUMBER + "," +
+                UserEntry.ROLE +
+                " FROM " + UserEntry.TABLE_NAME +
+                " JOIN " + StudentDataEntry.TABLE_NAME + " ON " + UserEntry.TABLE_NAME + "." + UserEntry.ID + " = " +
+                StudentDataEntry.TABLE_NAME + "." + StudentDataEntry.ID_USER +
+                " WHERE " + StudentDataEntry.TABLE_NAME + "." + StudentDataEntry.ID_GROUP + " = ?;";
     }
 }
