@@ -18,6 +18,7 @@ public class MentorController extends UserController {
     private StudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
     private GroupDAO dbGroupDAO = new DbGroupDAO();
     private TaskDAO dbTaskDAO = new DbTaskDAO();
+    private StudentTaskDAO dbStudentTaskDAO = new DbStudentTaskDAO();
     private TeamController teamController = new TeamController();
 
     public void start() {
@@ -42,7 +43,7 @@ public class MentorController extends UserController {
             } else if (option == 6) {
                 editItem();
             } else if (option == 7) {
-//                markStudentQuest();
+                markStudentAchievedQuest();
             } else if (option == 8) {
 //                markStudentItem();
             } else if (option == 9) {
@@ -257,5 +258,45 @@ public class MentorController extends UserController {
             System.err.println("You type wrong sign!");
         }
         return price;
+    }
+
+    private void markStudentAchievedQuest() {
+
+        List<Entry> students = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+        view.displayEntriesNoInput(students);
+        if (students.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String studentLogin = view.getStudentLoginToMarkQuest();
+        if (dbUserDAO.getByLoginAndRole(studentLogin, UserEntry.STUDENT_ROLE) != null) {
+            choseQuestToMark(studentLogin);
+        } else {
+            view.displayThereIsNoStudentWithThisLogin();
+        }
+    }
+
+    private void choseQuestToMark(String studentLogin) {
+
+        List<Entry> quests = new ArrayList<>(dbTaskDAO.getAll());
+        view.displayEntriesNoInput(quests);
+        if (quests.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String taskName = view.getTaskNameInput();
+        if (dbTaskDAO.getByName(taskName) != null) {
+            Task task = dbTaskDAO.getByName(taskName);
+            User student = dbUserDAO.getByLogin(studentLogin);
+            boolean isAdded = dbStudentTaskDAO.add(student.getId(), task.getID());
+            if (isAdded) {
+                view.displayTaskConnectionAdded();
+            } else {
+                view.displayErrorAddingTaskConnection();
+            }
+        } else {
+            view.displayThereIsNoGroupWithThisName();
+        }
+
     }
 }
