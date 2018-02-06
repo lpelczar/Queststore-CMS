@@ -1,9 +1,7 @@
 package com.example.queststore.controllers;
 
 
-import com.example.queststore.dao.DbItemDAO;
-import com.example.queststore.dao.DbStudentDataDAO;
-import com.example.queststore.dao.DbStudentItemDAO;
+import com.example.queststore.dao.*;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.views.StudentView;
@@ -14,9 +12,9 @@ import java.util.List;
 public class StudentController {
     private StudentData student;
     private StudentView view = new StudentView();
-    private DbItemDAO dbItemDAO = new DbItemDAO();
-    private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
-    private DbStudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
+    private ItemDAO ItemDAO = new DbItemDAO();
+    private StudentDataDAO StudentDataDAO = new DbStudentDataDAO();
+    private StudentItemDAO StudentItemDAO = new DbStudentItemDAO();
 
     public void start(int student_id) {
         student = getStudentDataBy(student_id);
@@ -47,7 +45,7 @@ public class StudentController {
     }
 
     private void showStudentBackPack(int student_id) {
-        List<Item> backpack = dbItemDAO.getItemsByStudentId(student_id);
+        List<Item> backpack = ItemDAO.getItemsByStudentId(student_id);
         view.displayStudentBackpack(backpack);
     }
 
@@ -72,13 +70,13 @@ public class StudentController {
     }
 
     private Item chooseItemToBuy() {
-        List<Item> items = dbItemDAO.getAllItems();
+        List<Item> items = ItemDAO.getAllItems();
 
         if (items != null) {
             view.showItemsInStore(items);
             int item_id = view.askForInt();
 
-            return dbItemDAO.getItemById(item_id);
+            return ItemDAO.getItemById(item_id);
 
         } else {
             view.displayOperationFailed();
@@ -94,7 +92,7 @@ public class StudentController {
     }
 
     private void updateStudentBackpack(int student_id, Item item) {
-        if (dbStudentItemDAO.add(student_id, item.getID())) {
+        if (StudentItemDAO.add(student_id, item.getID())) {
             view.displayOperationSuccesfull();
         } else {
             view.displayOperationFailed();
@@ -104,10 +102,10 @@ public class StudentController {
     private void updateStudentBalance(Item item) {
         int transactionBalance = student.getBalance() - item.getPrice();
         student.setBalance(transactionBalance);
-        dbStudentDataDAO.updateStudentData(student);
+        StudentDataDAO.updateStudentData(student);
     }
 
     private StudentData getStudentDataBy(int student_id) {
-        return dbStudentDataDAO.getStudentDataBy(student_id);
+        return StudentDataDAO.getStudentDataBy(student_id);
     }
 }
