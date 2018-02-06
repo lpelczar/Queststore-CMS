@@ -73,7 +73,7 @@ public class StudentController {
 
         if (item != null && team != null) {
 
-            if (isTeamMemberContainItem(team, item.getID())) {
+            if (!isTeamMemberContainItem(team, item.getID())) {
                 int priceForEachStudent = item.getPrice() / team.size();
 
                 if (isTeamAffordToBuy(priceForEachStudent, team)) {
@@ -116,7 +116,7 @@ public class StudentController {
         }
         return true;
     }
-    
+
     private void updateStudentBackpack(int studentId, Item item) {
         if (dbStudentItemDAO.add(studentId, item.getID())) {
             view.displayOperationSuccesfull();
