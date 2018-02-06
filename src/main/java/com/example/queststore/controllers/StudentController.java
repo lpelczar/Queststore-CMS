@@ -36,6 +36,7 @@ public class StudentController {
             } else if (option == 2) {
                 buyArtifact(student_id);
             } else if (option == 3) {
+                buyArtifactForTeam();
             } else if (option == 4) {
                 showStudentLevel();
             } else if (option == 5) {
@@ -55,13 +56,15 @@ public class StudentController {
     }
 
     private void buyArtifact(int student_id) {
-        Item item = chooseItemToBuy();
+        final String CATEGORY = "basic";
+        Item item = chooseItemToBuy(CATEGORY);
 
         if (item != null) {
+            int price = item.getPrice();
 
-            if (isStudentAffordToBuy(item)) {
+            if (isStudentAffordToBuy(price)) {
                 updateStudentBackpack(student_id, item);
-                updateStudentBalance(item);
+                updateStudentBalance(price);
 
             } else {
                 view.displayNoMoney();
@@ -69,8 +72,29 @@ public class StudentController {
         }
     }
 
-    private Item chooseItemToBuy() {
-        List<Item> items = ItemDAO.getAllItems();
+    private void buyArtifactForTeam() {
+        List<StudentData> team = getStudentsInSameTeam();
+
+        final String CATEGORY = "advanced";
+        Item item = chooseItemToBuy(CATEGORY);
+
+        if (item != null) {
+            int priceForEachStudent = item.getPrice() / team.size();
+
+            if (isTeamAffordToBuy(priceForEachStudent, team)) {
+                for (StudentData student : team) {
+                    updateStudentBackpack(student.getId(), item);
+                    updateStudentBalance(priceForEachStudent);
+                }
+            } else {
+                view.displayNoMoney();
+            }
+        }
+    }
+
+    private Item chooseItemToBuy(String category) {
+        List<Item> items = ItemDAO.getItemsByCategory(category);
+        // TODO 2: check if working for basic items for student
 
         if (items != null) {
             view.showItemsInStore(items);
@@ -84,11 +108,19 @@ public class StudentController {
         }
     }
 
-    private boolean isStudentAffordToBuy(Item item) {
+    private boolean isStudentAffordToBuy(int price) {
         int studentBalance = student.getBalance();
-        int itemPrice = item.getPrice();
+        return studentBalance > price;
+    }
 
-        return studentBalance > itemPrice;
+    private boolean isTeamAffordToBuy(int itemPriceForEachStudent, List<StudentData> team) {
+
+        for (StudentData student : team) {
+            if (student.getBalance() < itemPriceForEachStudent) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void updateStudentBackpack(int student_id, Item item) {
@@ -99,8 +131,8 @@ public class StudentController {
         }
     }
 
-    private void updateStudentBalance(Item item) {
-        int transactionBalance = student.getBalance() - item.getPrice();
+    private void updateStudentBalance(int price) {
+        int transactionBalance = student.getBalance() - price;
         student.setBalance(transactionBalance);
         StudentDataDAO.updateStudentData(student);
     }
@@ -108,4 +140,6 @@ public class StudentController {
     private StudentData getStudentDataBy(int student_id) {
         return StudentDataDAO.getStudentDataBy(student_id);
     }
+
+    private List<StudentData> getStudentsInSameTeam() { return StudentDataDAO.getStudentsInSameTeamBy(student.getId());}
 }
