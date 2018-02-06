@@ -48,8 +48,9 @@ public class AdminView extends UserView {
     public void displayEntriesNoInput(List<Entry> entries) {
         System.out.println("");
         if(!entries.isEmpty()) {
+            int index = 1;
             for (Entry entry : entries) {
-                System.out.println(entry);
+                System.out.println(index + ". " + entry);
             }
         } else {
             System.out.println("List is empty!");
@@ -207,6 +208,21 @@ public class AdminView extends UserView {
 
     public void displayThereIsNoLevelWithThisNameMessage() {
         System.out.println("There is no experience level with this name!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayGroupName(String groupName) {
+        System.out.println("");
+        System.out.println("Group name: " + groupName + " Students in the group: ");
+    }
+
+    public void displayThisGroupHasNoStudentsAssigned() {
+        System.out.println("This group has no students assigned!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayMentorHasNoGroupsAssigned() {
+        System.out.println("Mentor has no groups assigned!");
         displayPressAnyKeyToContinueMessage();
     }
 }
