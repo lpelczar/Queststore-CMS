@@ -1,6 +1,6 @@
 package com.example.queststore.models;
 
-public class StudentData {
+public class StudentData implements Entry {
 
     private int student_id;
     private int group_id;
