@@ -116,9 +116,9 @@ public class StudentController {
         }
         return true;
     }
-    // TODO 2: Refactor name of variables student_id to studentID etc.
-    private void updateStudentBackpack(int student_id, Item item) {
-        if (dbStudentItemDAO.add(student_id, item.getID())) {
+    
+    private void updateStudentBackpack(int studentId, Item item) {
+        if (dbStudentItemDAO.add(studentId, item.getID())) {
             view.displayOperationSuccesfull();
         } else {
             view.displayOperationFailed();
@@ -131,8 +131,8 @@ public class StudentController {
         dbStudentDataDAO.updateStudentData(student);
     }
 
-    private boolean isStudentContainItem(int studentID, int itemID) {
-        List<Integer> studentsItems = dbStudentItemDAO.getStudentsItemsBy(studentID);
+    private boolean isStudentContainItem(int studentId, int itemID) {
+        List<Integer> studentsItems = dbStudentItemDAO.getStudentsItemsBy(studentId);
         for (int studentItemID : studentsItems) {
             if (itemID == studentItemID) {
                 return true;
