@@ -11,4 +11,9 @@ public class StudentItemStatement {
                 StudentItemEntry.ID_ITEM + " ) " +
                 "VALUES (?,?); ";
     }
+
+    public String checkIfStudentContainItem() {
+        return "SELECT " + StudentItemEntry.ID_ITEM + " FROM " + StudentItemEntry.TABLE_NAME +
+                " WHERE "  + StudentItemEntry.ID_STUDENT + " = ?; ";
+    }
 }
