@@ -37,4 +37,20 @@ public class DbTaskDAO extends DbHelper implements TaskDAO {
         }
         return task;
     }
+
+    @Override
+    public boolean add(Task task) {
+        String sqlStatement = taskStatement.insertTaskStatement();
+        PreparedStatement statement = null;
+        try {
+            statement = getPreparedStatement(sqlStatement);
+            statement.setString(1, task.getName());
+            statement.setInt(2, task.getPoints());
+            statement.setString(3, task.getDescription());
+            statement.setString(4, task.getCategory());
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return update(statement);
+    }
 }

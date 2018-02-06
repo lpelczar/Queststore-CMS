@@ -8,4 +8,13 @@ public class TaskStatement {
         return "SELECT * FROM " + TaskEntry.TABLE_NAME +
                 " WHERE " + TaskEntry.NAME + " = ?;" ;
     }
+
+    public String insertTaskStatement() {
+        return "INSERT INTO " + TaskEntry.TABLE_NAME + " (" +
+                TaskEntry.NAME + "," +
+                TaskEntry.POINTS + "," +
+                TaskEntry.DESCRIPTION + "," +
+                TaskEntry.CATEGORY + ")" +
+                " VALUES (?,?,?,?);" ;
+    }
 }
