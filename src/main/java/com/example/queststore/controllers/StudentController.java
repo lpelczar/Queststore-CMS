@@ -94,7 +94,6 @@ public class StudentController {
 
     private Item chooseItemToBuy(String category) {
         List<Item> items = ItemDAO.getItemsByCategory(category);
-        // TODO 2: check if working for basic items for student
 
         if (items != null) {
             view.showItemsInStore(items);
