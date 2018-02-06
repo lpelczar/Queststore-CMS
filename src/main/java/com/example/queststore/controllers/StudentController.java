@@ -38,8 +38,6 @@ public class StudentController {
             } else if (option == 3) {
                 buyArtifactForTeam();
             } else if (option == 4) {
-                showStudentLevel();
-            } else if (option == 5) {
                 isLoopEnd = true;
             }
         }
@@ -48,11 +46,6 @@ public class StudentController {
     private void showStudentBackPack(int student_id) {
         List<Item> backpack = dbItemDAO.getItemsByStudentId(student_id);
         view.displayStudentBackpack(backpack);
-    }
-
-    private void showStudentLevel() {
-        String level = student.getLevel();
-        view.displayStudentLevel(level);
     }
 
     private void buyArtifact(int student_id) {

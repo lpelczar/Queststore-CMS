@@ -13,8 +13,7 @@ public class StudentView extends UserView{
         menu.put(1, "Show your bonuses.");
         menu.put(2, "Buy artifact.");
         menu.put(3, "Buy artifact for you and your teammates.");
-        menu.put(4, "Show your level.");
-        menu.put(5, "Log out.");
+        menu.put(4, "Log out.");
     }
 
     private void displayStudentMenu() {
@@ -44,7 +43,7 @@ public class StudentView extends UserView{
         if (backpack.isEmpty()) {
             System.out.println("You don\'t have any items!");
             displayPressAnyKeyToContinueMessage();
-        
+
         } else {
             for (Item item : backpack) {
                 System.out.println(item.getName());
@@ -63,10 +62,6 @@ public class StudentView extends UserView{
     public void displayItemInfo(Item item) {
         System.out.println("ID: " + item.getID() + item.toString());
         System.out.println();
-    }
-
-    public void displayStudentLevel(String level) {
-        System.out.println("Your level is " + level + ".");
     }
 
     public void displayNoMoney() { System.out.println("You don\'t have enough balance!"); }
