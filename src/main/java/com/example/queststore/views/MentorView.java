@@ -1,6 +1,7 @@
 package com.example.queststore.views;
 
 import com.example.queststore.models.Item;
+import com.example.queststore.models.Task;
 import com.example.queststore.utils.InputGetter;
 
 import java.util.*;
@@ -160,6 +161,43 @@ public class MentorView extends UserView {
 
     public void displayErrorAddingQuest() {
         System.out.println("Error adding quest!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public String getValueToUpdate(Task task) {
+        System.out.println("\n" + task);
+        System.out.println("\nWhat would you like to change:" +
+                "\n1. Points" +
+                "\n2. Description" +
+                "\n3. Category");
+        return InputGetter.getStringInputFromConsole("Enter option: ");
+    }
+
+    public void displayValueHasBeenChanged() {
+        System.out.println("Value has been changed!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayErrorChangingTheValue() {
+        System.out.println("Error changing the value!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayWrongOptionMessage() {
+        System.out.println("You have chosen wrong option!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public int askForPointsInput() {
+        return InputGetter.getIntInputFromConsole("Enter new points value: ");
+    }
+
+    public String askForDescriptionInput() {
+        return InputGetter.getStringInputFromConsole("Enter new description value: ");
+    }
+
+    public void displayThereIsNoTaskWithThisName() {
+        System.out.println("There is no task with this name!");
         displayPressAnyKeyToContinueMessage();
     }
 }

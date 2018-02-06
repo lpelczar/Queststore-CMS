@@ -20,7 +20,7 @@ public class MentorController extends UserController {
     private TaskDAO dbTaskDAO = new DbTaskDAO();
     private TeamController teamController = new TeamController();
 
-    public void start(){
+    public void start() {
         int option;
         boolean isAppRunning = true;
 
@@ -38,7 +38,7 @@ public class MentorController extends UserController {
             } else if (option == 4) {
                 addNewItem();
             } else if (option == 5) {
-//                editQuest();
+                editQuest();
             } else if (option == 6) {
                 editItem();
             } else if (option == 7) {
@@ -129,7 +129,7 @@ public class MentorController extends UserController {
 
     private void addNewItem() {
         DbItemDAO dbItemDAO = new DbItemDAO();
-    
+
         view.clearConsole();
         view.displayCreatingItem();
         String name = view.askForString();
@@ -145,13 +145,60 @@ public class MentorController extends UserController {
 
         if (dbItemDAO.addItem(item)) {
             view.displayOperationSuccessful();
-        }
-        else {
+        } else {
             view.displayOperationFailed();
         }
     }
 
-  private void editItem() {
+    private void editQuest() {
+
+        List<Entry> quests = new ArrayList<>(dbTaskDAO.getAll());
+        view.displayEntriesNoInput(quests);
+        if (quests.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String taskName = view.getQuestNameInput();
+        if (dbTaskDAO.getByName(taskName) != null) {
+            updateQuest(dbTaskDAO.getByName(taskName));
+        } else {
+            view.displayThereIsNoTaskWithThisName();
+        }
+    }
+
+    private void updateQuest(Task task) {
+
+        switch(view.getValueToUpdate(task)) {
+            case "1":
+                int points = view.askForPointsInput();
+                task.setPoints(points);
+                showEditResultMessage(dbTaskDAO.update(task));
+                break;
+            case "2":
+                String description = view.askForDescriptionInput();
+                task.setDescription(description);
+                showEditResultMessage(dbTaskDAO.update(task));
+                break;
+            case "3":
+                String categoryInput = view.getQuestCategory();
+                String category = categoryInput.equals("b") ? "Basic" : "Extra";
+                task.setCategory(category);
+                showEditResultMessage(dbTaskDAO.update(task));
+                break;
+            default:
+                view.displayWrongOptionMessage();
+        }
+    }
+
+    private void showEditResultMessage(boolean isEdit) {
+        if (isEdit) {
+            view.displayValueHasBeenChanged();
+        } else {
+            view.displayErrorChangingTheValue();
+        }
+    }
+
+    private void editItem() {
         view.clearConsole();
 
         List<Item> items = dbItemDAO.getAllItems();
@@ -177,19 +224,15 @@ public class MentorController extends UserController {
         if (updateOption == UPDATE_NAME) {
             view.displayUpdateName();
             item.setName(view.askForString());
-        }
-        else if (updateOption == UPDATE_PRICE) {
+        } else if (updateOption == UPDATE_PRICE) {
             view.displayUpdatePrice();
             item.setPrice(view.askForInt());
-        }
-        else if (updateOption == UPDATE_CATEGORY) {
+        } else if (updateOption == UPDATE_CATEGORY) {
             item.setCategory(view.askForItemCategory());
-        }
-        else if (updateOption == UPDATE_DESCRIPTION) {
+        } else if (updateOption == UPDATE_DESCRIPTION) {
             view.displayUpdateDescription();
             item.setDescription(view.askForString());
-        }
-        else {
+        } else {
             view.displayOperationFailed();
         }
 
@@ -204,7 +247,7 @@ public class MentorController extends UserController {
         boolean incorrect = true;
 
         try {
-            while(incorrect) {
+            while (incorrect) {
                 price = view.askForPrice();
                 if (price != null) {
                     incorrect = false;
