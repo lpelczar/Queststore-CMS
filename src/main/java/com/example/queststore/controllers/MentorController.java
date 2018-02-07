@@ -7,6 +7,7 @@ import com.example.queststore.models.*;
 import com.example.queststore.views.MentorView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.InputMismatchException;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class MentorController extends UserController {
     private GroupDAO dbGroupDAO = new DbGroupDAO();
     private TaskDAO dbTaskDAO = new DbTaskDAO();
     private StudentTaskDAO dbStudentTaskDAO = new DbStudentTaskDAO();
+    private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
     private TeamController teamController = new TeamController();
 
     public void start() {
@@ -277,12 +279,41 @@ public class MentorController extends UserController {
             boolean isAdded = dbStudentTaskDAO.add(student.getId(), task.getID());
             if (isAdded) {
                 view.displayTaskConnectionAdded();
+                updateStudentBalance(student.getId(), task.getPoints());
+                updateStudentExperienceAndLevel(student.getId(), task.getPoints());
             } else {
                 view.displayErrorAddingTaskConnection();
             }
         } else {
             view.displayThereIsNoGroupWithThisName();
         }
+    }
 
+    private void updateStudentBalance(int studentId, int points) {
+        StudentData studentData = dbStudentDataDAO.getStudentDataBy(studentId);
+        studentData.setBalance(studentData.getBalance() + points);
+    }
+
+    private void updateStudentExperienceAndLevel(int studentId, int points) {
+        StudentData studentData = dbStudentDataDAO.getStudentDataBy(studentId);
+        studentData.setExperience(studentData.getExperience() + points);
+        dbStudentDataDAO.updateStudentData(studentData);
+        updateStudentLevel(studentData);
+    }
+
+    private void updateStudentLevel(StudentData studentData) {
+        List<ExpLevel> availableLevels = dbExpLevelsDAO.getAll();
+        availableLevels.sort(Comparator.comparing(ExpLevel::getValue));
+        for (ExpLevel level : availableLevels) {
+            if (studentData.getExperience() < level.getValue()) {
+                studentData.setLevel(level.getName());
+                break;
+            }
+        }
+        if (dbStudentDataDAO.updateStudentData(studentData)) {
+            view.displayStudentDataHasBeenUpdated();
+        } else {
+            view.displayErrorUpdatingStudentData();
+        }
     }
 }

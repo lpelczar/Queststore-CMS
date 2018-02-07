@@ -203,5 +203,15 @@ public class MentorView extends UserView {
 
     public int getIdOfItem() {
         return InputGetter.getIntInputFromConsole("\nEnter id of item to edit: ");
+
+    public void displayStudentDataHasBeenUpdated() {
+        System.out.println("Student data has been updated!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayErrorUpdatingStudentData() {
+        System.out.println("Error updating student data!");
+        displayPressAnyKeyToContinueMessage();
+
     }
 }
