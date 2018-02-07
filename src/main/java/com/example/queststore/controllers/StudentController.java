@@ -2,6 +2,7 @@ package com.example.queststore.controllers;
 
 
 import com.example.queststore.dao.*;
+import com.example.queststore.data.contracts.StudentItemEntry;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.views.StudentView;
@@ -118,7 +119,7 @@ public class StudentController {
     }
 
     private void updateStudentBackpack(int studentId, Item item) {
-        if (dbStudentItemDAO.add(studentId, item.getID())) {
+        if (dbStudentItemDAO.add(studentId, item.getID(), StudentItemEntry.IS_NOT_USED_VALUE)) {
             view.displayOperationSuccesfull();
         } else {
             view.displayOperationFailed();
