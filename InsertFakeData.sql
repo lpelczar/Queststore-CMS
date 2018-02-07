@@ -16,27 +16,27 @@ INSERT INTO mentors_groups (id_mentor, id_group) VALUES (2,4);
 INSERT INTO users (name,login,email,password,phone_number,role)
 VALUES ("Student","Student","student@codecool.com","student123","123-456-798","Student");
 
-INSERT INTO students_data VALUES (3,1,"not assigned","beginner",1000,0);
+INSERT INTO students_data VALUES (3,1,"Not assigned","Beginner",1000,0);
 
 INSERT INTO users (name,login,email,password,phone_number,role)
 VALUES ("nikodem","nikodem","nikodem@codecool.com","nikodem123","123-456-000","Student");
 
-INSERT INTO students_data VALUES (4,2,"not assigned","beginner",1000,0);
+INSERT INTO students_data VALUES (4,2,"Not assigned","Beginner",1000,0);
 
 INSERT INTO users (name,login,email,password,phone_number,role)
 VALUES ("ryszard","ryszard","ryszard@codecool.com","ryszard123","123-456-556","Student");
 
-INSERT INTO students_data VALUES (5,2,"not assigned","beginner",1000,0);
+INSERT INTO students_data VALUES (5,2,"Not assigned","Beginner",1000,0);
 
 INSERT INTO users (name,login,email,password,phone_number,role)
 VALUES ("janusz","janusz","janusz@codecool.com","janusz123","123-456-223","Student");
 
-INSERT INTO students_data VALUES (6,3,"not assigned","beginner",1000,0);
+INSERT INTO students_data VALUES (6,3,"Not assigned","Beginner",1000,0);
 
 INSERT INTO users (name,login,email,password,phone_number,role)
 VALUES ("kacperek","kacperek","kacperek@codecool.com","kacperek123","123-888-223","Student");
 
-INSERT INTO students_data VALUES (7,4,"not assigned","beginner",1000,0);
+INSERT INTO students_data VALUES (7,4,"Not assigned","Beginner",1000,0);
 
 INSERT INTO tasks (name,points,description,category) VALUES ("dungeon", 100, "Finishing a Teamwork week", "Basic");
 INSERT INTO tasks (name,points,description,category) VALUES ("puzzle", 100, "Finishing an SI assignment", "Basic");
@@ -53,10 +53,10 @@ INSERT INTO tasks (name,points,description,category) VALUES ("Fortune", 500, "st
 INSERT INTO tasks (name,points,description,category) VALUES ("enchanted scroll", 500, "Creating extra material for the current TW/SI topic", "Extra");
 INSERT INTO tasks (name,points,description,category) VALUES ("arena", 500, "Do a presentation on a meet-up", "Extra");
 
-INSERT INTO experience_levels (name, level) VALUES ("low", 200);
-INSERT INTO experience_levels (name, level) VALUES ("medium", 1000);
-INSERT INTO experience_levels (name, level) VALUES ("pro", 2000);
-INSERT INTO experience_levels (name, level) VALUES ("god", 5000);
+INSERT INTO experience_levels (name, level) VALUES ("Low", 200);
+INSERT INTO experience_levels (name, level) VALUES ("Medium", 1000);
+INSERT INTO experience_levels (name, level) VALUES ("Pro", 2000);
+INSERT INTO experience_levels (name, level) VALUES ("God", 5000);
 
 INSERT INTO items (item_name, description, price, category)
 VALUES ("Combat training", "Private mentoring", 50, "Basic");

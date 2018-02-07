@@ -9,5 +9,7 @@ public class ItemEntry {
     public static final String DESCRIPTION = "description";
     public static final String CATEGORY = "category";
     public static final String PRICE = "price";
+    public static final String BASIC_ITEM = "Basic";
+    public static final String EXTRA_ITEM = "Extra";
 
 }

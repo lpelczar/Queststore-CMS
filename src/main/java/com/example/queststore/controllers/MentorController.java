@@ -2,7 +2,7 @@ package com.example.queststore.controllers;
 
 
 import com.example.queststore.dao.*;
-import com.example.queststore.data.contracts.StudentDataEntry;
+import com.example.queststore.data.contracts.TaskEntry;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.*;
 import com.example.queststore.views.MentorView;
@@ -12,6 +12,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MentorController extends UserController {
+
+    final String BASIC_TASK = "b";
 
     private MentorView view = new MentorView();
     private UserDAO dbUserDAO = new DbUserDAO();
@@ -33,28 +35,39 @@ public class MentorController extends UserController {
             view.handleMentorMenu();
             option = view.askForOption();
 
-            if (option == 1) {
-                promoteBlankUser();
-            } else if (option == 2) {
-                addStudentToGroup();
-            } else if (option == 3) {
-                addNewQuest();
-            } else if (option == 4) {
-                addNewItem();
-            } else if (option == 5) {
-                editQuest();
-            } else if (option == 6) {
-                editItem();
-            } else if (option == 7) {
-                markStudentAchievedQuest();
-            } else if (option == 8) {
-                markStudentUsedItem();
-            } else if (option == 9) {
-                showStudentSummary();
-            } else if (option == 10) {
-                teamController.hadnleRerollStudentsTeams();
-            } else if (option == 11) {
-                isAppRunning = false;
+            switch (option) {
+                case 1:
+                    promoteBlankUser();
+                    break;
+                case 2:
+                    addStudentToGroup();
+                    break;
+                case 3:
+                    addNewQuest();
+                    break;
+                case 4:
+                    addNewItem();
+                    break;
+                case 5:
+                    editQuest();
+                    break;
+                case 6:
+                    editItem();
+                    break;
+                case 7:
+                    markStudentAchievedQuest();
+                    break;
+                case 8:
+                    markStudentUsedItem();
+                    break;
+                case 9:
+                    showStudentSummary();
+                    break;
+                case 10:
+                    teamController.handleRerollStudentsTeams();
+                    break;
+                case 11:
+                    isAppRunning = false;
             }
         }
     }
@@ -143,7 +156,7 @@ public class MentorController extends UserController {
             int points = view.getQuestPointsInput();
             String description = view.getQuestDescriptionInput();
             String categoryInput = view.getQuestCategory();
-            String category = categoryInput.equals("b") ? "Basic" : "Extra";
+            String category = categoryInput.equals(BASIC_TASK) ? TaskEntry.BASIC_TASK : TaskEntry.EXTRA_TASK;
             if (dbTaskDAO.add(new Task(questName, points, description, category))) {
                 view.displayQuestSuccessfullyAdded();
             } else {
@@ -188,21 +201,24 @@ public class MentorController extends UserController {
     }
 
     private void updateQuest(Task task) {
+        final String UPDATE_POINTS = "1";
+        final String UPDATE_DESCRIPTION = "2";
+        final String UPDATE_CATEGORY = "3";
 
         switch(view.getValueToUpdate(task)) {
-            case "1":
+            case UPDATE_POINTS:
                 int points = view.askForPointsInput();
                 task.setPoints(points);
                 showEditResultMessage(dbTaskDAO.update(task));
                 break;
-            case "2":
+            case UPDATE_DESCRIPTION:
                 String description = view.askForDescriptionInput();
                 task.setDescription(description);
                 showEditResultMessage(dbTaskDAO.update(task));
                 break;
-            case "3":
+            case UPDATE_CATEGORY:
                 String categoryInput = view.getQuestCategory();
-                String category = categoryInput.equals("b") ? "Basic" : "Extra";
+                String category = categoryInput.equals(BASIC_TASK) ? TaskEntry.BASIC_TASK : TaskEntry.EXTRA_TASK;
                 task.setCategory(category);
                 showEditResultMessage(dbTaskDAO.update(task));
                 break;

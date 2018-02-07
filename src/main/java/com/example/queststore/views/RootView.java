@@ -1,5 +1,7 @@
 package com.example.queststore.views;
 
+import com.example.queststore.utils.InputGetter;
+
 import java.util.Scanner;
 
 public class RootView {
@@ -49,8 +51,7 @@ public class RootView {
     }
 
     public String getNewUserName() {
-        System.out.print("Enter name: ");
-        return getStringInput();
+        return InputGetter.getStringInputFromConsole("Enter name: ");
     }
 
     public String getNewUserEmail() {

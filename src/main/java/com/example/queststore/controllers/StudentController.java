@@ -2,6 +2,7 @@ package com.example.queststore.controllers;
 
 
 import com.example.queststore.dao.*;
+import com.example.queststore.data.contracts.ItemEntry;
 import com.example.queststore.data.contracts.StudentItemEntry;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.StudentData;
@@ -17,8 +18,8 @@ public class StudentController {
     private StudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
     private StudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
 
-    public void start(int student_id) {
-        student = getStudentDataBy(student_id);
+    public void start(int studentId) {
+        student = getStudentDataBy(studentId);
         boolean isLoopEnd = false;
         int option = 0;
 
@@ -30,36 +31,39 @@ public class StudentController {
                 option = view.askForOption();
             }
             catch (InputMismatchException e) {
-                System.err.println("You type wrong sign!");
+                System.err.println("Wrong option!");
             }
-            if (option == 1) {
-                showStudentBackPack(student_id);
-            } else if (option == 2) {
-                buyArtifact(student_id);
-            } else if (option == 3) {
-                buyArtifactForTeam();
-            } else if (option == 4) {
-                isLoopEnd = true;
+            switch (option) {
+                case 1:
+                    showStudentBackPack(studentId);
+                    break;
+                case 2:
+                    buyArtifact(studentId);
+                    break;
+                case 3:
+                    buyArtifactForTeam();
+                    break;
+                case 4:
+                    isLoopEnd = true;
             }
         }
     }
 
-    private void showStudentBackPack(int student_id) {
-        List<Item> backpack = dbItemDAO.getItemsByStudentId(student_id);
+    private void showStudentBackPack(int studentId) {
+        List<Item> backpack = dbItemDAO.getItemsByStudentId(studentId);
         view.displayStudentBackpack(backpack);
     }
 
-    private void buyArtifact(int student_id) {
-        final String CATEGORY = "basic";
-        Item item = chooseItemToBuy(CATEGORY);
+    private void buyArtifact(int studentId) {
+        Item item = chooseItemToBuy(ItemEntry.BASIC_ITEM);
 
         if (item != null) {
 
-            if (!isStudentContainItem(student_id, item.getID())) {
+            if (!isStudentContainItem(studentId, item.getID())) {
                 int price = item.getPrice();
 
                 if (isStudentAffordToBuy(price)) {
-                    updateStudentBackpack(student_id, item);
+                    updateStudentBackpack(studentId, item);
                     updateStudentBalance(price, student);
 
                 } else { view.displayNoMoney(); }
@@ -69,8 +73,7 @@ public class StudentController {
 
     private void buyArtifactForTeam() {
         List<StudentData> team = dbStudentDataDAO.getStudentsInSameTeamBy(student.getTeamName());
-        final String CATEGORY = "advanced";
-        Item item = chooseItemToBuy(CATEGORY);
+        Item item = chooseItemToBuy(ItemEntry.EXTRA_ITEM);
 
         if (item != null && team != null) {
 
@@ -120,7 +123,7 @@ public class StudentController {
 
     private void updateStudentBackpack(int studentId, Item item) {
         if (dbStudentItemDAO.add(studentId, item.getID(), StudentItemEntry.IS_NOT_USED_VALUE)) {
-            view.displayOperationSuccesfull();
+            view.displayOperationSuccessfull();
         } else {
             view.displayOperationFailed();
         }
