@@ -38,8 +38,9 @@ public class MentorView extends UserView {
     }
 
     public int askForPropertyToEdit(Item item) {
+        clearConsole();
         return InputGetter.getIntInputFromConsole(item.toString() +
-                                                    "\nWhat would you like to update:" +
+                                                    "\n\nWhat would you like to update:" +
                                                     "\n1. Name" +
                                                     "\n2. Price" +
                                                     "\n3. Category" +
@@ -201,6 +202,6 @@ public class MentorView extends UserView {
     }
 
     public int getIdOfItem() {
-        return InputGetter.getIntInputFromConsole("Enter id of item to edit: ");
+        return InputGetter.getIntInputFromConsole("\nEnter id of item to edit: ");
     }
 }

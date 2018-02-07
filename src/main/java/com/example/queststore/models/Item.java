@@ -57,7 +57,7 @@ public class Item implements Entry {
     public void setCategory(String category) { this.category = category; }
 
     public String toString() {
-        return "\n ID: " + ID +
+        return "\nID: " + ID +
                 "\nName: " + name +
                 "\nPrice: " + price +
                 "\nCategory: " + category +
