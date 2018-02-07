@@ -2,13 +2,13 @@ package com.example.queststore.controllers;
 
 
 import com.example.queststore.dao.*;
+import com.example.queststore.data.contracts.StudentDataEntry;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.*;
 import com.example.queststore.views.MentorView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.InputMismatchException;
 import java.util.List;
 
 public class MentorController extends UserController {
@@ -49,7 +49,7 @@ public class MentorController extends UserController {
             } else if (option == 8) {
 //                markStudentItem();
             } else if (option == 9) {
-//                showStudentSummary();
+                showStudentSummary();
             } else if (option == 10) {
                 teamController.hadnleRerollStudentsTeams();
             } else if (option == 11) {
@@ -70,6 +70,27 @@ public class MentorController extends UserController {
         } else {
             view.displayUserNotExists();
         }
+    }
+
+    private void showStudentSummary() {
+        List<String> studentInfo = new ArrayList<>();
+
+        List<User> students = dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE);
+        if (students != null) {
+
+            for (User user : students) {
+
+                StudentData student = dbStudentDataDAO.getStudentDataBy(user.getId());
+                studentInfo.add(user.getName());
+                studentInfo.add(student.getBalance().toString());
+
+                List<Item> studentItems = dbItemDAO.getItemsByStudentId(student.getId());
+                if (studentItems != null) {
+                    view.displayStudentInfo(studentInfo, studentItems);
+
+                } else { view.displayNoItems(); }
+            }
+        } else { view.displayNoStudents(); }
     }
 
     private void addStudentToGroup() {
@@ -203,7 +224,7 @@ public class MentorController extends UserController {
 
         view.displayEntriesNoInput(items);
         if (items.isEmpty()) {
-            view.displayNoItemsToEdit();
+            view.displayNoItems();
             return;
         }
 
