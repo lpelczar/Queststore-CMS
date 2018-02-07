@@ -52,3 +52,8 @@ INSERT INTO tasks (name,points,description,category) VALUES ("Achiever", 500, "s
 INSERT INTO tasks (name,points,description,category) VALUES ("Fortune", 500, "students choose the best project of the week. Selected team scores", "Extra");
 INSERT INTO tasks (name,points,description,category) VALUES ("enchanted scroll", 500, "Creating extra material for the current TW/SI topic", "Extra");
 INSERT INTO tasks (name,points,description,category) VALUES ("arena", 500, "Do a presentation on a meet-up", "Extra");
+
+INSERT INTO experience_levels (name, level) VALUES ("low", 200);
+INSERT INTO experience_levels (name, level) VALUES ("medium", 1000);
+INSERT INTO experience_levels (name, level) VALUES ("pro", 2000);
+INSERT INTO experience_levels (name, level) VALUES ("god", 5000);
