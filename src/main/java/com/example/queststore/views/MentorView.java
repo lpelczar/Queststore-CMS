@@ -226,4 +226,18 @@ public class MentorView extends UserView {
 
     }
 
+    public String getStudentLoginToMarkArtifact() {
+        return InputGetter.getStringInputFromConsole("Enter student login to mark the artifact: ");
+    }
+
+    public void displayItemHasBeenMarked() {
+        System.out.println("Item has been marked!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayErrorMarkingItem() {
+        System.out.println("Error marking item!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
 }

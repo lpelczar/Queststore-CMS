@@ -70,6 +70,13 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
         return getItemFromStore(statement);
     }
 
+    @Override
+    public Item getItemByName(String itemName) {
+        String sqlStatement = itemStatement.getItemByName();
+        PreparedStatement statement = psc.getPreparedStatementBy(itemName, sqlStatement);
+        return getItemFromStore(statement);
+    }
+
     private Item getItemFromStore(PreparedStatement statement) {
 
         Item item = null;

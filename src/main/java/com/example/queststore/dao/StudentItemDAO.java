@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface StudentItemDAO {
 
-    boolean add(int student_id, int item_id);
     List<Integer> getStudentsItemsBy(int studentID);
+    boolean add(int studentId, int itemId, int isUsed);
+    boolean markItemAsUsed(int studentId, int itemId);
 }

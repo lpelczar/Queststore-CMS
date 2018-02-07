@@ -72,4 +72,17 @@ public class PreparedStatementCreator extends DbHelper {
         }
         return statement;
     }
+
+    public PreparedStatement getPreparedStatementBy(int param1, int param2, int param3, String sqlStatement) {
+        PreparedStatement statement = null;
+        try {
+            statement = getPreparedStatement(sqlStatement);
+            statement.setInt(1, param1);
+            statement.setInt(2, param2);
+            statement.setInt(3, param3);
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return statement;
+    }
 }

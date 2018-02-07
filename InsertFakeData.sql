@@ -57,3 +57,30 @@ INSERT INTO experience_levels (name, level) VALUES ("low", 200);
 INSERT INTO experience_levels (name, level) VALUES ("medium", 1000);
 INSERT INTO experience_levels (name, level) VALUES ("pro", 2000);
 INSERT INTO experience_levels (name, level) VALUES ("god", 5000);
+
+INSERT INTO items (item_name, description, price, category)
+VALUES ("Combat training", "Private mentoring", 50, "Basic");
+INSERT INTO items (item_name, description, price, category)
+VALUES ("Sanctuary", "You can spend a day in home office", 300, "Basic");
+INSERT INTO items (item_name, description, price, category)
+VALUES ("Time Travel", "extend SI week assignment deadline by one day", 500, "Basic");
+INSERT INTO items (item_name, description, price, category)
+VALUES ("Sorcery", "60 min workshop by a mentor(s) of the chosen topic", 1000, "Extra");
+INSERT INTO items (item_name, description, price, category)
+VALUES ("Summon Code Elemental", "mentor joins a students' team for a one hour", 1000, "Extra");
+INSERT INTO items (item_name, description, price, category)
+VALUES ("Tome", "Extra material for the current topic", 500, "Extra");
+INSERT INTO items (item_name, description, price, category)
+VALUES ("Transform", "All mentors should dress up as pirates (or just funny) for the day", 5000, "Extra");
+INSERT INTO items (item_name, description, price, category)
+VALUES ("Teleport", "The whole course goes to an off-school program instead for a day", 30000, "Extra");
+
+INSERT INTO students_items (id_student, id_item, is_used) VALUES (7,2,0);
+INSERT INTO students_items (id_student, id_item, is_used) VALUES (3,7,0);
+INSERT INTO students_items (id_student, id_item, is_used) VALUES (5,3,0);
+INSERT INTO students_items (id_student, id_item, is_used) VALUES (5,4,0);
+INSERT INTO students_items (id_student, id_item, is_used) VALUES (5,2,0);
+INSERT INTO students_items (id_student, id_item, is_used) VALUES (7,5,0);
+INSERT INTO students_items (id_student, id_item, is_used) VALUES (4,6,0);
+INSERT INTO students_items (id_student, id_item, is_used) VALUES (4,1,0);
+INSERT INTO students_items (id_student, id_item, is_used) VALUES (3,4,0);

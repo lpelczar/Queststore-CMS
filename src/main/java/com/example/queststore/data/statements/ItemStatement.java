@@ -2,6 +2,7 @@ package com.example.queststore.data.statements;
 
 
 import com.example.queststore.data.contracts.ItemEntry;
+import com.example.queststore.data.contracts.StudentItemEntry;
 
 public class ItemStatement {
 
@@ -10,8 +11,17 @@ public class ItemStatement {
     }
 
     public String getItemsByStudentId() {
-        // TODO 1: Join two tables and get items!
-        return "";
+        return "SELECT " +
+                ItemEntry.ID + "," +
+                ItemEntry.ITEM_NAME + "," +
+                ItemEntry.DESCRIPTION + "," +
+                ItemEntry.PRICE + "," +
+                ItemEntry.CATEGORY
+                + " FROM " + ItemEntry.TABLE_NAME +
+                " JOIN " + StudentItemEntry.TABLE_NAME + " ON " +
+                ItemEntry.TABLE_NAME + "." + ItemEntry.ID + " = " +
+                StudentItemEntry.TABLE_NAME + "." + StudentItemEntry.ID_ITEM +
+                " WHERE " + StudentItemEntry.TABLE_NAME + "." + StudentItemEntry.ID_STUDENT + " = ?;" ;
     }
 
     public String getItemById() {
@@ -19,11 +29,15 @@ public class ItemStatement {
                 " WHERE " + ItemEntry.ID + " = ?; ";
     }
 
+    public String getItemByName() {
+        return "SELECT * FROM " + ItemEntry.TABLE_NAME +
+                " WHERE " + ItemEntry.ITEM_NAME + " = ?; ";
+    }
+
     public String getItemsByCategory() {
         return "SELECT * FROM " + ItemEntry.TABLE_NAME +
                 " WHERE " + ItemEntry.CATEGORY + " = ?; ";
     }
-
 
     public String addItemStatement() {
         return "INSERT INTO " + ItemEntry.TABLE_NAME + " (" +

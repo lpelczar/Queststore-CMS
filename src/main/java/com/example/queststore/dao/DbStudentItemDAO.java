@@ -17,9 +17,16 @@ public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
     private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
-    public boolean add(int student_id, int item_id) {
+    public boolean add(int studentId, int itemId, int isUsed) {
         String sqlStatement = studentItemStatement.addStudentItemConnection();
-        PreparedStatement statement = psc.getPreparedStatementBy(student_id, item_id, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(studentId, itemId, isUsed, sqlStatement);
+        return update(statement);
+    }
+
+    @Override
+    public boolean markItemAsUsed(int studentId, int itemId) {
+        String sqlStatement = studentItemStatement.markItemAsUsed();
+        PreparedStatement statement = psc.getPreparedStatementBy(studentId, itemId, sqlStatement);
         return update(statement);
     }
 
@@ -35,7 +42,6 @@ public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
             while (resultSet.next()) {
                 studentsItems.add(resultSet.getInt(StudentItemEntry.ID_ITEM));
             }
-
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
