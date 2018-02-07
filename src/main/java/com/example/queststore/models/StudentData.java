@@ -10,9 +10,9 @@ public class StudentData implements Entry {
     private int experience;
 
     public StudentData() {
-        this.level = "beginner";
+        this.level = "Beginner";
         this.group_id = 1;
-        this.team_name = "not assigned";
+        this.team_name = "Not assigned";
         this.balance = 0;
         this.experience = 0;
     }
