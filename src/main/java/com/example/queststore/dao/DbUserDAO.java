@@ -33,6 +33,13 @@ public class DbUserDAO extends DbHelper implements UserDAO {
         return getUsers(statement);
     }
 
+    @Override
+    public List<User> getStudentsByGroupId(int groupID) {
+        String sqlStatement = userStatement.selectAllStudentsByGroupId();
+        PreparedStatement statement = psc.getPreparedStatementBy(groupID, sqlStatement);
+        return getUsers(statement);
+    }
+
     private List<User> getUsers(PreparedStatement statement) {
         List<User> users = new ArrayList<>();
         try {

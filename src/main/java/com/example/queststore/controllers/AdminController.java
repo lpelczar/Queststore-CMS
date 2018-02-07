@@ -197,8 +197,22 @@ public class AdminController extends UserController {
     }
 
     private void showMentorGroups(int mentorID) {
+        List<String> groupsNames = new ArrayList<>(dbGroupDAO.getGroupsNamesByMentorId(mentorID));
+        if (!groupsNames.isEmpty()) {
+            for (String groupName : groupsNames) {
+                view.displayGroupName(groupName);
+                Group group = dbGroupDAO.getByName(groupName);
+                if (!dbUserDAO.getStudentsByGroupId(group.getId()).isEmpty()) {
+                    List<Entry> students = new ArrayList<>(dbUserDAO.getStudentsByGroupId(group.getId()));
+                    view.displayEntriesNoInput(students);
+                } else {
+                    view.displayThisGroupHasNoStudentsAssigned();
+                }
+            }
+        } else {
+            view.displayMentorHasNoGroupsAssigned();
+        }
         view.displayPressAnyKeyToContinueMessage();
-        //Get all groups by from mentor ID
     }
 
     private void editMentorData() {

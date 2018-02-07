@@ -61,6 +61,28 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
     }
 
     @Override
+    public List<String> getGroupsNamesByMentorId(int mentorID) {
+
+        String sqlStatement = groupStatement.selectGroupsNamesByMentorId();
+        List<String> groupNames = new ArrayList<>();
+        try {
+            PreparedStatement statement = getPreparedStatement(sqlStatement);
+            statement.setInt(1, mentorID);
+            ResultSet resultSet = query(statement);
+            while (resultSet.next())
+                groupNames.add(
+                        resultSet.getString(GroupEntry.GROUP_NAME));
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return groupNames;
+    }
+
+    @Override
     public boolean add(Group group) {
         String sqlStatement = groupStatement.insertGroupStatement();
         PreparedStatement statement = psc.getPreparedStatementBy(group.getGroupName(), sqlStatement);
