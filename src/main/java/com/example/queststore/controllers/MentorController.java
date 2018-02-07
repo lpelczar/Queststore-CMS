@@ -234,6 +234,7 @@ public class MentorController extends UserController {
 
         } else {
             view.displayOperationFailed();
+            return;
         }
 
         boolean isUpdate = dbItemDAO.updateItem(item);
