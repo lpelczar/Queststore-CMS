@@ -218,4 +218,14 @@ public class MentorView extends UserView {
         System.out.println("Error adding task student connection!");
         displayPressAnyKeyToContinueMessage();
     }
+
+    public void displayStudentDataHasBeenUpdated() {
+        System.out.println("Student data has been updated!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayErrorUpdatingStudentData() {
+        System.out.println("Error updating student data!");
+        displayPressAnyKeyToContinueMessage();
+    }
 }

@@ -12,7 +12,7 @@ public class StudentData implements Entry {
     public StudentData() {
         this.level = "beginner";
         this.group_id = 1;
-        this.team_name = "Not assign yet.";
+        this.team_name = "not assigned";
         this.balance = 0;
         this.experience = 0;
     }
@@ -56,6 +56,10 @@ public class StudentData implements Entry {
 
     public void setGroupId(int group_id) {
         this.group_id = group_id;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 
     public String toString() {
