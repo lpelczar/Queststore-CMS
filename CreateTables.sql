@@ -57,6 +57,7 @@ CREATE TABLE tasks (
 CREATE TABLE students_items (
   id_student INTEGER,
   id_item INTEGER,
+  is_used BOOLEAN,
   PRIMARY KEY (id_student, id_item),
   FOREIGN KEY (id_student) REFERENCES users(ID) ON DELETE CASCADE,
   FOREIGN KEY (id_item) REFERENCES items(ID) ON DELETE CASCADE
