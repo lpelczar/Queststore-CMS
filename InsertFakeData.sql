@@ -36,7 +36,7 @@ INSERT INTO students_data VALUES (6,3,"not assigned","beginner",1000,0);
 INSERT INTO users (name,login,email,password,phone_number,role)
 VALUES ("kacperek","kacperek","kacperek@codecool.com","kacperek123","123-888-223","Student");
 
-INSERT INTO students_data VALUES (6,4,"not assigned","beginner",1000,0);
+INSERT INTO students_data VALUES (7,4,"not assigned","beginner",1000,0);
 
 INSERT INTO tasks (name,points,description,category) VALUES ("dungeon", 100, "Finishing a Teamwork week", "Basic");
 INSERT INTO tasks (name,points,description,category) VALUES ("puzzle", 100, "Finishing an SI assignment", "Basic");
