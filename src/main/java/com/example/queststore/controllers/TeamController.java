@@ -13,7 +13,7 @@ public class TeamController {
     private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
     private UserView view = new UserView();
 
-    public void hadnleRerollStudentsTeams() {
+    public void handleRerollStudentsTeams() {
         List<StudentData> students = dbStudentDataDAO.getAllStudents();
         List<StudentData> teams = rerollStudentsTeam(students);
 
@@ -90,12 +90,13 @@ public class TeamController {
     }
 
     private boolean isPossibilityToAssign(String randomTeam) {
+        final int MAX = 3;
         Map<String, Integer> usedPossibilities = new HashMap<>();
 
         if (!usedPossibilities.containsKey(randomTeam)) {
             usedPossibilities.put(randomTeam, 1);
         }
-        else if (usedPossibilities.get(randomTeam) < 3) {
+        else if (usedPossibilities.get(randomTeam) < MAX) {
             usedPossibilities.put(randomTeam, usedPossibilities.get(randomTeam) + 1);
         }
         else {
@@ -130,7 +131,7 @@ public class TeamController {
 
         if (isUpdated) {
             view.clearConsole();
-            view.displayOperationSuccesfull();
+            view.displayOperationSuccessfull();
             view.displayPressAnyKeyToContinueMessage();
         }
     }
