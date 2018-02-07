@@ -201,7 +201,7 @@ public class MentorController extends UserController {
 
         view.displayEntriesNoInput(items);
         if (items.isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
+            view.displayNoItemsToEdit();
             return;
         }
 

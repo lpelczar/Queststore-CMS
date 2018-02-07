@@ -51,13 +51,6 @@ public class MentorView extends UserView {
         System.out.println("Create new bonus menu: ");
     }
 
-    public Integer askForPrice() throws InputMismatchException {
-        Integer price = 0;
-        System.out.println("Price: ");
-        price = scanner.nextInt();
-        return price;
-    }
-
     public String askForItemCategory() throws InputMismatchException {
         List<String> itemCategories = new ArrayList<>(Arrays.asList("basic", "advanced"));
 
@@ -78,9 +71,7 @@ public class MentorView extends UserView {
 
     public void displayItemHasBeenAdded() { System.out.println("Item has been added to DB successful!" ); }
 
-    public String getStudentLoginToAssignGroup() {
-        return InputGetter.getStringInputFromConsole("Enter student name to assign him to group: ");
-    }
+    public String getStudentLoginToAssignGroup() { return InputGetter.getStringInputFromConsole("Enter student name to assign him to group: "); }
 
     public void displayThereIsNoStudentWithThisLogin() {
         System.out.println("There is no student with this login!");
