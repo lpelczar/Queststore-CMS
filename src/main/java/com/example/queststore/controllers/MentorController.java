@@ -147,7 +147,7 @@ public class MentorController extends UserController {
         Item item = new Item(name, price, description, category);
 
         if (dbItemDAO.addItem(item)) {
-            view.displayOperationSuccessful();
+            view.displayItemHasBeenAdded();
         } else {
             view.displayOperationFailed();
         }
@@ -247,7 +247,7 @@ public class MentorController extends UserController {
 
         boolean isUpdate = dbItemDAO.updateItem(item);
         if (isUpdate) {
-            view.displayOperationSuccessful();
+            view.displayItemHasBeenAdded();
 
         } else {
             view.displayOperationFailed();

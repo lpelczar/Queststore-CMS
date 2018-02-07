@@ -3,6 +3,7 @@ package com.example.queststore.views;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.Task;
 import com.example.queststore.utils.InputGetter;
+import jdk.internal.util.xml.impl.Input;
 
 import java.util.*;
 
@@ -71,13 +72,13 @@ public class MentorView extends UserView {
         return userCategoryChoose;
     }
 
-    public void displayUpdateName() { System.out.println("Enter new name: "); }
+    public void displayUpdateName() { InputGetter.getStringInputFromConsole("Enter new name: "); }
 
-    public void displayUpdatePrice() { System.out.println("Enter new price: "); }
+    public void displayUpdatePrice() { InputGetter.getIntInputFromConsole("Enter new price: "); }
 
-    public void displayUpdateDescription() { System.out.println("Enter new description: "); }
+    public void displayUpdateDescription() { InputGetter.getStringInputFromConsole("Enter new description: "); }
 
-    public void displayOperationSuccessful() { System.out.println("Item has been added to DB succesfully!" ); }
+    public void displayItemHasBeenAdded() { System.out.println("Item has been added to DB successful!" ); }
 
     public String getStudentLoginToAssignGroup() {
         return InputGetter.getStringInputFromConsole("Enter student name to assign him to group: ");
