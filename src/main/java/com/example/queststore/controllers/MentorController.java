@@ -4,9 +4,7 @@ package com.example.queststore.controllers;
 import com.example.queststore.dao.*;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.*;
-import com.example.queststore.utils.InputGetter;
 import com.example.queststore.views.MentorView;
-import jdk.internal.util.xml.impl.Input;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -133,16 +131,12 @@ public class MentorController extends UserController {
     private void addNewItem() {
         DbItemDAO dbItemDAO = new DbItemDAO();
 
-        view.clearConsole();
         view.displayCreatingItem();
-        String name = view.askForString();
 
-        int price = priceCheck();
-
+        String name = view.displayGetName();
+        int price = view.displayGetPrice();
         String category = view.askForItemCategory();
-
-        view.displayUpdateDescription();
-        String description = view.askForString();
+        String description = view.displayGetDescription();
 
         Item item = new Item(name, price, description, category);
 
@@ -215,7 +209,7 @@ public class MentorController extends UserController {
         Item item = dbItemDAO.getItemById(id);
 
         if (item != null) {
-            int updateOption = view.askForPropetyToEdit(item);
+            int updateOption = view.askForPropertyToEdit(item);
             handleUpdateBonus(updateOption, item);
         }
     }
@@ -227,16 +221,16 @@ public class MentorController extends UserController {
         int UPDATE_DESCRIPTION = 4;
 
         if (updateOption == UPDATE_NAME) {
-            item.setName(view.displayUpdateName());
+            item.setName(view.displayGetName());
 
         } else if (updateOption == UPDATE_PRICE) {
-            item.setPrice(view.displayUpdatePrice());
+            item.setPrice(view.displayGetPrice());
 
         } else if (updateOption == UPDATE_CATEGORY) {
             item.setCategory(view.askForItemCategory());
 
         } else if (updateOption == UPDATE_DESCRIPTION) {
-            item.setDescription(view.displayUpdateDescription());
+            item.setDescription(view.displayGetDescription());
 
         } else {
             view.displayOperationFailed();
@@ -249,23 +243,6 @@ public class MentorController extends UserController {
         } else {
             view.displayOperationFailed();
         }
-    }
-
-    private Integer priceCheck() {
-        Integer price = 0;
-        boolean incorrect = true;
-
-        try {
-            while (incorrect) {
-                price = view.askForPrice();
-                if (price != null) {
-                    incorrect = false;
-                }
-            }
-        } catch (InputMismatchException e) {
-            System.err.println("You type wrong sign!");
-        }
-        return price;
     }
 
     private void markStudentAchievedQuest() {
