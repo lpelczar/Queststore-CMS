@@ -17,6 +17,9 @@ public class RootController {
     private StudentController studentController;
     private MentorController mentorController;
 
+    final int MIN_LENGTH = 6;
+    final int MAX_LENGTH = 15;
+
     public RootController() {
 
         this.dbUserDAO = new DbUserDAO();
@@ -67,14 +70,19 @@ public class RootController {
 
             if(user != null) {
                 isLoggedIn = true;
-                if (user.getRole().equals(UserEntry.BLANK_USER_ROLE)) {
-                    rootView.displayUserNotAssignedMessage();
-                } else if (user.getRole().equals(UserEntry.STUDENT_ROLE)) {
-                    studentController.start(user.getId());
-                } else if (user.getRole().equals(UserEntry.MENTOR_ROLE)) {
-                    mentorController.start();
-                } else if (user.getRole().equals(UserEntry.ADMIN_ROLE)) {
-                    adminController.start();
+                switch (user.getRole()) {
+                    case UserEntry.BLANK_USER_ROLE:
+                        rootView.displayUserNotAssignedMessage();
+                        break;
+                    case UserEntry.STUDENT_ROLE:
+                        studentController.start(user.getId());
+                        break;
+                    case UserEntry.MENTOR_ROLE:
+                        mentorController.start();
+                        break;
+                    case UserEntry.ADMIN_ROLE:
+                        adminController.start();
+                        break;
                 }
             } else {
                 rootView.displayUserNotExistsMessage();
@@ -109,7 +117,7 @@ public class RootController {
             }
             password = createUserPassword();
             name = createUserName();
-            this.dbUserDAO.add(new User(name, login, email, password, phoneNumber, "Blank"));
+            this.dbUserDAO.add(new User(name, login, email, password, phoneNumber, UserEntry.BLANK_USER_ROLE));
             rootView.displayUserCreated(login, name, email, phoneNumber);
             isUserCreated = true;
         }
@@ -122,7 +130,7 @@ public class RootController {
 
         while(!isCorrectInput) {
             login = rootView.getNewUserLogin();
-            if (login.length() >= 6 && login.length() <= 15) {
+            if (login.length() >= MIN_LENGTH && login.length() <= MAX_LENGTH) {
                 isCorrectInput = true;
             }
         }
@@ -136,7 +144,7 @@ public class RootController {
 
         while(!isCorrectInput) {
             password = rootView.getNewUserPassword();
-            if (password.length() >= 6 && password.length() <= 15) {
+            if (password.length() >= MIN_LENGTH && password.length() <= MAX_LENGTH) {
                 isCorrectInput = true;
             }
         }
@@ -144,17 +152,7 @@ public class RootController {
     }
 
     private String createUserName() {
-
-        String name = null;
-        boolean isCorrectInput = false;
-
-        while(!isCorrectInput) {
-            name = rootView.getNewUserName();
-            if (name.length() > 1) {
-                isCorrectInput = true;
-            }
-        }
-        return name;
+        return rootView.getNewUserName();
     }
 
     private String createUserEmail() {
