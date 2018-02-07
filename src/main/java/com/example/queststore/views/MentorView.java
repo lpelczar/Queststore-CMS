@@ -72,11 +72,11 @@ public class MentorView extends UserView {
         return userCategoryChoose;
     }
 
-    public void displayUpdateName() { InputGetter.getStringInputFromConsole("Enter new name: "); }
+    public String displayUpdateName() {return InputGetter.getStringInputFromConsole("Enter new name: "); }
 
-    public void displayUpdatePrice() { InputGetter.getIntInputFromConsole("Enter new price: "); }
+    public int displayUpdatePrice() {return InputGetter.getIntInputFromConsole("Enter new price: "); }
 
-    public void displayUpdateDescription() { InputGetter.getStringInputFromConsole("Enter new description: "); }
+    public String displayUpdateDescription() {return InputGetter.getStringInputFromConsole("Enter new description: "); }
 
     public void displayItemHasBeenAdded() { System.out.println("Item has been added to DB successful!" ); }
 
