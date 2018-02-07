@@ -19,6 +19,7 @@ public class MentorController extends UserController {
     private StudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
     private GroupDAO dbGroupDAO = new DbGroupDAO();
     private TaskDAO dbTaskDAO = new DbTaskDAO();
+    private StudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
     private StudentTaskDAO dbStudentTaskDAO = new DbStudentTaskDAO();
     private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
     private TeamController teamController = new TeamController();
@@ -47,7 +48,7 @@ public class MentorController extends UserController {
             } else if (option == 7) {
                 markStudentAchievedQuest();
             } else if (option == 8) {
-//                markStudentItem();
+                markStudentUsedItem();
             } else if (option == 9) {
 //                showStudentSummary();
             } else if (option == 10) {
@@ -328,6 +329,40 @@ public class MentorController extends UserController {
             view.displayStudentDataHasBeenUpdated();
         } else {
             view.displayErrorUpdatingStudentData();
+        }
+    }
+
+    private void markStudentUsedItem() {
+        List<Entry> students = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+        view.displayEntriesNoInput(students);
+        if (students.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String studentLogin = view.getStudentLoginToMarkArtifact();
+        if (dbUserDAO.getByLoginAndRole(studentLogin, UserEntry.STUDENT_ROLE) != null) {
+            choseArtifactToMark(studentLogin);
+        } else {
+            view.displayThereIsNoStudentWithThisLogin();
+        }
+    }
+
+    private void choseArtifactToMark(String studentLogin) {
+        User student = dbUserDAO.getByLogin(studentLogin);
+        List<Entry> items = new ArrayList<>(dbItemDAO.getItemsByStudentId(student.getId()));
+        view.displayEntriesNoInput(items);
+        if (items.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String itemName = view.getTaskNameInput();
+        if (dbItemDAO.getItemByName(itemName) != null) {
+            Item item = dbItemDAO.getItemByName(itemName);
+            if (dbStudentItemDAO.markItemAsUsed(student.getId(), item.getID())) {
+                view.displayItemHasBeenMarked();
+            } else {
+                view.displayErrorMarkingItem();
+            }
         }
     }
 }
