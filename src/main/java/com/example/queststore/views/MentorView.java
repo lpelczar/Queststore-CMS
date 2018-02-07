@@ -36,41 +36,32 @@ public class MentorView extends UserView {
         clearConsole();
         displayMentorMenu();
     }
-  
-    public void displayItemsInStore(List<Item> itemsStore) {
-        for (Item item : itemsStore) {
-            displayItemInfo(item);
+
+    public void displayStudentInfo(List<String> studentInfo, List<Item> items) {
+        int NAME_INDEX = 0;
+        int BALANCE_INDEX = 1;
+
+        System.out.format("%-20%-20", studentInfo.get(NAME_INDEX), studentInfo.get(BALANCE_INDEX));
+        for (Item item : items) {
+            System.out.format("%-5%-20%-20%", item.getName(), item.getCategory(), item.getDescription());
         }
-        System.out.println("Enter ID of item to edit: ");
     }
 
-    public void displayItemInfo(Item item) {
-        System.out.println("ID: " + item.getID() + item.toString());
-        System.out.println();
-    }
-
-    public int askForChange(Item item) {
-        System.out.println("\n" + item.toString());
-        System.out.println("\nWhat would you like to update:" +
-                "\n1. Name" +
-                "\n2. Price" +
-                "\n3. Category" +
-                "\n4. Description");
-
-        return askForOption();
-    }
+    public void displayNoStudents() { System.out.println("No students for display!"); }
 
     public void displayCreatingItem() {
-
+        clearConsole();
         System.out.println("Create new bonus menu: ");
-        displayUpdateName();
     }
 
-    public Integer askForPrice() throws InputMismatchException {
-        Integer price = 0;
-        System.out.println("Price: ");
-        price = scanner.nextInt();
-        return price;
+    public int askForPropertyToEdit(Item item) {
+        clearConsole();
+        return InputGetter.getIntInputFromConsole(item.toString() +
+                                                    "\n\nWhat would you like to update:" +
+                                                    "\n1. Name" +
+                                                    "\n2. Price" +
+                                                    "\n3. Category" +
+                                                    "\n4. Description");
     }
 
     public String askForItemCategory() throws InputMismatchException {
@@ -85,17 +76,15 @@ public class MentorView extends UserView {
         return userCategoryChoose;
     }
 
-    public void displayUpdateName() { System.out.println("Enter new name: "); }
+    public String displayGetName() {return InputGetter.getStringInputFromConsole("Enter new name: "); }
 
-    public void displayUpdatePrice() { System.out.println("Enter new price: "); }
+    public int displayGetPrice() {return InputGetter.getIntInputFromConsole("Enter new price: "); }
 
-    public void displayUpdateDescription() { System.out.println("Enter new description: "); }
+    public String displayGetDescription() {return InputGetter.getStringInputFromConsole("Enter new description: "); }
 
-    public void displayOperationSuccessful() { System.out.println("Item has been added to DB succesfully!" ); }
+    public void displayItemHasBeenAdded() { System.out.println("Item has been added to DB successful!" ); }
 
-    public String getStudentLoginToAssignGroup() {
-        return InputGetter.getStringInputFromConsole("Enter student name to assign him to group: ");
-    }
+    public String getStudentLoginToAssignGroup() { return InputGetter.getStringInputFromConsole("Enter student name to assign him to group: "); }
 
     public void displayThereIsNoStudentWithThisLogin() {
         System.out.println("There is no student with this login!");
@@ -219,6 +208,13 @@ public class MentorView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
+    public void displayNoItems() {
+        System.out.println("There is no items!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public int getIdOfItem() { return InputGetter.getIntInputFromConsole("\nEnter id of item to edit: "); }
+
     public void displayStudentDataHasBeenUpdated() {
         System.out.println("Student data has been updated!");
         displayPressAnyKeyToContinueMessage();
@@ -227,6 +223,7 @@ public class MentorView extends UserView {
     public void displayErrorUpdatingStudentData() {
         System.out.println("Error updating student data!");
         displayPressAnyKeyToContinueMessage();
+
     }
 
     public String getStudentLoginToMarkArtifact() {
@@ -242,4 +239,5 @@ public class MentorView extends UserView {
         System.out.println("Error marking item!");
         displayPressAnyKeyToContinueMessage();
     }
+
 }

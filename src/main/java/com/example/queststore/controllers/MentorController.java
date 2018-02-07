@@ -2,13 +2,13 @@ package com.example.queststore.controllers;
 
 
 import com.example.queststore.dao.*;
+import com.example.queststore.data.contracts.StudentDataEntry;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.*;
 import com.example.queststore.views.MentorView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.InputMismatchException;
 import java.util.List;
 
 public class MentorController extends UserController {
@@ -50,7 +50,7 @@ public class MentorController extends UserController {
             } else if (option == 8) {
                 markStudentUsedItem();
             } else if (option == 9) {
-//                showStudentSummary();
+                showStudentSummary();
             } else if (option == 10) {
                 teamController.hadnleRerollStudentsTeams();
             } else if (option == 11) {
@@ -71,6 +71,27 @@ public class MentorController extends UserController {
         } else {
             view.displayUserNotExists();
         }
+    }
+
+    private void showStudentSummary() {
+        List<String> studentInfo = new ArrayList<>();
+
+        List<User> students = dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE);
+        if (students != null) {
+
+            for (User user : students) {
+
+                StudentData student = dbStudentDataDAO.getStudentDataBy(user.getId());
+                studentInfo.add(user.getName());
+                studentInfo.add(student.getBalance().toString());
+
+                List<Item> studentItems = dbItemDAO.getItemsByStudentId(student.getId());
+                if (studentItems != null) {
+                    view.displayStudentInfo(studentInfo, studentItems);
+
+                } else { view.displayNoItems(); }
+            }
+        } else { view.displayNoStudents(); }
     }
 
     private void addStudentToGroup() {
@@ -134,21 +155,17 @@ public class MentorController extends UserController {
     private void addNewItem() {
         DbItemDAO dbItemDAO = new DbItemDAO();
 
-        view.clearConsole();
         view.displayCreatingItem();
-        String name = view.askForString();
 
-        int price = priceCheck();
-
+        String name = view.displayGetName();
+        int price = view.displayGetPrice();
         String category = view.askForItemCategory();
-
-        view.displayUpdateDescription();
-        String description = view.askForString();
+        String description = view.displayGetDescription();
 
         Item item = new Item(name, price, description, category);
 
         if (dbItemDAO.addItem(item)) {
-            view.displayOperationSuccessful();
+            view.displayItemHasBeenAdded();
         } else {
             view.displayOperationFailed();
         }
@@ -204,19 +221,21 @@ public class MentorController extends UserController {
 
     private void editItem() {
         view.clearConsole();
+        List<Entry> items = new ArrayList<>(dbItemDAO.getAllItems());
 
-        List<Item> items = dbItemDAO.getAllItems();
-        view.displayItemsInStore(items);
-        int id = view.askForInt();
+        view.displayEntriesNoInput(items);
+        if (items.isEmpty()) {
+            view.displayNoItems();
+            return;
+        }
 
-        view.clearConsole();
-
+        int id = view.getIdOfItem();
         Item item = dbItemDAO.getItemById(id);
-        view.displayItemInfo(item);
 
-        int updateOption = view.askForChange(item);
-        handleUpdateBonus(updateOption, item);
-
+        if (item != null) {
+            int updateOption = view.askForPropertyToEdit(item);
+            handleUpdateBonus(updateOption, item);
+        }
     }
 
     private void handleUpdateBonus(int updateOption, Item item) {
@@ -226,41 +245,29 @@ public class MentorController extends UserController {
         int UPDATE_DESCRIPTION = 4;
 
         if (updateOption == UPDATE_NAME) {
-            view.displayUpdateName();
-            item.setName(view.askForString());
+            item.setName(view.displayGetName());
+
         } else if (updateOption == UPDATE_PRICE) {
-            view.displayUpdatePrice();
-            item.setPrice(view.askForInt());
+            item.setPrice(view.displayGetPrice());
+
         } else if (updateOption == UPDATE_CATEGORY) {
             item.setCategory(view.askForItemCategory());
+
         } else if (updateOption == UPDATE_DESCRIPTION) {
-            view.displayUpdateDescription();
-            item.setDescription(view.askForString());
+            item.setDescription(view.displayGetDescription());
+
         } else {
             view.displayOperationFailed();
+            return;
         }
 
         boolean isUpdate = dbItemDAO.updateItem(item);
         if (isUpdate) {
-            view.displayOperationSuccessful();
-        }
-    }
+            view.displayItemHasBeenAdded();
 
-    private Integer priceCheck() {
-        Integer price = 0;
-        boolean incorrect = true;
-
-        try {
-            while (incorrect) {
-                price = view.askForPrice();
-                if (price != null) {
-                    incorrect = false;
-                }
-            }
-        } catch (InputMismatchException e) {
-            System.err.println("You type wrong sign!");
+        } else {
+            view.displayOperationFailed();
         }
-        return price;
     }
 
     private void markStudentAchievedQuest() {
