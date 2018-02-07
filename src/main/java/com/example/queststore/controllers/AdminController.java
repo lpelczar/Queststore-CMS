@@ -30,30 +30,42 @@ public class AdminController extends UserController {
             view.handleAdminMenu();
             option = view.askForOption();
 
-            if (option == 1) {
-                promoteBlankUser();
-            } else if (option == 2) {
-                createGroup();
-            } else if (option == 3) {
-                assignMentorToGroup();
-            } else if (option == 4) {
-                revokeMentorFromGroup();
-            } else if (option == 5) {
-                deleteGroup();
-            } else if (option == 6) {
-                deleteMentor();
-            } else if (option == 7) {
-                editMentorData();
-            } else if (option == 8) {
-                showMentorProfileAndHisGroups();
-            } else if (option == 9) {
-                addLevelOfExperience();
-            } else if (option == 10) {
-                removeLevelOfExperience();
-            } else if (option == 11) {
-                showAllLevelsOfExperience();
-            } else if (option == 12) {
-                isAppRunning = false;
+            switch (option) {
+                case 1:
+                    promoteBlankUser();
+                    break;
+                case 2:
+                    createGroup();
+                    break;
+                case 3:
+                    assignMentorToGroup();
+                    break;
+                case 4:
+                    revokeMentorFromGroup();
+                    break;
+                case 5:
+                    deleteGroup();
+                    break;
+                case 6:
+                    deleteMentor();
+                    break;
+                case 7:
+                    editMentorData();
+                    break;
+                case 8:
+                    showMentorProfileAndHisGroups();
+                    break;
+                case 9:
+                    addLevelOfExperience();
+                    break;
+                case 10:
+                    removeLevelOfExperience();
+                    break;
+                case 11:
+                    showAllLevelsOfExperience();
+                    break;
+                case 12:
+                    isAppRunning = false;
             }
         }
     }
@@ -236,21 +248,25 @@ public class AdminController extends UserController {
     }
 
     private void updateProfileAttribute(User user) {
+        final int UPDATE_NAME = 1;
+        final int UPDATE_LOGIN = 2;
+        final int UPDATE_EMAIL = 3;
+        final int UPDATE_PHONE = 4;
 
-        int toChange = view.askForChangeInProfile(user);
-        if (toChange == 1) {
+        int valueToChange = view.askForChangeInProfile(user);
+        if (valueToChange == UPDATE_NAME) {
             String name = view.askForNewValue();
             user.setName(name);
             showEditResultMessage(dbUserDAO.update(user));
-        } else if (toChange == 2) {
+        } else if (valueToChange == UPDATE_LOGIN) {
             String login = view.askForNewValue();
             user.setLogin(login);
             showEditResultMessage(dbUserDAO.update(user));
-        } else if (toChange == 3) {
+        } else if (valueToChange == UPDATE_EMAIL) {
             String email = view.askForNewValue();
             user.setEmail(email);
             showEditResultMessage(dbUserDAO.update(user));
-        } else if (toChange == 4) {
+        } else if (valueToChange == UPDATE_PHONE) {
             String phoneNumber = view.askForNewValue();
             user.setPhoneNumber(phoneNumber);
             showEditResultMessage(dbUserDAO.update(user));
