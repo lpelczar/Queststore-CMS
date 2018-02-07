@@ -4,7 +4,9 @@ package com.example.queststore.controllers;
 import com.example.queststore.dao.*;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.*;
+import com.example.queststore.utils.InputGetter;
 import com.example.queststore.views.MentorView;
+import jdk.internal.util.xml.impl.Input;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -201,19 +203,21 @@ public class MentorController extends UserController {
 
     private void editItem() {
         view.clearConsole();
+        List<Entry> items = new ArrayList<>(dbItemDAO.getAllItems());
 
-        List<Item> items = dbItemDAO.getAllItems();
-        view.displayItemsInStore(items);
-        int id = view.askForInt();
+        view.displayEntriesNoInput(items);
+        if (items.isEmpty()) {
+            view.displayPressAnyKeyToContinueMessage();
+            return;
+        }
 
-        view.clearConsole();
-
+        int id = view.getIdOfItem();
         Item item = dbItemDAO.getItemById(id);
-        view.displayItemInfo(item);
 
-        int updateOption = view.askForChange(item);
-        handleUpdateBonus(updateOption, item);
-
+        if (item != null) {
+            int updateOption = view.askForPropetyToEdit(item);
+            handleUpdateBonus(updateOption, item);
+        }
     }
 
     private void handleUpdateBonus(int updateOption, Item item) {
@@ -240,7 +244,7 @@ public class MentorController extends UserController {
         boolean isUpdate = dbItemDAO.updateItem(item);
         if (isUpdate) {
             view.displayOperationSuccessful();
-        }
+        } else { view.displayOperationFailed();
     }
 
     private Integer priceCheck() {

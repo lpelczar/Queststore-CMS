@@ -36,28 +36,14 @@ public class MentorView extends UserView {
         clearConsole();
         displayMentorMenu();
     }
-  
-    public void displayItemsInStore(List<Item> itemsStore) {
-        for (Item item : itemsStore) {
-            displayItemInfo(item);
-        }
-        System.out.println("Enter ID of item to edit: ");
-    }
 
-    public void displayItemInfo(Item item) {
-        System.out.println("ID: " + item.getID() + item.toString());
-        System.out.println();
-    }
-
-    public int askForChange(Item item) {
-        System.out.println("\n" + item.toString());
-        System.out.println("\nWhat would you like to update:" +
-                "\n1. Name" +
-                "\n2. Price" +
-                "\n3. Category" +
-                "\n4. Description");
-
-        return askForOption();
+    public int askForPropetyToEdit(Item item) {
+        return InputGetter.getIntInputFromConsole(item.toString() +
+                                                    "\nWhat would you like to update:" +
+                                                    "\n1. Name" +
+                                                    "\n2. Price" +
+                                                    "\n3. Category" +
+                                                    "\n4. Description");
     }
 
     public void displayCreatingItem() {
@@ -217,5 +203,14 @@ public class MentorView extends UserView {
     public void displayErrorAddingTaskConnection() {
         System.out.println("Error adding task student connection!");
         displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayNoItemsToEdit() {
+        System.out.println("There is no items to edit!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public int getIdOfItem() {
+        return InputGetter.getIntInputFromConsole("Enter id of item to edit: ");
     }
 }
