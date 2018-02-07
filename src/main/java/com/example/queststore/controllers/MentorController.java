@@ -229,14 +229,18 @@ public class MentorController extends UserController {
         if (updateOption == UPDATE_NAME) {
             view.displayUpdateName();
             item.setName(view.askForString());
+
         } else if (updateOption == UPDATE_PRICE) {
             view.displayUpdatePrice();
             item.setPrice(view.askForInt());
+
         } else if (updateOption == UPDATE_CATEGORY) {
             item.setCategory(view.askForItemCategory());
+
         } else if (updateOption == UPDATE_DESCRIPTION) {
             view.displayUpdateDescription();
             item.setDescription(view.askForString());
+
         } else {
             view.displayOperationFailed();
         }
@@ -244,7 +248,10 @@ public class MentorController extends UserController {
         boolean isUpdate = dbItemDAO.updateItem(item);
         if (isUpdate) {
             view.displayOperationSuccessful();
-        } else { view.displayOperationFailed();
+
+        } else {
+            view.displayOperationFailed();
+        }
     }
 
     private Integer priceCheck() {
