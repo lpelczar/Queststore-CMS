@@ -3,7 +3,6 @@ package com.example.queststore.views;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.Task;
 import com.example.queststore.utils.InputGetter;
-import jdk.internal.util.xml.impl.Input;
 
 import java.util.*;
 
@@ -38,7 +37,7 @@ public class MentorView extends UserView {
         displayMentorMenu();
     }
 
-    public int askForPropetyToEdit(Item item) {
+    public int askForPropertyToEdit(Item item) {
         return InputGetter.getIntInputFromConsole(item.toString() +
                                                     "\nWhat would you like to update:" +
                                                     "\n1. Name" +
