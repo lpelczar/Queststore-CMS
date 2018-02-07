@@ -47,9 +47,8 @@ public class MentorView extends UserView {
     }
 
     public void displayCreatingItem() {
-
+        clearConsole();
         System.out.println("Create new bonus menu: ");
-        displayUpdateName();
     }
 
     public Integer askForPrice() throws InputMismatchException {
@@ -71,11 +70,11 @@ public class MentorView extends UserView {
         return userCategoryChoose;
     }
 
-    public String displayUpdateName() {return InputGetter.getStringInputFromConsole("Enter new name: "); }
+    public String displayGetName() {return InputGetter.getStringInputFromConsole("Enter new name: "); }
 
-    public int displayUpdatePrice() {return InputGetter.getIntInputFromConsole("Enter new price: "); }
+    public int displayGetPrice() {return InputGetter.getIntInputFromConsole("Enter new price: "); }
 
-    public String displayUpdateDescription() {return InputGetter.getStringInputFromConsole("Enter new description: "); }
+    public String displayGetDescription() {return InputGetter.getStringInputFromConsole("Enter new description: "); }
 
     public void displayItemHasBeenAdded() { System.out.println("Item has been added to DB successful!" ); }
 
