@@ -37,6 +37,23 @@ public class MentorView extends UserView {
         displayMentorMenu();
     }
 
+    public void displayStudentInfo(List<String> studentInfo, List<Item> items) {
+        int NAME_INDEX = 0;
+        int BALANCE_INDEX = 1;
+
+        System.out.format("%-20%-20", studentInfo.get(NAME_INDEX), studentInfo.get(BALANCE_INDEX));
+        for (Item item : items) {
+            System.out.format("%-5%-20%-20%", item.getName(), item.getCategory(), item.getDescription());
+        }
+    }
+
+    public void displayNoStudents() { System.out.println("No students for display!"); }
+
+    public void displayCreatingItem() {
+        clearConsole();
+        System.out.println("Create new bonus menu: ");
+    }
+
     public int askForPropertyToEdit(Item item) {
         clearConsole();
         return InputGetter.getIntInputFromConsole(item.toString() +
@@ -45,11 +62,6 @@ public class MentorView extends UserView {
                                                     "\n2. Price" +
                                                     "\n3. Category" +
                                                     "\n4. Description");
-    }
-
-    public void displayCreatingItem() {
-        clearConsole();
-        System.out.println("Create new bonus menu: ");
     }
 
     public String askForItemCategory() throws InputMismatchException {
@@ -196,13 +208,12 @@ public class MentorView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
-    public void displayNoItemsToEdit() {
-        System.out.println("There is no items to edit!");
+    public void displayNoItems() {
+        System.out.println("There is no items!");
         displayPressAnyKeyToContinueMessage();
     }
 
-    public int getIdOfItem() {
-        return InputGetter.getIntInputFromConsole("\nEnter id of item to edit: ");
+    public int getIdOfItem() { return InputGetter.getIntInputFromConsole("\nEnter id of item to edit: "); }
 
     public void displayStudentDataHasBeenUpdated() {
         System.out.println("Student data has been updated!");
@@ -214,4 +225,5 @@ public class MentorView extends UserView {
         displayPressAnyKeyToContinueMessage();
 
     }
+
 }
