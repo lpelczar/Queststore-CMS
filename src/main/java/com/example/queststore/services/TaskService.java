@@ -127,7 +127,7 @@ public class TaskService {
                 taskView.displayErrorAddingTaskConnection();
             }
         } else {
-            groupView.displayThereIsNoGroupWithThisName();
+            taskView.displayThereIsNoTaskWithThisName();
         }
     }
 }
