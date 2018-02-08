@@ -1,24 +1,16 @@
 package com.example.queststore.controllers;
 
-
-import com.example.queststore.dao.*;
-import com.example.queststore.data.contracts.UserEntry;
-import com.example.queststore.models.Entry;
-import com.example.queststore.models.ExpLevel;
-import com.example.queststore.models.Group;
-import com.example.queststore.models.User;
+import com.example.queststore.services.ExpLevelsService;
+import com.example.queststore.services.GroupService;
+import com.example.queststore.services.MentorService;
 import com.example.queststore.views.AdminView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AdminController extends UserController {
 
-    private AdminView view = new AdminView();
-    private UserDAO dbUserDAO = new DbUserDAO();
-    private GroupDAO dbGroupDAO = new DbGroupDAO();
-    private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
-    private MentorGroupDAO dbMentorGroupDAO = new DbMentorGroupDAO();
+    private AdminView adminView = new AdminView();
+    private GroupService groupService = new GroupService();
+    private ExpLevelsService expLevelsService = new ExpLevelsService();
+    private MentorService mentorService = new MentorService();
 
     public void start() {
 
@@ -26,299 +18,47 @@ public class AdminController extends UserController {
         boolean isAppRunning = true;
 
         while (isAppRunning) {
-            view.clearConsole();
-            view.handleAdminMenu();
-            option = view.askForOption();
+            adminView.clearConsole();
+            adminView.handleAdminMenu();
+            option = adminView.askForOption();
 
             switch (option) {
                 case 1:
                     promoteBlankUser();
                     break;
                 case 2:
-                    createGroup();
+                    groupService.createGroup();
                     break;
                 case 3:
-                    assignMentorToGroup();
+                    groupService.assignMentorToGroup();
                     break;
                 case 4:
-                    revokeMentorFromGroup();
+                    groupService.revokeMentorFromGroup();
                     break;
                 case 5:
-                    deleteGroup();
+                    groupService.deleteGroup();
                     break;
                 case 6:
-                    deleteMentor();
+                    mentorService.deleteMentor();
                     break;
                 case 7:
-                    editMentorData();
+                    mentorService.editMentorData();
                     break;
                 case 8:
-                    showMentorProfileAndHisGroups();
+                    mentorService.showMentorProfileAndHisGroups();
                     break;
                 case 9:
-                    addLevelOfExperience();
+                    expLevelsService.addLevelOfExperience();
                     break;
                 case 10:
-                    removeLevelOfExperience();
+                    expLevelsService.removeLevelOfExperience();
                     break;
                 case 11:
-                    showAllLevelsOfExperience();
+                    expLevelsService.showAllLevelsOfExperience();
                     break;
                 case 12:
                     isAppRunning = false;
             }
         }
-    }
-
-
-    private void createGroup() {
-
-        String name = view.getGroupNameInput();
-        Group group = new Group(name);
-        if (dbGroupDAO.add(group)) {
-            view.displayGroupAdded();
-        } else {
-            view.displayGroupWithThisNameAlreadyExists();
-        }
-    }
-
-    private void assignMentorToGroup() {
-        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
-        view.displayEntriesNoInput(mentors);
-        if (mentors.isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String mentorLogin = view.getMentorLoginToAssignGroup();
-        if (dbUserDAO.getByLoginAndRole(mentorLogin, UserEntry.MENTOR_ROLE) != null) {
-            choseGroupAndAssignToMentor(mentorLogin);
-        } else {
-            view.displayThereIsNoMentorWithThisLogin();
-        }
-    }
-
-    private void choseGroupAndAssignToMentor(String mentorLogin) {
-        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
-        view.displayEntriesNoInput(groups);
-        if (groups.isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String groupName = view.getGroupNameInput();
-        if (dbGroupDAO.getByName(groupName) != null) {
-            Group group = dbGroupDAO.getByName(groupName);
-            User mentor = dbUserDAO.getByLogin(mentorLogin);
-            boolean isAdded = dbMentorGroupDAO.add(group.getId(), mentor.getId());
-            if (isAdded) {
-                view.displayGroupConnectionAdded();
-            } else {
-                view.displayErrorAddingGroupConnection();
-            }
-        } else {
-            view.displayThereIsNoGroupWithThisName();
-        }
-    }
-
-    private void revokeMentorFromGroup() {
-        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
-        view.displayEntriesNoInput(mentors);
-        if (mentors.isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String mentorLogin = view.getMentorLoginToRevokeFromGroup();
-        if (dbUserDAO.getByLoginAndRole(mentorLogin, UserEntry.MENTOR_ROLE) != null) {
-            choseGroupAndRevokeMentor(mentorLogin);
-        } else {
-            view.displayThereIsNoMentorWithThisLogin();
-        }
-    }
-
-    private void choseGroupAndRevokeMentor(String mentorLogin) {
-        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
-        view.displayEntriesNoInput(groups);
-        if (groups.isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String groupName = view.getGroupNameInput();
-        if (dbGroupDAO.getByName(groupName) != null) {
-            Group group = dbGroupDAO.getByName(groupName);
-            User mentor = dbUserDAO.getByLogin(mentorLogin);
-            boolean isRemoved = dbMentorGroupDAO.delete(group.getId(), mentor.getId());
-            if (isRemoved) {
-                view.displayGroupConnectionRemoved();
-            } else {
-                view.displayErrorRemovingGroupConnection();
-            }
-        } else {
-            view.displayThereIsNoGroupWithThisName();
-        }
-    }
-
-    private void deleteGroup() {
-        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
-        view.displayEntriesNoInput(groups);
-        if (groups.isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String groupName = view.getGroupNameInput();
-        Group group = dbGroupDAO.getByName(groupName);
-        if (group != null) {
-            dbGroupDAO.delete(group);
-            view.displayGroupDeleted();
-        } else {
-            view.displayThereIsNoGroupWithThisName();
-        }
-    }
-
-    private void deleteMentor() {
-        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
-        view.displayEntriesNoInput(mentors);
-        if (mentors.isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String login = view.getMentorLoginToDelete();
-        User mentor = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
-        if (mentor != null) {
-            dbUserDAO.delete(mentor);
-            view.displayMentorDeletedMessage();
-        } else {
-            view.displayNoMentorMessage();
-        }
-    }
-
-    private void showMentorProfileAndHisGroups() {
-        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
-        view.displayEntriesNoInput(mentors);
-        if (mentors.isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String login = view.getMentorLoginToShow();
-        User mentor = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
-
-        if (mentor != null) {
-            view.displayMentorProfile(mentor);
-            showMentorGroups(mentor.getId());
-        } else {
-            view.displayNoMentorMessage();
-        }
-    }
-
-    private void showMentorGroups(int mentorID) {
-        List<String> groupsNames = new ArrayList<>(dbGroupDAO.getGroupsNamesByMentorId(mentorID));
-        if (!groupsNames.isEmpty()) {
-            for (String groupName : groupsNames) {
-                view.displayGroupName(groupName);
-                Group group = dbGroupDAO.getByName(groupName);
-                if (!dbUserDAO.getStudentsByGroupId(group.getId()).isEmpty()) {
-                    List<Entry> students = new ArrayList<>(dbUserDAO.getStudentsByGroupId(group.getId()));
-                    view.displayEntriesNoInput(students);
-                } else {
-                    view.displayThisGroupHasNoStudentsAssigned();
-                }
-            }
-        } else {
-            view.displayMentorHasNoGroupsAssigned();
-        }
-        view.displayPressAnyKeyToContinueMessage();
-    }
-
-    private void editMentorData() {
-
-        final String QUIT_OPTION = "q";
-
-        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
-        view.displayEntriesNoInput(mentors);
-        if (dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE).isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String login = view.getMentorLoginToEdit();
-        if (login.equals(QUIT_OPTION)) return;
-        User mentorToEdit = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
-        if (mentorToEdit != null) {
-            updateProfileAttribute(mentorToEdit);
-        } else {
-            view.displayThereIsNoMentorWithThisLogin();
-        }
-    }
-
-    private void updateProfileAttribute(User user) {
-        final int UPDATE_NAME = 1;
-        final int UPDATE_LOGIN = 2;
-        final int UPDATE_EMAIL = 3;
-        final int UPDATE_PHONE = 4;
-
-        int valueToChange = view.askForChangeInProfile(user);
-        if (valueToChange == UPDATE_NAME) {
-            String name = view.askForNewValue();
-            user.setName(name);
-            showEditResultMessage(dbUserDAO.update(user));
-        } else if (valueToChange == UPDATE_LOGIN) {
-            String login = view.askForNewValue();
-            user.setLogin(login);
-            showEditResultMessage(dbUserDAO.update(user));
-        } else if (valueToChange == UPDATE_EMAIL) {
-            String email = view.askForNewValue();
-            user.setEmail(email);
-            showEditResultMessage(dbUserDAO.update(user));
-        } else if (valueToChange == UPDATE_PHONE) {
-            String phoneNumber = view.askForNewValue();
-            user.setPhoneNumber(phoneNumber);
-            showEditResultMessage(dbUserDAO.update(user));
-        } else {
-            view.displayWrongSignError();
-        }
-    }
-
-    private void showEditResultMessage(boolean isEdit) {
-        if (isEdit) {
-            view.displayValueHasBeenChanged();
-        } else {
-            view.displayErrorChangingTheValue();
-        }
-    }
-
-    private void addLevelOfExperience() {
-
-        String levelName = view.getLevelNameInput();
-        int value = view.getLevelValueInput();
-
-        if (dbExpLevelsDAO.add(new ExpLevel(levelName, value))) {
-            view.displayLevelSetMessage();
-        } else {
-            view.displayErrorChangingTheValue();
-        }
-    }
-
-    private void removeLevelOfExperience() {
-
-        List<Entry> levels = new ArrayList<>(dbExpLevelsDAO.getAll());
-        view.displayEntriesNoInput(levels);
-        if (dbExpLevelsDAO.getAll().isEmpty()) {
-            view.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-
-        String levelName = view.getLevelNameInput();
-        if (dbExpLevelsDAO.getByName(levelName) != null) {
-            if (dbExpLevelsDAO.delete(levelName)) {
-                view.displayLevelDeletedMessage();
-            } else {
-                view.displayDeleteErrorMessage();
-            }
-        } else {
-            view.displayThereIsNoLevelWithThisNameMessage();
-        }
-    }
-
-    private void showAllLevelsOfExperience() {
-
-        List<Entry> expLevels = new ArrayList<>(dbExpLevelsDAO.getAll());
-        view.displayEntries(expLevels);
     }
 }

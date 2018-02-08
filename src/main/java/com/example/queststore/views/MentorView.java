@@ -1,12 +1,13 @@
 package com.example.queststore.views;
 
-import com.example.queststore.models.Item;
-import com.example.queststore.models.Task;
+import com.example.queststore.models.User;
 import com.example.queststore.utils.InputGetter;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-public class MentorView extends UserView {
+public class MentorView extends AbstractView {
 
     private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
@@ -37,67 +38,7 @@ public class MentorView extends UserView {
         displayMentorMenu();
     }
 
-    public void displayStudentInfo(List<String> studentInfo, List<Item> items) {
-        int NAME_INDEX = 0;
-        int BALANCE_INDEX = 1;
-
-        System.out.println();
-        System.out.format("%-1s%-7s%-20s%-10s%-20s",
-                          "\n", "Name: ", studentInfo.get(NAME_INDEX), "Balance: ", studentInfo.get(BALANCE_INDEX));
-
-        if (!items.isEmpty()) {
-            for (Item item : items) {
-                System.out.println();
-                System.out.format("%-30s%-20s%-40s", item.getName(), item.getCategory(), item.getDescription());
-            }
-        } else { displayStudentHaveNotItems(); }
-    }
-
-    private void displayStudentHaveNotItems() { System.out.println("No items for display."); }
-
-    public void displayNoStudents() { System.out.println("No students for display!"); }
-
-    public void displayCreatingItem() {
-        clearConsole();
-        System.out.println("Create new bonus menu: ");
-    }
-
-    public int askForPropertyToEdit(Item item) {
-        clearConsole();
-        return InputGetter.getIntInputFromConsole(item.toString() +
-                                                    "\n\nWhat would you like to update:" +
-                                                    "\n1. Name" +
-                                                    "\n2. Price" +
-                                                    "\n3. Category" +
-                                                    "\n4. Description");
-    }
-
-    public String askForItemCategory() throws InputMismatchException {
-        List<String> itemCategories = new ArrayList<>(Arrays.asList("basic", "advanced"));
-
-        String userCategoryChoose = "";
-
-        while (!itemCategories.contains(userCategoryChoose)) {
-            System.out.println("Choose category of bonus, type \'basic\' or \'advanced\': ");
-            userCategoryChoose = scanner.next();
-        }
-        return userCategoryChoose;
-    }
-
-    public String displayGetName() {return InputGetter.getStringInputFromConsole("Enter new name: "); }
-
-    public int displayGetPrice() {return InputGetter.getIntInputFromConsole("Enter new price: "); }
-
-    public String displayGetDescription() {return InputGetter.getStringInputFromConsole("Enter new description: "); }
-
-    public void displayItemHasBeenAdded() { System.out.println("Item has been added to DB successful!" ); }
-
     public String getStudentLoginToAssignGroup() { return InputGetter.getStringInputFromConsole("Enter student name to assign him to group: "); }
-
-    public void displayThereIsNoStudentWithThisLogin() {
-        System.out.println("There is no student with this login!");
-        displayPressAnyKeyToContinueMessage();
-    }
 
     public String getGroupNameInput() {
         return InputGetter.getStringInputFromConsole("Enter group name: ");
@@ -118,133 +59,75 @@ public class MentorView extends UserView {
         displayPressAnyKeyToContinueMessage();
     }
 
-    public String getQuestNameInput() {
-        return InputGetter.getStringInputFromConsole("Enter quest name: ");
-    }
-
-    public void displayQuestAlreadyExists() {
-        System.out.println("Quest with this name already exists!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public int getQuestPointsInput() {
-        return InputGetter.getIntInputFromConsole("Enter points prize: ");
-    }
-
-    public String getQuestDescriptionInput() {
-        return InputGetter.getStringInputFromConsole("Enter quest description: ");
-    }
-
-    public String getQuestCategory() {
-
-        final String[] CORRECT_OPTIONS = {"b", "e"};
-        String userInput = "";
-        boolean userInputInCorrectOptions = false;
-
-        while (!userInputInCorrectOptions) {
-            userInput = InputGetter.getStringInputFromConsole("Enter 'b' to add basic quest or 'e' to add extra quest: ");
-            userInputInCorrectOptions = Arrays.asList(CORRECT_OPTIONS).contains(userInput.toLowerCase());
-            if (!userInputInCorrectOptions) {
-                System.out.println("Wrong input!");
-            }
-        }
-        return userInput;
-    }
-
-    public void displayQuestSuccessfullyAdded() {
-        System.out.println("Quest successfully added!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public void displayErrorAddingQuest() {
-        System.out.println("Error adding quest!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public String getValueToUpdate(Task task) {
-        System.out.println("\n" + task);
-        System.out.println("\nWhat would you like to change:" +
-                "\n1. Points" +
-                "\n2. Description" +
-                "\n3. Category");
-        return InputGetter.getStringInputFromConsole("Enter option: ");
-    }
-
-    public void displayValueHasBeenChanged() {
-        System.out.println("Value has been changed!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
     public void displayErrorChangingTheValue() {
         System.out.println("Error changing the value!");
         displayPressAnyKeyToContinueMessage();
-    }
-
-    public void displayWrongOptionMessage() {
-        System.out.println("You have chosen wrong option!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public int askForPointsInput() {
-        return InputGetter.getIntInputFromConsole("Enter new points value: ");
-    }
-
-    public String askForDescriptionInput() {
-        return InputGetter.getStringInputFromConsole("Enter new description value: ");
-    }
-
-    public void displayThereIsNoTaskWithThisName() {
-        System.out.println("There is no task with this name!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public String getStudentLoginToMarkQuest() {
-        return InputGetter.getStringInputFromConsole("Enter student login to mark the quest: ");
-    }
-
-    public String getTaskNameInput() {
-        return InputGetter.getStringInputFromConsole("Enter task name: ");
-    }
-
-    public void displayTaskConnectionAdded() {
-        System.out.println("Task student connection has been added!");
-    }
-
-    public void displayErrorAddingTaskConnection() {
-        System.out.println("Error adding task student connection!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public void displayNoItems() {
-        System.out.println("There is no items!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public int getIdOfItem() { return InputGetter.getIntInputFromConsole("\nEnter id of item to edit: "); }
-
-    public void displayStudentDataHasBeenUpdated() {
-        System.out.println("Student data has been updated!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public void displayErrorUpdatingStudentData() {
-        System.out.println("Error updating student data!");
-        displayPressAnyKeyToContinueMessage();
-
     }
 
     public String getStudentLoginToMarkArtifact() {
         return InputGetter.getStringInputFromConsole("Enter student login to mark the artifact: ");
     }
 
-    public void displayItemHasBeenMarked() {
-        System.out.println("Item has been marked!");
+    public String getMentorLoginToDelete() {
+        System.out.print("Enter mentor login to delete all his data: ");
+        return getStringInput();
+    }
+
+    public void displayMentorDeletedMessage() {
+        System.out.println("Mentor has been deleted!");
         displayPressAnyKeyToContinueMessage();
     }
 
-    public void displayErrorMarkingItem() {
-        System.out.println("Error marking item!");
+    public void displayNoMentorMessage() {
+        System.out.println("There is no mentor with this login!");
         displayPressAnyKeyToContinueMessage();
     }
+
+    public String getMentorLoginToShowProfile() {
+        System.out.print("Enter login of the mentor: ");
+        return getStringInput();
+    }
+
+    public void displayMentorProfile(User mentor) {
+        System.out.println("");
+        System.out.println(mentor);
+    }
+
+    public String getMentorLoginToEdit() {
+        System.out.print("\nEnter mentor login to edit his data (or q to go back): ");
+        return getStringInput();
+    }
+
+    public void displayThereIsNoMentorWithThisLogin() {
+        System.out.println("There is no mentor with this login!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public int askForChangeInProfile(User profile) {
+        System.out.println("\n" + profile.toString());
+        System.out.println("\nWhat would you like to change in profile:" +
+                "\n1. Name" +
+                "\n2. Login" +
+                "\n3. Email" +
+                "\n4. Phone number");
+
+        return askForOption();
+    }
+
+    public String getMentorLoginToAssignGroup() {
+        System.out.print("Enter mentor login: ");
+        return getStringInput();
+    }
+
+    public String getMentorLoginToRevokeFromGroup() {
+        System.out.print("Enter mentor login to revoke him from group: ");
+        return getStringInput();
+    }
+
+    public void displayMentorHasNoGroupsAssigned() {
+        System.out.println("Mentor has no groups assigned!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
 
 }

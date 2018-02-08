@@ -5,7 +5,7 @@ import com.example.queststore.utils.InputGetter;
 
 import java.util.*;
 
-public class StudentView extends UserView{
+public class StudentView extends AbstractView {
 
     private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
@@ -71,4 +71,34 @@ public class StudentView extends UserView{
     public void displayItemAlreadyContaining() { System.out.println("You already have this item!"); displayPressAnyKeyToContinueMessage(); }
 
     public void displayNoMoney() { System.out.println("You don\'t have enough balance!"); displayPressAnyKeyToContinueMessage(); }
+
+    public void displayStudentDataHasBeenUpdated() {
+        System.out.println("Student data has been updated!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+    public void displayErrorUpdatingStudentData() {
+        System.out.println("Error updating student data!");
+        displayPressAnyKeyToContinueMessage();
+
+    }
+
+    public void displayStudentInfo(List<String> studentInfo, List<Item> items) {
+        int NAME_INDEX = 0;
+        int BALANCE_INDEX = 1;
+
+        System.out.format("%-20%-20", studentInfo.get(NAME_INDEX), studentInfo.get(BALANCE_INDEX));
+        for (Item item : items) {
+            System.out.format("%-5%-20%-20%", item.getName(), item.getCategory(), item.getDescription());
+        }
+    }
+
+    public void displayNoStudents() { System.out.println("No students for display!"); }
+
+    public void displayNoItems() {
+        System.out.println("There is no items!");
+        displayPressAnyKeyToContinueMessage();
+    }
+
+
 }

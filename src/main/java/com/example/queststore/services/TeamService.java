@@ -1,4 +1,4 @@
-package com.example.queststore.controllers;
+package com.example.queststore.services;
 
 import com.example.queststore.dao.DbStudentDataDAO;
 import com.example.queststore.dao.DbStudentItemDAO;
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class TeamController {
+public class TeamService {
     private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
     private UserView view = new UserView();
 

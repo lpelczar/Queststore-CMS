@@ -59,10 +59,10 @@ public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
     }
 
     @Override
-    public removeTeamItems() {
+    public boolean removeTeamItems() {
         String sqlStatement = studentItemStatement.deleteTeamItemsStatement();
         List<Object> params = Collections.emptyList();
         PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
-        update(statement);
+        return update(statement);
     }
 }
