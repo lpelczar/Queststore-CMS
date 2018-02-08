@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
@@ -43,7 +44,8 @@ public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
     @Override
     public ExpLevel getByName(String levelName) {
         String sqlStatement = expStatement.selectLevelByName();
-        PreparedStatement statement = psc.getPreparedStatementBy(levelName, sqlStatement);
+        List<Object> params = Collections.singletonList(levelName);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         ExpLevel level = null;
         try {
             ResultSet resultSet = query(statement);
@@ -72,7 +74,8 @@ public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
     @Override
     public boolean delete(String levelName) {
         String sqlStatement = expStatement.deleteLevelStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(levelName, sqlStatement);
+        List<Object> params = Collections.singletonList(levelName);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 }
