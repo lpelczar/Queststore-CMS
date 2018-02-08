@@ -10,16 +10,18 @@ public class PreparedStatementCreator extends DbHelper {
         PreparedStatement statement = null;
         try {
             statement = getPreparedStatement(sqlStatement);
-            int index = 1;
-            for (Object argument : args) {
-                if (argument instanceof String) {
-                    String param = (String) argument;
-                    statement.setString(index, param);
-                } else if (argument instanceof Integer) {
-                    int param = (int) argument;
-                    statement.setInt(index, param);
+            if (!args.isEmpty()) {
+                int index = 1;
+                for (Object argument : args) {
+                    if (argument instanceof String) {
+                        String param = (String) argument;
+                        statement.setString(index, param);
+                    } else if (argument instanceof Integer) {
+                        int param = (int) argument;
+                        statement.setInt(index, param);
+                    }
+                    index++;
                 }
-                index++;
             }
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
