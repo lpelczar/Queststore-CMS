@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
@@ -19,14 +21,16 @@ public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
     @Override
     public boolean add(int studentId, int itemId, int isUsed) {
         String sqlStatement = studentItemStatement.addStudentItemConnection();
-        PreparedStatement statement = psc.getPreparedStatementBy(studentId, itemId, isUsed, sqlStatement);
+        List<Object> params = Arrays.asList(studentId, itemId, isUsed);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean markItemAsUsed(int studentId, int itemId) {
         String sqlStatement = studentItemStatement.markItemAsUsed();
-        PreparedStatement statement = psc.getPreparedStatementBy(studentId, itemId, sqlStatement);
+        List<Object> params = Arrays.asList(studentId, itemId);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 
@@ -36,7 +40,8 @@ public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
         List<Integer> studentsItems = new ArrayList<>();
 
         try {
-            PreparedStatement statement = psc.getPreparedStatementBy(studentID, sqlStatement);
+            List<Object> params = Collections.singletonList(studentID);
+            PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
             ResultSet resultSet = query(statement);
 
             while (resultSet.next()) {
