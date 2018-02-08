@@ -3,12 +3,14 @@ package com.example.queststore.views;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.Task;
 import com.example.queststore.utils.InputGetter;
+import com.example.queststore.utils.TableCreator;
 
 import java.util.*;
 
 public class MentorView extends UserView {
 
     private Map<Integer, String> menu = new HashMap<>();
+    private TableCreator table = new TableCreator();
     private Scanner scanner = new Scanner(System.in);
 
     private void prepareMentorMenu() {
@@ -46,10 +48,12 @@ public class MentorView extends UserView {
                           "\n", "Name: ", studentInfo.get(NAME_INDEX), "Balance: ", studentInfo.get(BALANCE_INDEX));
 
         if (!items.isEmpty()) {
-            for (Item item : items) {
-                System.out.println();
-                System.out.format("%-30s%-20s%-40s", item.getName(), item.getCategory(), item.getDescription());
-            }
+//            for (Item item : items) {
+//                System.out.println();
+//                System.out.format("%-30s%-20s%-40s", item.getName(), item.getCategory(), item.getDescription());
+//            }
+            List a = table.convertToString(items);
+            table.drawTable(a);
         } else { displayStudentHaveNotItems(); }
     }
 
