@@ -17,8 +17,8 @@ public class RootController {
     private StudentController studentController;
     private MentorController mentorController;
 
-    final int MIN_LENGTH = 6;
-    final int MAX_LENGTH = 15;
+    private final int MIN_LENGTH = 6;
+    private final int MAX_LENGTH = 15;
 
     public RootController() {
 
