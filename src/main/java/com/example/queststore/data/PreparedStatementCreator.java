@@ -2,84 +2,25 @@ package com.example.queststore.data;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class PreparedStatementCreator extends DbHelper {
 
-    public PreparedStatement getPreparedStatementBy(String sqlStatement) {
+    public PreparedStatement getPreparedStatementBy(List<Object> args, String sqlStatement) {
         PreparedStatement statement = null;
         try {
             statement = getPreparedStatement(sqlStatement);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-        return statement;
-    }
-
-    public PreparedStatement getPreparedStatementBy(String param1, String sqlStatement) {
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, param1);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-        return statement;
-    }
-
-    public PreparedStatement getPreparedStatementBy(int param1, String sqlStatement) {
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setInt(1, param1);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-        return statement;
-    }
-
-    public PreparedStatement getPreparedStatementBy(int param1, int param2, String sqlStatement) {
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setInt(1, param1);
-            statement.setInt(2, param2);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-        return statement;
-    }
-
-    public PreparedStatement getPreparedStatementBy(String param1, String param2, String sqlStatement) {
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, param1);
-            statement.setString(2, param2);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-        return statement;
-    }
-
-    public PreparedStatement getPreparedStatementBy(String param1, int param2, String sqlStatement) {
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, param1);
-            statement.setInt(2, param2);
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
-        return statement;
-    }
-
-    public PreparedStatement getPreparedStatementBy(int param1, int param2, int param3, String sqlStatement) {
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setInt(1, param1);
-            statement.setInt(2, param2);
-            statement.setInt(3, param3);
+            int index = 1;
+            for (Object argument : args) {
+                if (argument instanceof String) {
+                    String param = (String) argument;
+                    statement.setString(index, param);
+                } else if (argument instanceof Integer) {
+                    int param = (int) argument;
+                    statement.setInt(index, param);
+                }
+                index++;
+            }
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
