@@ -2,9 +2,7 @@ package com.example.queststore.views;
 
 import com.example.queststore.utils.InputGetter;
 
-import java.util.Scanner;
-
-public class RootView {
+public class RootView extends AbstractView {
 
     public void displayMenu() {
 
@@ -19,11 +17,6 @@ public class RootView {
     public String getUserInput() {
         System.out.print("Choose option: ");
         return getStringInput();
-    }
-
-    private String getStringInput() {
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
     }
 
     public void displayWrongInputMessage() {
@@ -86,17 +79,6 @@ public class RootView {
 
     public void displayUserNotExistsMessage() {
         System.out.println("\nUser not exists!\n");
-    }
-
-    private void displayPressAnyKeyToContinueMessage() {
-        System.out.print("\nPress any key to continue.");
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
-    }
-
-    private static void clearConsole() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 
     public void displayUserWithThisEmailAlreadyExists() {
