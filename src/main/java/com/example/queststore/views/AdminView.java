@@ -1,12 +1,10 @@
 package com.example.queststore.views;
 
 
-import com.example.queststore.models.Entry;
 import com.example.queststore.models.User;
 import com.example.queststore.utils.InputGetter;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AdminView extends UserView {
@@ -43,18 +41,6 @@ public class AdminView extends UserView {
     public void displayNoMentorMessage() {
         System.out.println("There is no mentor with this login!");
         displayPressAnyKeyToContinueMessage();
-    }
-
-    public void displayEntriesNoInput(List<Entry> entries) {
-        System.out.println("");
-        if(!entries.isEmpty()) {
-            int index = 1;
-            for (Entry entry : entries) {
-                System.out.println(index + ". " + entry);
-            }
-        } else {
-            System.out.println("List is empty!");
-        }
     }
 
     public int askForChangeInProfile(User profile) {
@@ -213,7 +199,7 @@ public class AdminView extends UserView {
 
     public void displayGroupName(String groupName) {
         System.out.println("");
-        System.out.println("Group name: " + groupName + " Students in the group: ");
+        System.out.println("Group name: " + groupName + " | Students in the group: ");
     }
 
     public void displayThisGroupHasNoStudentsAssigned() {

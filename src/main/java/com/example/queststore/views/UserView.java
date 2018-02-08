@@ -64,22 +64,21 @@ public class UserView {
     }
 
     public void displayEntries(List<Entry> entries) {
-        System.out.println("");
-        if(!entries.isEmpty()) {
-            for (Entry entry : entries) {
-                System.out.println(entry);
-            }
-        } else {
-            System.out.println("List is empty!");
-        }
+        showAllEntries(entries);
         displayPressAnyKeyToContinueMessage();
     }
 
     public void displayEntriesNoInput(List<Entry> entries) {
+        showAllEntries(entries);
+    }
+
+    private void showAllEntries(List<Entry> entries) {
         System.out.println("");
         if(!entries.isEmpty()) {
+            int index = 1;
             for (Entry entry : entries) {
-                System.out.println(entry);
+                System.out.println(index + ". " + entry);
+                index++;
             }
         } else {
             System.out.println("List is empty!");
