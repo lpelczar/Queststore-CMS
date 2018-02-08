@@ -21,12 +21,12 @@ public class ItemView extends AbstractView {
     public void displayItemHasBeenAdded() { System.out.println("Item has been added successfully!" ); }
 
     public String askForItemCategory() throws InputMismatchException {
-        List<String> itemCategories = new ArrayList<>(Arrays.asList("basic", "advanced"));
+        List<String> itemCategories = new ArrayList<>(Arrays.asList("Basic", "Extra"));
 
         String userCategoryChoose = "";
 
         while (!itemCategories.contains(userCategoryChoose)) {
-            System.out.println("Choose category of bonus, type \'basic\' or \'advanced\': ");
+            System.out.println("Choose category of bonus, type \'Basic\' or \'Extra\': ");
             Scanner scanner = new Scanner(System.in);
             userCategoryChoose = scanner.next();
         }
