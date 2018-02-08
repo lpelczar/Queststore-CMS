@@ -200,7 +200,6 @@ public class MentorView extends UserView {
 
     public void displayTaskConnectionAdded() {
         System.out.println("Task student connection has been added!");
-        displayPressAnyKeyToContinueMessage();
     }
 
     public void displayErrorAddingTaskConnection() {

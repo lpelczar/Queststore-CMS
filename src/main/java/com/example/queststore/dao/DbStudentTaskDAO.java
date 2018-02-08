@@ -5,6 +5,8 @@ import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.statements.StudentTaskStatement;
 
 import java.sql.PreparedStatement;
+import java.util.Arrays;
+import java.util.List;
 
 public class DbStudentTaskDAO extends DbHelper implements StudentTaskDAO {
 
@@ -14,7 +16,8 @@ public class DbStudentTaskDAO extends DbHelper implements StudentTaskDAO {
     @Override
     public boolean add(int studentID, int taskID) {
         String sqlStatement = studentTaskStatement.insertConnectionStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(studentID, taskID, sqlStatement);
+        List<Object> params = Arrays.asList(studentID, taskID);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 }

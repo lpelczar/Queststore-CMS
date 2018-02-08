@@ -15,14 +15,14 @@ CREATE TABLE mentors_data (
 
 CREATE TABLE students_data (
   id_user INTEGER,
-  id_group INTEGER,
+  id_group INTEGER DEFAULT 1,
   team_name TEXT,
   level TEXT,
   balance INTEGER,
   experience INTEGER,
   PRIMARY KEY (id_user, id_group),
   FOREIGN KEY (id_user) REFERENCES users(ID) ON DELETE CASCADE,
-  FOREIGN KEY (id_group) REFERENCES groups(ID) ON DELETE CASCADE
+  FOREIGN KEY (id_group) REFERENCES groups(ID) ON DELETE SET DEFAULT
   );
 
 CREATE TABLE groups (

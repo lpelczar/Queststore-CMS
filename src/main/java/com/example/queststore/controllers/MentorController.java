@@ -13,7 +13,7 @@ import java.util.List;
 
 public class MentorController extends UserController {
 
-    final String BASIC_TASK = "b";
+    private final String BASIC_TASK = "b";
 
     private MentorView view = new MentorView();
     private UserDAO dbUserDAO = new DbUserDAO();

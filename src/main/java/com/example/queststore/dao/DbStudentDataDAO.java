@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
@@ -98,36 +99,18 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     public boolean add(StudentData student) {
         String sqlStatement = studentDataStatement.createStudentData();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setInt(1, student.getId());
-            statement.setInt(2, student.getGroupId());
-            statement.setString(3, student.getTeamName());
-            statement.setString(4, student.getLevel());
-            statement.setInt(5, student.getBalance());
-            statement.setInt(6, student.getExperience());
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        List<Object> params = Arrays.asList(student.getId(), student.getGroupId(), student.getTeamName(),
+                student.getLevel(), student.getBalance(), student.getExperience());
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean updateStudentData(StudentData student) {
         String sqlStatement = studentDataStatement.updateStudentData();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setInt(1, student.getGroupId());
-            statement.setString(2, student.getTeamName());
-            statement.setString(3, student.getLevel());
-            statement.setInt(4, student.getBalance());
-            statement.setInt(5, student.getExperience());
-            statement.setInt(6, student.getId());
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        List<Object> params = Arrays.asList(student.getGroupId(), student.getTeamName(),
+                student.getLevel(), student.getBalance(), student.getExperience(), student.getId());
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 }

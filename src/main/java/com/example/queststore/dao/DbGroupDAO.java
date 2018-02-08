@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DbGroupDAO extends DbHelper implements GroupDAO {
@@ -20,7 +21,6 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
     @Override
     public List<Group> getAll() {
         String sqlStatement = groupStatement.selectAllGroups();
-
         List<Group> groups = new ArrayList<>();
         try {
             PreparedStatement statement = getPreparedStatement(sqlStatement);
@@ -43,8 +43,8 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
         String sqlStatement = groupStatement.selectGroupByName();
         Group group = null;
         try {
-            PreparedStatement statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, name);
+            List<Object> params = Collections.singletonList(name);
+            PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 group = new Group(
@@ -66,8 +66,8 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
         String sqlStatement = groupStatement.selectGroupsNamesByMentorId();
         List<String> groupNames = new ArrayList<>();
         try {
-            PreparedStatement statement = getPreparedStatement(sqlStatement);
-            statement.setInt(1, mentorID);
+            List<Object> params = Collections.singletonList(mentorID);
+            PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 groupNames.add(
@@ -85,14 +85,16 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
     @Override
     public boolean add(Group group) {
         String sqlStatement = groupStatement.insertGroupStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(group.getGroupName(), sqlStatement);
+        List<Object> params = Collections.singletonList(group.getGroupName());
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean delete(Group group) {
         String sqlStatement = groupStatement.deleteGroupStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(group.getId(), sqlStatement);
+        List<Object> params = Collections.singletonList(group.getId());
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 }
