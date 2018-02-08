@@ -60,7 +60,7 @@ public class StudentView extends UserView{
     }
 
     public void displayItemInfo(Item item) {
-        System.out.println("ID: " + item.getID() + item.toString());
+        System.out.println(item.toString());
         System.out.println();
     }
 
