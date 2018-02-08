@@ -27,7 +27,8 @@ public class StudentItemStatement {
     }
 
     public String deleteTeamItemsStatement() {
-        return " WHERE " + StudentItemEntry.TABLE_NAME + "." + StudentItemEntry.ID_ITEM + " IN (" +
+        return " DELETE FROM " + StudentItemEntry.TABLE_NAME +
+                " WHERE " +StudentItemEntry.TABLE_NAME + "." + StudentItemEntry.ID_ITEM + " IN (" +
                " SELECT " + ItemEntry.ID +
                " FROM " + ItemEntry.TABLE_NAME +
                " JOIN " + StudentItemEntry.TABLE_NAME + " ON " +

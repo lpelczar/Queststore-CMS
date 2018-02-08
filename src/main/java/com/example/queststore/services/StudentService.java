@@ -105,16 +105,24 @@ public class StudentService {
         List<Item> items = dbItemDAO.getItemsByCategory(category);
 
         if (items != null) {
-            studentView.chooseItemFrom(items);
-            int item_id = studentView.askForInt();
+            int itemId = studentView.chooseItemFrom(items);
 
-            return dbItemDAO.getItemById(item_id);
+            if (checkIfIdItemInStore(itemId, items)) {
+                return dbItemDAO.getItemById(itemId);
 
+            } else { studentView.displayWrongId(); return null; }
         } else {
             studentView.displayOperationFailed();
             return null;
         }
     }
+
+    private boolean checkIfIdItemInStore(int itemId, List<Item> items) {
+        for (Item item : items) {
+            if (itemId == item.getID()) { return true; }
+            }
+            return false;
+        }
 
     private boolean isStudentAffordToBuy(int price) {
         int studentBalance = student.getBalance();

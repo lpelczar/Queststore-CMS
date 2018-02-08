@@ -87,9 +87,9 @@ public class StudentView extends AbstractView {
         int NAME_INDEX = 0;
         int BALANCE_INDEX = 1;
 
-        System.out.format("%-20%-20", studentInfo.get(NAME_INDEX), studentInfo.get(BALANCE_INDEX));
+        System.out.format("%-20s%-20s", studentInfo.get(NAME_INDEX), studentInfo.get(BALANCE_INDEX));
         for (Item item : items) {
-            System.out.format("%-5%-20%-20%", item.getName(), item.getCategory(), item.getDescription());
+            System.out.format("%-5s%-20s%-20s", item.getName(), item.getCategory(), item.getDescription());
         }
     }
 
