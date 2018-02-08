@@ -135,7 +135,7 @@ public class TeamService {
 
         if (isUpdated) {
             view.clearConsole();
-            view.displayOperationSuccessfull();
+            view.displayOperationSuccessfullyCompleted();
             view.displayPressAnyKeyToContinueMessage();
         }
     }
