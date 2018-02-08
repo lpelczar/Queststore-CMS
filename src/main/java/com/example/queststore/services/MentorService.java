@@ -1,8 +1,6 @@
 package com.example.queststore.services;
 
-import com.example.queststore.dao.DbGroupDAO;
 import com.example.queststore.dao.DbUserDAO;
-import com.example.queststore.dao.GroupDAO;
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Entry;
@@ -16,7 +14,6 @@ public class MentorService {
 
     private MentorView mentorView = new MentorView();
     private UserDAO dbUserDAO = new DbUserDAO();
-    private GroupDAO dbGroupDAO = new DbGroupDAO();
     private GroupService groupService = new GroupService();
 
     public void deleteMentor() {

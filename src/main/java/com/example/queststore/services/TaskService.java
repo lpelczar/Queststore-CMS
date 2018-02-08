@@ -6,7 +6,6 @@ import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Entry;
 import com.example.queststore.models.Task;
 import com.example.queststore.models.User;
-import com.example.queststore.views.GroupView;
 import com.example.queststore.views.TaskView;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ public class TaskService {
 
     private final String BASIC_TASK = "b";
     private TaskView taskView = new TaskView();
-    private GroupView groupView = new GroupView();
     private TaskDAO dbTaskDAO = new DbTaskDAO();
     private UserDAO dbUserDAO = new DbUserDAO();
     private StudentTaskDAO dbStudentTaskDAO = new DbStudentTaskDAO();
