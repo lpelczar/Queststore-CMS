@@ -5,6 +5,8 @@ import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.statements.MentorGroupStatement;
 
 import java.sql.PreparedStatement;
+import java.util.Arrays;
+import java.util.List;
 
 public class DbMentorGroupDAO extends DbHelper implements MentorGroupDAO {
 
@@ -15,14 +17,16 @@ public class DbMentorGroupDAO extends DbHelper implements MentorGroupDAO {
     public boolean add(int groupID, int mentorID) {
 
         String sqlStatement = mentorGroupStatement.insertConnectionStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(groupID, mentorID, sqlStatement);
+        List<Object> params = Arrays.asList(groupID, mentorID);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean delete(int groupID, int mentorID) {
         String sqlStatement = mentorGroupStatement.deleteConnectionStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(groupID, mentorID, sqlStatement);
+        List<Object> params = Arrays.asList(groupID, mentorID);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 }
