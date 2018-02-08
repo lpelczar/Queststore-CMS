@@ -1,6 +1,7 @@
 package com.example.queststore.views;
 
 import com.example.queststore.models.Item;
+import com.example.queststore.utils.InputGetter;
 
 import java.util.*;
 
@@ -40,9 +41,9 @@ public class StudentView extends UserView{
     }
 
     public void displayStudentBackpack(List<Item> backpack) {
+        clearConsole();
         if (backpack.isEmpty()) {
             System.out.println("You don\'t have any items!");
-            displayPressAnyKeyToContinueMessage();
 
         } else {
             for (Item item : backpack) {
@@ -50,19 +51,22 @@ public class StudentView extends UserView{
                 System.out.println(item.getDescription() + "\n");
             }
         }
+        displayPressAnyKeyToContinueMessage();
     }
 
-    public void showItemsInStore(List<Item> itemsStore) {
+    public int chooseItemFrom(List<Item> itemsStore) {
         for (Item item : itemsStore) {
             displayItemInfo(item);
         }
-        System.out.println("Enter ID of item to edit: ");
+        return InputGetter.getIntInputFromConsole("Enter ID of item: ");
     }
 
     public void displayItemInfo(Item item) {
-        System.out.println("ID: " + item.getID() + item.toString());
+        System.out.println(item.toString());
         System.out.println();
     }
+
+    public void displayWrongId() { System.out.println("\nYou type wrong ID!"); displayPressAnyKeyToContinueMessage(); }
 
     public void displayItemAlreadyContaining() { System.out.println("You already have this item!"); displayPressAnyKeyToContinueMessage(); }
 

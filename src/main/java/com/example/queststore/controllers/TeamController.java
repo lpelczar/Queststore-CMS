@@ -1,6 +1,7 @@
 package com.example.queststore.controllers;
 
 import com.example.queststore.dao.DbStudentDataDAO;
+import com.example.queststore.dao.DbStudentItemDAO;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.views.UserView;
 
@@ -13,11 +14,15 @@ public class TeamController {
     private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
     private UserView view = new UserView();
 
+    private Map<String, Integer> teamMembersCount;
+    private DbStudentItemDAO dbStudentItemDAO;
+
     public void handleRerollStudentsTeams() {
         List<StudentData> students = dbStudentDataDAO.getAllStudents();
         List<StudentData> teams = rerollStudentsTeam(students);
 
         updateDbStudentsTeam(teams);
+        dbStudentItemDAO.removeTeamItems();
     }
 
     private List<StudentData> rerollStudentsTeam(List<StudentData> students) {
@@ -71,6 +76,7 @@ public class TeamController {
     }
 
     private List<StudentData> assignToRandomTeams(List<StudentData> students, int numberOfTeams) {
+        teamMembersCount = new HashMap<>();
         Random randomNumber = new Random();
         boolean isAllAssigned = false;
         int index = 0;
@@ -91,13 +97,12 @@ public class TeamController {
 
     private boolean isPossibilityToAssign(String randomTeam) {
         final int MAX = 3;
-        Map<String, Integer> usedPossibilities = new HashMap<>();
 
-        if (!usedPossibilities.containsKey(randomTeam)) {
-            usedPossibilities.put(randomTeam, 1);
+        if (!teamMembersCount.containsKey(randomTeam)) {
+            teamMembersCount.put(randomTeam, 1);
         }
-        else if (usedPossibilities.get(randomTeam) < MAX) {
-            usedPossibilities.put(randomTeam, usedPossibilities.get(randomTeam) + 1);
+        else if (teamMembersCount.get(randomTeam) < MAX) {
+            teamMembersCount.put(randomTeam, teamMembersCount.get(randomTeam) + 1);
         }
         else {
             return false;

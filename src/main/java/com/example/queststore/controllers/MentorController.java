@@ -87,23 +87,25 @@ public class MentorController extends UserController {
     }
 
     private void showStudentSummary() {
-        List<String> studentInfo = new ArrayList<>();
+        view.clearConsole();
 
         List<User> students = dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE);
         if (students != null) {
 
             for (User user : students) {
-
+                List<String> studentInfo = new ArrayList<>();
                 StudentData student = dbStudentDataDAO.getStudentDataBy(user.getId());
+
                 studentInfo.add(user.getName());
                 studentInfo.add(student.getBalance().toString());
 
                 List<Item> studentItems = dbItemDAO.getItemsByStudentId(student.getId());
                 if (studentItems != null) {
                     view.displayStudentInfo(studentInfo, studentItems);
-
-                } else { view.displayNoItems(); }
+                }
             }
+            view.displayPressAnyKeyToContinueMessage();
+
         } else { view.displayNoStudents(); }
     }
 
@@ -252,6 +254,7 @@ public class MentorController extends UserController {
             int updateOption = view.askForPropertyToEdit(item);
             handleUpdateBonus(updateOption, item);
         }
+        view.displayPressAnyKeyToContinueMessage();
     }
 
     private void handleUpdateBonus(int updateOption, Item item) {

@@ -81,6 +81,7 @@ public class StudentController {
                 int priceForEachStudent = item.getPrice() / team.size();
 
                 if (isTeamAffordToBuy(priceForEachStudent, team)) {
+
                     for (StudentData member : team) {
                         updateStudentBackpack(member.getId(), item);
                         updateStudentBalance(priceForEachStudent, member);
@@ -95,15 +96,24 @@ public class StudentController {
         List<Item> items = dbItemDAO.getItemsByCategory(category);
 
         if (items != null) {
-            view.showItemsInStore(items);
-            int item_id = view.askForInt();
+            int itemId = view.chooseItemFrom(items);
 
-            return dbItemDAO.getItemById(item_id);
+            if (checkIfIdItemInStore(itemId, items)) {
+                return dbItemDAO.getItemById(itemId);
+
+            } else { view.displayWrongId(); return null; }
 
         } else {
             view.displayOperationFailed();
             return null;
         }
+    }
+
+    private boolean checkIfIdItemInStore(int itemId, List<Item> items) {
+        for (Item item : items) {
+            if (itemId == item.getID()) { return true; }
+        }
+        return false;
     }
 
     private boolean isStudentAffordToBuy(int price) {
