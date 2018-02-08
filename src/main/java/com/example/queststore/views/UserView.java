@@ -86,6 +86,7 @@ public class UserView {
     }
 
     public void displayPressAnyKeyToContinueMessage() {
+        System.out.println();
         System.out.print("\nPress any key to continue.");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();

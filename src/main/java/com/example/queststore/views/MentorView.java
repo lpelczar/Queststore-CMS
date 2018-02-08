@@ -41,11 +41,19 @@ public class MentorView extends UserView {
         int NAME_INDEX = 0;
         int BALANCE_INDEX = 1;
 
-        System.out.format("%-20s%-20s", studentInfo.get(NAME_INDEX), studentInfo.get(BALANCE_INDEX));
-        for (Item item : items) {
-            System.out.format("%-5s%-20s%-20s", item.getName(), item.getCategory(), item.getDescription());
-        }
+        System.out.println();
+        System.out.format("%-1s%-7s%-20s%-10s%-20s",
+                          "\n", "Name: ", studentInfo.get(NAME_INDEX), "Balance: ", studentInfo.get(BALANCE_INDEX));
+
+        if (!items.isEmpty()) {
+            for (Item item : items) {
+                System.out.println();
+                System.out.format("%-30s%-20s%-40s", item.getName(), item.getCategory(), item.getDescription());
+            }
+        } else { displayStudentHaveNotItems(); }
     }
+
+    private void displayStudentHaveNotItems() { System.out.println("No items for display."); }
 
     public void displayNoStudents() { System.out.println("No students for display!"); }
 
