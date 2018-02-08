@@ -57,10 +57,10 @@ public class Item implements Entry {
     public void setCategory(String category) { this.category = category; }
 
     public String toString() {
-        return "\nID: " + ID +
-                "\nName: " + name +
-                "\nPrice: " + price +
-                "\nCategory: " + category +
-                "\nDescription: " + description;
+        return "ID: " + ID +
+                " | Name: " + name +
+                " | Price: " + price +
+                " | Category: " + category +
+                " | Description: " + description;
     }
 }
