@@ -27,10 +27,11 @@ public class StudentItemStatement {
     }
 
     public String deleteTeamItemsStatement() {
-        return "DELETE FROM " + StudentItemEntry.TABLE_NAME +
-                " LEFT JOIN " + ItemEntry.TABLE_NAME + " ON " +
-                StudentItemEntry.TABLE_NAME + "." + StudentItemEntry.ID_ITEM + " = " +
-                ItemEntry.TABLE_NAME + "." + ItemEntry.ID +
-                " WHERE " + ItemEntry.CATEGORY + " = " + ItemEntry.EXTRA_ITEM + "; ";
+        return " WHERE " + StudentItemEntry.TABLE_NAME + "." + StudentItemEntry.ID_ITEM + " IN (" +
+               " SELECT " + ItemEntry.ID +
+               " FROM " + ItemEntry.TABLE_NAME +
+               " JOIN " + StudentItemEntry.TABLE_NAME + " ON " +
+               ItemEntry.TABLE_NAME + "." + ItemEntry.ID + " = " + StudentItemEntry.TABLE_NAME + "." + StudentItemEntry.ID_ITEM +
+               " WHERE " + ItemEntry.TABLE_NAME + "." + ItemEntry.CATEGORY + " = \'" + ItemEntry.EXTRA_ITEM + "\'); ";
     }
 }
