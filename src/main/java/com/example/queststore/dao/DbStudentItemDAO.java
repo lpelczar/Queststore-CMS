@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
@@ -50,5 +51,13 @@ public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
             closeConnection();
         }
         return studentsItems;
+    }
+
+    @Override
+    public removeTeamItems() {
+        String sqlStatement = studentItemStatement.deleteTeamItemsStatement();
+        List<Object> params = Collections.emptyList();
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        update(statement);
     }
 }
