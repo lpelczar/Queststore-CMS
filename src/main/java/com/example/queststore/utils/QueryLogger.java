@@ -8,13 +8,13 @@ import java.util.logging.SimpleFormatter;
 
 public class QueryLogger {
 
-    public static void log(String message) {
+    public static void logInfo(String message, String path) {
 
         Logger logger = Logger.getLogger("MyLog");
         FileHandler fh;
 
         try {
-            fh = new FileHandler("logs/queries.log", true);
+            fh = new FileHandler(path, true);
             logger.addHandler(fh);
             SimpleFormatter formatter = new SimpleFormatter();
             fh.setFormatter(formatter);

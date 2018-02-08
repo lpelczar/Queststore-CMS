@@ -5,6 +5,7 @@ import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.ExperienceLevelEntry;
 import com.example.queststore.data.statements.ExperienceLevelStatement;
 import com.example.queststore.models.ExpLevel;
+import com.example.queststore.utils.QueryLogger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,7 +35,7 @@ public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         } finally {
             closeConnection();
         }
@@ -56,7 +57,7 @@ public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         } finally {
             closeConnection();
         }

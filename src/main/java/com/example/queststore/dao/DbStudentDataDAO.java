@@ -5,6 +5,7 @@ import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.StudentDataEntry;
 import com.example.queststore.data.statements.StudentDataStatement;
 import com.example.queststore.models.StudentData;
+import com.example.queststore.utils.QueryLogger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,7 +41,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         } finally {
             closeConnection();
         }
@@ -65,7 +66,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
             }
             resultSet.close();
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         } finally {
             closeConnection();
         }
@@ -90,7 +91,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
                         resultSet.getInt(StudentDataEntry.EXPERIENCE)));
             }
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         } finally {
             closeConnection();
         }

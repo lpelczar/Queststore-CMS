@@ -5,6 +5,7 @@ import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.GroupEntry;
 import com.example.queststore.data.statements.GroupStatement;
 import com.example.queststore.models.Group;
+import com.example.queststore.utils.QueryLogger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +32,7 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         } finally {
             closeConnection();
         }
@@ -53,7 +54,7 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         } finally {
             closeConnection();
         }
@@ -75,7 +76,7 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         } finally {
             closeConnection();
         }

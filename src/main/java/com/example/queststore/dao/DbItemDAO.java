@@ -5,6 +5,7 @@ import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.ItemEntry;
 import com.example.queststore.data.statements.ItemStatement;
 import com.example.queststore.models.Item;
+import com.example.queststore.utils.QueryLogger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -61,7 +62,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         } finally {
             closeConnection();
         }
@@ -101,7 +102,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         } finally {
             closeConnection();
         }
