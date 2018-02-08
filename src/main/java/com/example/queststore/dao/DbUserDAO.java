@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class DbUserDAO extends DbHelper implements UserDAO {
@@ -21,7 +23,7 @@ public class DbUserDAO extends DbHelper implements UserDAO {
     public List<User> getAll() {
 
         String sqlStatement = userStatement.selectAllUsers();
-        PreparedStatement statement = psc.getPreparedStatementBy(sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(new ArrayList<>(), sqlStatement);
         return getUsers(statement);
     }
 
@@ -29,14 +31,16 @@ public class DbUserDAO extends DbHelper implements UserDAO {
     public List<User> getAllByRole(String role) {
 
         String sqlStatement = userStatement.selectAllUsersByRole();
-        PreparedStatement statement = psc.getPreparedStatementBy(role, sqlStatement);
+        List<Object> params = Collections.singletonList(role);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getUsers(statement);
     }
 
     @Override
     public List<User> getStudentsByGroupId(int groupID) {
         String sqlStatement = userStatement.selectAllStudentsByGroupId();
-        PreparedStatement statement = psc.getPreparedStatementBy(groupID, sqlStatement);
+        List<Object> params = Collections.singletonList(groupID);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getUsers(statement);
     }
 
@@ -67,42 +71,48 @@ public class DbUserDAO extends DbHelper implements UserDAO {
     public User getById(int id) {
 
         String sqlStatement = userStatement.selectUserById();
-        PreparedStatement statement = psc.getPreparedStatementBy(id, sqlStatement);
+        List<Object> params = Collections.singletonList(id);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getUser(statement);
     }
 
     public User getByLoginAndPassword(String login, String password) {
 
         String sqlStatement = userStatement.selectUserByLoginAndPassword();
-        PreparedStatement statement = psc.getPreparedStatementBy(login, password, sqlStatement);
+        List<Object> params = Arrays.asList(login, password);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getUser(statement);
     }
 
     public User getByLoginAndRole(String login, String role) {
 
         String sqlStatement = userStatement.selectUserByLoginAndRole();
-        PreparedStatement statement = psc.getPreparedStatementBy(login, role, sqlStatement);
+        List<Object> params = Arrays.asList(login, role);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getUser(statement);
     }
 
     public User getByLogin(String login) {
 
         String sqlStatement = userStatement.selectUserByLogin();
-        PreparedStatement statement = psc.getPreparedStatementBy(login, sqlStatement);
+        List<Object> params = Collections.singletonList(login);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getUser(statement);
     }
 
     public User getByEmail(String email) {
 
         String sqlStatement = userStatement.selectUserByEmail();
-        PreparedStatement statement = psc.getPreparedStatementBy(email, sqlStatement);
+        List<Object> params = Collections.singletonList(email);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getUser(statement);
     }
 
     public User getByPhoneNumber(String phoneNumber) {
 
         String sqlStatement = userStatement.selectUserByPhoneNumber();
-        PreparedStatement statement = psc.getPreparedStatementBy(phoneNumber, sqlStatement);
+        List<Object> params = Collections.singletonList(phoneNumber);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getUser(statement);
     }
 
@@ -132,44 +142,26 @@ public class DbUserDAO extends DbHelper implements UserDAO {
     @Override
     public boolean add(User user) {
         String sqlStatement = userStatement.insertUserStatement();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getLogin());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getPassword());
-            statement.setString(5, user.getPhoneNumber());
-            statement.setString(6, user.getRole());
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        List<Object> params = Arrays.asList(user.getName(), user.getLogin(), user.getEmail(),
+                user.getPassword(), user.getPhoneNumber(), user.getRole());
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean update(User user) {
         String sqlStatement = userStatement.updateUserStatement();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getLogin());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getPassword());
-            statement.setString(5, user.getPhoneNumber());
-            statement.setString(6, user.getRole());
-            statement.setInt(7, user.getId());
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        List<Object> params = Arrays.asList(user.getName(), user.getLogin(), user.getEmail(),
+                user.getPassword(), user.getPhoneNumber(), user.getRole(), user.getId());
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean delete(User user) {
         String sqlStatement = userStatement.deleteUserStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(user.getId(), sqlStatement);
+        List<Object> params = Collections.singletonList(user.getId());
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 }
