@@ -40,9 +40,9 @@ public class StudentView extends UserView{
     }
 
     public void displayStudentBackpack(List<Item> backpack) {
+        clearConsole();
         if (backpack.isEmpty()) {
             System.out.println("You don\'t have any items!");
-            displayPressAnyKeyToContinueMessage();
 
         } else {
             for (Item item : backpack) {
@@ -50,6 +50,7 @@ public class StudentView extends UserView{
                 System.out.println(item.getDescription() + "\n");
             }
         }
+        displayPressAnyKeyToContinueMessage();
     }
 
     public void showItemsInStore(List<Item> itemsStore) {
