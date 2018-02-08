@@ -56,7 +56,7 @@ public class StudentView extends UserView{
         for (Item item : itemsStore) {
             displayItemInfo(item);
         }
-        System.out.println("Enter ID of item to edit: ");
+        System.out.println("Enter ID of item: ");
     }
 
     public void displayItemInfo(Item item) {
