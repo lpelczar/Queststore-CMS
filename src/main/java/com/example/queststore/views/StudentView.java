@@ -10,7 +10,7 @@ public class StudentView extends AbstractView {
     private Map<Integer, String> menu = new HashMap<>();
     private Scanner scanner = new Scanner(System.in);
 
-    public void prepareStudentMenu() {
+    private void prepareStudentMenu() {
         menu.put(1, "Show your bonuses.");
         menu.put(2, "Buy artifact.");
         menu.put(3, "Buy artifact for you and your teammates.");
@@ -61,7 +61,7 @@ public class StudentView extends AbstractView {
         return InputGetter.getIntInputFromConsole("Enter ID of item: ");
     }
 
-    public void displayItemInfo(Item item) {
+    private void displayItemInfo(Item item) {
         System.out.println(item.toString());
         System.out.println();
     }
@@ -102,11 +102,5 @@ public class StudentView extends AbstractView {
     private void displayStudentHaveNotItems() { System.out.println("No items for display."); }
 
     public void displayNoStudents() { System.out.println("No students for display!"); }
-
-    public void displayNoItems() {
-        System.out.println("There is no items!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
 
 }

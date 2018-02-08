@@ -5,12 +5,10 @@ import com.example.queststore.utils.InputGetter;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 
 public class MentorView extends AbstractView {
 
     private Map<Integer, String> menu = new HashMap<>();
-    private Scanner scanner = new Scanner(System.in);
 
     private void prepareMentorMenu() {
         menu.put(1, "Promote blank user to student.");
@@ -62,10 +60,6 @@ public class MentorView extends AbstractView {
     public void displayErrorChangingTheValue() {
         System.out.println("Error changing the value!");
         displayPressAnyKeyToContinueMessage();
-    }
-
-    public String getStudentLoginToMarkArtifact() {
-        return InputGetter.getStringInputFromConsole("Enter student login to mark the artifact: ");
     }
 
     public String getMentorLoginToDelete() {

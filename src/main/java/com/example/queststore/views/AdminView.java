@@ -1,9 +1,6 @@
 package com.example.queststore.views;
 
 
-import com.example.queststore.models.User;
-import com.example.queststore.utils.InputGetter;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,35 +37,6 @@ public class AdminView extends AbstractView {
 
     public void displayValueHasBeenChanged() {
         System.out.println("Value has been changed!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public void displayMentorProfile(User mentor) {
-        System.out.println("");
-        System.out.println(mentor);
-    }
-
-    public String getMentorLoginToShow() {
-        System.out.print("Enter login of the mentor: ");
-        return getStringInput();
-    }
-
-    public String getGroupNameInput() {
-        System.out.print("Enter group name: ");
-        return getStringInput();
-    }
-
-    public int getLevelValueInput() {
-        return InputGetter.getIntInputFromConsole("Enter value of experience to set: ");
-    }
-
-    public void displayEmptyListMsg() {
-        System.out.println("List is empty!");
-        displayPressAnyKeyToContinueMessage();
-    }
-
-    public void displayUserDoesNotExist() {
-        System.out.println("This user does not exist!");
         displayPressAnyKeyToContinueMessage();
     }
 
