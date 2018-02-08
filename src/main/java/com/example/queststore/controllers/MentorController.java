@@ -254,6 +254,7 @@ public class MentorController extends UserController {
             int updateOption = view.askForPropertyToEdit(item);
             handleUpdateBonus(updateOption, item);
         }
+        view.displayPressAnyKeyToContinueMessage();
     }
 
     private void handleUpdateBonus(int updateOption, Item item) {
