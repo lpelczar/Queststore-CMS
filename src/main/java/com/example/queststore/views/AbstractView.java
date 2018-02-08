@@ -93,20 +93,7 @@ abstract class AbstractView {
         displayPressAnyKeyToContinueMessage();
     }
 
-    public int askForInt() {
-        int option = 0;
-        Scanner scanner = new Scanner(System.in);
+    public void displayOperationSuccessfullyCompleted() { System.out.println(" Operation successfully completed!"); }
 
-        try {
-            option = scanner.nextInt();
-        } catch (InputMismatchException e) {
-            System.err.println("You type wrong sign");
-        }
-
-        return option;
-    }
-
-    public void displayOperationSuccessfull() { System.out.println(" Operation succesfull!"); }
-
-    public void displayOperationFailed() { System.out.println("Operation has been failed!"); }
+    public void displayOperationFailed() { System.out.println("Operation failed!"); }
 }

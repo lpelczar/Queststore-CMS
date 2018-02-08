@@ -7,7 +7,14 @@ public class RootView extends AbstractView {
     public void displayMenu() {
 
         clearConsole();
-        System.out.println("Welcome to QuestStore v.0.2" +
+        System.out.println("   ____                  _       _                          ___   ____  \n" +
+                "  / __ \\                | |     | |                        / _ \\ |___ \\ \n" +
+                " | |  | |_   _  ___  ___| |_ ___| |_ ___  _ __ ___  __   _| | | |  __) |\n" +
+                " | |  | | | | |/ _ \\/ __| __/ __| __/ _ \\| '__/ _ \\ \\ \\ / / | | | |__ < \n" +
+                " | |__| | |_| |  __/\\__ \\ |_\\__ \\ || (_) | | |  __/  \\ V /| |_| | ___) |\n" +
+                "  \\___\\_\\\\__,_|\\___||___/\\__|___/\\__\\___/|_|  \\___|   \\_/  \\___(_)____/ \n" +
+                "                                                                        \n" +
+                "                                                                        " +
                 "\nWhat do you want to do?\n" +
                 " 1. Sign in\n" +
                 " 2. Sign up\n" +

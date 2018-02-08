@@ -22,10 +22,6 @@ public class ExpLevel implements Entry {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     @Override
     public String toString() {
         return String.format("Level name: %s, Value: %d", name, value);

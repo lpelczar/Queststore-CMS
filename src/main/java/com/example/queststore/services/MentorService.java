@@ -1,8 +1,6 @@
 package com.example.queststore.services;
 
-import com.example.queststore.dao.DbGroupDAO;
 import com.example.queststore.dao.DbUserDAO;
-import com.example.queststore.dao.GroupDAO;
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Entry;
@@ -16,7 +14,6 @@ public class MentorService {
 
     private MentorView mentorView = new MentorView();
     private UserDAO dbUserDAO = new DbUserDAO();
-    private GroupDAO dbGroupDAO = new DbGroupDAO();
     private GroupService groupService = new GroupService();
 
     public void deleteMentor() {
@@ -81,24 +78,30 @@ public class MentorService {
         final int UPDATE_PHONE = 4;
 
         int valueToChange = mentorView.askForChangeInProfile(user);
-        if (valueToChange == UPDATE_NAME) {
-            String name = mentorView.askForNewValue();
-            user.setName(name);
-            showEditResultMessage(dbUserDAO.update(user));
-        } else if (valueToChange == UPDATE_LOGIN) {
-            String login = mentorView.askForNewValue();
-            user.setLogin(login);
-            showEditResultMessage(dbUserDAO.update(user));
-        } else if (valueToChange == UPDATE_EMAIL) {
-            String email = mentorView.askForNewValue();
-            user.setEmail(email);
-            showEditResultMessage(dbUserDAO.update(user));
-        } else if (valueToChange == UPDATE_PHONE) {
-            String phoneNumber = mentorView.askForNewValue();
-            user.setPhoneNumber(phoneNumber);
-            showEditResultMessage(dbUserDAO.update(user));
-        } else {
-            mentorView.displayWrongSignError();
+        switch (valueToChange) {
+            case UPDATE_NAME:
+                String name = mentorView.askForNewValue();
+                user.setName(name);
+                showEditResultMessage(dbUserDAO.update(user));
+                break;
+            case UPDATE_LOGIN:
+                String login = mentorView.askForNewValue();
+                user.setLogin(login);
+                showEditResultMessage(dbUserDAO.update(user));
+                break;
+            case UPDATE_EMAIL:
+                String email = mentorView.askForNewValue();
+                user.setEmail(email);
+                showEditResultMessage(dbUserDAO.update(user));
+                break;
+            case UPDATE_PHONE:
+                String phoneNumber = mentorView.askForNewValue();
+                user.setPhoneNumber(phoneNumber);
+                showEditResultMessage(dbUserDAO.update(user));
+                break;
+            default:
+                mentorView.displayWrongSignError();
+                break;
         }
     }
 

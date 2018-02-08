@@ -163,7 +163,7 @@ public class StudentService {
 
     private void updateStudentBackpack(int studentId, Item item) {
         if (dbStudentItemDAO.add(studentId, item.getID(), StudentItemEntry.IS_NOT_USED_VALUE)) {
-            studentView.displayOperationSuccessfull();
+            studentView.displayOperationSuccessfullyCompleted();
         } else {
             studentView.displayOperationFailed();
         }

@@ -65,5 +65,5 @@ public class UserView extends AbstractView {
         displayPressAnyKeyToContinueMessage();
     }
 
-    public void displayOperationSuccessfull() { System.out.println(" Operation succesfull!"); }
+    public void displayOperationSuccessfullyCompleted() { System.out.println(" Operation succesfull!"); }
 }
