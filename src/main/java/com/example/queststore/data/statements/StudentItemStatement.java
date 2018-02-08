@@ -1,6 +1,7 @@
 package com.example.queststore.data.statements;
 
 
+import com.example.queststore.data.contracts.ItemEntry;
 import com.example.queststore.data.contracts.StudentItemEntry;
 
 public class StudentItemStatement {
@@ -23,5 +24,13 @@ public class StudentItemStatement {
                 StudentItemEntry.IS_USED + " = " + StudentItemEntry.IS_USED_VALUE +
                 " WHERE " + StudentItemEntry.ID_STUDENT + " = ? AND " +
                 StudentItemEntry.ID_ITEM + " = ?; ";
+    }
+
+    public String deleteTeamItemsStatement() {
+        return "DELETE FROM " + StudentItemEntry.TABLE_NAME +
+                " LEFT JOIN " + ItemEntry.TABLE_NAME + " ON " +
+                StudentItemEntry.TABLE_NAME + "." + StudentItemEntry.ID_ITEM + " = " +
+                ItemEntry.TABLE_NAME + "." + ItemEntry.ID +
+                " WHERE " + ItemEntry.CATEGORY + " = " + ItemEntry.EXTRA_ITEM + "; ";
     }
 }
