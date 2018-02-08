@@ -53,6 +53,7 @@ public class ItemService {
             int updateOption = itemView.askForPropertyToEdit(item);
             handleUpdateBonus(updateOption, item);
         }
+        itemView.displayPressAnyKeyToContinueMessage();
     }
 
     private void handleUpdateBonus(int updateOption, Item item) {

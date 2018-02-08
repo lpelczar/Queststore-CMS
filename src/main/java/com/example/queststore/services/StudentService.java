@@ -59,12 +59,13 @@ public class StudentService {
     }
 
     public void showStudentSummary() {
-        List<String> studentInfo = new ArrayList<>();
+        studentView.clearConsole();
 
         List<User> students = dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE);
         if (students != null) {
 
             for (User user : students) {
+                List<String> studentInfo = new ArrayList<>();
 
                 StudentData student = dbStudentDataDAO.getStudentDataBy(user.getId());
                 studentInfo.add(user.getName());
@@ -74,7 +75,8 @@ public class StudentService {
                 if (studentItems != null) {
                     studentView.displayStudentInfo(studentInfo, studentItems);
 
-                } else { studentView.displayNoItems(); }
+                }
+                studentView.displayPressAnyKeyToContinueMessage();
             }
         } else { studentView.displayNoStudents(); }
     }
