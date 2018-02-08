@@ -1,5 +1,7 @@
 package com.example.queststore.data;
 
+import com.example.queststore.utils.QueryLogger;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -24,7 +26,7 @@ public class PreparedStatementCreator extends DbHelper {
                 }
             }
         } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         }
         return statement;
     }

@@ -20,7 +20,7 @@ public class DbHelper {
             Class.forName(DRIVER);
             connection = DriverManager.getConnection(DB_URL, config.toProperties());
         } catch ( Exception e ) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
             System.exit(0);
         }
     }
@@ -34,7 +34,7 @@ public class DbHelper {
     }
 
     protected PreparedStatement getPreparedStatement(String sqlStatement) throws SQLException {
-        QueryLogger.log(sqlStatement);
+        QueryLogger.logInfo(sqlStatement, "logs/queries.log");
         openConnection();
         return connection.prepareStatement(sqlStatement);
     }
@@ -52,7 +52,7 @@ public class DbHelper {
             connection.commit();
             return true;
         } catch (SQLException e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
         } finally {
             closeConnection();
         }
