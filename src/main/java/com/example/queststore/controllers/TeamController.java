@@ -12,10 +12,11 @@ import java.util.Random;
 
 public class TeamController {
     private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
+    private DbStudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
     private UserView view = new UserView();
 
     private Map<String, Integer> teamMembersCount;
-    private DbStudentItemDAO dbStudentItemDAO;
+
 
     public void handleRerollStudentsTeams() {
         List<StudentData> students = dbStudentDataDAO.getAllStudents();
