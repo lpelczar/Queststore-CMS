@@ -106,7 +106,7 @@ abstract class AbstractView {
         return option;
     }
 
-    public void displayOperationSuccessfull() { System.out.println(" Operation succesfull!"); }
+    public void displayOperationSuccessfull() { System.out.println(" Operation successfully completed!"); }
 
-    public void displayOperationFailed() { System.out.println("Operation has been failed!"); }
+    public void displayOperationFailed() { System.out.println("Operation failed!"); }
 }

@@ -18,7 +18,7 @@ public class ItemView extends AbstractView {
 
     public String displayGetDescription() {return InputGetter.getStringInputFromConsole("Enter new description: "); }
 
-    public void displayItemHasBeenAdded() { System.out.println("Item has been added to DB successful!" ); }
+    public void displayItemHasBeenAdded() { System.out.println("Item has been added successfully!" ); }
 
     public String askForItemCategory() throws InputMismatchException {
         List<String> itemCategories = new ArrayList<>(Arrays.asList("basic", "advanced"));
