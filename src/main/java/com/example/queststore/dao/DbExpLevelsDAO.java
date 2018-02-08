@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
@@ -63,7 +64,8 @@ public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
     @Override
     public boolean add(ExpLevel expLevel) {
         String sqlStatement = expStatement.insertLevelStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(expLevel.getName(), expLevel.getValue(), sqlStatement);
+        List<Object> params = Arrays.asList(expLevel.getName(), expLevel.getValue());
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 
