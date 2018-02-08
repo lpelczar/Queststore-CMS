@@ -50,9 +50,9 @@ public class ItemStatement {
     public String updateQueryStatement() {
         return "UPDATE " + ItemEntry.TABLE_NAME + " SET " +
                 ItemEntry.ITEM_NAME + " = ?, " +
+                ItemEntry.DESCRIPTION + " = ?, " +
                 ItemEntry.PRICE + " = ?, " +
-                ItemEntry.CATEGORY + " = ?, " +
-                ItemEntry.DESCRIPTION + " = ? " +
+                ItemEntry.CATEGORY + " = ? " +
                 "WHERE " + ItemEntry.ID + " = ?; ";
     }
 }
