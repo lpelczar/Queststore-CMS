@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -19,23 +21,26 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
     private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
-    public List<Item> getItemsByStudentId(int student_id) {
+    public List<Item> getItemsByStudentId(int studentId) {
         String sqlStatement = itemStatement.getItemsByStudentId();
-        PreparedStatement statement = psc.getPreparedStatementBy(student_id, sqlStatement);
+        List<Object> params = Collections.singletonList(studentId);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getItemsBy(statement);
     }
 
     @Override
     public List<Item> getItemsByCategory(String category) {
         String sqlStatement = itemStatement.getItemsByCategory();
-        PreparedStatement statement = psc.getPreparedStatementBy(category, sqlStatement);
+        List<Object> params = Collections.singletonList(category);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getItemsBy(statement);
     }
 
     @Override
     public List<Item> getAllItems() {
         String sqlStatement = itemStatement.getAllItems();
-        PreparedStatement statement = psc.getPreparedStatementBy(sqlStatement);
+        List<Object> params = Collections.emptyList();
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getItemsBy(statement);
     }
 
@@ -66,14 +71,16 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
     @Override
     public Item getItemById(int id) {
         String sqlStatement = itemStatement.getItemById();
-        PreparedStatement statement = psc.getPreparedStatementBy(id, sqlStatement);
+        List<Object> params = Collections.singletonList(id);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getItemFromStore(statement);
     }
 
     @Override
     public Item getItemByName(String itemName) {
         String sqlStatement = itemStatement.getItemByName();
-        PreparedStatement statement = psc.getPreparedStatementBy(itemName, sqlStatement);
+        List<Object> params = Collections.singletonList(itemName);
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return getItemFromStore(statement);
     }
 
@@ -105,32 +112,17 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
 
     public boolean addItem(Item item) {
         String sqlStatement = itemStatement.addItemStatement();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, item.getName());
-            statement.setString(2, item.getDescription());
-            statement.setInt(3, item.getPrice());
-            statement.setString(4, item.getCategory());
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        List<Object> params = Arrays.asList(item.getName(), item.getDescription(),
+                item.getPrice(), item.getCategory());
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 
     public boolean updateItem(Item item) {
         String sqlStatement = itemStatement.updateQueryStatement();
-        PreparedStatement statement = null;
-        try {
-            statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, item.getName());
-            statement.setString(2, item.getDescription());
-            statement.setInt(3, item.getPrice());
-            statement.setString(4, item.getCategory());
-            statement.setInt(5, item.getID());
-        } catch (SQLException e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        }
+        List<Object> params = Arrays.asList(item.getName(), item.getDescription(),
+                item.getPrice(), item.getCategory(), item.getID());
+        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
         return update(statement);
     }
 }
