@@ -22,16 +22,14 @@ public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
     @Override
     public boolean add(int studentId, int itemId, int isUsed) {
         String sqlStatement = studentItemStatement.addStudentItemConnection();
-        List<Object> params = Arrays.asList(studentId, itemId, isUsed);
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(studentId, itemId, isUsed), sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean markItemAsUsed(int studentId, int itemId) {
         String sqlStatement = studentItemStatement.markItemAsUsed();
-        List<Object> params = Arrays.asList(studentId, itemId);
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(studentId, itemId), sqlStatement);
         return update(statement);
     }
 
@@ -41,8 +39,7 @@ public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
         List<Integer> studentsItems = new ArrayList<>();
 
         try {
-            List<Object> params = Collections.singletonList(studentID);
-            PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+            PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(studentID), sqlStatement);
             ResultSet resultSet = query(statement);
 
             while (resultSet.next()) {
@@ -61,8 +58,7 @@ public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
     @Override
     public boolean removeTeamItems() {
         String sqlStatement = studentItemStatement.deleteTeamItemsStatement();
-        List<Object> params = Collections.emptyList();
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Collections.emptyList(), sqlStatement);
         return update(statement);
     }
 }
