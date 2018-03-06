@@ -4,6 +4,8 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import com.example.queststore.services.Iterator;
+
 abstract class AbstractView {
 
     String getStringInput() {
@@ -32,13 +34,17 @@ abstract class AbstractView {
     }
 
     private void showAllEntries(List entries) {
-        System.out.println("");
+        Iterator<Object> iterator = new Iterator<>(entries.toArray());
+        System.out.println();
+        
         if(!entries.isEmpty()) {
             int index = 1;
-            for (Object entry : entries) {
-                System.out.println(index + ". " + entry);
+
+            while (iterator.hasNext()) {
+                System.out.println(index + ". " + iterator.next());
                 index++;
             }
+
         } else {
             System.out.println("List is empty!");
         }
