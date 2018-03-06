@@ -1,6 +1,6 @@
 package com.example.queststore.models;
 
-public class Task implements Entry {
+public class Task {
 
     private int ID;
     private String name;

@@ -3,7 +3,6 @@ package com.example.queststore.services;
 import com.example.queststore.dao.*;
 import com.example.queststore.data.contracts.TaskEntry;
 import com.example.queststore.data.contracts.UserEntry;
-import com.example.queststore.models.Entry;
 import com.example.queststore.models.Task;
 import com.example.queststore.models.User;
 import com.example.queststore.views.TaskView;
@@ -39,7 +38,7 @@ public class TaskService {
 
     public void editQuest() {
 
-        List<Entry> quests = new ArrayList<>(dbTaskDAO.getAll());
+        List<Task> quests = new ArrayList<>(dbTaskDAO.getAll());
         taskView.displayEntriesNoInput(quests);
         if (quests.isEmpty()) {
             taskView.displayPressAnyKeyToContinueMessage();
@@ -90,7 +89,7 @@ public class TaskService {
 
     public void markStudentAchievedQuest() {
 
-        List<Entry> students = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+        List<User> students = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE));
         taskView.displayEntriesNoInput(students);
         if (students.isEmpty()) {
             taskView.displayPressAnyKeyToContinueMessage();
@@ -106,7 +105,7 @@ public class TaskService {
 
     private void choseQuestToMark(String studentLogin) {
 
-        List<Entry> quests = new ArrayList<>(dbTaskDAO.getAll());
+        List<Task> quests = new ArrayList<>(dbTaskDAO.getAll());
         taskView.displayEntriesNoInput(quests);
         if (quests.isEmpty()) {
             taskView.displayPressAnyKeyToContinueMessage();

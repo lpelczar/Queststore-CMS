@@ -2,7 +2,6 @@ package com.example.queststore.services;
 
 import com.example.queststore.dao.*;
 import com.example.queststore.data.contracts.UserEntry;
-import com.example.queststore.models.Entry;
 import com.example.queststore.models.Group;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.models.User;
@@ -33,7 +32,7 @@ public class GroupService {
     }
 
     public void assignMentorToGroup() {
-        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        List<User> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         groupView.displayEntriesNoInput(mentors);
         if (mentors.isEmpty()) {
             groupView.displayPressAnyKeyToContinueMessage();
@@ -48,7 +47,7 @@ public class GroupService {
     }
 
     private void choseGroupAndAssignToMentor(String mentorLogin) {
-        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
+        List<Group> groups = new ArrayList<>(dbGroupDAO.getAll());
         groupView.displayEntriesNoInput(groups);
         if (groups.isEmpty()) {
             groupView.displayPressAnyKeyToContinueMessage();
@@ -70,7 +69,7 @@ public class GroupService {
     }
 
     public void revokeMentorFromGroup() {
-        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        List<User> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         groupView.displayEntriesNoInput(mentors);
         if (mentors.isEmpty()) {
             groupView.displayPressAnyKeyToContinueMessage();
@@ -85,7 +84,7 @@ public class GroupService {
     }
 
     private void choseGroupAndRevokeMentor(String mentorLogin) {
-        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
+        List<Group> groups = new ArrayList<>(dbGroupDAO.getAll());
         groupView.displayEntriesNoInput(groups);
         if (groups.isEmpty()) {
             groupView.displayPressAnyKeyToContinueMessage();
@@ -107,7 +106,7 @@ public class GroupService {
     }
 
     public void deleteGroup() {
-        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
+        List<Group> groups = new ArrayList<>(dbGroupDAO.getAll());
         groupView.displayEntriesNoInput(groups);
         if (groups.isEmpty()) {
             groupView.displayPressAnyKeyToContinueMessage();
@@ -130,7 +129,7 @@ public class GroupService {
                 groupView.displayGroupName(groupName);
                 Group group = dbGroupDAO.getByName(groupName);
                 if (!dbUserDAO.getStudentsByGroupId(group.getId()).isEmpty()) {
-                    List<Entry> students = new ArrayList<>(dbUserDAO.getStudentsByGroupId(group.getId()));
+                    List<User> students = new ArrayList<>(dbUserDAO.getStudentsByGroupId(group.getId()));
                     groupView.displayEntriesNoInput(students);
                 } else {
                     groupView.displayThisGroupHasNoStudentsAssigned();
@@ -144,7 +143,7 @@ public class GroupService {
 
     public void addStudentToGroup() {
 
-        List<Entry> students = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+        List<User> students = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE));
         mentorView.displayEntriesNoInput(students);
         if (students.isEmpty()) {
             mentorView.displayPressAnyKeyToContinueMessage();
@@ -160,7 +159,7 @@ public class GroupService {
 
     private void choseGroupAndAssignToStudent(String studentLogin) {
 
-        List<Entry> groups = new ArrayList<>(dbGroupDAO.getAll());
+        List<Group> groups = new ArrayList<>(dbGroupDAO.getAll());
         mentorView.displayEntriesNoInput(groups);
         if (groups.isEmpty()) {
             mentorView.displayPressAnyKeyToContinueMessage();

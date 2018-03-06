@@ -1,6 +1,6 @@
 package com.example.queststore.models;
 
-public class User implements Entry {
+public class User {
 
     private int id;
     private String name;

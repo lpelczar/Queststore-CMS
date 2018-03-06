@@ -3,7 +3,6 @@ package com.example.queststore.services;
 import com.example.queststore.dao.DbUserDAO;
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.data.contracts.UserEntry;
-import com.example.queststore.models.Entry;
 import com.example.queststore.models.User;
 import com.example.queststore.views.MentorView;
 
@@ -17,7 +16,7 @@ public class MentorService {
     private GroupService groupService = new GroupService();
 
     public void deleteMentor() {
-        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        List<User> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         mentorView.displayEntriesNoInput(mentors);
         if (mentors.isEmpty()) {
             mentorView.displayPressAnyKeyToContinueMessage();
@@ -34,7 +33,7 @@ public class MentorService {
     }
 
     public void showMentorProfileAndHisGroups() {
-        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        List<User> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         mentorView.displayEntriesNoInput(mentors);
         if (mentors.isEmpty()) {
             mentorView.displayPressAnyKeyToContinueMessage();
@@ -55,7 +54,7 @@ public class MentorService {
 
         final String QUIT_OPTION = "q";
 
-        List<Entry> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        List<User> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         mentorView.displayEntriesNoInput(mentors);
         if (dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE).isEmpty()) {
             mentorView.displayPressAnyKeyToContinueMessage();
