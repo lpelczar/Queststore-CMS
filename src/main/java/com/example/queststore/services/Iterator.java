@@ -1,17 +1,19 @@
 package com.example.queststore.services;
 
+import java.util.List;
+
 public class Iterator<T> {
 
     private int index;
-    private T[] data;
+    private List<T> data;
 
-    public Iterator(T[] elements) {
+    public Iterator(List<T> elements) {
         data = elements;
     }
 
-    public boolean hasNext() { return index < data.length; }
+    public boolean hasNext() { return index < data.size(); }
 
     public T next() {
-        return data[index++];
+        return data.get(index++);
     }
 }

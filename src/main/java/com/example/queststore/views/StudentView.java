@@ -43,27 +43,25 @@ public class StudentView extends AbstractView {
 
     public void displayStudentBackpack(List<Item> backpack) {
         clearConsole();
-        Iterator<Object> iterator = new Iterator<>(backpack.toArray());
+        Iterator<Item> iterator = new Iterator<>(backpack);
 
         if (backpack.isEmpty()) {
             System.out.println("You don\'t have any items!");
 
         } else {
             while (iterator.hasNext()) {
-                Item item = (Item) iterator.next();
-                System.out.println(item.getName());
-                System.out.println(item.getDescription() + "\n");
+                System.out.println(iterator.next().getName());
+                System.out.println(iterator.next().getDescription() + "\n");
             }
         }
         displayPressAnyKeyToContinueMessage();
     }
 
     public int chooseItemFrom(List<Item> itemsStore) {
-        Iterator iterator = new Iterator<>(itemsStore.toArray());
+        Iterator<Item> iterator = new Iterator<>(itemsStore);
 
         while (iterator.hasNext()) {
-            Item item = (Item) iterator.next();
-            displayItemInfo(item);
+            displayItemInfo(iterator.next());
         }
 
         return InputGetter.getIntInputFromConsole("Enter ID of item: ");
@@ -94,7 +92,7 @@ public class StudentView extends AbstractView {
     public void displayStudentInfo(List<String> studentInfo, List<Item> items) {
         int NAME_INDEX = 0;
         int BALANCE_INDEX = 1;
-        Iterator<Object> iterator = new Iterator<>(items.toArray());
+        Iterator<Item> iterator = new Iterator<>(items);
 
         System.out.println();
         System.out.format("%-1s%-7s%-20s%-10s%-20s",
@@ -103,9 +101,9 @@ public class StudentView extends AbstractView {
         if (!items.isEmpty()) {
 
             while (iterator.hasNext()) {
-                Item item = (Item) iterator.next();
                 System.out.println();
-                System.out.format("%-30s%-20s%-40s", item.getName(), item.getCategory(), item.getDescription());
+                System.out.format("%-30s%-20s%-40s", iterator.next().getName(), iterator.next().getCategory(),
+                        iterator.next().getDescription());
             }
 
         } else { displayStudentHaveNotItems(); }
