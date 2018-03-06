@@ -6,7 +6,7 @@ import org.sqlite.SQLiteConfig;
 
 import java.sql.*;
 
-public class DbHelper {
+public abstract class DbHelper {
 
     private static final String DB_URL = "jdbc:sqlite:queststore.db";
     private static final String DRIVER = "org.sqlite.JDBC";
