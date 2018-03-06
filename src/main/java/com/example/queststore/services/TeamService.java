@@ -1,7 +1,7 @@
 package com.example.queststore.services;
 
-import com.example.queststore.dao.DbStudentDataDAO;
-import com.example.queststore.dao.DbStudentItemDAO;
+import com.example.queststore.dao.StudentDataDAO;
+import com.example.queststore.dao.StudentItemDAO;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.views.UserView;
 
@@ -11,17 +11,23 @@ import java.util.Map;
 import java.util.Random;
 
 public class TeamService {
-    private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
-    private DbStudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
-    private UserView view = new UserView();
+
+    private StudentDataDAO studentDataDAO;
+    private StudentItemDAO studentItemDAO;
     private Map<String, Integer> teamMembersCount;
+    private UserView view = new UserView();
+
+    public TeamService(StudentDataDAO studentDataDAO, StudentItemDAO studentItemDAO) {
+        this.studentDataDAO = studentDataDAO;
+        this.studentItemDAO = studentItemDAO;
+    }
 
     public void handleReshuffleStudentsTeams() {
-        List<StudentData> students = dbStudentDataDAO.getAllStudents();
+        List<StudentData> students = studentDataDAO.getAllStudents();
         List<StudentData> teams = reshuffleStudentsTeam(students);
 
         updateDbStudentsTeam(teams);
-        dbStudentItemDAO.removeTeamItems();
+        studentItemDAO.removeTeamItems();
     }
 
     private List<StudentData> reshuffleStudentsTeam(List<StudentData> students) {
@@ -130,7 +136,7 @@ public class TeamService {
         boolean isUpdated = false;
 
         for (StudentData student : students) {
-            isUpdated = dbStudentDataDAO.updateStudentData(student);
+            isUpdated = studentDataDAO.updateStudentData(student);
         }
 
         if (isUpdated) {
