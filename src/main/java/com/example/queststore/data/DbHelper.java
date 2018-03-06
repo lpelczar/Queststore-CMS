@@ -4,13 +4,19 @@ package com.example.queststore.data;
 import com.example.queststore.utils.QueryLogger;
 import org.sqlite.SQLiteConfig;
 
+import java.io.File;
 import java.sql.*;
 
-public abstract class DbHelper {
+public class DbHelper {
 
+    private static final String DATABASE_PATH = "queststore.db";
     private static final String DB_URL = "jdbc:sqlite:queststore.db";
     private static final String DRIVER = "org.sqlite.JDBC";
     private Connection connection;
+
+    public boolean isDatabaseFileExists() {
+        return new File(DATABASE_PATH).isFile();
+    }
 
     private void openConnection() {
 
