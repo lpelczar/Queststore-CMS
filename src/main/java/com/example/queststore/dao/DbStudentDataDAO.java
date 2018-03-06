@@ -42,6 +42,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
             statement.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -67,6 +68,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
             resultSet.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -92,6 +94,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
             }
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }

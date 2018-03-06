@@ -38,6 +38,7 @@ public class DbTaskDAO extends DbHelper implements TaskDAO {
             statement.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -63,6 +64,7 @@ public class DbTaskDAO extends DbHelper implements TaskDAO {
             statement.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
