@@ -1,7 +1,7 @@
 package com.example.queststore.services;
 
-import com.example.queststore.dao.DbStudentDataDAO;
-import com.example.queststore.dao.DbStudentItemDAO;
+import com.example.queststore.dao.StudentDataDAO;
+import com.example.queststore.dao.StudentItemDAO;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.views.UserView;
 
@@ -11,20 +11,27 @@ import java.util.Map;
 import java.util.Random;
 
 public class TeamService {
-    private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
-    private DbStudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
-    private UserView view = new UserView();
+
+    private StudentDataDAO studentDataDAO;
+    private StudentItemDAO studentItemDAO;
     private Map<String, Integer> teamMembersCount;
+    private UserView userView;
 
-    public void handleRerollStudentsTeams() {
-        List<StudentData> students = dbStudentDataDAO.getAllStudents();
-        List<StudentData> teams = rerollStudentsTeam(students);
-
-        updateDbStudentsTeam(teams);
-        dbStudentItemDAO.removeTeamItems();
+    public TeamService(StudentDataDAO studentDataDAO, StudentItemDAO studentItemDAO, UserView userView) {
+        this.studentDataDAO = studentDataDAO;
+        this.studentItemDAO = studentItemDAO;
+        this.userView = userView;
     }
 
-    private List<StudentData> rerollStudentsTeam(List<StudentData> students) {
+    public void handleReshuffleStudentsTeams() {
+        List<StudentData> students = studentDataDAO.getAllStudents();
+        List<StudentData> teams = reshuffleStudentsTeam(students);
+
+        updateDbStudentsTeam(teams);
+        studentItemDAO.removeTeamItems();
+    }
+
+    private List<StudentData> reshuffleStudentsTeam(List<StudentData> students) {
         int numberOfTeams = countNumbersOfTeams(students);
         return assignStudentsToTeams(students, numberOfTeams);
     }
@@ -130,13 +137,13 @@ public class TeamService {
         boolean isUpdated = false;
 
         for (StudentData student : students) {
-            isUpdated = dbStudentDataDAO.updateStudentData(student);
+            isUpdated = studentDataDAO.updateStudentData(student);
         }
 
         if (isUpdated) {
-            view.clearConsole();
-            view.displayOperationSuccessfullyCompleted();
-            view.displayPressAnyKeyToContinueMessage();
+            userView.clearConsole();
+            userView.displayOperationSuccessfullyCompleted();
+            userView.displayPressAnyKeyToContinueMessage();
         }
     }
 }

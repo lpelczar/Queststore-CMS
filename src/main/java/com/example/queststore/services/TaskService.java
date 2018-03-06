@@ -1,6 +1,8 @@
 package com.example.queststore.services;
 
-import com.example.queststore.dao.*;
+import com.example.queststore.dao.StudentTaskDAO;
+import com.example.queststore.dao.TaskDAO;
+import com.example.queststore.dao.UserDAO;
 import com.example.queststore.data.contracts.TaskEntry;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Task;
@@ -13,22 +15,31 @@ import java.util.List;
 public class TaskService {
 
     private final String BASIC_TASK = "b";
-    private TaskView taskView = new TaskView();
-    private TaskDAO dbTaskDAO = new DbTaskDAO();
-    private UserDAO dbUserDAO = new DbUserDAO();
-    private StudentTaskDAO dbStudentTaskDAO = new DbStudentTaskDAO();
-    private StudentService studentService = new StudentService();
+    private TaskDAO taskDAO;
+    private UserDAO userDAO;
+    private StudentTaskDAO studentTaskDAO;
+    private StudentService studentService;
+    private TaskView taskView;
+
+    public TaskService(TaskDAO taskDAO, UserDAO userDAO, StudentTaskDAO studentTaskDAO, StudentService studentService,
+                       TaskView taskView) {
+        this.taskDAO = taskDAO;
+        this.userDAO = userDAO;
+        this.studentTaskDAO = studentTaskDAO;
+        this.studentService = studentService;
+        this.taskView = taskView;
+    }
 
     public void addNewQuest() {
         String questName = taskView.getQuestNameInput();
-        if (dbTaskDAO.getByName(questName) != null) {
+        if (taskDAO.getByName(questName) != null) {
             taskView.displayQuestAlreadyExists();
         } else {
             int points = taskView.getQuestPointsInput();
             String description = taskView.getQuestDescriptionInput();
             String categoryInput = taskView.getQuestCategory();
             String category = categoryInput.equals(BASIC_TASK) ? TaskEntry.BASIC_TASK : TaskEntry.EXTRA_TASK;
-            if (dbTaskDAO.add(new Task(questName, points, description, category))) {
+            if (taskDAO.add(new Task(questName, points, description, category))) {
                 taskView.displayQuestSuccessfullyAdded();
             } else {
                 taskView.displayErrorAddingQuest();
@@ -38,15 +49,15 @@ public class TaskService {
 
     public void editQuest() {
 
-        List<Task> quests = new ArrayList<>(dbTaskDAO.getAll());
+        List<Task> quests = new ArrayList<>(taskDAO.getAll());
         taskView.displayEntriesNoInput(quests);
         if (quests.isEmpty()) {
             taskView.displayPressAnyKeyToContinueMessage();
             return;
         }
         String taskName = taskView.getQuestNameInput();
-        if (dbTaskDAO.getByName(taskName) != null) {
-            updateQuest(dbTaskDAO.getByName(taskName));
+        if (taskDAO.getByName(taskName) != null) {
+            updateQuest(taskDAO.getByName(taskName));
         } else {
             taskView.displayThereIsNoTaskWithThisName();
         }
@@ -61,18 +72,18 @@ public class TaskService {
             case UPDATE_POINTS:
                 int points = taskView.askForPointsInput();
                 task.setPoints(points);
-                showEditResultMessage(dbTaskDAO.update(task));
+                showEditResultMessage(taskDAO.update(task));
                 break;
             case UPDATE_DESCRIPTION:
                 String description = taskView.askForDescriptionInput();
                 task.setDescription(description);
-                showEditResultMessage(dbTaskDAO.update(task));
+                showEditResultMessage(taskDAO.update(task));
                 break;
             case UPDATE_CATEGORY:
                 String categoryInput = taskView.getQuestCategory();
                 String category = categoryInput.equals(BASIC_TASK) ? TaskEntry.BASIC_TASK : TaskEntry.EXTRA_TASK;
                 task.setCategory(category);
-                showEditResultMessage(dbTaskDAO.update(task));
+                showEditResultMessage(taskDAO.update(task));
                 break;
             default:
                 taskView.displayWrongOptionMessage();
@@ -89,14 +100,14 @@ public class TaskService {
 
     public void markStudentAchievedQuest() {
 
-        List<User> students = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+        List<User> students = new ArrayList<>(userDAO.getAllByRole(UserEntry.STUDENT_ROLE));
         taskView.displayEntriesNoInput(students);
         if (students.isEmpty()) {
             taskView.displayPressAnyKeyToContinueMessage();
             return;
         }
         String studentLogin = taskView.getStudentLoginToMarkQuest();
-        if (dbUserDAO.getByLoginAndRole(studentLogin, UserEntry.STUDENT_ROLE) != null) {
+        if (userDAO.getByLoginAndRole(studentLogin, UserEntry.STUDENT_ROLE) != null) {
             choseQuestToMark(studentLogin);
         } else {
             taskView.displayThereIsNoStudentWithThisLogin();
@@ -105,17 +116,17 @@ public class TaskService {
 
     private void choseQuestToMark(String studentLogin) {
 
-        List<Task> quests = new ArrayList<>(dbTaskDAO.getAll());
+        List<Task> quests = new ArrayList<>(taskDAO.getAll());
         taskView.displayEntriesNoInput(quests);
         if (quests.isEmpty()) {
             taskView.displayPressAnyKeyToContinueMessage();
             return;
         }
         String taskName = taskView.getTaskNameInput();
-        if (dbTaskDAO.getByName(taskName) != null) {
-            Task task = dbTaskDAO.getByName(taskName);
-            User student = dbUserDAO.getByLogin(studentLogin);
-            boolean isAdded = dbStudentTaskDAO.add(student.getId(), task.getID());
+        if (taskDAO.getByName(taskName) != null) {
+            Task task = taskDAO.getByName(taskName);
+            User student = userDAO.getByLogin(studentLogin);
+            boolean isAdded = studentTaskDAO.add(student.getId(), task.getID());
             if (isAdded) {
                 taskView.displayTaskConnectionAdded();
                 studentService.updateStudentBalance(student.getId(), task.getPoints());

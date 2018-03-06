@@ -115,4 +115,8 @@ public class StudentView extends AbstractView {
 
     public void displayNoStudents() { System.out.println("No students for display!"); }
 
+    public void displayStudentHaveNoTeamAssignedMessage() {
+        System.out.println("Student have no team assigned!");
+        displayPressAnyKeyToContinueMessage();
+    }
 }
