@@ -11,8 +11,13 @@ import java.util.InputMismatchException;
 
 public class StudentController {
 
-    private StudentView view = new StudentView();
-    private StudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
+    private StudentView view;
+    private StudentDataDAO studentDataDAO;
+
+    public StudentController(StudentView view, StudentDataDAO studentDataDAO) {
+        this.view = view;
+        this.studentDataDAO = studentDataDAO;
+    }
 
     public void start(int studentId) {
         StudentData student = getStudentDataBy(studentId);
@@ -47,6 +52,6 @@ public class StudentController {
     }
 
     private StudentData getStudentDataBy(int student_id) {
-        return dbStudentDataDAO.getStudentDataBy(student_id);
+        return studentDataDAO.getStudentDataBy(student_id);
     }
 }
