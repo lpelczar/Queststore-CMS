@@ -1,8 +1,7 @@
 package com.example.queststore.controllers;
 
 
-import com.example.queststore.dao.DbStudentDataDAO;
-import com.example.queststore.dao.DbUserDAO;
+import com.example.queststore.dao.StudentDataDAO;
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.StudentData;
@@ -14,17 +13,23 @@ import java.util.List;
 
 class UserController {
 
-    private UserDAO dbUserDAO = new DbUserDAO();
-    private UserView view = new UserView();
-    private DbStudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
+    private UserDAO userDAO;
+    private UserView view;
+    private StudentDataDAO studentDataDAO;
+
+    public UserController(UserDAO userDAO, UserView view, StudentDataDAO studentDataDAO) {
+        this.userDAO = userDAO;
+        this.view = view;
+        this.studentDataDAO = studentDataDAO;
+    }
 
     void promoteBlankUser() {
 
-        if (dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE).size() > 0) {
-            List<User> users = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
+        if (userDAO.getAllByRole(UserEntry.BLANK_USER_ROLE).size() > 0) {
+            List<User> users = new ArrayList<>(userDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
             view.displayEntriesNoInput(users);
             String login = view.askForLogin();
-            User user = dbUserDAO.getByLoginAndRole(login, UserEntry.BLANK_USER_ROLE);
+            User user = userDAO.getByLoginAndRole(login, UserEntry.BLANK_USER_ROLE);
 
             if (user != null) {
                 promote(user);
@@ -43,13 +48,13 @@ class UserController {
 
         if (isPromoteToMentor) {
             user.setRole(UserEntry.MENTOR_ROLE);
-            isPromoted = dbUserDAO.update(user);
+            isPromoted = userDAO.update(user);
         } else {
             user.setRole(UserEntry.STUDENT_ROLE);
-            isPromoted = dbUserDAO.update(user);
+            isPromoted = userDAO.update(user);
 
             StudentData student = createStudent(user);
-            dbStudentDataDAO.add(student);
+            studentDataDAO.add(student);
         }
         if (isPromoted) {
             view.displayHasBeenPromoted();
