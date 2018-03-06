@@ -1,6 +1,7 @@
 package com.example.queststore.data;
 
 
+import com.example.queststore.data.statements.UserStatement;
 import com.example.queststore.utils.QueryLogger;
 import org.sqlite.SQLiteConfig;
 
@@ -16,6 +17,18 @@ public class DbHelper {
 
     public boolean isDatabaseFileExists() {
         return new File(DATABASE_PATH).isFile();
+    }
+
+    public void createDatabase() {
+        String createUsersTable = new UserStatement().createTable();
+
+        try {
+            openConnection();
+            getPreparedStatement(createUsersTable).executeUpdate();
+        } catch (SQLException e) {
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
     }
 
     private void openConnection() {
