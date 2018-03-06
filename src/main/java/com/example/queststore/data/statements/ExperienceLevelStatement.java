@@ -25,4 +25,10 @@ public class ExperienceLevelStatement {
         return "DELETE FROM " + ExperienceLevelEntry.TABLE_NAME +
                 " WHERE " + ExperienceLevelEntry.NAME + " = ?;" ;
     }
+
+    public String createTable() {
+        return "CREATE TABLE " + ExperienceLevelEntry.TABLE_NAME + " (" +
+                ExperienceLevelEntry.NAME + " TEXT PRIMARY KEY UNIQUE," +
+                ExperienceLevelEntry.LEVEL + " INTEGER NOT NULL);" ;
+    }
 }
