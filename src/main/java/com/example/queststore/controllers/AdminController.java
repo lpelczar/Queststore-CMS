@@ -7,10 +7,18 @@ import com.example.queststore.views.AdminView;
 
 public class AdminController extends UserController {
 
-    private AdminView adminView = new AdminView();
-    private GroupService groupService = new GroupService();
-    private ExpLevelsService expLevelsService = new ExpLevelsService();
-    private MentorService mentorService = new MentorService();
+    private AdminView adminView;
+    private GroupService groupService;
+    private ExpLevelsService expLevelsService;
+    private MentorService mentorService;
+
+    public AdminController(AdminView adminView, GroupService groupService, ExpLevelsService expLevelsService,
+                           MentorService mentorService) {
+        this.adminView = adminView;
+        this.groupService = groupService;
+        this.expLevelsService = expLevelsService;
+        this.mentorService = mentorService;
+    }
 
     public void start() {
 
