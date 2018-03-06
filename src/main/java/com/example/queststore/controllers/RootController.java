@@ -53,11 +53,9 @@ public class RootController {
     }
 
     private void checkDatabaseSetup() {
-
         DbHelper dbHelper = new DbHelper();
         if (!dbHelper.isDatabaseFileExists()) {
-            System.out.println("Database is not configured correctly! Exiting...");
-            System.exit(0);
+            dbHelper.createDatabase();
         }
     }
 

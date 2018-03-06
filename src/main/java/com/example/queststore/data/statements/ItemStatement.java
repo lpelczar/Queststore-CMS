@@ -55,4 +55,13 @@ public class ItemStatement {
                 ItemEntry.CATEGORY + " = ? " +
                 "WHERE " + ItemEntry.ID + " = ?; ";
     }
+
+    public String createTable() {
+        return "CREATE TABLE " + ItemEntry.TABLE_NAME + " (" +
+                ItemEntry.ID + " INTEGER PRIMARY KEY," +
+                ItemEntry.ITEM_NAME + " TEXT NOT NULL," +
+                ItemEntry.DESCRIPTION + " TEXT NOT NULL," +
+                ItemEntry.PRICE + " INTEGER NOT NULL," +
+                ItemEntry.CATEGORY + " TEXT);" ;
+    }
 }
