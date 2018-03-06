@@ -1,6 +1,6 @@
 package com.example.queststore.views;
 
-import com.example.queststore.services.Iterator;
+import com.example.queststore.utils.Iterator;
 
 import java.util.InputMismatchException;
 import java.util.List;

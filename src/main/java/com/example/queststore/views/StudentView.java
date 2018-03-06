@@ -1,7 +1,7 @@
 package com.example.queststore.views;
 
 import com.example.queststore.models.Item;
-import com.example.queststore.services.Iterator;
+import com.example.queststore.utils.Iterator;
 import com.example.queststore.utils.InputGetter;
 
 import java.util.*;

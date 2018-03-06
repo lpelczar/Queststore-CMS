@@ -1,4 +1,4 @@
-package com.example.queststore.services;
+package com.example.queststore.utils;
 
 import java.util.List;
 
