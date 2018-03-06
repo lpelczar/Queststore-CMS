@@ -16,7 +16,6 @@ import java.util.List;
 
 public class StudentService {
 
-    private StudentData student;
     private StudentView studentView;
     private StudentDataDAO studentDataDAO;
     private StudentItemDAO studentItemDAO;
@@ -31,17 +30,6 @@ public class StudentService {
         this.expLevelsDAO = expLevelsDAO;
         this.userDAO = userDAO;
         this.itemDAO = itemDAO;
-        this.studentView = studentView;
-    }
-
-    public StudentService(StudentDataDAO studentDataDAO, StudentItemDAO studentItemDAO, ExpLevelsDAO expLevelsDAO,
-                          UserDAO userDAO, ItemDAO itemDAO, StudentData studentData, StudentView studentView) {
-        this.studentDataDAO = studentDataDAO;
-        this.studentItemDAO = studentItemDAO;
-        this.expLevelsDAO = expLevelsDAO;
-        this.userDAO = userDAO;
-        this.itemDAO = itemDAO;
-        this.student = studentData;
         this.studentView = studentView;
     }
 
@@ -109,9 +97,10 @@ public class StudentService {
             if (!isStudentContainItem(studentId, item.getID())) {
                 int price = item.getPrice();
 
-                if (isStudentAffordToBuy(price)) {
+                if (isStudentAffordToBuy(studentId, price)) {
                     updateStudentBackpack(studentId, item);
-                    updateStudentBalance(price, student);
+                    StudentData studentData = studentDataDAO.getStudentDataBy(studentId);
+                    updateStudentBalance(price, studentData);
 
                 } else { studentView.displayNoMoney(); }
             } else { studentView.displayItemAlreadyContaining(); }
@@ -141,13 +130,19 @@ public class StudentService {
             return false;
         }
 
-    private boolean isStudentAffordToBuy(int price) {
-        int studentBalance = student.getBalance();
+    private boolean isStudentAffordToBuy(int studentId, int price) {
+        StudentData studentData = studentDataDAO.getStudentDataBy(studentId);
+        int studentBalance = studentData.getBalance();
         return studentBalance > price;
     }
 
-    public void buyArtifactForTeam() {
-        List<StudentData> team = studentDataDAO.getStudentsInSameTeamBy(student.getTeamName());
+    public void buyArtifactForTeam(int studentId) {
+        StudentData studentData = studentDataDAO.getStudentDataBy(studentId);
+        if (studentData.getTeamName().isEmpty()) {
+            studentView.displayStudentHaveNoTeamAssignedMessage();
+            return;
+        }
+        List<StudentData> team = studentDataDAO.getStudentsInSameTeamBy(studentData.getTeamName());
         Item item = chooseItemToBuy(ItemEntry.EXTRA_ITEM);
 
         if (item != null && team != null) {

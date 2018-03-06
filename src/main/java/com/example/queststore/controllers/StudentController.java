@@ -43,7 +43,7 @@ public class StudentController {
                     studentService.buyArtifact(studentId);
                     break;
                 case 3:
-                    studentService.buyArtifactForTeam();
+                    studentService.buyArtifactForTeam(studentId);
                     break;
                 case 4:
                     isLoopEnd = true;
