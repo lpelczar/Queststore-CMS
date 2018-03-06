@@ -17,33 +17,46 @@ import java.util.List;
 public class StudentService {
 
     private StudentData student;
-    private StudentView studentView = new StudentView();
-    private StudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
-    private StudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
-    private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
-    private UserDAO dbUserDAO = new DbUserDAO();
-    private ItemDAO dbItemDAO = new DbItemDAO();
+    private StudentView studentView;
+    private StudentDataDAO studentDataDAO;
+    private StudentItemDAO studentItemDAO;
+    private ExpLevelsDAO expLevelsDAO;
+    private UserDAO userDAO;
+    private ItemDAO itemDAO;
 
-    public StudentService(){}
+    public StudentService(StudentDataDAO studentDataDAO, StudentItemDAO studentItemDAO, ExpLevelsDAO expLevelsDAO,
+                          UserDAO userDAO, ItemDAO itemDAO) {
+        this.studentDataDAO = studentDataDAO;
+        this.studentItemDAO = studentItemDAO;
+        this.expLevelsDAO = expLevelsDAO;
+        this.userDAO = userDAO;
+        this.itemDAO = itemDAO;
+    }
 
-    public StudentService(StudentData studentData) {
+    public StudentService(StudentDataDAO studentDataDAO, StudentItemDAO studentItemDAO, ExpLevelsDAO expLevelsDAO,
+                          UserDAO userDAO, ItemDAO itemDAO, StudentData studentData) {
+        this.studentDataDAO = studentDataDAO;
+        this.studentItemDAO = studentItemDAO;
+        this.expLevelsDAO = expLevelsDAO;
+        this.userDAO = userDAO;
+        this.itemDAO = itemDAO;
         this.student = studentData;
     }
 
     public void updateStudentBalance(int studentId, int points) {
-        StudentData studentData = dbStudentDataDAO.getStudentDataBy(studentId);
+        StudentData studentData = studentDataDAO.getStudentDataBy(studentId);
         studentData.setBalance(studentData.getBalance() + points);
     }
 
     public void updateStudentExperienceAndLevel(int studentId, int points) {
-        StudentData studentData = dbStudentDataDAO.getStudentDataBy(studentId);
+        StudentData studentData = studentDataDAO.getStudentDataBy(studentId);
         studentData.setExperience(studentData.getExperience() + points);
-        dbStudentDataDAO.updateStudentData(studentData);
+        studentDataDAO.updateStudentData(studentData);
         updateStudentLevel(studentData);
     }
 
     private void updateStudentLevel(StudentData studentData) {
-        List<ExpLevel> availableLevels = dbExpLevelsDAO.getAll();
+        List<ExpLevel> availableLevels = expLevelsDAO.getAll();
         availableLevels.sort(Comparator.comparing(ExpLevel::getValue));
         for (ExpLevel level : availableLevels) {
             if (studentData.getExperience() < level.getValue()) {
@@ -51,7 +64,7 @@ public class StudentService {
                 break;
             }
         }
-        if (dbStudentDataDAO.updateStudentData(studentData)) {
+        if (studentDataDAO.updateStudentData(studentData)) {
             studentView.displayStudentDataHasBeenUpdated();
         } else {
             studentView.displayErrorUpdatingStudentData();
@@ -61,17 +74,17 @@ public class StudentService {
     public void showStudentSummary() {
         studentView.clearConsole();
 
-        List<User> students = dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE);
+        List<User> students = userDAO.getAllByRole(UserEntry.STUDENT_ROLE);
         if (students != null) {
 
             for (User user : students) {
                 List<String> studentInfo = new ArrayList<>();
 
-                StudentData student = dbStudentDataDAO.getStudentDataBy(user.getId());
+                StudentData student = studentDataDAO.getStudentDataBy(user.getId());
                 studentInfo.add(user.getName());
                 studentInfo.add(student.getBalance().toString());
 
-                List<Item> studentItems = dbItemDAO.getItemsByStudentId(student.getId());
+                List<Item> studentItems = itemDAO.getItemsByStudentId(student.getId());
                 if (studentItems != null) {
                     studentView.displayStudentInfo(studentInfo, studentItems);
 
@@ -82,7 +95,7 @@ public class StudentService {
     }
 
     public void showStudentBackPack(int studentId) {
-        List<Item> backpack = dbItemDAO.getItemsByStudentId(studentId);
+        List<Item> backpack = itemDAO.getItemsByStudentId(studentId);
         studentView.displayStudentBackpack(backpack);
     }
 
@@ -104,13 +117,13 @@ public class StudentService {
     }
 
     private Item chooseItemToBuy(String category) {
-        List<Item> items = dbItemDAO.getItemsByCategory(category);
+        List<Item> items = itemDAO.getItemsByCategory(category);
 
         if (items != null) {
             int itemId = studentView.chooseItemFrom(items);
 
             if (checkIfIdItemInStore(itemId, items)) {
-                return dbItemDAO.getItemById(itemId);
+                return itemDAO.getItemById(itemId);
 
             } else { studentView.displayWrongId(); return null; }
         } else {
@@ -132,7 +145,7 @@ public class StudentService {
     }
 
     public void buyArtifactForTeam() {
-        List<StudentData> team = dbStudentDataDAO.getStudentsInSameTeamBy(student.getTeamName());
+        List<StudentData> team = studentDataDAO.getStudentsInSameTeamBy(student.getTeamName());
         Item item = chooseItemToBuy(ItemEntry.EXTRA_ITEM);
 
         if (item != null && team != null) {
@@ -162,7 +175,7 @@ public class StudentService {
     }
 
     private void updateStudentBackpack(int studentId, Item item) {
-        if (dbStudentItemDAO.add(studentId, item.getID(), StudentItemEntry.IS_NOT_USED_VALUE)) {
+        if (studentItemDAO.add(studentId, item.getID(), StudentItemEntry.IS_NOT_USED_VALUE)) {
             studentView.displayOperationSuccessfullyCompleted();
         } else {
             studentView.displayOperationFailed();
@@ -172,11 +185,11 @@ public class StudentService {
     private void updateStudentBalance(int price, StudentData student) {
         int transactionBalance = student.getBalance() - price;
         student.setBalance(transactionBalance);
-        dbStudentDataDAO.updateStudentData(student);
+        studentDataDAO.updateStudentData(student);
     }
 
     private boolean isStudentContainItem(int studentId, int itemID) {
-        List<Integer> studentsItems = dbStudentItemDAO.getStudentsItemsBy(studentId);
+        List<Integer> studentsItems = studentItemDAO.getStudentsItemsBy(studentId);
         for (int studentItemID : studentsItems) {
             if (itemID == studentItemID) {
                 return true;
