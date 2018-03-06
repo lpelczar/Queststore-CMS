@@ -1,6 +1,7 @@
 package com.example.queststore.data;
 
 
+import com.example.queststore.data.statements.StudentDataStatement;
 import com.example.queststore.data.statements.UserStatement;
 import com.example.queststore.utils.QueryLogger;
 import org.sqlite.SQLiteConfig;
@@ -21,10 +22,12 @@ public class DbHelper {
 
     public void createDatabase() {
         String createUsersTable = new UserStatement().createTable();
+        String createStudentsData = new StudentDataStatement().createTable();
 
         try {
             openConnection();
             getPreparedStatement(createUsersTable).executeUpdate();
+            getPreparedStatement(createStudentsData).executeUpdate();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
