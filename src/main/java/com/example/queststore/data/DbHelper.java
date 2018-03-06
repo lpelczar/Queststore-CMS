@@ -29,6 +29,7 @@ public class DbHelper {
             getPreparedStatement(new StudentTaskStatement().createTable()).executeUpdate();
             getPreparedStatement(new TaskStatement().createTable()).executeUpdate();
             getPreparedStatement(new StudentItemStatement().createTable()).executeUpdate();
+            getPreparedStatement(new ItemStatement().createTable()).executeUpdate();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
