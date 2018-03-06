@@ -1,6 +1,5 @@
 package com.example.queststore.services;
 
-import com.example.queststore.dao.DbUserDAO;
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.User;
@@ -12,20 +11,25 @@ import java.util.List;
 public class MentorService {
 
     private MentorView mentorView = new MentorView();
-    private UserDAO dbUserDAO = new DbUserDAO();
-    private GroupService groupService = new GroupService();
+    private UserDAO userDAO;
+    private GroupService groupService;
+
+    public MentorService(UserDAO userDAO, GroupService groupService) {
+        this.userDAO = userDAO;
+        this.groupService = groupService;
+    }
 
     public void deleteMentor() {
-        List<User> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        List<User> mentors = new ArrayList<>(userDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         mentorView.displayEntriesNoInput(mentors);
         if (mentors.isEmpty()) {
             mentorView.displayPressAnyKeyToContinueMessage();
             return;
         }
         String login = mentorView.getMentorLoginToDelete();
-        User mentor = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
+        User mentor = userDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
         if (mentor != null) {
-            dbUserDAO.delete(mentor);
+            userDAO.delete(mentor);
             mentorView.displayMentorDeletedMessage();
         } else {
             mentorView.displayNoMentorMessage();
@@ -33,14 +37,14 @@ public class MentorService {
     }
 
     public void showMentorProfileAndHisGroups() {
-        List<User> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        List<User> mentors = new ArrayList<>(userDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         mentorView.displayEntriesNoInput(mentors);
         if (mentors.isEmpty()) {
             mentorView.displayPressAnyKeyToContinueMessage();
             return;
         }
         String login = mentorView.getMentorLoginToShowProfile();
-        User mentor = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
+        User mentor = userDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
 
         if (mentor != null) {
             mentorView.displayMentorProfile(mentor);
@@ -54,15 +58,15 @@ public class MentorService {
 
         final String QUIT_OPTION = "q";
 
-        List<User> mentors = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        List<User> mentors = new ArrayList<>(userDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         mentorView.displayEntriesNoInput(mentors);
-        if (dbUserDAO.getAllByRole(UserEntry.MENTOR_ROLE).isEmpty()) {
+        if (userDAO.getAllByRole(UserEntry.MENTOR_ROLE).isEmpty()) {
             mentorView.displayPressAnyKeyToContinueMessage();
             return;
         }
         String login = mentorView.getMentorLoginToEdit();
         if (login.equals(QUIT_OPTION)) return;
-        User mentorToEdit = dbUserDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
+        User mentorToEdit = userDAO.getByLoginAndRole(login, UserEntry.MENTOR_ROLE);
         if (mentorToEdit != null) {
             updateProfileAttribute(mentorToEdit);
         } else {
@@ -81,22 +85,22 @@ public class MentorService {
             case UPDATE_NAME:
                 String name = mentorView.askForNewValue();
                 user.setName(name);
-                showEditResultMessage(dbUserDAO.update(user));
+                showEditResultMessage(userDAO.update(user));
                 break;
             case UPDATE_LOGIN:
                 String login = mentorView.askForNewValue();
                 user.setLogin(login);
-                showEditResultMessage(dbUserDAO.update(user));
+                showEditResultMessage(userDAO.update(user));
                 break;
             case UPDATE_EMAIL:
                 String email = mentorView.askForNewValue();
                 user.setEmail(email);
-                showEditResultMessage(dbUserDAO.update(user));
+                showEditResultMessage(userDAO.update(user));
                 break;
             case UPDATE_PHONE:
                 String phoneNumber = mentorView.askForNewValue();
                 user.setPhoneNumber(phoneNumber);
-                showEditResultMessage(dbUserDAO.update(user));
+                showEditResultMessage(userDAO.update(user));
                 break;
             default:
                 mentorView.displayWrongSignError();
