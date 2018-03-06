@@ -33,4 +33,10 @@ public class GroupStatement {
                 MentorGroupEntry.TABLE_NAME + "." + MentorGroupEntry.ID_GROUP +
                 " WHERE " + MentorGroupEntry.TABLE_NAME + "." + MentorGroupEntry.ID_MENTOR + " = ?;" ;
     }
+
+    public String createTable() {
+        return "CREATE TABLE " + GroupEntry.TABLE_NAME + " (" +
+                GroupEntry.ID + " INTEGER PRIMARY KEY," +
+                GroupEntry.GROUP_NAME + " TEXT NOT NULL UNIQUE);" ;
+    }
 }
