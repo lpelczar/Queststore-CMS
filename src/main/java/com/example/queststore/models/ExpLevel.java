@@ -1,6 +1,6 @@
 package com.example.queststore.models;
 
-public class ExpLevel implements Entry {
+public class ExpLevel {
 
     private String name;
     private int value;

@@ -5,7 +5,6 @@ import com.example.queststore.dao.DbStudentDataDAO;
 import com.example.queststore.dao.DbUserDAO;
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.data.contracts.UserEntry;
-import com.example.queststore.models.Entry;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.models.User;
 import com.example.queststore.views.UserView;
@@ -22,7 +21,7 @@ class UserController {
     void promoteBlankUser() {
 
         if (dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE).size() > 0) {
-            List<Entry> users = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
+            List<User> users = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
             view.displayEntriesNoInput(users);
             String login = view.askForLogin();
             User user = dbUserDAO.getByLoginAndRole(login, UserEntry.BLANK_USER_ROLE);

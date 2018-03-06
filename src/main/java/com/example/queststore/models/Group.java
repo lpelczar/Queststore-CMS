@@ -1,6 +1,6 @@
 package com.example.queststore.models;
 
-public class Group implements Entry {
+public class Group {
 
     private int id;
     private String groupName;

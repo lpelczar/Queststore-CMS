@@ -6,7 +6,7 @@ import org.sqlite.SQLiteConfig;
 
 import java.sql.*;
 
-public class DbHelper {
+public abstract class DbHelper {
 
     private static final String DB_URL = "jdbc:sqlite:queststore.db";
     private static final String DRIVER = "org.sqlite.JDBC";
@@ -21,6 +21,7 @@ public class DbHelper {
             connection = DriverManager.getConnection(DB_URL, config.toProperties());
         } catch ( Exception e ) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -53,6 +54,7 @@ public class DbHelper {
             return true;
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }

@@ -2,7 +2,6 @@ package com.example.queststore.services;
 
 import com.example.queststore.dao.DbExpLevelsDAO;
 import com.example.queststore.dao.ExpLevelsDAO;
-import com.example.queststore.models.Entry;
 import com.example.queststore.models.ExpLevel;
 import com.example.queststore.views.ExpLevelsView;
 
@@ -28,7 +27,7 @@ public class ExpLevelsService {
 
     public void removeLevelOfExperience() {
 
-        List<Entry> levels = new ArrayList<>(dbExpLevelsDAO.getAll());
+        List<ExpLevel> levels = new ArrayList<>(dbExpLevelsDAO.getAll());
         expLevelsView.displayEntriesNoInput(levels);
         if (dbExpLevelsDAO.getAll().isEmpty()) {
             expLevelsView.displayPressAnyKeyToContinueMessage();
@@ -49,7 +48,7 @@ public class ExpLevelsService {
 
     public void showAllLevelsOfExperience() {
 
-        List<Entry> expLevels = new ArrayList<>(dbExpLevelsDAO.getAll());
+        List<ExpLevel> expLevels = new ArrayList<>(dbExpLevelsDAO.getAll());
         expLevelsView.displayEntries(expLevels);
     }
 }

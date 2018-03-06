@@ -49,6 +49,7 @@ public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
             statement.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }

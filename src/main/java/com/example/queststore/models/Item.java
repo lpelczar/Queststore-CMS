@@ -1,7 +1,7 @@
 package com.example.queststore.models;
 
 
-public class Item implements Entry {
+public class Item {
     private String name;
     private Integer price;
     private String description;

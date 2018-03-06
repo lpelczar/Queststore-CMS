@@ -1,7 +1,5 @@
 package com.example.queststore.views;
 
-import com.example.queststore.models.Entry;
-
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -24,20 +22,20 @@ abstract class AbstractView {
         System.out.flush();
     }
 
-    public void displayEntries(List<Entry> entries) {
+    public void displayEntries(List entries) {
         showAllEntries(entries);
         displayPressAnyKeyToContinueMessage();
     }
 
-    public void displayEntriesNoInput(List<Entry> entries) {
+    public void displayEntriesNoInput(List entries) {
         showAllEntries(entries);
     }
 
-    private void showAllEntries(List<Entry> entries) {
+    private void showAllEntries(List entries) {
         System.out.println("");
         if(!entries.isEmpty()) {
             int index = 1;
-            for (Entry entry : entries) {
+            for (Object entry : entries) {
                 System.out.println(index + ". " + entry);
                 index++;
             }

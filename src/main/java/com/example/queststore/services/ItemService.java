@@ -2,7 +2,6 @@ package com.example.queststore.services;
 
 import com.example.queststore.dao.*;
 import com.example.queststore.data.contracts.UserEntry;
-import com.example.queststore.models.Entry;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.User;
 import com.example.queststore.views.ItemView;
@@ -38,7 +37,7 @@ public class ItemService {
 
     public void editItem() {
         itemView.clearConsole();
-        List<Entry> items = new ArrayList<>(dbItemDAO.getAllItems());
+        List<Item> items = new ArrayList<>(dbItemDAO.getAllItems());
 
         itemView.displayEntriesNoInput(items);
         if (items.isEmpty()) {
@@ -89,7 +88,7 @@ public class ItemService {
     }
 
     public void markStudentUsedItem() {
-        List<Entry> students = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+        List<User> students = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE));
         itemView.displayEntriesNoInput(students);
         if (students.isEmpty()) {
             itemView.displayPressAnyKeyToContinueMessage();
@@ -105,7 +104,7 @@ public class ItemService {
 
     private void choseArtifactToMark(String studentLogin) {
         User student = dbUserDAO.getByLogin(studentLogin);
-        List<Entry> items = new ArrayList<>(dbItemDAO.getItemsByStudentId(student.getId()));
+        List<Item> items = new ArrayList<>(dbItemDAO.getItemsByStudentId(student.getId()));
         itemView.displayEntriesNoInput(items);
         if (items.isEmpty()) {
             itemView.displayPressAnyKeyToContinueMessage();
