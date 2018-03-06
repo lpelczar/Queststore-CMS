@@ -11,7 +11,7 @@ import com.example.queststore.views.UserView;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class UserController {
+class UserController {
 
     private UserDAO userDAO;
     private UserView userView;
@@ -72,10 +72,6 @@ abstract class UserController {
 
     public UserDAO getUserDAO() {
         return userDAO;
-    }
-
-    public UserView getUserView() {
-        return userView;
     }
 
     public StudentDataDAO getStudentDataDAO() {
