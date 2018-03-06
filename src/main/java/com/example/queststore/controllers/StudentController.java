@@ -1,7 +1,6 @@
 package com.example.queststore.controllers;
 
 
-import com.example.queststore.dao.DbStudentDataDAO;
 import com.example.queststore.dao.StudentDataDAO;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.services.StudentService;
@@ -13,15 +12,16 @@ public class StudentController {
 
     private StudentView view;
     private StudentDataDAO studentDataDAO;
+    private StudentService studentService;
 
-    public StudentController(StudentView view, StudentDataDAO studentDataDAO) {
+    public StudentController(StudentView view, StudentDataDAO studentDataDAO, StudentService studentService) {
         this.view = view;
         this.studentDataDAO = studentDataDAO;
+        this.studentService = studentService;
     }
 
     public void start(int studentId) {
         StudentData student = getStudentDataBy(studentId);
-        StudentService studentService = new StudentService(student);
         boolean isLoopEnd = false;
         int option = 0;
 
