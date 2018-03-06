@@ -28,4 +28,14 @@ public class TaskStatement {
     public String selectAllTasks() {
         return "SELECT * FROM " + TaskEntry.TABLE_NAME + ";" ;
     }
+
+    public String createTable() {
+        return "CREATE TABLE " + TaskEntry.TABLE_NAME + " (" +
+                TaskEntry.ID + " INTEGER PRIMARY KEY," +
+                TaskEntry.NAME + " TEXT NOT NULL UNIQUE," +
+                TaskEntry.POINTS + " INTEGER NOT NULL," +
+                TaskEntry.DESCRIPTION + " TEXT," +
+                TaskEntry.CATEGORY + " TEXT" +
+                ");" ;
+    }
 }
