@@ -7,24 +7,22 @@ import com.example.queststore.models.StudentData;
 import com.example.queststore.models.User;
 import com.example.queststore.services.*;
 import com.example.queststore.views.MentorView;
+import com.example.queststore.views.UserView;
 
 public class MentorController extends UserController {
 
     private MentorView mentorView;
-    private UserDAO dbUserDAO;
-    private StudentDataDAO dbStudentDataDAO;
     private TeamService teamService;
     private GroupService groupService;
     private TaskService taskService;
     private StudentService studentService;
     private ItemService itemService;
 
-    public MentorController(MentorView mentorView, UserDAO dbUserDAO, StudentDataDAO dbStudentDataDAO,
+    public MentorController(UserDAO userDAO, UserView view, StudentDataDAO studentDataDAO, MentorView mentorView,
                             TeamService teamService, GroupService groupService, TaskService taskService,
                             StudentService studentService, ItemService itemService) {
+        super(userDAO, view, studentDataDAO);
         this.mentorView = mentorView;
-        this.dbUserDAO = dbUserDAO;
-        this.dbStudentDataDAO = dbStudentDataDAO;
         this.teamService = teamService;
         this.groupService = groupService;
         this.taskService = taskService;
@@ -81,9 +79,9 @@ public class MentorController extends UserController {
     @Override
     void promote(User user) {
         user.setRole(UserEntry.STUDENT_ROLE);
-        boolean isPromoted = dbUserDAO.update(user);
+        boolean isPromoted = getUserDAO().update(user);
         StudentData student = createStudent(user);
-        dbStudentDataDAO.add(student);
+        getStudentDataDAO().add(student);
         if (isPromoted) {
             mentorView.displayHasBeenPromoted();
         } else {

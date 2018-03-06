@@ -10,12 +10,12 @@ import java.util.InputMismatchException;
 
 public class StudentController {
 
-    private StudentView view;
+    private StudentView studentView;
     private StudentDataDAO studentDataDAO;
     private StudentService studentService;
 
-    public StudentController(StudentView view, StudentDataDAO studentDataDAO, StudentService studentService) {
-        this.view = view;
+    public StudentController(StudentView studentView, StudentDataDAO studentDataDAO, StudentService studentService) {
+        this.studentView = studentView;
         this.studentDataDAO = studentDataDAO;
         this.studentService = studentService;
     }
@@ -26,11 +26,11 @@ public class StudentController {
         int option = 0;
 
         while (!isLoopEnd) {
-            view.displayInfoBar(student.getBalance(), student.getLevel());
-            view.handleStudentMenu();
+            studentView.displayInfoBar(student.getBalance(), student.getLevel());
+            studentView.handleStudentMenu();
 
             try {
-                option = view.askForOption();
+                option = studentView.askForOption();
             }
             catch (InputMismatchException e) {
                 System.err.println("Wrong option!");

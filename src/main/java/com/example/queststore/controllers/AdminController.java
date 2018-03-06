@@ -1,9 +1,12 @@
 package com.example.queststore.controllers;
 
+import com.example.queststore.dao.StudentDataDAO;
+import com.example.queststore.dao.UserDAO;
 import com.example.queststore.services.ExpLevelsService;
 import com.example.queststore.services.GroupService;
 import com.example.queststore.services.MentorService;
 import com.example.queststore.views.AdminView;
+import com.example.queststore.views.UserView;
 
 public class AdminController extends UserController {
 
@@ -12,8 +15,9 @@ public class AdminController extends UserController {
     private ExpLevelsService expLevelsService;
     private MentorService mentorService;
 
-    public AdminController(AdminView adminView, GroupService groupService, ExpLevelsService expLevelsService,
-                           MentorService mentorService) {
+    public AdminController(UserDAO userDAO, UserView userView, StudentDataDAO studentDataDAO, AdminView adminView,
+                           GroupService groupService, ExpLevelsService expLevelsService, MentorService mentorService) {
+        super(userDAO, userView, studentDataDAO);
         this.adminView = adminView;
         this.groupService = groupService;
         this.expLevelsService = expLevelsService;

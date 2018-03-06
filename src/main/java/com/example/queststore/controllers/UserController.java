@@ -11,15 +11,15 @@ import com.example.queststore.views.UserView;
 import java.util.ArrayList;
 import java.util.List;
 
-class UserController {
+abstract class UserController {
 
     private UserDAO userDAO;
-    private UserView view;
+    private UserView userView;
     private StudentDataDAO studentDataDAO;
 
-    public UserController(UserDAO userDAO, UserView view, StudentDataDAO studentDataDAO) {
+    public UserController(UserDAO userDAO, UserView userView, StudentDataDAO studentDataDAO) {
         this.userDAO = userDAO;
-        this.view = view;
+        this.userView = userView;
         this.studentDataDAO = studentDataDAO;
     }
 
@@ -27,23 +27,23 @@ class UserController {
 
         if (userDAO.getAllByRole(UserEntry.BLANK_USER_ROLE).size() > 0) {
             List<User> users = new ArrayList<>(userDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
-            view.displayEntriesNoInput(users);
-            String login = view.askForLogin();
+            userView.displayEntriesNoInput(users);
+            String login = userView.askForLogin();
             User user = userDAO.getByLoginAndRole(login, UserEntry.BLANK_USER_ROLE);
 
             if (user != null) {
                 promote(user);
             } else {
-                view.displayUserDoesNotExist();
+                userView.displayUserDoesNotExist();
             }
         } else {
-            view.displayEmptyListMsg();
+            userView.displayEmptyListMsg();
         }
     }
 
     void promote(User user) {
 
-        boolean isPromoteToMentor = view.getTypeOfPromotion();
+        boolean isPromoteToMentor = userView.getTypeOfPromotion();
         boolean isPromoted;
 
         if (isPromoteToMentor) {
@@ -57,9 +57,9 @@ class UserController {
             studentDataDAO.add(student);
         }
         if (isPromoted) {
-            view.displayHasBeenPromoted();
+            userView.displayHasBeenPromoted();
         } else {
-            view.displayUserNotExists();
+            userView.displayUserNotExists();
         }
     }
 
@@ -68,5 +68,17 @@ class UserController {
         student.setStudentId(user.getId());
         return student;
 
+    }
+
+    public UserDAO getUserDAO() {
+        return userDAO;
+    }
+
+    public UserView getUserView() {
+        return userView;
+    }
+
+    public StudentDataDAO getStudentDataDAO() {
+        return studentDataDAO;
     }
 }
