@@ -10,13 +10,14 @@ import java.util.List;
 
 public class MentorService {
 
-    private MentorView mentorView = new MentorView();
+    private MentorView mentorView;
     private UserDAO userDAO;
     private GroupService groupService;
 
-    public MentorService(UserDAO userDAO, GroupService groupService) {
+    public MentorService(UserDAO userDAO, GroupService groupService, MentorView mentorView) {
         this.userDAO = userDAO;
         this.groupService = groupService;
+        this.mentorView = mentorView;
     }
 
     public void deleteMentor() {

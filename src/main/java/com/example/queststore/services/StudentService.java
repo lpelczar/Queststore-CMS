@@ -25,22 +25,24 @@ public class StudentService {
     private ItemDAO itemDAO;
 
     public StudentService(StudentDataDAO studentDataDAO, StudentItemDAO studentItemDAO, ExpLevelsDAO expLevelsDAO,
-                          UserDAO userDAO, ItemDAO itemDAO) {
+                          UserDAO userDAO, ItemDAO itemDAO, StudentView studentView) {
         this.studentDataDAO = studentDataDAO;
         this.studentItemDAO = studentItemDAO;
         this.expLevelsDAO = expLevelsDAO;
         this.userDAO = userDAO;
         this.itemDAO = itemDAO;
+        this.studentView = studentView;
     }
 
     public StudentService(StudentDataDAO studentDataDAO, StudentItemDAO studentItemDAO, ExpLevelsDAO expLevelsDAO,
-                          UserDAO userDAO, ItemDAO itemDAO, StudentData studentData) {
+                          UserDAO userDAO, ItemDAO itemDAO, StudentData studentData, StudentView studentView) {
         this.studentDataDAO = studentDataDAO;
         this.studentItemDAO = studentItemDAO;
         this.expLevelsDAO = expLevelsDAO;
         this.userDAO = userDAO;
         this.itemDAO = itemDAO;
         this.student = studentData;
+        this.studentView = studentView;
     }
 
     public void updateStudentBalance(int studentId, int points) {

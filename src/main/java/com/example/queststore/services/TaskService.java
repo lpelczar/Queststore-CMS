@@ -15,17 +15,19 @@ import java.util.List;
 public class TaskService {
 
     private final String BASIC_TASK = "b";
-    private TaskView taskView = new TaskView();
     private TaskDAO taskDAO;
     private UserDAO userDAO;
     private StudentTaskDAO studentTaskDAO;
     private StudentService studentService;
+    private TaskView taskView;
 
-    public TaskService(TaskDAO taskDAO, UserDAO userDAO, StudentTaskDAO studentTaskDAO, StudentService studentService) {
+    public TaskService(TaskDAO taskDAO, UserDAO userDAO, StudentTaskDAO studentTaskDAO, StudentService studentService,
+                       TaskView taskView) {
         this.taskDAO = taskDAO;
         this.userDAO = userDAO;
         this.studentTaskDAO = studentTaskDAO;
         this.studentService = studentService;
+        this.taskView = taskView;
     }
 
     public void addNewQuest() {

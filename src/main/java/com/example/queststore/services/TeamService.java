@@ -15,11 +15,12 @@ public class TeamService {
     private StudentDataDAO studentDataDAO;
     private StudentItemDAO studentItemDAO;
     private Map<String, Integer> teamMembersCount;
-    private UserView view = new UserView();
+    private UserView userView;
 
-    public TeamService(StudentDataDAO studentDataDAO, StudentItemDAO studentItemDAO) {
+    public TeamService(StudentDataDAO studentDataDAO, StudentItemDAO studentItemDAO, UserView userView) {
         this.studentDataDAO = studentDataDAO;
         this.studentItemDAO = studentItemDAO;
+        this.userView = userView;
     }
 
     public void handleReshuffleStudentsTeams() {
@@ -140,9 +141,9 @@ public class TeamService {
         }
 
         if (isUpdated) {
-            view.clearConsole();
-            view.displayOperationSuccessfullyCompleted();
-            view.displayPressAnyKeyToContinueMessage();
+            userView.clearConsole();
+            userView.displayOperationSuccessfullyCompleted();
+            userView.displayPressAnyKeyToContinueMessage();
         }
     }
 }
