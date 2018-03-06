@@ -76,8 +76,8 @@ public class StudentService {
                     studentView.displayStudentInfo(studentInfo, studentItems);
 
                 }
-                studentView.displayPressAnyKeyToContinueMessage();
             }
+            studentView.displayPressAnyKeyToContinueMessage();
         } else { studentView.displayNoStudents(); }
     }
 
