@@ -1,6 +1,7 @@
 package com.example.queststore.views;
 
 import com.example.queststore.models.Item;
+import com.example.queststore.services.Iterator;
 import com.example.queststore.utils.InputGetter;
 
 import java.util.*;
@@ -42,11 +43,14 @@ public class StudentView extends AbstractView {
 
     public void displayStudentBackpack(List<Item> backpack) {
         clearConsole();
+        Iterator<Object> iterator = new Iterator<>(backpack.toArray());
+
         if (backpack.isEmpty()) {
             System.out.println("You don\'t have any items!");
 
         } else {
-            for (Item item : backpack) {
+            while (iterator.hasNext()) {
+                Item item = (Item) iterator.next();
                 System.out.println(item.getName());
                 System.out.println(item.getDescription() + "\n");
             }
@@ -55,9 +59,13 @@ public class StudentView extends AbstractView {
     }
 
     public int chooseItemFrom(List<Item> itemsStore) {
-        for (Item item : itemsStore) {
+        Iterator iterator = new Iterator<>(itemsStore.toArray());
+
+        while (iterator.hasNext()) {
+            Item item = (Item) iterator.next();
             displayItemInfo(item);
         }
+
         return InputGetter.getIntInputFromConsole("Enter ID of item: ");
     }
 
@@ -86,16 +94,20 @@ public class StudentView extends AbstractView {
     public void displayStudentInfo(List<String> studentInfo, List<Item> items) {
         int NAME_INDEX = 0;
         int BALANCE_INDEX = 1;
+        Iterator<Object> iterator = new Iterator<>(items.toArray());
 
         System.out.println();
         System.out.format("%-1s%-7s%-20s%-10s%-20s",
                 "\n", "Name: ", studentInfo.get(NAME_INDEX), "Balance: ", studentInfo.get(BALANCE_INDEX));
 
         if (!items.isEmpty()) {
-            for (Item item : items) {
+
+            while (iterator.hasNext()) {
+                Item item = (Item) iterator.next();
                 System.out.println();
                 System.out.format("%-30s%-20s%-40s", item.getName(), item.getCategory(), item.getDescription());
             }
+
         } else { displayStudentHaveNotItems(); }
     }
 
