@@ -6,7 +6,12 @@ import com.example.queststore.utils.QueryLogger;
 import org.sqlite.SQLiteConfig;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class DbHelper {
 
@@ -31,9 +36,33 @@ public class DbHelper {
             getPreparedStatement(new StudentItemStatement().createTable()).executeUpdate();
             getPreparedStatement(new ItemStatement().createTable()).executeUpdate();
             getPreparedStatement(new ExperienceLevelStatement().createTable()).executeUpdate();
+            insertFakeDataToDb();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+    }
+
+    private void insertFakeDataToDb() {
+        String fileContent = "";
+        try {
+            fileContent = new String(Files.readAllBytes(Paths.get("InsertFakeData.sql")));
+        } catch (IOException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        List<String> statements = Arrays.asList(fileContent.split(";"));
+        try {
+            openConnection();
+            for (String statement : statements) {
+                getPreparedStatement(statement.trim()).executeUpdate();
+            }
+        } catch (SQLException e) {
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
         }
     }
 
