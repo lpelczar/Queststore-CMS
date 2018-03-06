@@ -16,15 +16,15 @@ public class TeamService {
     private UserView view = new UserView();
     private Map<String, Integer> teamMembersCount;
 
-    public void handleRerollStudentsTeams() {
+    public void handleReshuffleStudentsTeams() {
         List<StudentData> students = dbStudentDataDAO.getAllStudents();
-        List<StudentData> teams = rerollStudentsTeam(students);
+        List<StudentData> teams = reshuffleStudentsTeam(students);
 
         updateDbStudentsTeam(teams);
         dbStudentItemDAO.removeTeamItems();
     }
 
-    private List<StudentData> rerollStudentsTeam(List<StudentData> students) {
+    private List<StudentData> reshuffleStudentsTeam(List<StudentData> students) {
         int numberOfTeams = countNumbersOfTeams(students);
         return assignStudentsToTeams(students, numberOfTeams);
     }

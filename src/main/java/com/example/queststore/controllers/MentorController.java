@@ -57,7 +57,7 @@ public class MentorController extends UserController {
                     studentService.showStudentSummary();
                     break;
                 case 10:
-                    teamService.handleRerollStudentsTeams();
+                    teamService.handleReshuffleStudentsTeams();
                     break;
                 case 11:
                     isAppRunning = false;
