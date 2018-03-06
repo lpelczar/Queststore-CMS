@@ -10,14 +10,27 @@ import com.example.queststore.views.MentorView;
 
 public class MentorController extends UserController {
 
-    private MentorView mentorView = new MentorView();
-    private UserDAO dbUserDAO = new DbUserDAO();
-    private StudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
-    private TeamService teamService = new TeamService();
-    private GroupService groupService = new GroupService();
-    private TaskService taskService = new TaskService();
-    private StudentService studentService = new StudentService();
-    private ItemService itemService = new ItemService();
+    private MentorView mentorView;
+    private UserDAO dbUserDAO;
+    private StudentDataDAO dbStudentDataDAO;
+    private TeamService teamService;
+    private GroupService groupService;
+    private TaskService taskService;
+    private StudentService studentService;
+    private ItemService itemService;
+
+    public MentorController(MentorView mentorView, UserDAO dbUserDAO, StudentDataDAO dbStudentDataDAO,
+                            TeamService teamService, GroupService groupService, TaskService taskService,
+                            StudentService studentService, ItemService itemService) {
+        this.mentorView = mentorView;
+        this.dbUserDAO = dbUserDAO;
+        this.dbStudentDataDAO = dbStudentDataDAO;
+        this.teamService = teamService;
+        this.groupService = groupService;
+        this.taskService = taskService;
+        this.studentService = studentService;
+        this.itemService = itemService;
+    }
 
     public void start() {
         int option;
