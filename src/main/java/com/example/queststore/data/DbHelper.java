@@ -1,10 +1,7 @@
 package com.example.queststore.data;
 
 
-import com.example.queststore.data.statements.GroupStatement;
-import com.example.queststore.data.statements.MentorGroupStatement;
-import com.example.queststore.data.statements.StudentDataStatement;
-import com.example.queststore.data.statements.UserStatement;
+import com.example.queststore.data.statements.*;
 import com.example.queststore.utils.QueryLogger;
 import org.sqlite.SQLiteConfig;
 
@@ -29,6 +26,7 @@ public class DbHelper {
             getPreparedStatement(new StudentDataStatement().createTable()).executeUpdate();
             getPreparedStatement(new GroupStatement().createTable()).executeUpdate();
             getPreparedStatement(new MentorGroupStatement().createTable()).executeUpdate();
+            getPreparedStatement(new StudentTaskStatement().createTable()).executeUpdate();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
