@@ -2,19 +2,15 @@ package com.example.queststore.dao;
 
 
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.PreparedStatementCreator;
-import com.example.queststore.data.statements.UserStatement;
 import com.example.queststore.models.User;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.nio.file.Files;
-import java.sql.Connection;
 import java.util.List;
 
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DbUserDAOTest {
     private UserDAO userDAO;
@@ -25,7 +21,7 @@ class DbUserDAOTest {
     @BeforeEach
     public void setUpConnectionDB() throws Exception {
         Files.deleteIfExists(new File(DATABASE_PATH).toPath());
-        DbHelper.setDatabsePath(DATABASE_PATH);
+        DbHelper.setDatabasePath(DATABASE_PATH);
         new DbHelper().createDatabase();
         userDAO = new DbUserDAO();
 
