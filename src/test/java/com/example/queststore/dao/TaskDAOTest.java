@@ -31,4 +31,14 @@ public class TaskDAOTest {
         Task result = this.taskDAO.getByName(expected.getName());
         assertEquals(expected, result);
     }
+
+    @Test
+    public void whenUpdateThenTaskIsUpdated() {
+        Task task = new Task(1, "Task", 300, "Simple task", "BASIC");
+        this.taskDAO.add(task);
+        task.setPoints(500);
+        task.setDescription("New description");
+        this.taskDAO.update(task);
+        assertEquals(task, this.taskDAO.getByName(task.getName()));
+    }
 }
