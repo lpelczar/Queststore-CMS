@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class GroupDAOTest {
 
@@ -30,5 +31,13 @@ public class GroupDAOTest {
         this.groupDAO.add(expected);
         Group result = this.groupDAO.getByName(expected.getGroupName());
         assertEquals(expected, result);
+    }
+
+    @Test
+    public void whenDeleteThenGroupDeleted() {
+        Group group = new Group(1,"Group1");
+        this.groupDAO.add(group);
+        this.groupDAO.delete(group);
+        assertNull(this.groupDAO.getByName(group.getGroupName()));
     }
 }
