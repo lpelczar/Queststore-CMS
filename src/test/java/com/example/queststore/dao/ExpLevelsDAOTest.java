@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ExpLevelsDAOTest {
 
@@ -34,5 +35,13 @@ public class ExpLevelsDAOTest {
         assertEquals(expLevel.getValue(), result.getValue());
     }
 
+    @Test
+    public void whenDeleteThenExpLevelDeleted() {
+        String expLevelName = "TestName";
+        ExpLevel expLevel = new ExpLevel(expLevelName, 300);
+        this.expLevelsDAO.add(expLevel);
+        this.expLevelsDAO.delete(expLevel.getName());
+        assertNull(this.expLevelsDAO.getByName(expLevel.getName()));
+    }
 
 }
