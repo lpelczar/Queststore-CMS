@@ -28,6 +28,7 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 groups.add(new Group(
+                        resultSet.getInt(GroupEntry.ID),
                         resultSet.getString(GroupEntry.GROUP_NAME)));
             resultSet.close();
             statement.close();

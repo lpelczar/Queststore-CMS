@@ -56,6 +56,7 @@ public class RootController {
         DbHelper dbHelper = new DbHelper();
         if (!dbHelper.isDatabaseFileExists()) {
             dbHelper.createDatabase();
+            dbHelper.runSqlScriptsFromFile("InsertFakeData.sql");
         }
     }
 
