@@ -28,18 +28,15 @@ public class ExpLevelsDAOTest {
 
     @Test
     public void whenAddThenExpLevelIsAddedToDb() {
-        String expLevelName = "TestName";
-        ExpLevel expLevel = new ExpLevel(expLevelName, 300);
-        this.expLevelsDAO.add(expLevel);
-        ExpLevel result = this.expLevelsDAO.getByName(expLevelName);
-        assertEquals(expLevel.getName(), result.getName());
-        assertEquals(expLevel.getValue(), result.getValue());
+        ExpLevel expected = new ExpLevel("TestName", 300);
+        this.expLevelsDAO.add(expected);
+        ExpLevel result = this.expLevelsDAO.getByName(expected.getName());
+        assertEquals(expected, result);
     }
 
     @Test
     public void whenDeleteThenExpLevelDeleted() {
-        String expLevelName = "TestName";
-        ExpLevel expLevel = new ExpLevel(expLevelName, 300);
+        ExpLevel expLevel = new ExpLevel("TestName", 300);
         this.expLevelsDAO.add(expLevel);
         this.expLevelsDAO.delete(expLevel.getName());
         assertNull(this.expLevelsDAO.getByName(expLevel.getName()));
