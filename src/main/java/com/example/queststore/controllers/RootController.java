@@ -2,6 +2,7 @@ package com.example.queststore.controllers;
 
 
 import com.example.queststore.dao.UserDAO;
+import com.example.queststore.data.DbHelper;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.User;
 import com.example.queststore.utils.EmailValidator;
@@ -30,6 +31,7 @@ public class RootController {
 
     public void start() {
         boolean isAppRunning = true;
+        checkDatabaseSetup();
 
         while (isAppRunning) {
             rootView.displayMenu();
@@ -47,6 +49,13 @@ public class RootController {
                 default:
                     rootView.displayWrongInputMessage();
             }
+        }
+    }
+
+    private void checkDatabaseSetup() {
+        DbHelper dbHelper = new DbHelper();
+        if (!dbHelper.isDatabaseFileExists()) {
+            dbHelper.createDatabase();
         }
     }
 

@@ -87,4 +87,15 @@ public class UserStatement {
                 StudentDataEntry.TABLE_NAME + "." + StudentDataEntry.ID_USER +
                 " WHERE " + StudentDataEntry.TABLE_NAME + "." + StudentDataEntry.ID_GROUP + " = ?;";
     }
+
+    public String createTable() {
+        return "CREATE TABLE " + UserEntry.TABLE_NAME + " (" +
+                UserEntry.ID + " INTEGER PRIMARY KEY," +
+                UserEntry.NAME + " TEXT NOT NULL," +
+                UserEntry.LOGIN + " TEXT NOT NULL UNIQUE," +
+                UserEntry.EMAIL + " TEXT NOT NULL UNIQUE," +
+                UserEntry.PASSWORD + " TEXT NOT NULL," +
+                UserEntry.PHONE_NUMBER + " TEXT NOT NULL UNIQUE," +
+                UserEntry.ROLE + " TEXT);" ;
+    }
 }

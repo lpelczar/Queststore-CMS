@@ -1,10 +1,10 @@
 package com.example.queststore.views;
 
+import com.example.queststore.utils.Iterator;
+
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-
-import com.example.queststore.services.Iterator;
 
 abstract class AbstractView {
 
@@ -24,17 +24,17 @@ abstract class AbstractView {
         System.out.flush();
     }
 
-    public void displayEntries(List entries) {
+    public <T> void displayEntries(List<T> entries) {
         showAllEntries(entries);
         displayPressAnyKeyToContinueMessage();
     }
 
-    public void displayEntriesNoInput(List entries) {
+    public <T> void displayEntriesNoInput(List<T> entries) {
         showAllEntries(entries);
     }
 
-    private void showAllEntries(List entries) {
-        Iterator<Object> iterator = new Iterator<>(entries.toArray());
+    private <T> void showAllEntries(List<T> entries) {
+        Iterator<T> iterator = new Iterator<>(entries);
         System.out.println();
         
         if(!entries.isEmpty()) {
