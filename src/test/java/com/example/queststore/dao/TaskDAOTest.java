@@ -38,6 +38,8 @@ public class TaskDAOTest {
         this.taskDAO.add(task);
         task.setPoints(500);
         task.setDescription("New description");
+        task.setName("New name");
+        task.setCategory("New category");
         this.taskDAO.update(task);
         assertEquals(task, this.taskDAO.getByName(task.getName()));
     }

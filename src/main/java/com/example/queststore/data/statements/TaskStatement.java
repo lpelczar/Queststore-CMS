@@ -20,6 +20,8 @@ public class TaskStatement {
 
     public String updateTaskStatement() {
         return "UPDATE " + TaskEntry.TABLE_NAME + " SET " +
+                TaskEntry.ID + " = ?," +
+                TaskEntry.NAME + " = ?," +
                 TaskEntry.POINTS + " = ?," +
                 TaskEntry.DESCRIPTION + " = ?," +
                 TaskEntry.CATEGORY + " = ? WHERE " + TaskEntry.ID + " = ?;";
