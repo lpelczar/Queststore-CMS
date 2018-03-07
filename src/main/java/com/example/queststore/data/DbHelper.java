@@ -15,8 +15,7 @@ import java.util.List;
 
 public class DbHelper {
 
-    private static final String DATABASE_PATH = "queststore.db";
-    private static final String DB_URL = "jdbc:sqlite:queststore.db";
+    private static String DATABASE_PATH = "queststore.db";
     private static final String DRIVER = "org.sqlite.JDBC";
     private Connection connection;
 
@@ -36,7 +35,6 @@ public class DbHelper {
             getPreparedStatement(new StudentItemStatement().createTable()).executeUpdate();
             getPreparedStatement(new ItemStatement().createTable()).executeUpdate();
             getPreparedStatement(new ExperienceLevelStatement().createTable()).executeUpdate();
-            insertFakeDataToDb();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -45,10 +43,10 @@ public class DbHelper {
         }
     }
 
-    private void insertFakeDataToDb() {
+    public void runSqlScriptsFromFile(String filePath) {
         String fileContent = "";
         try {
-            fileContent = new String(Files.readAllBytes(Paths.get("InsertFakeData.sql")));
+            fileContent = new String(Files.readAllBytes(Paths.get(filePath)));
         } catch (IOException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
@@ -72,7 +70,7 @@ public class DbHelper {
             SQLiteConfig config = new SQLiteConfig();
             config.enforceForeignKeys(true);
             Class.forName(DRIVER);
-            connection = DriverManager.getConnection(DB_URL, config.toProperties());
+            connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_PATH, config.toProperties());
         } catch ( Exception e ) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -113,5 +111,9 @@ public class DbHelper {
             closeConnection();
         }
         return false;
+    }
+
+    public static void setDatabasePath(String path) {
+        DATABASE_PATH = path;
     }
 }
