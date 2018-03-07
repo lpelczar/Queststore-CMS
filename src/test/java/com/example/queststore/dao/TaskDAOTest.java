@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -42,5 +43,16 @@ public class TaskDAOTest {
         task.setCategory("New category");
         this.taskDAO.update(task);
         assertEquals(task, this.taskDAO.getByName(task.getName()));
+    }
+
+    @Test
+    public void whenGetAllThenReturnAllElements() {
+        Task task1 = new Task(1, "Task1", 300, "Simple task", "BASIC");
+        Task task2 = new Task(2, "Task2", 350, "Simple2 task", "ADVANCED");
+        this.taskDAO.add(task1);
+        this.taskDAO.add(task2);
+        List<Task> results = this.taskDAO.getAll();
+        assertEquals(task1, results.get(0));
+        assertEquals(task2, results.get(1));
     }
 }
