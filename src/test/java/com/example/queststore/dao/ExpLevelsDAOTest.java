@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -44,4 +45,14 @@ public class ExpLevelsDAOTest {
         assertNull(this.expLevelsDAO.getByName(expLevel.getName()));
     }
 
+    @Test
+    public void whenGetAllThenReturnAllElements() {
+        ExpLevel expLevel1 = new ExpLevel("test1", 300);
+        ExpLevel expLevel2 = new ExpLevel("test2", 350);
+        this.expLevelsDAO.add(expLevel1);
+        this.expLevelsDAO.add(expLevel2);
+        List<ExpLevel> results = this.expLevelsDAO.getAll();
+        assertEquals(expLevel1, results.get(0));
+        assertEquals(expLevel2, results.get(1));
+    }
 }
