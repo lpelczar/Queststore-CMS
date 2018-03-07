@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -39,5 +40,16 @@ public class GroupDAOTest {
         this.groupDAO.add(group);
         this.groupDAO.delete(group);
         assertNull(this.groupDAO.getByName(group.getGroupName()));
+    }
+
+    @Test
+    public void whenGetAllThenReturnAllElements() {
+        Group group1 = new Group(1,"Group1");
+        Group group2 = new Group(2,"Group2");
+        this.groupDAO.add(group1);
+        this.groupDAO.add(group2);
+        List<Group> results = this.groupDAO.getAll();
+        assertEquals(group1, results.get(0));
+        assertEquals(group2, results.get(1));
     }
 }
