@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EmailValidatorTest {
 
-    EmailValidator emailValidator;
+    private EmailValidator emailValidator;
 
     @BeforeEach
     private void createInstance() {
@@ -15,13 +15,13 @@ class EmailValidatorTest {
     }
 
     @Test
-    public void validateFalseTest() {
+    void validateFalseTest() {
         assertFalse(emailValidator.validate("@.com"));
         assertFalse(emailValidator.validate("@@@.@@.pl"));
     }
 
     @Test
-    public void validateTrueTest() {
+    void validateTrueTest() {
         assertTrue(emailValidator.validate("nikodem89.pisal.test@testy.com"));
     }
 }

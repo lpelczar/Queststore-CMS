@@ -13,14 +13,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StudentItemDAOTest {
+class StudentItemDAOTest {
 
     private ItemDAO itemDAO;
     private StudentItemDAO studentItemDAO;
     private UserDAO userDAO;
 
     @BeforeEach
-    public void before() throws IOException {
+    void before() throws IOException {
         String testDbPath = "testDb.db";
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
@@ -31,7 +31,7 @@ public class StudentItemDAOTest {
     }
 
     @Test
-    public void whenAddThenStudentItemIsAddedToDb() {
+    void whenAddThenStudentItemIsAddedToDb() {
         Item item = new Item(1, "Item", 5, "desc", "basic");
         User student = new User(1, "Student", "Student", "student@email.com", "student",
                 "666555666", "Student");

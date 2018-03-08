@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
-    User user;
+
+    private User user;
 
     @BeforeEach
-    public void createInstance() {
+    void createInstance() {
         user = new User(
                 0,
                 "testName",
@@ -22,72 +23,72 @@ class UserTest {
     }
 
     @Test
-    public void getIdTest() {
+    void getIdTest() {
         assertEquals(0, user.getId());
     }
 
     @Test
-    public void getNameTest() {
+    void getNameTest() {
         assertEquals("testName", user.getName());
     }
 
     @Test
-    public void getLoginTest() {
+    void getLoginTest() {
         assertEquals("testLogin", user.getLogin());
     }
 
     @Test
-    public void getEmailTest() {
+    void getEmailTest() {
         assertEquals("testEmail", user.getEmail());
     }
 
     @Test
-    public void getPasswordTest() {
+    void getPasswordTest() {
         assertEquals("testPassword", user.getPassword());
     }
 
     @Test
-    public void getPhoneNumberTest() {
+    void getPhoneNumberTest() {
         assertEquals("testPhoneNumber", user.getPhoneNumber());
     }
 
     @Test
-    public void getRoleTest() {
+    void getRoleTest() {
         assertEquals("testRole", user.getRole());
     }
 
     @Test
-    public void setNameTest() {
+    void setNameTest() {
         user.setName("newNameTest");
         assertEquals("newNameTest", user.getName());
     }
 
     @Test
-    public void setLoginTest() {
+    void setLoginTest() {
         user.setLogin("newLoginTest");
         assertEquals("newLoginTest", user.getLogin());
     }
 
     @Test
-    public void setEmailTest() {
+    void setEmailTest() {
         user.setEmail("newEmailTest");
         assertEquals("newEmailTest", user.getEmail());
     }
 
     @Test
-    public void setPhoneNumberTest() {
+    void setPhoneNumberTest() {
         user.setPhoneNumber("606663119");
         assertEquals("606663119", user.getPhoneNumber());
     }
 
     @Test
-    public void setRoleTest() {
+    void setRoleTest() {
         user.setRole("student");
         assertEquals("student", user.getRole());
     }
 
     @Test
-    public void toStringTest() {
+    void toStringTest() {
         String expectedResult = "Name: testName" +
                 " | Login: testLogin" +
                 " | Email: testEmail" +

@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PhoneValidatorTest {
-    PhoneValidator phoneValidator;
+
+    private PhoneValidator phoneValidator;
 
     @BeforeEach
     private void createInstance() {
@@ -14,12 +15,12 @@ class PhoneValidatorTest {
     }
 
     @Test
-    public void validateFalseTest() {
+    void validateFalseTest() {
         assertFalse(phoneValidator.validate("660662665"));
     }
 
     @Test
-    public void validateTrueTest() {
+    void validateTrueTest() {
         assertTrue(phoneValidator.validate("123-456-789"));
     }
 }

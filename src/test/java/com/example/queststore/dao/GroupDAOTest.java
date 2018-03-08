@@ -13,12 +13,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class GroupDAOTest {
+class GroupDAOTest {
 
     private GroupDAO groupDAO;
 
     @BeforeEach
-    public void before() throws IOException {
+    void before() throws IOException {
         String testDbPath = "testDb.db";
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
@@ -27,7 +27,7 @@ public class GroupDAOTest {
     }
 
     @Test
-    public void whenAddThenGroupIsAddedToDb() {
+    void whenAddThenGroupIsAddedToDb() {
         Group expected = new Group(1,"Group1");
         this.groupDAO.add(expected);
         Group result = this.groupDAO.getByName(expected.getGroupName());
@@ -35,7 +35,7 @@ public class GroupDAOTest {
     }
 
     @Test
-    public void whenDeleteThenGroupDeleted() {
+    void whenDeleteThenGroupDeleted() {
         Group group = new Group(1,"Group1");
         this.groupDAO.add(group);
         this.groupDAO.delete(group);
@@ -43,7 +43,7 @@ public class GroupDAOTest {
     }
 
     @Test
-    public void whenGetAllThenReturnAllElements() {
+    void whenGetAllThenReturnAllElements() {
         Group group1 = new Group(1,"Group1");
         Group group2 = new Group(2,"Group2");
         this.groupDAO.add(group1);

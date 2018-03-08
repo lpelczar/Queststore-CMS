@@ -19,7 +19,7 @@ class UserDAOTest {
     private static final String DATABASE_PATH = "testDb.db";
 
     @BeforeEach
-    public void setUpConnectionDB() throws Exception {
+    void setUpConnectionDB() throws Exception {
         Files.deleteIfExists(new File(DATABASE_PATH).toPath());
         DbHelper.setDatabasePath(DATABASE_PATH);
         new DbHelper().createDatabase();
@@ -47,7 +47,7 @@ class UserDAOTest {
     }
 
     @Test
-    public void addUserToDbTest() {
+    void addUserToDbTest() {
         userDAO.add(user1);
         User result = userDAO.getByLogin(user1.getLogin());
 
@@ -56,7 +56,7 @@ class UserDAOTest {
     }
 
     @Test
-    public void updateUserInDbTest() {
+    void updateUserInDbTest() {
         userDAO.add(user1);
         User userTest = userDAO.getByLogin(user1.getLogin());
 
@@ -69,7 +69,7 @@ class UserDAOTest {
     }
 
     @Test
-    public void deleteUserFromDbTest() {
+    void deleteUserFromDbTest() {
         userDAO.add(user1);
         User userFromDB = userDAO.getByLogin(user1.getLogin());
         userDAO.delete(userFromDB);
@@ -79,7 +79,7 @@ class UserDAOTest {
     }
 
     @Test
-    public void getByIdTest() {
+    void getByIdTest() {
         userDAO.add(user1);
         User result = userDAO.getById(1);
 
@@ -87,7 +87,7 @@ class UserDAOTest {
     }
 
     @Test
-    public void getByLoginAndPasswordTest() {
+    void getByLoginAndPasswordTest() {
         userDAO.add(user1);
         User result = userDAO.getByLoginAndPassword(user1.getLogin(), user1.getPassword());
 
@@ -96,7 +96,7 @@ class UserDAOTest {
     }
 
     @Test
-    public void getByLoginAndRoleTest() {
+    void getByLoginAndRoleTest() {
         userDAO.add(user1);
         User result = userDAO.getByLoginAndRole(user1.getLogin(), user1.getRole());
 
@@ -105,7 +105,7 @@ class UserDAOTest {
     }
 
     @Test
-    public void getByLoginTest() {
+    void getByLoginTest() {
         userDAO.add(user1);
         User result = userDAO.getByLogin(user1.getLogin());
 
@@ -114,7 +114,7 @@ class UserDAOTest {
     }
 
     @Test
-    public void getByEmailTest() {
+    void getByEmailTest() {
         userDAO.add(user1);
         User result = userDAO.getByEmail(user1.getEmail());
 
@@ -123,7 +123,7 @@ class UserDAOTest {
     }
 
     @Test
-    public void getByPhoneNumberTest() {
+    void getByPhoneNumberTest() {
         userDAO.add(user1);
         User result = userDAO.getByPhoneNumber(user1.getPhoneNumber());
 
@@ -132,7 +132,7 @@ class UserDAOTest {
     }
 
     @Test
-    public void getAllByRoleTest() {
+    void getAllByRoleTest() {
         userDAO.add(user1);
         userDAO.add(user2);
         List<User> result = userDAO.getAllByRole("userRole");
@@ -142,7 +142,7 @@ class UserDAOTest {
     }
 
     @Test
-    public void getAllTest() {
+    void getAllTest() {
         userDAO.add(user1);
         userDAO.add(user2);
 
