@@ -13,12 +13,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class ExpLevelsDAOTest {
+class ExpLevelsDAOTest {
 
     private ExpLevelsDAO expLevelsDAO;
 
     @BeforeEach
-    public void before() throws IOException {
+    void before() throws IOException {
         String testDbPath = "testDb.db";
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
@@ -27,7 +27,7 @@ public class ExpLevelsDAOTest {
     }
 
     @Test
-    public void whenAddThenExpLevelIsAddedToDb() {
+    void whenAddThenExpLevelIsAddedToDb() {
         ExpLevel expected = new ExpLevel("TestName", 300);
         this.expLevelsDAO.add(expected);
         ExpLevel result = this.expLevelsDAO.getByName(expected.getName());
@@ -35,7 +35,7 @@ public class ExpLevelsDAOTest {
     }
 
     @Test
-    public void whenDeleteThenExpLevelDeleted() {
+    void whenDeleteThenExpLevelDeleted() {
         ExpLevel expLevel = new ExpLevel("TestName", 300);
         this.expLevelsDAO.add(expLevel);
         this.expLevelsDAO.delete(expLevel.getName());
@@ -43,7 +43,7 @@ public class ExpLevelsDAOTest {
     }
 
     @Test
-    public void whenGetAllThenReturnAllElements() {
+    void whenGetAllThenReturnAllElements() {
         ExpLevel expLevel1 = new ExpLevel("test1", 300);
         ExpLevel expLevel2 = new ExpLevel("test2", 350);
         this.expLevelsDAO.add(expLevel1);

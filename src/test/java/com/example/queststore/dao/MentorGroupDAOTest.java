@@ -14,14 +14,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MentorGroupDAOTest {
+class MentorGroupDAOTest {
 
     private GroupDAO groupDAO;
     private MentorGroupDAO mentorGroupDAO;
     private UserDAO userDAO;
 
     @BeforeEach
-    public void before() throws IOException {
+    void before() throws IOException {
         String testDbPath = "testDb.db";
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
@@ -32,7 +32,7 @@ public class MentorGroupDAOTest {
     }
 
     @Test
-    public void whenAddThenMentorGroupIsAddedToDb() {
+    void whenAddThenMentorGroupIsAddedToDb() {
         Group group1 = new Group(1,"Group1");
         Group group2 = new Group(2,"Group2");
         User mentor = new User(1, "Mentor", "Mentor", "mentor@email.com", "mentor",
@@ -48,7 +48,7 @@ public class MentorGroupDAOTest {
     }
 
     @Test
-    public void whenDeleteThenMentorGroupIsDeleted() {
+    void whenDeleteThenMentorGroupIsDeleted() {
         Group group1 = new Group(1,"Group1");
         User mentor = new User(1, "Mentor", "Mentor", "mentor@email.com", "mentor",
                 "666555666", "Mentor");

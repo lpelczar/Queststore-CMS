@@ -12,12 +12,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TaskDAOTest {
+class TaskDAOTest {
 
     private TaskDAO taskDAO;
 
     @BeforeEach
-    public void before() throws IOException {
+    void before() throws IOException {
         String testDbPath = "testDb.db";
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
@@ -26,7 +26,7 @@ public class TaskDAOTest {
     }
 
     @Test
-    public void whenAddThenTaskIsAddedToDb() {
+    void whenAddThenTaskIsAddedToDb() {
         Task expected = new Task(1, "Task", 300, "Simple task", "BASIC");
         this.taskDAO.add(expected);
         Task result = this.taskDAO.getByName(expected.getName());
@@ -34,7 +34,7 @@ public class TaskDAOTest {
     }
 
     @Test
-    public void whenUpdateThenTaskIsUpdated() {
+    void whenUpdateThenTaskIsUpdated() {
         Task task = new Task(1, "Task", 300, "Simple task", "BASIC");
         this.taskDAO.add(task);
         task.setPoints(500);
@@ -46,7 +46,7 @@ public class TaskDAOTest {
     }
 
     @Test
-    public void whenGetAllThenReturnAllElements() {
+    void whenGetAllThenReturnAllElements() {
         Task task1 = new Task(1, "Task1", 300, "Simple task", "BASIC");
         Task task2 = new Task(2, "Task2", 350, "Simple2 task", "ADVANCED");
         this.taskDAO.add(task1);

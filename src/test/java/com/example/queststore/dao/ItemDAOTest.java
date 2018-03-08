@@ -20,7 +20,7 @@ class ItemDAOTest {
 
 
     @BeforeEach
-    public void setUpConnectionDB() throws Exception {
+    void setUpConnectionDB() throws Exception {
         Files.deleteIfExists(new File(DATABASE_PATH).toPath());
         DbHelper.setDatabasePath(DATABASE_PATH);
         new DbHelper().createDatabase();
@@ -47,7 +47,7 @@ class ItemDAOTest {
 
 
     @Test
-    public void addItemTest() {
+    void addItemTest() {
         itemDAO.addItem(item1);
         Item result = itemDAO.getItemByName(item1.getName());
 
@@ -55,7 +55,7 @@ class ItemDAOTest {
     }
 
     @Test
-    public void updateItemTest() {
+    void updateItemTest() {
         itemDAO.addItem(item1);
 
         item1.setName("changeForTest");
