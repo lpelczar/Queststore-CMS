@@ -82,8 +82,8 @@ public class DbTaskDAO extends DbHelper implements TaskDAO {
     @Override
     public boolean update(Task task) {
         String sqlStatement = taskStatement.updateTaskStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(task.getPoints(), task.getDescription(),
-                task.getCategory(), task.getID()), sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(task.getID(), task.getName(),
+                task.getPoints(), task.getDescription(), task.getCategory(), task.getID()), sqlStatement);
         return update(statement);
     }
 }
