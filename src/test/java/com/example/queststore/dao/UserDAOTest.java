@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class DbUserDAOTest {
+class UserDAOTest {
     private UserDAO userDAO;
     private User user1;
     private User user2;

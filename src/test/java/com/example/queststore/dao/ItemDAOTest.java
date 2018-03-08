@@ -22,7 +22,7 @@ class ItemDAOTest {
     @BeforeEach
     public void setUpConnectionDB() throws Exception {
         Files.deleteIfExists(new File(DATABASE_PATH).toPath());
-        DbHelper.setDatabsePath(DATABASE_PATH);
+        DbHelper.setDatabasePath(DATABASE_PATH);
         new DbHelper().createDatabase();
         studentItemDAO = new DbStudentItemDAO();
         itemDAO = new DbItemDAO();
