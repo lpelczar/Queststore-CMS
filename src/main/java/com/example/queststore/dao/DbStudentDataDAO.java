@@ -20,7 +20,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
     private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
-    public StudentData getStudentDataBy(int student_id) {
+    public StudentData getStudentDataByStudentId(int student_id) {
 
         String sqlStatement = studentDataStatement.getStudentDataById();
         StudentData studentData = null;
@@ -50,7 +50,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
     }
 
     @Override
-    public List<StudentData> getAllStudents() {
+    public List<StudentData> getAllStudentsData() {
         String sqlStatement = studentDataStatement.getAllStudents();
         List<StudentData> students = new ArrayList<>();
         try {
@@ -76,7 +76,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
     }
 
     @Override
-    public List<StudentData> getStudentsInSameTeamBy(String teamName) {
+    public List<StudentData> getStudentsDataByTeamName(String teamName) {
         String sqlStatement = studentDataStatement.getStudentsInSameTeam();
         List<StudentData> studentsTeam = new ArrayList<>();
         try {

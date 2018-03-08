@@ -1,5 +1,7 @@
 package com.example.queststore.models;
 
+import java.util.Objects;
+
 public class StudentData {
 
     private int student_id;
@@ -70,5 +72,24 @@ public class StudentData {
                 "Balance: " + balance + "\n" +
                 "Exp: " + experience;
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StudentData that = (StudentData) o;
+        return student_id == that.student_id &&
+                group_id == that.group_id &&
+                balance == that.balance &&
+                experience == that.experience &&
+                Objects.equals(team_name, that.team_name) &&
+                Objects.equals(level, that.level);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(student_id, group_id, team_name, level, balance, experience);
     }
 }

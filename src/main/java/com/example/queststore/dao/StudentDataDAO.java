@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface StudentDataDAO {
 
-    StudentData getStudentDataBy(int student_id);
-    List<StudentData> getAllStudents();
-    List<StudentData> getStudentsInSameTeamBy(String teamName);
+    StudentData getStudentDataByStudentId(int student_id);
+    List<StudentData> getAllStudentsData();
+    List<StudentData> getStudentsDataByTeamName(String teamName);
     boolean add(StudentData student);
     boolean updateStudentData(StudentData student);
 }

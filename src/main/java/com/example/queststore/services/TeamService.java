@@ -24,7 +24,7 @@ public class TeamService {
     }
 
     public void handleReshuffleStudentsTeams() {
-        List<StudentData> students = studentDataDAO.getAllStudents();
+        List<StudentData> students = studentDataDAO.getAllStudentsData();
         List<StudentData> teams = reshuffleStudentsTeam(students);
 
         updateDbStudentsTeam(teams);

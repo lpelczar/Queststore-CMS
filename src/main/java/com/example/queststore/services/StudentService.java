@@ -34,12 +34,12 @@ public class StudentService {
     }
 
     public void updateStudentBalance(int studentId, int points) {
-        StudentData studentData = studentDataDAO.getStudentDataBy(studentId);
+        StudentData studentData = studentDataDAO.getStudentDataByStudentId(studentId);
         studentData.setBalance(studentData.getBalance() + points);
     }
 
     public void updateStudentExperienceAndLevel(int studentId, int points) {
-        StudentData studentData = studentDataDAO.getStudentDataBy(studentId);
+        StudentData studentData = studentDataDAO.getStudentDataByStudentId(studentId);
         studentData.setExperience(studentData.getExperience() + points);
         studentDataDAO.updateStudentData(studentData);
         updateStudentLevel(studentData);
@@ -70,7 +70,7 @@ public class StudentService {
             for (User user : students) {
                 List<String> studentInfo = new ArrayList<>();
 
-                StudentData student = studentDataDAO.getStudentDataBy(user.getId());
+                StudentData student = studentDataDAO.getStudentDataByStudentId(user.getId());
                 studentInfo.add(user.getName());
                 studentInfo.add(student.getBalance().toString());
 
@@ -99,7 +99,7 @@ public class StudentService {
 
                 if (isStudentAffordToBuy(studentId, price)) {
                     updateStudentBackpack(studentId, item);
-                    StudentData studentData = studentDataDAO.getStudentDataBy(studentId);
+                    StudentData studentData = studentDataDAO.getStudentDataByStudentId(studentId);
                     updateStudentBalance(price, studentData);
 
                 } else { studentView.displayNoMoney(); }
@@ -131,18 +131,18 @@ public class StudentService {
         }
 
     private boolean isStudentAffordToBuy(int studentId, int price) {
-        StudentData studentData = studentDataDAO.getStudentDataBy(studentId);
+        StudentData studentData = studentDataDAO.getStudentDataByStudentId(studentId);
         int studentBalance = studentData.getBalance();
         return studentBalance > price;
     }
 
     public void buyArtifactForTeam(int studentId) {
-        StudentData studentData = studentDataDAO.getStudentDataBy(studentId);
+        StudentData studentData = studentDataDAO.getStudentDataByStudentId(studentId);
         if (studentData.getTeamName().isEmpty()) {
             studentView.displayStudentHaveNoTeamAssignedMessage();
             return;
         }
-        List<StudentData> team = studentDataDAO.getStudentsInSameTeamBy(studentData.getTeamName());
+        List<StudentData> team = studentDataDAO.getStudentsDataByTeamName(studentData.getTeamName());
         Item item = chooseItemToBuy(ItemEntry.EXTRA_ITEM);
 
         if (item != null && team != null) {

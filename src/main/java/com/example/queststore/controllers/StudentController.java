@@ -52,6 +52,6 @@ public class StudentController {
     }
 
     private StudentData getStudentDataBy(int student_id) {
-        return studentDataDAO.getStudentDataBy(student_id);
+        return studentDataDAO.getStudentDataByStudentId(student_id);
     }
 }
