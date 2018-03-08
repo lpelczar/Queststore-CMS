@@ -72,6 +72,11 @@ class StudentDataTest {
     }
 
     @Test
+    void setNegativeIdTest() {
+        assertThrows(IllegalArgumentException.class, () -> studentData.setStudentId(-2));
+    }
+
+    @Test
     void setTeamNameTest() {
         studentData.setTeamName("newTeamName");
         assertEquals("newTeamName", studentData.getTeamName());
