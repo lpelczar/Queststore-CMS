@@ -49,8 +49,8 @@ class ItemDAOTest {
                 "itemCategoryBasic"
         );
 
-        itemDAO.addItem(item1);
-        itemDAO.addItem(item2);
+        itemDAO.add(item1);
+        itemDAO.add(item2);
     }
     
     @Test
@@ -68,7 +68,7 @@ class ItemDAOTest {
         item1.setDescription("descriptionTest");
         item1.setPrice(200);
 
-        itemDAO.updateItem(item1);
+        itemDAO.update(item1);
         Item result = itemDAO.getItemByName(item1.getName());
 
         assertEquals(item1, result);

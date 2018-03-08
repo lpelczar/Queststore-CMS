@@ -37,7 +37,7 @@ class StudentItemDAOTest {
         User student = new User(1, "Student", "Student", "student@email.com", "student",
                 "666555666", "Student");
         this.userDAO.add(student);
-        this.itemDAO.addItem(item);
+        this.itemDAO.add(item);
         this.studentItemDAO.add(student.getId(), item.getID(), 1);
         List<Item> items = this.itemDAO.getItemsByStudentId(student.getId());
         List<Integer> itemsIds = this.studentItemDAO.getStudentItemsIdsBy(student.getId());
@@ -51,7 +51,7 @@ class StudentItemDAOTest {
         User student = new User(1, "Student", "Student", "student@email.com", "student",
                 "666555666", "Student");
         this.userDAO.add(student);
-        this.itemDAO.addItem(item);
+        this.itemDAO.add(item);
         this.studentItemDAO.add(student.getId(), item.getID(), 1);
         this.studentItemDAO.removeTeamItems();
         List<Integer> itemsIds = this.studentItemDAO.getStudentItemsIdsBy(student.getId());

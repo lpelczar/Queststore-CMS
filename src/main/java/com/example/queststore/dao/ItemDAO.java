@@ -11,6 +11,6 @@ public interface ItemDAO {
     List<Item> getAllItems();
     Item getItemByName(String itemName);
     Item getItemById(int id);
-    boolean addItem(Item item);
-    boolean updateItem(Item item);
+    boolean add(Item item);
+    boolean update(Item item);
 }

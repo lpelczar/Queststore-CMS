@@ -35,7 +35,7 @@ public class ItemService {
 
         Item item = new Item(name, price, description, category);
 
-        if (dbItemDAO.addItem(item)) {
+        if (dbItemDAO.add(item)) {
             itemView.displayItemHasBeenAdded();
         } else {
             itemView.displayOperationFailed();
@@ -85,7 +85,7 @@ public class ItemService {
             return;
         }
 
-        boolean isUpdate = itemDAO.updateItem(item);
+        boolean isUpdate = itemDAO.update(item);
         if (isUpdate) {
             itemView.displayItemHasBeenAdded();
 
