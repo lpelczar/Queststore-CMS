@@ -30,6 +30,7 @@ class DbUserDAOTest {
         userDAO = new DbUserDAO();
 
         user1 = new User(
+                1,
                 "userName1",
                 "userLogin1",
                 "userEmail1",
@@ -39,6 +40,7 @@ class DbUserDAOTest {
         );
 
         user2 = new User(
+                2,
                 "userName2",
                 "userLogin2",
                 "userEmail2",
@@ -53,8 +55,7 @@ class DbUserDAOTest {
         userDAO.add(user1);
         User result = userDAO.getByLogin(user1.getLogin());
 
-        assertEquals(user1.getLogin(), result.getLogin());
-        assertEquals(user1.getPhoneNumber(), result.getPhoneNumber());
+        assertEquals(user1, result);
 
     }
 
@@ -68,7 +69,7 @@ class DbUserDAOTest {
 
         User result = userDAO.getByLogin(userTest.getLogin());
 
-        assertEquals(userTest.getName(), result.getName());
+        assertEquals(userTest, result);
     }
 
     @Test
@@ -138,11 +139,10 @@ class DbUserDAOTest {
     public void getAllByRoleTest() {
         userDAO.add(user1);
         userDAO.add(user2);
-
         List<User> result = userDAO.getAllByRole("userRole");
 
-        assertEquals("userName1", result.get(0).getName());
-        assertEquals("userLogin2", result.get(1).getLogin());
+        assertEquals(user1, result.get(0));
+        assertEquals(user2, result.get(1));
     }
 
     @Test
@@ -152,8 +152,7 @@ class DbUserDAOTest {
 
         List<User> result = userDAO.getAll();
 
-        assertEquals("userPhoneNumber1", result.get(0).getPhoneNumber());
-        assertEquals("userPassword2", result.get(1).getPassword());
+        assertEquals(user1, result.get(0));
+        assertEquals(user2, result.get(1));
     }
-
 }
