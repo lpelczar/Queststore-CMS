@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class IntegerCheckerTest {
 
     @Test
-    public void isIntegerFalseTest() {
+    void isIntegerFalseTest() {
         assertFalse(IntegerChecker.isInteger("no"));
         assertFalse(IntegerChecker.isInteger("12no"));
     }
 
     @Test
-    public void isIntegerTrueTest() {
+    void isIntegerTrueTest() {
         assertTrue(IntegerChecker.isInteger("512"));
     }
 }

@@ -186,7 +186,7 @@ public class StudentService {
     }
 
     private boolean isStudentContainItem(int studentId, int itemID) {
-        List<Integer> studentsItems = studentItemDAO.getStudentsItemsBy(studentId);
+        List<Integer> studentsItems = studentItemDAO.getStudentItemsIdsBy(studentId);
         for (int studentItemID : studentsItems) {
             if (itemID == studentItemID) {
                 return true;

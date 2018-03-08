@@ -2,30 +2,26 @@ package com.example.queststore.dao;
 
 
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.PreparedStatementCreator;
-import com.example.queststore.data.statements.UserStatement;
 import com.example.queststore.models.User;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.io.File;
 import java.nio.file.Files;
-import java.sql.Connection;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class DbUserDAOTest {
+class UserDAOTest {
     private UserDAO userDAO;
     private User user1;
     private User user2;
     private static final String DATABASE_PATH = "testDb.db";
 
     @BeforeEach
-    public void setUpConnectionDB() throws Exception {
+    void setUpConnectionDB() throws Exception {
         Files.deleteIfExists(new File(DATABASE_PATH).toPath());
-        DbHelper.setDatabsePath(DATABASE_PATH);
+        DbHelper.setDatabasePath(DATABASE_PATH);
         new DbHelper().createDatabase();
         userDAO = new DbUserDAO();
 
@@ -51,7 +47,7 @@ class DbUserDAOTest {
     }
 
     @Test
-    public void addUserToDbTest() {
+    void addUserToDbTest() {
         userDAO.add(user1);
         User result = userDAO.getByLogin(user1.getLogin());
 
@@ -60,7 +56,7 @@ class DbUserDAOTest {
     }
 
     @Test
-    public void updateUserInDbTest() {
+    void updateUserInDbTest() {
         userDAO.add(user1);
         User userTest = userDAO.getByLogin(user1.getLogin());
 
@@ -73,7 +69,7 @@ class DbUserDAOTest {
     }
 
     @Test
-    public void deleteUserFromDbTest() {
+    void deleteUserFromDbTest() {
         userDAO.add(user1);
         User userFromDB = userDAO.getByLogin(user1.getLogin());
         userDAO.delete(userFromDB);
@@ -83,7 +79,7 @@ class DbUserDAOTest {
     }
 
     @Test
-    public void getByIdTest() {
+    void getByIdTest() {
         userDAO.add(user1);
         User result = userDAO.getById(1);
 
@@ -91,7 +87,7 @@ class DbUserDAOTest {
     }
 
     @Test
-    public void getByLoginAndPasswordTest() {
+    void getByLoginAndPasswordTest() {
         userDAO.add(user1);
         User result = userDAO.getByLoginAndPassword(user1.getLogin(), user1.getPassword());
 
@@ -100,7 +96,7 @@ class DbUserDAOTest {
     }
 
     @Test
-    public void getByLoginAndRoleTest() {
+    void getByLoginAndRoleTest() {
         userDAO.add(user1);
         User result = userDAO.getByLoginAndRole(user1.getLogin(), user1.getRole());
 
@@ -109,7 +105,7 @@ class DbUserDAOTest {
     }
 
     @Test
-    public void getByLoginTest() {
+    void getByLoginTest() {
         userDAO.add(user1);
         User result = userDAO.getByLogin(user1.getLogin());
 
@@ -118,7 +114,7 @@ class DbUserDAOTest {
     }
 
     @Test
-    public void getByEmailTest() {
+    void getByEmailTest() {
         userDAO.add(user1);
         User result = userDAO.getByEmail(user1.getEmail());
 
@@ -127,7 +123,7 @@ class DbUserDAOTest {
     }
 
     @Test
-    public void getByPhoneNumberTest() {
+    void getByPhoneNumberTest() {
         userDAO.add(user1);
         User result = userDAO.getByPhoneNumber(user1.getPhoneNumber());
 
@@ -136,7 +132,7 @@ class DbUserDAOTest {
     }
 
     @Test
-    public void getAllByRoleTest() {
+    void getAllByRoleTest() {
         userDAO.add(user1);
         userDAO.add(user2);
         List<User> result = userDAO.getAllByRole("userRole");
@@ -146,7 +142,7 @@ class DbUserDAOTest {
     }
 
     @Test
-    public void getAllTest() {
+    void getAllTest() {
         userDAO.add(user1);
         userDAO.add(user2);
 
