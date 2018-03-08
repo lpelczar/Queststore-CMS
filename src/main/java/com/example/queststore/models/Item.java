@@ -1,6 +1,8 @@
 package com.example.queststore.models;
 
 
+import java.util.Objects;
+
 public class Item {
     private String name;
     private Integer price;
@@ -62,5 +64,23 @@ public class Item {
                 " | Price: " + price +
                 " | Category: " + category +
                 " | Description: " + description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return ID == item.ID &&
+                Objects.equals(name, item.name) &&
+                Objects.equals(price, item.price) &&
+                Objects.equals(description, item.description) &&
+                Objects.equals(category, item.category);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, price, description, category, ID);
     }
 }
