@@ -84,4 +84,24 @@ class StudentDataDAOTest {
         assertEquals(studentData1, studentsData.get(0));
         assertEquals(studentData2, studentsData.get(1));
     }
+
+    @Test
+    void whenGetStudentsDataByTeamNameThenReturnCorrectData() {
+        User student1 = new User(1, "Student", "Student", "student@email.com", "student",
+                "666555666", "Student");
+        User student2 = new User(2, "Student2", "Student2", "student2@email.com", "student2",
+                "666555626", "Student2");
+        Group group1 = new Group(1,"Group1");
+        StudentData studentData1 = new StudentData(student1.getId(), group1.getId(), "team3", "pro1",
+                14, 31);
+        StudentData studentData2 = new StudentData(student2.getId(), group1.getId(), "team4", "pro2",
+                15, 32);
+        this.userDAO.add(student1);
+        this.userDAO.add(student2);
+        this.groupDAO.add(group1);
+        this.studentDataDAO.add(studentData1);
+        this.studentDataDAO.add(studentData2);
+        List<StudentData> studentsData = this.studentDataDAO.getStudentsDataByTeamName(studentData2.getTeamName());
+        assertEquals(studentData2, studentsData.get(0));
+    }
 }
