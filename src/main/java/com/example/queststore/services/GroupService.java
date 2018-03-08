@@ -179,7 +179,7 @@ public class GroupService {
         if (groupDAO.getByName(groupName) != null) {
             Group group = groupDAO.getByName(groupName);
             User student = userDAO.getByLogin(studentLogin);
-            StudentData studentData = studentDataDAO.getStudentDataBy(student.getId());
+            StudentData studentData = studentDataDAO.getStudentDataByStudentId(student.getId());
             studentData.setGroupId(group.getId());
             boolean isUpdated = studentDataDAO.updateStudentData(studentData);
             if (isUpdated) {
