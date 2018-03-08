@@ -64,10 +64,14 @@ class UserController {
     }
 
     StudentData createStudent(User user) {
-        StudentData student = new StudentData();
-        student.setStudentId(user.getId());
-        return student;
-
+        try {
+            StudentData student = new StudentData();
+            student.setStudentId(user.getId());
+            return student;
+        }
+        catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     public UserDAO getUserDAO() {

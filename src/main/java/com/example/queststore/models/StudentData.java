@@ -52,7 +52,13 @@ public class StudentData {
 
     public Integer getGroupId() { return group_id; }
 
-    public void setStudentId(int studentId) { this.student_id = studentId; }
+    public void setStudentId(int studentId) throws IllegalArgumentException {
+        if (studentId > 0 ) {
+            this.student_id = studentId;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
 
     public void setTeamName(String team_name) { this.team_name = team_name; }
 
