@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MentorGroupDAOTest {
 
@@ -44,5 +45,17 @@ public class MentorGroupDAOTest {
         List<String> groupNames = this.groupDAO.getGroupsNamesByMentorId(mentor.getId());
         assertEquals(group1.getGroupName(), groupNames.get(0));
         assertEquals(group2.getGroupName(), groupNames.get(1));
+    }
+
+    @Test
+    public void whenDeleteThenMentorGroupIsDeleted() {
+        Group group1 = new Group(1,"Group1");
+        User mentor = new User(1, "Mentor", "Mentor", "mentor@email.com", "mentor",
+                "666555666", "Mentor");
+        this.userDAO.add(mentor);
+        this.groupDAO.add(group1);
+        this.mentorGroupDAO.add(group1.getId(), mentor.getId());
+        this.mentorGroupDAO.delete(group1.getId(), mentor.getId());
+        assertTrue(this.groupDAO.getGroupsNamesByMentorId(mentor.getId()).isEmpty());
     }
 }
