@@ -43,4 +43,23 @@ class StudentDataDAOTest {
         StudentData result = this.studentDataDAO.getStudentDataBy(student.getId());
         assertEquals(expected, result);
     }
+
+    @Test
+    void whenUpdateStudentDataThenItIsUpdatedInDb() {
+        User student = new User(1, "Student", "Student", "student@email.com", "student",
+                "666555666", "Student");
+        Group group1 = new Group(1,"Group1");
+        StudentData expected = new StudentData(student.getId(), group1.getId(), "team", "pro",
+                13, 30);
+        this.userDAO.add(student);
+        this.groupDAO.add(group1);
+        this.studentDataDAO.add(expected);
+        expected.setTeamName("New");
+        expected.setLevel("Level");
+        expected.setBalance(234);
+        expected.setExperience(100);
+        this.studentDataDAO.updateStudentData(expected);
+        StudentData result = this.studentDataDAO.getStudentDataBy(student.getId());
+        assertEquals(expected, result);
+    }
 }
