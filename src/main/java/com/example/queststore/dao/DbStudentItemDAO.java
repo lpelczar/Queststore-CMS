@@ -34,7 +34,7 @@ public class DbStudentItemDAO extends DbHelper implements StudentItemDAO {
     }
 
     @Override
-    public List<Integer> getStudentsItemsBy(int studentID) {
+    public List<Integer> getStudentItemsIdsBy(int studentID) {
         String sqlStatement = studentItemStatement.getStudentsItems();
         List<Integer> studentsItems = new ArrayList<>();
 

@@ -39,6 +39,8 @@ class StudentItemDAOTest {
         this.itemDAO.addItem(item);
         this.studentItemDAO.add(student.getId(), item.getID(), 1);
         List<Item> items = this.itemDAO.getItemsByStudentId(student.getId());
+        List<Integer> itemsIds = this.studentItemDAO.getStudentItemsIdsBy(student.getId());
         assertEquals(item, items.get(0));
+        assertEquals((int) itemsIds.get(0), item.getID());
     }
 }
