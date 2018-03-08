@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StudentItemDAOTest {
 
@@ -42,5 +43,18 @@ class StudentItemDAOTest {
         List<Integer> itemsIds = this.studentItemDAO.getStudentItemsIdsBy(student.getId());
         assertEquals(item, items.get(0));
         assertEquals((int) itemsIds.get(0), item.getID());
+    }
+
+    @Test
+    void whenRemoveTeamItemsThenItemsAreRemoved() {
+        Item item = new Item(1, "Item", 5, "desc", "Extra");
+        User student = new User(1, "Student", "Student", "student@email.com", "student",
+                "666555666", "Student");
+        this.userDAO.add(student);
+        this.itemDAO.addItem(item);
+        this.studentItemDAO.add(student.getId(), item.getID(), 1);
+        this.studentItemDAO.removeTeamItems();
+        List<Integer> itemsIds = this.studentItemDAO.getStudentItemsIdsBy(student.getId());
+        assertTrue(itemsIds.isEmpty());
     }
 }
