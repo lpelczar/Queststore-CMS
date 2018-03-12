@@ -21,13 +21,13 @@ class TaskTest {
 
     @Test
     void getIDTest() {
-        assertEquals(1, task.getID());
+        assertEquals(1, task.getId());
     }
 
     @Test
     void setIDTest() {
-        task.setID(7);
-        assertEquals(7, task.getID());
+        task.setId(7);
+        assertEquals(7, task.getId());
     }
 
     @Test

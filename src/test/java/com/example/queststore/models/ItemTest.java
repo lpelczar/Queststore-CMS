@@ -21,13 +21,13 @@ class ItemTest {
 
     @Test
     void getIDTest() {
-        assertEquals(1, item.getID());
+        assertEquals(1, item.getId());
     }
 
     @Test
     void setIDTest() {
-        item.setID(2);
-        assertEquals(2, item.getID());
+        item.setId(2);
+        assertEquals(2, item.getId());
     }
 
     @Test
