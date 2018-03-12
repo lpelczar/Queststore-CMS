@@ -28,11 +28,13 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 groups.add(new Group(
+                        resultSet.getInt(GroupEntry.ID),
                         resultSet.getString(GroupEntry.GROUP_NAME)));
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -44,8 +46,7 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
         String sqlStatement = groupStatement.selectGroupByName();
         Group group = null;
         try {
-            List<Object> params = Collections.singletonList(name);
-            PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+            PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(name), sqlStatement);
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 group = new Group(
@@ -55,6 +56,7 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
             statement.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -67,8 +69,7 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
         String sqlStatement = groupStatement.selectGroupsNamesByMentorId();
         List<String> groupNames = new ArrayList<>();
         try {
-            List<Object> params = Collections.singletonList(mentorID);
-            PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+            PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(mentorID), sqlStatement);
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 groupNames.add(
@@ -77,6 +78,7 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
             statement.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -86,16 +88,15 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
     @Override
     public boolean add(Group group) {
         String sqlStatement = groupStatement.insertGroupStatement();
-        List<Object> params = Collections.singletonList(group.getGroupName());
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(group.getGroupName()),
+                sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean delete(Group group) {
         String sqlStatement = groupStatement.deleteGroupStatement();
-        List<Object> params = Collections.singletonList(group.getId());
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(group.getId()), sqlStatement);
         return update(statement);
     }
 }

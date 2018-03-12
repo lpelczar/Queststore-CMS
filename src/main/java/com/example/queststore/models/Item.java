@@ -1,12 +1,14 @@
 package com.example.queststore.models;
 
 
-public class Item implements Entry {
+import java.util.Objects;
+
+public class Item {
     private String name;
     private Integer price;
     private String description;
     private String category;
-    private int ID;
+    private int id;
 
     public Item(String name, Integer price, String description, String category) {
         this.name = name;
@@ -15,18 +17,14 @@ public class Item implements Entry {
         this.category = category;
     }
 
-    public Item(int ID, String name, Integer price, String description, String category) {
-        this.ID = ID;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.category = category;
-
+    public Item(int id, String name, Integer price, String description, String category) {
+        this(name, price, description, category);
+        this.id = id;
     }
 
-    public int getID() { return ID; }
+    public int getId() { return id; }
 
-    public void setID(int ID) { this.ID = ID; }
+    public void setId(int id) { this.id = id; }
 
     public String getName() {
         return name;
@@ -57,10 +55,28 @@ public class Item implements Entry {
     public void setCategory(String category) { this.category = category; }
 
     public String toString() {
-        return "ID: " + ID +
+        return "id: " + id +
                 " | Name: " + name +
                 " | Price: " + price +
                 " | Category: " + category +
                 " | Description: " + description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id == item.id &&
+                Objects.equals(name, item.name) &&
+                Objects.equals(price, item.price) &&
+                Objects.equals(description, item.description) &&
+                Objects.equals(category, item.category);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, price, description, category, id);
     }
 }

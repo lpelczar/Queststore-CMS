@@ -38,6 +38,7 @@ public class DbTaskDAO extends DbHelper implements TaskDAO {
             statement.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -63,6 +64,7 @@ public class DbTaskDAO extends DbHelper implements TaskDAO {
             statement.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -72,18 +74,16 @@ public class DbTaskDAO extends DbHelper implements TaskDAO {
     @Override
     public boolean add(Task task) {
         String sqlStatement = taskStatement.insertTaskStatement();
-        List<Object> params = Arrays.asList(task.getName(), task.getPoints(), task.getDescription(),
-                task.getCategory());
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(task.getName(), task.getPoints(),
+                task.getDescription(), task.getCategory()), sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean update(Task task) {
         String sqlStatement = taskStatement.updateTaskStatement();
-        List<Object> params = Arrays.asList(task.getPoints(), task.getDescription(),
-                task.getCategory(), task.getID());
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(task.getId(), task.getName(),
+                task.getPoints(), task.getDescription(), task.getCategory(), task.getId()), sqlStatement);
         return update(statement);
     }
 }

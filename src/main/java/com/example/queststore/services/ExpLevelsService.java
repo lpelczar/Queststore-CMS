@@ -1,8 +1,6 @@
 package com.example.queststore.services;
 
-import com.example.queststore.dao.DbExpLevelsDAO;
 import com.example.queststore.dao.ExpLevelsDAO;
-import com.example.queststore.models.Entry;
 import com.example.queststore.models.ExpLevel;
 import com.example.queststore.views.ExpLevelsView;
 
@@ -11,15 +9,20 @@ import java.util.List;
 
 public class ExpLevelsService {
 
-    private ExpLevelsView expLevelsView = new ExpLevelsView();
-    private ExpLevelsDAO dbExpLevelsDAO = new DbExpLevelsDAO();
+    private ExpLevelsView expLevelsView;
+    private ExpLevelsDAO expLevelsDAO;
+
+    public ExpLevelsService(ExpLevelsView expLevelsView, ExpLevelsDAO expLevelsDAO) {
+        this.expLevelsView = expLevelsView;
+        this.expLevelsDAO = expLevelsDAO;
+    }
 
     public void addLevelOfExperience() {
 
         String levelName = expLevelsView.getLevelNameInput();
         int value = expLevelsView.getLevelValueInput();
 
-        if (dbExpLevelsDAO.add(new ExpLevel(levelName, value))) {
+        if (expLevelsDAO.add(new ExpLevel(levelName, value))) {
             expLevelsView.displayLevelSetMessage();
         } else {
             expLevelsView.displayErrorChangingTheValue();
@@ -28,16 +31,16 @@ public class ExpLevelsService {
 
     public void removeLevelOfExperience() {
 
-        List<Entry> levels = new ArrayList<>(dbExpLevelsDAO.getAll());
+        List<ExpLevel> levels = new ArrayList<>(expLevelsDAO.getAll());
         expLevelsView.displayEntriesNoInput(levels);
-        if (dbExpLevelsDAO.getAll().isEmpty()) {
+        if (expLevelsDAO.getAll().isEmpty()) {
             expLevelsView.displayPressAnyKeyToContinueMessage();
             return;
         }
 
         String levelName = expLevelsView.getLevelNameInput();
-        if (dbExpLevelsDAO.getByName(levelName) != null) {
-            if (dbExpLevelsDAO.delete(levelName)) {
+        if (expLevelsDAO.getByName(levelName) != null) {
+            if (expLevelsDAO.delete(levelName)) {
                 expLevelsView.displayLevelDeletedMessage();
             } else {
                 expLevelsView.displayDeleteErrorMessage();
@@ -49,7 +52,7 @@ public class ExpLevelsService {
 
     public void showAllLevelsOfExperience() {
 
-        List<Entry> expLevels = new ArrayList<>(dbExpLevelsDAO.getAll());
+        List<ExpLevel> expLevels = new ArrayList<>(expLevelsDAO.getAll());
         expLevelsView.displayEntries(expLevels);
     }
 }

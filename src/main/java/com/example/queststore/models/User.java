@@ -1,6 +1,8 @@
 package com.example.queststore.models;
 
-public class User implements Entry {
+import java.util.Objects;
+
+public class User {
 
     private int id;
     private String name;
@@ -10,8 +12,7 @@ public class User implements Entry {
     private String phoneNumber;
     private String role;
 
-    public User(int id, String name, String login, String email, String password, String phoneNumber, String role) {
-        this.id = id;
+    public User(String name, String login, String email, String password, String phoneNumber, String role) {
         this.name = name;
         this.login = login;
         this.email = email;
@@ -20,13 +21,9 @@ public class User implements Entry {
         this.role = role;
     }
 
-    public User(String name, String login, String email, String password, String phoneNumber, String role) {
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.role = role;
+    public User(int id, String name, String login, String email, String password, String phoneNumber, String role) {
+        this(name, login, email, password, phoneNumber, role);
+        this.id = id;
     }
 
     public String toString(){
@@ -82,5 +79,25 @@ public class User implements Entry {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(phoneNumber, user.phoneNumber) &&
+                Objects.equals(role, user.role);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, login, email, password, phoneNumber, role);
     }
 }

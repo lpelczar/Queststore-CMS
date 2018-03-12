@@ -2,7 +2,6 @@ package com.example.queststore.services;
 
 import com.example.queststore.dao.*;
 import com.example.queststore.data.contracts.UserEntry;
-import com.example.queststore.models.Entry;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.User;
 import com.example.queststore.views.ItemView;
@@ -12,10 +11,17 @@ import java.util.List;
 
 public class ItemService {
 
-    private ItemView itemView = new ItemView();
-    private ItemDAO dbItemDAO = new DbItemDAO();
-    private UserDAO dbUserDAO = new DbUserDAO();
-    private StudentItemDAO dbStudentItemDAO = new DbStudentItemDAO();
+    private ItemDAO itemDAO;
+    private UserDAO userDAO;
+    private StudentItemDAO studentItemDAO;
+    private ItemView itemView;
+
+    public ItemService(ItemDAO itemDAO, UserDAO userDAO, StudentItemDAO studentItemDAO, ItemView itemView) {
+        this.itemDAO = itemDAO;
+        this.userDAO = userDAO;
+        this.studentItemDAO = studentItemDAO;
+        this.itemView = itemView;
+    }
 
     public void addNewItem() {
         DbItemDAO dbItemDAO = new DbItemDAO();
@@ -29,7 +35,7 @@ public class ItemService {
 
         Item item = new Item(name, price, description, category);
 
-        if (dbItemDAO.addItem(item)) {
+        if (dbItemDAO.add(item)) {
             itemView.displayItemHasBeenAdded();
         } else {
             itemView.displayOperationFailed();
@@ -38,7 +44,7 @@ public class ItemService {
 
     public void editItem() {
         itemView.clearConsole();
-        List<Entry> items = new ArrayList<>(dbItemDAO.getAllItems());
+        List<Item> items = new ArrayList<>(itemDAO.getAllItems());
 
         itemView.displayEntriesNoInput(items);
         if (items.isEmpty()) {
@@ -47,7 +53,7 @@ public class ItemService {
         }
 
         int id = itemView.getIdOfItem();
-        Item item = dbItemDAO.getItemById(id);
+        Item item = itemDAO.getItemById(id);
 
         if (item != null) {
             int updateOption = itemView.askForPropertyToEdit(item);
@@ -79,7 +85,7 @@ public class ItemService {
             return;
         }
 
-        boolean isUpdate = dbItemDAO.updateItem(item);
+        boolean isUpdate = itemDAO.update(item);
         if (isUpdate) {
             itemView.displayItemHasBeenAdded();
 
@@ -89,14 +95,14 @@ public class ItemService {
     }
 
     public void markStudentUsedItem() {
-        List<Entry> students = new ArrayList<>(dbUserDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+        List<User> students = new ArrayList<>(userDAO.getAllByRole(UserEntry.STUDENT_ROLE));
         itemView.displayEntriesNoInput(students);
         if (students.isEmpty()) {
             itemView.displayPressAnyKeyToContinueMessage();
             return;
         }
         String studentLogin = itemView.getStudentLoginToMarkArtifact();
-        if (dbUserDAO.getByLoginAndRole(studentLogin, UserEntry.STUDENT_ROLE) != null) {
+        if (userDAO.getByLoginAndRole(studentLogin, UserEntry.STUDENT_ROLE) != null) {
             choseArtifactToMark(studentLogin);
         } else {
             itemView.displayThereIsNoStudentWithThisLogin();
@@ -104,17 +110,17 @@ public class ItemService {
     }
 
     private void choseArtifactToMark(String studentLogin) {
-        User student = dbUserDAO.getByLogin(studentLogin);
-        List<Entry> items = new ArrayList<>(dbItemDAO.getItemsByStudentId(student.getId()));
+        User student = userDAO.getByLogin(studentLogin);
+        List<Item> items = new ArrayList<>(itemDAO.getItemsByStudentId(student.getId()));
         itemView.displayEntriesNoInput(items);
         if (items.isEmpty()) {
             itemView.displayPressAnyKeyToContinueMessage();
             return;
         }
         String itemName = itemView.getItemNameInput();
-        if (dbItemDAO.getItemByName(itemName) != null) {
-            Item item = dbItemDAO.getItemByName(itemName);
-            if (dbStudentItemDAO.markItemAsUsed(student.getId(), item.getID())) {
+        if (itemDAO.getItemByName(itemName) != null) {
+            Item item = itemDAO.getItemByName(itemName);
+            if (studentItemDAO.markItemAsUsed(student.getId(), item.getId())) {
                 itemView.displayItemHasBeenMarked();
             } else {
                 itemView.displayErrorMarkingItem();

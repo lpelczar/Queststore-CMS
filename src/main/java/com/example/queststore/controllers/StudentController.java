@@ -1,7 +1,6 @@
 package com.example.queststore.controllers;
 
 
-import com.example.queststore.dao.DbStudentDataDAO;
 import com.example.queststore.dao.StudentDataDAO;
 import com.example.queststore.models.StudentData;
 import com.example.queststore.services.StudentService;
@@ -11,21 +10,27 @@ import java.util.InputMismatchException;
 
 public class StudentController {
 
-    private StudentView view = new StudentView();
-    private StudentDataDAO dbStudentDataDAO = new DbStudentDataDAO();
+    private StudentView studentView;
+    private StudentDataDAO studentDataDAO;
+    private StudentService studentService;
+
+    public StudentController(StudentView studentView, StudentDataDAO studentDataDAO, StudentService studentService) {
+        this.studentView = studentView;
+        this.studentDataDAO = studentDataDAO;
+        this.studentService = studentService;
+    }
 
     public void start(int studentId) {
         StudentData student = getStudentDataBy(studentId);
-        StudentService studentService = new StudentService(student);
         boolean isLoopEnd = false;
         int option = 0;
 
         while (!isLoopEnd) {
-            view.displayInfoBar(student.getBalance(), student.getLevel());
-            view.handleStudentMenu();
+            studentView.displayInfoBar(student.getBalance(), student.getLevel());
+            studentView.handleStudentMenu();
 
             try {
-                option = view.askForOption();
+                option = studentView.askForOption();
             }
             catch (InputMismatchException e) {
                 System.err.println("Wrong option!");
@@ -38,7 +43,7 @@ public class StudentController {
                     studentService.buyArtifact(studentId);
                     break;
                 case 3:
-                    studentService.buyArtifactForTeam();
+                    studentService.buyArtifactForTeam(studentId);
                     break;
                 case 4:
                     isLoopEnd = true;
@@ -47,6 +52,6 @@ public class StudentController {
     }
 
     private StudentData getStudentDataBy(int student_id) {
-        return dbStudentDataDAO.getStudentDataBy(student_id);
+        return studentDataDAO.getStudentDataByStudentId(student_id);
     }
 }

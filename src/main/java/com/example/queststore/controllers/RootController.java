@@ -1,8 +1,8 @@
 package com.example.queststore.controllers;
 
 
-import com.example.queststore.dao.DbUserDAO;
 import com.example.queststore.dao.UserDAO;
+import com.example.queststore.data.DbHelper;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.User;
 import com.example.queststore.utils.EmailValidator;
@@ -11,7 +11,7 @@ import com.example.queststore.views.RootView;
 
 public class RootController {
 
-    private UserDAO dbUserDAO;
+    private UserDAO userDAO;
     private RootView rootView;
     private AdminController adminController;
     private StudentController studentController;
@@ -20,18 +20,18 @@ public class RootController {
     private final int MIN_LENGTH = 6;
     private final int MAX_LENGTH = 15;
 
-    public RootController() {
-
-        this.dbUserDAO = new DbUserDAO();
-        this.rootView = new RootView();
-        this.adminController = new AdminController();
-        this.studentController = new StudentController();
-        this.mentorController = new MentorController();
+    public RootController(UserDAO userDAO, RootView rootView, AdminController adminController,
+                          StudentController studentController, MentorController mentorController) {
+        this.userDAO = userDAO;
+        this.rootView = rootView;
+        this.adminController = adminController;
+        this.studentController = studentController;
+        this.mentorController = mentorController;
     }
-
 
     public void start() {
         boolean isAppRunning = true;
+        checkDatabaseSetup();
 
         while (isAppRunning) {
             rootView.displayMenu();
@@ -52,6 +52,15 @@ public class RootController {
         }
     }
 
+    private void checkDatabaseSetup() {
+        DbHelper dbHelper = new DbHelper();
+        if (!dbHelper.isDatabaseFileExists()) {
+            DbHelper.setDatabasePath("queststore.db");
+            dbHelper.createDatabase();
+            dbHelper.runSqlScriptsFromFile("InsertFakeData.sql");
+        }
+    }
+
     private void signIn() {
 
         final String QUIT_OPTION = "q";
@@ -66,7 +75,7 @@ public class RootController {
             if (login.equals(QUIT_OPTION)) return;
             password = rootView.getUserPassword();
             if (password.equals(QUIT_OPTION)) return;
-            user = dbUserDAO.getByLoginAndPassword(login, password);
+            user = userDAO.getByLoginAndPassword(login, password);
 
             if(user != null) {
                 isLoggedIn = true;
@@ -101,23 +110,23 @@ public class RootController {
 
         while(!isUserCreated) {
             login = createUserLogin();
-            if (dbUserDAO.getByLogin(login) != null) {
+            if (userDAO.getByLogin(login) != null) {
                 rootView.displayUserWithThisNameAlreadyExists();
                 return;
             }
             email = createUserEmail();
-            if (dbUserDAO.getByEmail(email) != null) {
+            if (userDAO.getByEmail(email) != null) {
                 rootView.displayUserWithThisEmailAlreadyExists();
                 return;
             }
             phoneNumber = createUserPhoneNumber();
-            if (dbUserDAO.getByPhoneNumber(phoneNumber) != null) {
+            if (userDAO.getByPhoneNumber(phoneNumber) != null) {
                 rootView.displayUserWithThisPhoneNumberAlreadyExists();
                 return;
             }
             password = createUserPassword();
             name = createUserName();
-            this.dbUserDAO.add(new User(name, login, email, password, phoneNumber, UserEntry.BLANK_USER_ROLE));
+            this.userDAO.add(new User(name, login, email, password, phoneNumber, UserEntry.BLANK_USER_ROLE));
             rootView.displayUserCreated(login, name, email, phoneNumber);
             isUserCreated = true;
         }

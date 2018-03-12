@@ -1,6 +1,8 @@
 package com.example.queststore.models;
 
-public class Group implements Entry {
+import java.util.Objects;
+
+public class Group {
 
     private int id;
     private String groupName;
@@ -10,8 +12,8 @@ public class Group implements Entry {
     }
 
     public Group(int id, String name) {
+        this(name);
         this.id = id;
-        this.groupName = name;
     }
 
     public String getGroupName() {
@@ -25,5 +27,20 @@ public class Group implements Entry {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Group group = (Group) o;
+        return id == group.id &&
+                Objects.equals(groupName, group.groupName);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, groupName);
     }
 }

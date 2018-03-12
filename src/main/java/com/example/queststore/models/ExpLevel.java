@@ -1,6 +1,8 @@
 package com.example.queststore.models;
 
-public class ExpLevel implements Entry {
+import java.util.Objects;
+
+public class ExpLevel {
 
     private String name;
     private int value;
@@ -25,5 +27,19 @@ public class ExpLevel implements Entry {
     @Override
     public String toString() {
         return String.format("Level name: %s, Value: %d", name, value);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExpLevel expLevel = (ExpLevel) o;
+        return value == expLevel.value &&
+                Objects.equals(name, expLevel.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, value);
     }
 }

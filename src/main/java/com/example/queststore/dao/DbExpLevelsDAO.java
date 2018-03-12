@@ -36,6 +36,7 @@ public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
             statement.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -45,8 +46,7 @@ public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
     @Override
     public ExpLevel getByName(String levelName) {
         String sqlStatement = expStatement.selectLevelByName();
-        List<Object> params = Collections.singletonList(levelName);
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(levelName), sqlStatement);
         ExpLevel level = null;
         try {
             ResultSet resultSet = query(statement);
@@ -67,16 +67,15 @@ public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
     @Override
     public boolean add(ExpLevel expLevel) {
         String sqlStatement = expStatement.insertLevelStatement();
-        List<Object> params = Arrays.asList(expLevel.getName(), expLevel.getValue());
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(expLevel.getName(), expLevel.getValue()),
+                sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean delete(String levelName) {
         String sqlStatement = expStatement.deleteLevelStatement();
-        List<Object> params = Collections.singletonList(levelName);
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(levelName), sqlStatement);
         return update(statement);
     }
 }

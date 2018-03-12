@@ -20,6 +20,8 @@ public class TaskStatement {
 
     public String updateTaskStatement() {
         return "UPDATE " + TaskEntry.TABLE_NAME + " SET " +
+                TaskEntry.ID + " = ?," +
+                TaskEntry.NAME + " = ?," +
                 TaskEntry.POINTS + " = ?," +
                 TaskEntry.DESCRIPTION + " = ?," +
                 TaskEntry.CATEGORY + " = ? WHERE " + TaskEntry.ID + " = ?;";
@@ -27,5 +29,15 @@ public class TaskStatement {
 
     public String selectAllTasks() {
         return "SELECT * FROM " + TaskEntry.TABLE_NAME + ";" ;
+    }
+
+    public String createTable() {
+        return "CREATE TABLE " + TaskEntry.TABLE_NAME + " (" +
+                TaskEntry.ID + " INTEGER PRIMARY KEY," +
+                TaskEntry.NAME + " TEXT NOT NULL UNIQUE," +
+                TaskEntry.POINTS + " INTEGER NOT NULL," +
+                TaskEntry.DESCRIPTION + " TEXT," +
+                TaskEntry.CATEGORY + " TEXT" +
+                ");" ;
     }
 }

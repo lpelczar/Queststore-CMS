@@ -1,6 +1,8 @@
 package com.example.queststore.data.statements;
 
+import com.example.queststore.data.contracts.GroupEntry;
 import com.example.queststore.data.contracts.StudentDataEntry;
+import com.example.queststore.data.contracts.UserEntry;
 
 public class StudentDataStatement {
 
@@ -37,4 +39,18 @@ public class StudentDataStatement {
         return "SELECT * FROM " + StudentDataEntry.TABLE_NAME + ";";
     }
 
+    public String createTable() {
+        return "CREATE TABLE " + StudentDataEntry.TABLE_NAME + " (" +
+                StudentDataEntry.ID_USER + " INTEGER," +
+                StudentDataEntry.ID_GROUP + " INTEGER DEFAULT 1," +
+                StudentDataEntry.TEAM_NAME + " TEXT," +
+                StudentDataEntry.LEVEL + " TEXT," +
+                StudentDataEntry.BALANCE + " INTEGER," +
+                StudentDataEntry.EXPERIENCE + " INTEGER," +
+                "PRIMARY KEY (" + StudentDataEntry.ID_USER + ", " + StudentDataEntry.ID_GROUP + ")," +
+                "FOREIGN KEY (" + StudentDataEntry.ID_USER + ") REFERENCES " + UserEntry.TABLE_NAME +
+                "(" + UserEntry.ID + ") ON DELETE CASCADE," +
+                "FOREIGN KEY (" + StudentDataEntry.ID_GROUP + ") REFERENCES " + GroupEntry.TABLE_NAME +
+                "(" + GroupEntry.ID + ") ON DELETE SET DEFAULT );" ;
+    }
 }

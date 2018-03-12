@@ -1,6 +1,7 @@
 package com.example.queststore.views;
 
 import com.example.queststore.models.Item;
+import com.example.queststore.utils.Iterator;
 import com.example.queststore.utils.InputGetter;
 
 import java.util.*;
@@ -42,22 +43,27 @@ public class StudentView extends AbstractView {
 
     public void displayStudentBackpack(List<Item> backpack) {
         clearConsole();
+        Iterator<Item> iterator = new Iterator<>(backpack);
+
         if (backpack.isEmpty()) {
             System.out.println("You don\'t have any items!");
 
         } else {
-            for (Item item : backpack) {
-                System.out.println(item.getName());
-                System.out.println(item.getDescription() + "\n");
+            while (iterator.hasNext()) {
+                System.out.println(iterator.next().getName());
+                System.out.println(iterator.next().getDescription() + "\n");
             }
         }
         displayPressAnyKeyToContinueMessage();
     }
 
     public int chooseItemFrom(List<Item> itemsStore) {
-        for (Item item : itemsStore) {
-            displayItemInfo(item);
+        Iterator<Item> iterator = new Iterator<>(itemsStore);
+
+        while (iterator.hasNext()) {
+            displayItemInfo(iterator.next());
         }
+
         return InputGetter.getIntInputFromConsole("Enter ID of item: ");
     }
 
@@ -86,16 +92,20 @@ public class StudentView extends AbstractView {
     public void displayStudentInfo(List<String> studentInfo, List<Item> items) {
         int NAME_INDEX = 0;
         int BALANCE_INDEX = 1;
+        Iterator<Item> iterator = new Iterator<>(items);
 
         System.out.println();
         System.out.format("%-1s%-7s%-20s%-10s%-20s",
                 "\n", "Name: ", studentInfo.get(NAME_INDEX), "Balance: ", studentInfo.get(BALANCE_INDEX));
 
         if (!items.isEmpty()) {
-            for (Item item : items) {
+
+            while (iterator.hasNext()) {
                 System.out.println();
-                System.out.format("%-30s%-20s%-40s", item.getName(), item.getCategory(), item.getDescription());
+                System.out.format("%-30s%-20s%-40s", iterator.next().getName(), iterator.next().getCategory(),
+                        iterator.next().getDescription());
             }
+
         } else { displayStudentHaveNotItems(); }
     }
 
@@ -103,4 +113,8 @@ public class StudentView extends AbstractView {
 
     public void displayNoStudents() { System.out.println("No students for display!"); }
 
+    public void displayStudentHaveNoTeamAssignedMessage() {
+        System.out.println("Student have no team assigned!");
+        displayPressAnyKeyToContinueMessage();
+    }
 }

@@ -20,7 +20,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
     private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
-    public StudentData getStudentDataBy(int student_id) {
+    public StudentData getStudentDataByStudentId(int student_id) {
 
         String sqlStatement = studentDataStatement.getStudentDataById();
         StudentData studentData = null;
@@ -42,6 +42,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
             statement.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -49,7 +50,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
     }
 
     @Override
-    public List<StudentData> getAllStudents() {
+    public List<StudentData> getAllStudentsData() {
         String sqlStatement = studentDataStatement.getAllStudents();
         List<StudentData> students = new ArrayList<>();
         try {
@@ -67,6 +68,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
             resultSet.close();
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -74,7 +76,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
     }
 
     @Override
-    public List<StudentData> getStudentsInSameTeamBy(String teamName) {
+    public List<StudentData> getStudentsDataByTeamName(String teamName) {
         String sqlStatement = studentDataStatement.getStudentsInSameTeam();
         List<StudentData> studentsTeam = new ArrayList<>();
         try {
@@ -92,6 +94,7 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
             }
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -100,18 +103,19 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     public boolean add(StudentData student) {
         String sqlStatement = studentDataStatement.createStudentData();
-        List<Object> params = Arrays.asList(student.getId(), student.getGroupId(), student.getTeamName(),
-                student.getLevel(), student.getBalance(), student.getExperience());
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(student.getId(), student.getGroupId(),
+                student.getTeamName(),student.getLevel(), student.getBalance(), student.getExperience()), sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean updateStudentData(StudentData student) {
-        String sqlStatement = studentDataStatement.updateStudentData();
-        List<Object> params = Arrays.asList(student.getGroupId(), student.getTeamName(),
-                student.getLevel(), student.getBalance(), student.getExperience(), student.getId());
-        PreparedStatement statement = psc.getPreparedStatementBy(params, sqlStatement);
-        return update(statement);
+        if (student != null) {
+            String sqlStatement = studentDataStatement.updateStudentData();
+            PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(student.getGroupId(), student.getTeamName(),
+                    student.getLevel(), student.getBalance(), student.getExperience(), student.getId()), sqlStatement);
+            return update(statement);
+
+        } else { return false; }
     }
 }
