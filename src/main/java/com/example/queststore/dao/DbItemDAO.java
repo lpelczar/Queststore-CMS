@@ -118,7 +118,7 @@ public class DbItemDAO extends DbHelper implements ItemDAO {
     public boolean update(Item item) {
         String sqlStatement = itemStatement.updateQueryStatement();
         PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(item.getName(), item.getDescription(),
-                item.getPrice(), item.getCategory(), item.getID()), sqlStatement);
+                item.getPrice(), item.getCategory(), item.getId()), sqlStatement);
         return update(statement);
     }
 }

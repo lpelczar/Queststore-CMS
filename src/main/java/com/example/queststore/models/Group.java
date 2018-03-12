@@ -12,8 +12,8 @@ public class Group {
     }
 
     public Group(int id, String name) {
+        this(name);
         this.id = id;
-        this.groupName = name;
     }
 
     public String getGroupName() {

@@ -38,11 +38,11 @@ class StudentItemDAOTest {
                 "666555666", "Student");
         this.userDAO.add(student);
         this.itemDAO.add(item);
-        this.studentItemDAO.add(student.getId(), item.getID(), 1);
+        this.studentItemDAO.add(student.getId(), item.getId(), 1);
         List<Item> items = this.itemDAO.getItemsByStudentId(student.getId());
         List<Integer> itemsIds = this.studentItemDAO.getStudentItemsIdsBy(student.getId());
         assertEquals(item, items.get(0));
-        assertEquals((int) itemsIds.get(0), item.getID());
+        assertEquals((int) itemsIds.get(0), item.getId());
     }
 
     @Test
@@ -52,7 +52,7 @@ class StudentItemDAOTest {
                 "666555666", "Student");
         this.userDAO.add(student);
         this.itemDAO.add(item);
-        this.studentItemDAO.add(student.getId(), item.getID(), 1);
+        this.studentItemDAO.add(student.getId(), item.getId(), 1);
         this.studentItemDAO.removeTeamItems();
         List<Integer> itemsIds = this.studentItemDAO.getStudentItemsIdsBy(student.getId());
         assertTrue(itemsIds.isEmpty());

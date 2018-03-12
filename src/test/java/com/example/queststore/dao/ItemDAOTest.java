@@ -119,7 +119,7 @@ class ItemDAOTest {
                 100,
                 100
         );
-        studentItemDAO.add(student1.getId(), item1.getID(), 0);
+        studentItemDAO.add(student1.getId(), item1.getId(), 0);
         List<Item> result = itemDAO.getItemsByStudentId(student1.getId());
 
         assertEquals(item1, result.get(0));

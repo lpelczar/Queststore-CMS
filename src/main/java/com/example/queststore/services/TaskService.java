@@ -126,7 +126,7 @@ public class TaskService {
         if (taskDAO.getByName(taskName) != null) {
             Task task = taskDAO.getByName(taskName);
             User student = userDAO.getByLogin(studentLogin);
-            boolean isAdded = studentTaskDAO.add(student.getId(), task.getID());
+            boolean isAdded = studentTaskDAO.add(student.getId(), task.getId());
             if (isAdded) {
                 taskView.displayTaskConnectionAdded();
                 studentService.updateStudentBalance(student.getId(), task.getPoints());

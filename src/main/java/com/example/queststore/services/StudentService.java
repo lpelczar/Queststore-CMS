@@ -94,7 +94,7 @@ public class StudentService {
 
         if (item != null) {
 
-            if (!isStudentContainItem(studentId, item.getID())) {
+            if (!isStudentContainItem(studentId, item.getId())) {
                 int price = item.getPrice();
 
                 if (isStudentAffordToBuy(studentId, price)) {
@@ -125,7 +125,7 @@ public class StudentService {
 
     private boolean checkIfIdItemInStore(int itemId, List<Item> items) {
         for (Item item : items) {
-            if (itemId == item.getID()) { return true; }
+            if (itemId == item.getId()) { return true; }
             }
             return false;
         }
@@ -147,7 +147,7 @@ public class StudentService {
 
         if (item != null && team != null) {
 
-            if (!isTeamMemberContainItem(team, item.getID())) {
+            if (!isTeamMemberContainItem(team, item.getId())) {
                 int priceForEachStudent = item.getPrice() / team.size();
 
                 if (isTeamAffordToBuy(priceForEachStudent, team)) {
@@ -172,7 +172,7 @@ public class StudentService {
     }
 
     private void updateStudentBackpack(int studentId, Item item) {
-        if (studentItemDAO.add(studentId, item.getID(), StudentItemEntry.IS_NOT_USED_VALUE)) {
+        if (studentItemDAO.add(studentId, item.getId(), StudentItemEntry.IS_NOT_USED_VALUE)) {
             studentView.displayOperationSuccessfullyCompleted();
         } else {
             studentView.displayOperationFailed();

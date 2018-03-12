@@ -120,7 +120,7 @@ public class ItemService {
         String itemName = itemView.getItemNameInput();
         if (itemDAO.getItemByName(itemName) != null) {
             Item item = itemDAO.getItemByName(itemName);
-            if (studentItemDAO.markItemAsUsed(student.getId(), item.getID())) {
+            if (studentItemDAO.markItemAsUsed(student.getId(), item.getId())) {
                 itemView.displayItemHasBeenMarked();
             } else {
                 itemView.displayErrorMarkingItem();

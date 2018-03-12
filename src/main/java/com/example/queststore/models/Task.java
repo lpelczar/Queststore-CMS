@@ -4,19 +4,11 @@ import java.util.Objects;
 
 public class Task {
 
-    private int ID;
+    private int id;
     private String name;
     private int points;
     private String description;
     private String category;
-
-    public Task(int ID, String name, int points, String description, String category) {
-        this.ID = ID;
-        this.name = name;
-        this.points = points;
-        this.description = description;
-        this.category = category;
-    }
 
     public Task(String name, int points, String description, String category) {
         this.name = name;
@@ -25,12 +17,17 @@ public class Task {
         this.category = category;
     }
 
-    public int getID() {
-        return ID;
+    public Task(int id, String name, int points, String description, String category) {
+        this(name, points, description, category);
+        this.id = id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -76,7 +73,7 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return ID == task.ID &&
+        return id == task.id &&
                 points == task.points &&
                 Objects.equals(name, task.name) &&
                 Objects.equals(description, task.description) &&
@@ -86,6 +83,6 @@ public class Task {
     @Override
     public int hashCode() {
 
-        return Objects.hash(ID, name, points, description, category);
+        return Objects.hash(id, name, points, description, category);
     }
 }

@@ -12,8 +12,7 @@ public class User {
     private String phoneNumber;
     private String role;
 
-    public User(int id, String name, String login, String email, String password, String phoneNumber, String role) {
-        this.id = id;
+    public User(String name, String login, String email, String password, String phoneNumber, String role) {
         this.name = name;
         this.login = login;
         this.email = email;
@@ -22,13 +21,9 @@ public class User {
         this.role = role;
     }
 
-    public User(String name, String login, String email, String password, String phoneNumber, String role) {
-        this.name = name;
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.phoneNumber = phoneNumber;
-        this.role = role;
+    public User(int id, String name, String login, String email, String password, String phoneNumber, String role) {
+        this(name, login, email, password, phoneNumber, role);
+        this.id = id;
     }
 
     public String toString(){
