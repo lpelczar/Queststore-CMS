@@ -110,9 +110,12 @@ public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     @Override
     public boolean updateStudentData(StudentData student) {
-        String sqlStatement = studentDataStatement.updateStudentData();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(student.getGroupId(), student.getTeamName(),
-                student.getLevel(), student.getBalance(), student.getExperience(), student.getId()), sqlStatement);
-        return update(statement);
+        if (student != null) {
+            String sqlStatement = studentDataStatement.updateStudentData();
+            PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(student.getGroupId(), student.getTeamName(),
+                    student.getLevel(), student.getBalance(), student.getExperience(), student.getId()), sqlStatement);
+            return update(statement);
+
+        } else { return false; }
     }
 }
