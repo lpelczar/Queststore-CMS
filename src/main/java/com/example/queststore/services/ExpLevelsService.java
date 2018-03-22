@@ -21,13 +21,13 @@ public class ExpLevelsService {
         return expLevelsDAO.add(new ExpLevel(levelName, value));
     }
 
-    public void removeLevelOfExperience() {
+    public boolean removeLevelOfExperience() {
 
         List<ExpLevel> levels = new ArrayList<>(expLevelsDAO.getAll());
         expLevelsView.displayEntriesNoInput(levels);
         if (expLevelsDAO.getAll().isEmpty()) {
             expLevelsView.displayPressAnyKeyToContinueMessage();
-            return;
+            return false;
         }
 
         String levelName = expLevelsView.getLevelNameInput();
@@ -42,9 +42,7 @@ public class ExpLevelsService {
         }
     }
 
-    public void showAllLevelsOfExperience() {
-
-        List<ExpLevel> expLevels = new ArrayList<>(expLevelsDAO.getAll());
-        expLevelsView.displayEntries(expLevels);
+    public List<ExpLevel> getAllLevelsOfExperience() {
+        return new ArrayList<>(expLevelsDAO.getAll());
     }
 }

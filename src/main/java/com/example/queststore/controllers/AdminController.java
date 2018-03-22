@@ -72,7 +72,8 @@ public class AdminController extends UserController {
                     expLevelsService.removeLevelOfExperience();
                     break;
                 case 11:
-                    expLevelsService.showAllLevelsOfExperience();
+                    expLevelsView.displayEntries(expLevelsService.getAllLevelsOfExperience());
+                    expLevelsService.getAllLevelsOfExperience();
                     break;
                 case 12:
                     isAppRunning = false;
