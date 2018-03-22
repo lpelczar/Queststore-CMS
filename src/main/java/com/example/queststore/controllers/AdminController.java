@@ -69,10 +69,25 @@ public class AdminController extends UserController {
                     expLevelsService.addLevelOfExperience(levelName, levelValue);
                     break;
                 case 10:
-                    expLevelsService.removeLevelOfExperience();
+                    expLevelsView.displayEntriesNoInput(expLevelsService.getAllLevelsOfExperience());
+                    if (expLevelsService.getAllLevelsOfExperience().isEmpty()) {
+                        expLevelsView.displayPressAnyKeyToContinueMessage();
+                        break;
+                    }
+                    levelName = expLevelsView.getLevelNameInput();
+                    if (levelName != null){
+                        if (expLevelsService.removeLevelOfExperience(levelName)) {
+                            expLevelsView.displayLevelDeletedMessage();
+                        } else {
+                            expLevelsView.displayDeleteErrorMessage();
+                        }
+                    } else {
+                        expLevelsView.displayThereIsNoLevelWithThisNameMessage();
+                    }
                     break;
                 case 11:
-                    expLevelsService.showAllLevelsOfExperience();
+                    expLevelsView.displayEntries(expLevelsService.getAllLevelsOfExperience());
+                    expLevelsService.getAllLevelsOfExperience();
                     break;
                 case 12:
                     isAppRunning = false;
