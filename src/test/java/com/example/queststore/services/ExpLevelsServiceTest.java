@@ -67,6 +67,7 @@ class ExpLevelsServiceTest {
         boolean actual = service.removeLevelOfExperience("test");
         Assertions.assertTrue(actual);
     }
+
     @Test
     void testGetSingleLevelOfExperience() {
         DbExpLevelsDAO testDao = new DbExpLevelsDAO();
@@ -77,6 +78,28 @@ class ExpLevelsServiceTest {
 
         List<ExpLevel> levels = service.getAllLevelsOfExperience();
         Assertions.assertEquals("test3", levels.get(1).getName());
+    }
 
+    @Test
+    void testGetAllLevelsOfExperience() {
+        DbExpLevelsDAO testDao = new DbExpLevelsDAO();
+        ExpLevelsService service = new ExpLevelsService(mockView, testDao);
+
+        service.addLevelOfExperience("test1", 1);
+        service.addLevelOfExperience("test2", 2);
+        service.addLevelOfExperience("test3", 3);
+
+        List<ExpLevel> actualLevels = service.getAllLevelsOfExperience();
+        List<ExpLevel> expectedLevels = new ArrayList<>();
+
+        ExpLevel lvl1 = new ExpLevel("test1", 1);
+        ExpLevel lvl2 = new ExpLevel("test2", 2);
+        ExpLevel lvl3 = new ExpLevel("test3", 3);
+
+        expectedLevels.add(lvl1);
+        expectedLevels.add(lvl2);
+        expectedLevels.add(lvl3);
+
+        Assertions.assertArrayEquals(new List[]{expectedLevels}, new List[]{actualLevels});
     }
 }
