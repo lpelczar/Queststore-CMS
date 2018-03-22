@@ -83,7 +83,6 @@ public class DbUserDAO extends DbHelper implements UserDAO {
     }
 
     public User getByLoginAndRole(String login, String role) {
-
         String sqlStatement = userStatement.selectUserByLoginAndRole();
         PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(login, role), sqlStatement);
         return getUser(statement);

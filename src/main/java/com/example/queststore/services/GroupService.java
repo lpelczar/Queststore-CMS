@@ -30,52 +30,16 @@ public class GroupService {
         this.studentDataDAO = studentDataDAO;
     }
 
-    public void createGroup() {
-
-        String name = groupView.getGroupNameInput();
-        Group group = new Group(name);
-        if (groupDAO.add(group)) {
-            groupView.displayGroupAdded();
-        } else {
-            groupView.displayGroupWithThisNameAlreadyExists();
-        }
+    public boolean createGroup(String name) {
+        return groupDAO.add(new Group(name));
     }
 
-    public void assignMentorToGroup() {
-        List<User> mentors = new ArrayList<>(userDAO.getAllByRole(UserEntry.MENTOR_ROLE));
-        groupView.displayEntriesNoInput(mentors);
-        if (mentors.isEmpty()) {
-            groupView.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String mentorLogin = mentorView.getMentorLoginToAssignGroup();
-        if (userDAO.getByLoginAndRole(mentorLogin, UserEntry.MENTOR_ROLE) != null) {
-            choseGroupAndAssignToMentor(mentorLogin);
-        } else {
-            mentorView.displayThereIsNoMentorWithThisLogin();
-        }
+    public boolean verifyMentorExists(String mentorLogin) {
+        return userDAO.getByLoginAndRole(mentorLogin, UserEntry.MENTOR_ROLE) != null;
     }
 
-    private void choseGroupAndAssignToMentor(String mentorLogin) {
-        List<Group> groups = new ArrayList<>(groupDAO.getAll());
-        groupView.displayEntriesNoInput(groups);
-        if (groups.isEmpty()) {
-            groupView.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-        String groupName = groupView.getGroupNameInput();
-        if (groupDAO.getByName(groupName) != null) {
-            Group group = groupDAO.getByName(groupName);
-            User mentor = userDAO.getByLogin(mentorLogin);
-            boolean isAdded = mentorGroupDAO.add(group.getId(), mentor.getId());
-            if (isAdded) {
-                groupView.displayGroupConnectionAdded();
-            } else {
-                groupView.displayErrorAddingGroupConnection();
-            }
-        } else {
-            groupView.displayThereIsNoGroupWithThisName();
-        }
+    public List<Group> getAllGroups() {
+        return new ArrayList<>(groupDAO.getAll());
     }
 
     public void revokeMentorFromGroup() {
