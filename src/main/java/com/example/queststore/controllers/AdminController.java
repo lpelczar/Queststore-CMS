@@ -57,27 +57,10 @@ public class AdminController extends UserController {
                     promoteBlankUser();
                     break;
                 case 2:
-                    String name = groupView.getGroupNameInput();
-                    if (groupService.createGroup(name)) {
-                        groupView.displayGroupAdded();
-                    } else {
-                        groupView.displayGroupWithThisNameAlreadyExists();
-                    }
+                    createGroup();
                     break;
                 case 3:
-                    List<User> mentors = new ArrayList<>(userDAO.getAllByRole(UserEntry.MENTOR_ROLE));
-                    groupView.displayEntriesNoInput(mentors);
-                    if (mentors.isEmpty()) {
-                        groupView.displayPressAnyKeyToContinueMessage();
-                        break;
-                    }
-
-                    String mentorLogin = mentorView.getMentorLoginToAssignGroup();
-                    if (groupService.verifyMentorExists(mentorLogin)) {
-                        chooseGroupAndAssignToMentor(mentorLogin);
-                    } else {
-                        mentorView.displayThereIsNoMentorWithThisLogin();
-                    }
+                    chooseMentorForGroupAssignment();
                     break;
                 case 4:
                     groupService.revokeMentorFromGroup();
@@ -95,33 +78,42 @@ public class AdminController extends UserController {
                     mentorService.showMentorProfileAndHisGroups();
                     break;
                 case 9:
-                    String levelName = expLevelsView.getLevelNameInput();
-                    int levelValue = expLevelsView.getLevelValueInput();
-                    expLevelsService.addLevelOfExperience(levelName, levelValue);
+                    createNewLevelOfExperience();
                     break;
                 case 10:
-                    expLevelsView.displayEntriesNoInput(expLevelsService.getAllLevelsOfExperience());
-                    if (expLevelsService.getAllLevelsOfExperience().isEmpty()) {
-                        expLevelsView.displayPressAnyKeyToContinueMessage();
-                        break;
-                    }
-                    levelName = expLevelsView.getLevelNameInput();
-                    if (levelName != null){
-                        if (expLevelsService.removeLevelOfExperience(levelName)) {
-                            expLevelsView.displayLevelDeletedMessage();
-                        } else {
-                            expLevelsView.displayDeleteErrorMessage();
-                        }
-                    } else {
-                        expLevelsView.displayThereIsNoLevelWithThisNameMessage();
-                    }
+                    deleteLevelOfExperience();
+                    break;
                 case 11:
-                    expLevelsView.displayEntries(expLevelsService.getAllLevelsOfExperience());
-                    expLevelsService.getAllLevelsOfExperience();
+                    showLevelsOfExperience();
                     break;
                 case 12:
                     isAppRunning = false;
             }
+        }
+    }
+//  2
+    private void createGroup() {
+        String name = groupView.getGroupNameInput();
+        if (groupService.createGroup(name)) {
+            groupView.displayGroupAdded();
+        } else {
+            groupView.displayGroupWithThisNameAlreadyExists();
+        }
+    }
+//  3
+    private void chooseMentorForGroupAssignment() {
+        List<User> mentors = new ArrayList<>(userDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+        groupView.displayEntriesNoInput(mentors);
+        if (mentors.isEmpty()) {
+            groupView.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+
+        String mentorLogin = mentorView.getMentorLoginToAssignGroup();
+        if (groupService.verifyMentorExists(mentorLogin)) {
+            chooseGroupAndAssignToMentor(mentorLogin);
+        } else {
+            mentorView.displayThereIsNoMentorWithThisLogin();
         }
     }
 
@@ -147,6 +139,39 @@ public class AdminController extends UserController {
             groupView.displayThereIsNoGroupWithThisName();
         }
     }
+
+//  9
+    private void createNewLevelOfExperience() {
+        String levelName = expLevelsView.getLevelNameInput();
+        int levelValue = expLevelsView.getLevelValueInput();
+        expLevelsService.addLevelOfExperience(levelName, levelValue);
+    }
+
+//  10
+    private void deleteLevelOfExperience() {
+        expLevelsView.displayEntriesNoInput(expLevelsService.getAllLevelsOfExperience());
+        if (expLevelsService.getAllLevelsOfExperience().isEmpty()) {
+            expLevelsView.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+        String levelName = expLevelsView.getLevelNameInput();
+        if (levelName != null){
+            if (expLevelsService.removeLevelOfExperience(levelName)) {
+                expLevelsView.displayLevelDeletedMessage();
+            } else {
+                expLevelsView.displayDeleteErrorMessage();
+            }
+        } else {
+            expLevelsView.displayThereIsNoLevelWithThisNameMessage();
+        }
+    }
+
+//  11
+    private void showLevelsOfExperience() {
+        expLevelsView.displayEntries(expLevelsService.getAllLevelsOfExperience());
+        expLevelsService.getAllLevelsOfExperience();
+    }
+
 }
 
 

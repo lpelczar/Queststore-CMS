@@ -3,6 +3,7 @@ package com.example.queststore.services;
 import com.example.queststore.dao.*;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.models.Group;
+import com.example.queststore.models.User;
 import com.example.queststore.views.GroupView;
 import com.example.queststore.views.MentorView;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
@@ -29,8 +30,6 @@ class GroupServiceTest {
     @Mock
     private MentorView mockMentorView;
 
-    @Mock
-    private GroupDAO mockGroupDAO;
 
     @Mock
     private UserDAO mockUserDAO;
@@ -60,7 +59,7 @@ class GroupServiceTest {
 
     @AfterEach
     void tearDown() throws IOException {
-        Files.deleteIfExists(new File(DbHelper.getDatabasePath()).toPath());
+//        Files.deleteIfExists(new File(DbHelper.getDatabasePath()).toPath());
     }
 
     @Test
@@ -83,5 +82,16 @@ class GroupServiceTest {
         service.createGroup("test 2");
 
         Assertions.assertEquals("test 2", testDao.getByName("test 2").getGroupName());
+    }
+
+    @Test
+    void testIfMentorExists() {
+        testDao = new DbGroupDAO();
+        DbUserDAO userDAO = new DbUserDAO();
+
+        service = new GroupService(mockGroupView, mockMentorView, testDao,
+                userDAO, mockMentorGroupDAO, mockStudentDataDAO);
+        userDAO.add(new User(1, "1", "login", "1", "1", "1", "Mentor"));
+        Assertions.assertTrue(service.verifyMentorExists("login"));
     }
 }
