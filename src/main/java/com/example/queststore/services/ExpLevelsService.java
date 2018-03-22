@@ -1,5 +1,6 @@
 package com.example.queststore.services;
 
+import com.example.queststore.dao.DbExpLevelsDAO;
 import com.example.queststore.dao.ExpLevelsDAO;
 import com.example.queststore.models.ExpLevel;
 import com.example.queststore.views.ExpLevelsView;
@@ -17,16 +18,8 @@ public class ExpLevelsService {
         this.expLevelsDAO = expLevelsDAO;
     }
 
-    public void addLevelOfExperience() {
-
-        String levelName = expLevelsView.getLevelNameInput();
-        int value = expLevelsView.getLevelValueInput();
-
-        if (expLevelsDAO.add(new ExpLevel(levelName, value))) {
-            expLevelsView.displayLevelSetMessage();
-        } else {
-            expLevelsView.displayErrorChangingTheValue();
-        }
+    public boolean addLevelOfExperience(String levelName, int value) {
+        return expLevelsDAO.add(new ExpLevel(levelName, value));
     }
 
     public void removeLevelOfExperience() {

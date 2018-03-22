@@ -116,4 +116,5 @@ public class DbHelper {
     public static void setDatabasePath(String path) {
         DATABASE_PATH = path;
     }
+    public static String getDatabasePath() { return DATABASE_PATH; }
 }
