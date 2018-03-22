@@ -2,6 +2,7 @@ package com.example.queststore.services;
 
 import com.example.queststore.dao.DbExpLevelsDAO;
 import com.example.queststore.data.DbHelper;
+import com.example.queststore.models.ExpLevel;
 import com.example.queststore.views.ExpLevelsView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -13,6 +14,8 @@ import org.mockito.MockitoAnnotations;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.Mockito.when;
 
@@ -41,7 +44,7 @@ class ExpLevelsServiceTest {
     }
 
     @Test
-    void testIfAddLevelOfExperienceCompletes() { // Naming convention?
+    void testIfAddLevelOfExperienceCompletes() {
         when(mockView.getLevelNameInput()).thenReturn("test");
         when(mockView.getLevelValueInput()).thenReturn(1);
 
@@ -58,10 +61,22 @@ class ExpLevelsServiceTest {
         when(mockView.getLevelValueInput()).thenReturn(1);
 
         DbExpLevelsDAO testDao = new DbExpLevelsDAO();
-
         ExpLevelsService service = new ExpLevelsService(mockView, testDao);
+
         service.addLevelOfExperience("test", 1);
         boolean actual = service.removeLevelOfExperience("test");
         Assertions.assertTrue(actual);
+    }
+    @Test
+    void testGetSingleLevelOfExperience() {
+        DbExpLevelsDAO testDao = new DbExpLevelsDAO();
+        ExpLevelsService service = new ExpLevelsService(mockView, testDao);
+
+        service.addLevelOfExperience("test1", 1);
+        service.addLevelOfExperience("test3", 3);
+
+        List<ExpLevel> levels = service.getAllLevelsOfExperience();
+        Assertions.assertEquals("test3", levels.get(1).getName());
+
     }
 }

@@ -25,7 +25,6 @@ public class ExpLevelsService {
         return expLevelsDAO.delete(levelName);
     }
 
-
     public List<ExpLevel> getAllLevelsOfExperience() {
         return new ArrayList<>(expLevelsDAO.getAll());
     }
