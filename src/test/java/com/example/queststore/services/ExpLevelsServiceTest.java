@@ -17,12 +17,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-
 class ExpLevelsServiceTest {
-
-    @Mock
-    private ExpLevelsView mockView;
 
     @BeforeEach
     void setUp() {
@@ -45,33 +40,28 @@ class ExpLevelsServiceTest {
 
     @Test
     void testIfAddLevelOfExperienceCompletes() {
-        when(mockView.getLevelNameInput()).thenReturn("test");
-        when(mockView.getLevelValueInput()).thenReturn(1);
-
         DbExpLevelsDAO testDao = new DbExpLevelsDAO();
 
-        ExpLevelsService service = new ExpLevelsService(mockView, testDao);
-        boolean actual = service.addLevelOfExperience(mockView.getLevelNameInput(), mockView.getLevelValueInput());
+        ExpLevelsService service = new ExpLevelsService(testDao);
+        boolean actual = service.addLevelOfExperience("test", 1);
         Assertions.assertTrue(actual);
     }
 
     @Test
     void testIfRemoveLevelOfExperienceCompletes() {
-        when(mockView.getLevelNameInput()).thenReturn("test");
-        when(mockView.getLevelValueInput()).thenReturn(1);
-
         DbExpLevelsDAO testDao = new DbExpLevelsDAO();
-        ExpLevelsService service = new ExpLevelsService(mockView, testDao);
+        ExpLevelsService service = new ExpLevelsService(testDao);
 
         service.addLevelOfExperience("test", 1);
         boolean actual = service.removeLevelOfExperience("test");
         Assertions.assertTrue(actual);
     }
 
+
     @Test
     void testGetSingleLevelOfExperience() {
         DbExpLevelsDAO testDao = new DbExpLevelsDAO();
-        ExpLevelsService service = new ExpLevelsService(mockView, testDao);
+        ExpLevelsService service = new ExpLevelsService(testDao);
 
         service.addLevelOfExperience("test1", 1);
         service.addLevelOfExperience("test3", 3);
@@ -83,7 +73,7 @@ class ExpLevelsServiceTest {
     @Test
     void testGetAllLevelsOfExperience() {
         DbExpLevelsDAO testDao = new DbExpLevelsDAO();
-        ExpLevelsService service = new ExpLevelsService(mockView, testDao);
+        ExpLevelsService service = new ExpLevelsService(testDao);
 
         service.addLevelOfExperience("test1", 1);
         service.addLevelOfExperience("test2", 2);
@@ -102,4 +92,5 @@ class ExpLevelsServiceTest {
 
         Assertions.assertArrayEquals(new List[]{expectedLevels}, new List[]{actualLevels});
     }
+
 }
