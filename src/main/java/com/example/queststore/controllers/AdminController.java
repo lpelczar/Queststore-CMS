@@ -6,6 +6,7 @@ import com.example.queststore.services.ExpLevelsService;
 import com.example.queststore.services.GroupService;
 import com.example.queststore.services.MentorService;
 import com.example.queststore.views.AdminView;
+import com.example.queststore.views.ExpLevelsView;
 import com.example.queststore.views.UserView;
 
 public class AdminController extends UserController {
@@ -14,6 +15,7 @@ public class AdminController extends UserController {
     private GroupService groupService;
     private ExpLevelsService expLevelsService;
     private MentorService mentorService;
+    private ExpLevelsView expLevelsView;
 
     public AdminController(UserDAO userDAO, UserView userView, StudentDataDAO studentDataDAO, AdminView adminView,
                            GroupService groupService, ExpLevelsService expLevelsService, MentorService mentorService) {
@@ -22,6 +24,8 @@ public class AdminController extends UserController {
         this.groupService = groupService;
         this.expLevelsService = expLevelsService;
         this.mentorService = mentorService;
+        this.expLevelsView = new ExpLevelsView();
+
     }
 
     public void start() {
@@ -60,7 +64,9 @@ public class AdminController extends UserController {
                     mentorService.showMentorProfileAndHisGroups();
                     break;
                 case 9:
-                    expLevelsService.addLevelOfExperience();
+                    String levelName = expLevelsView.getLevelNameInput();
+                    int levelValue = expLevelsView.getLevelValueInput();
+                    expLevelsService.addLevelOfExperience(levelName, levelValue);
                     break;
                 case 10:
                     expLevelsService.removeLevelOfExperience();
