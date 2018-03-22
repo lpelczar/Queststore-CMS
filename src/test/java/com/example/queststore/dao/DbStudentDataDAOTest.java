@@ -50,7 +50,6 @@ class DbStudentDataDAOTest {
         StudentData retrieved = studentDataDao.getStudentDataByStudentId(expected.getId());
 
         assertEquals(expected, retrieved);
-
     }
 
     @Test
@@ -81,7 +80,26 @@ class DbStudentDataDAOTest {
         List<StudentData> current = studentDataDao.getAllStudentsData();
 
         assertFalse(expected.equals(current));
+    }
 
+    @Test
+    public void nonExistentStudentDataUpdateShouldFail() {
+
+        GroupDAO groupDao = new DbGroupDAO();
+        UserDAO userDao = new DbUserDAO();
+        StudentDataDAO studentDataDao = new DbStudentDataDAO();
+
+        Group group = new Group(1, "test");
+        groupDao.add(group);
+
+        int userId = 1;
+        User user = new User(userId, "name", "login", "email", "password", "01234", "role");
+        userDao.add(user);
+
+        StudentData studentData = new StudentData();
+        studentData.setStudentId(userId);
+
+        assertFalse(studentDataDao.updateStudentData(studentData));
     }
 
 }
