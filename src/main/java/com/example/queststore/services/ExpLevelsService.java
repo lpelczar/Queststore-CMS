@@ -1,6 +1,5 @@
 package com.example.queststore.services;
 
-import com.example.queststore.dao.DbExpLevelsDAO;
 import com.example.queststore.dao.ExpLevelsDAO;
 import com.example.queststore.models.ExpLevel;
 import com.example.queststore.views.ExpLevelsView;
@@ -22,30 +21,12 @@ public class ExpLevelsService {
         return expLevelsDAO.add(new ExpLevel(levelName, value));
     }
 
-    public void removeLevelOfExperience() {
-
-        List<ExpLevel> levels = new ArrayList<>(expLevelsDAO.getAll());
-        expLevelsView.displayEntriesNoInput(levels);
-        if (expLevelsDAO.getAll().isEmpty()) {
-            expLevelsView.displayPressAnyKeyToContinueMessage();
-            return;
-        }
-
-        String levelName = expLevelsView.getLevelNameInput();
-        if (expLevelsDAO.getByName(levelName) != null) {
-            if (expLevelsDAO.delete(levelName)) {
-                expLevelsView.displayLevelDeletedMessage();
-            } else {
-                expLevelsView.displayDeleteErrorMessage();
-            }
-        } else {
-            expLevelsView.displayThereIsNoLevelWithThisNameMessage();
-        }
+    public boolean removeLevelOfExperience(String levelName) {
+        return expLevelsDAO.delete(levelName);
     }
 
-    public void showAllLevelsOfExperience() {
 
-        List<ExpLevel> expLevels = new ArrayList<>(expLevelsDAO.getAll());
-        expLevelsView.displayEntries(expLevels);
+    public List<ExpLevel> getAllLevelsOfExperience() {
+        return new ArrayList<>(expLevelsDAO.getAll());
     }
 }
