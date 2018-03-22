@@ -3,13 +3,10 @@ package com.example.queststore.services;
 import com.example.queststore.dao.DbExpLevelsDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.models.ExpLevel;
-import com.example.queststore.views.ExpLevelsView;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,11 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ExpLevelsServiceTest {
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @AfterEach
     void tearDown() throws IOException {
@@ -92,5 +84,4 @@ class ExpLevelsServiceTest {
 
         Assertions.assertArrayEquals(new List[]{expectedLevels}, new List[]{actualLevels});
     }
-
 }
