@@ -41,8 +41,8 @@ class ExpLevelsServiceTest {
     }
 
     @Test
-    void testAddLevelOfExperience() {
-        when(mockView.getLevelNameInput()).thenReturn("Mock name");
+    void testIfAddLevelOfExperienceCompletes() { // Naming convention?
+        when(mockView.getLevelNameInput()).thenReturn("test");
         when(mockView.getLevelValueInput()).thenReturn(1);
 
         DbExpLevelsDAO testDao = new DbExpLevelsDAO();
