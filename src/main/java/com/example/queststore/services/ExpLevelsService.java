@@ -17,16 +17,8 @@ public class ExpLevelsService {
         this.expLevelsDAO = expLevelsDAO;
     }
 
-    public void addLevelOfExperience() {
-
-        String levelName = expLevelsView.getLevelNameInput();
-        int value = expLevelsView.getLevelValueInput();
-
-        if (expLevelsDAO.add(new ExpLevel(levelName, value))) {
-            expLevelsView.displayLevelSetMessage();
-        } else {
-            expLevelsView.displayErrorChangingTheValue();
-        }
+    public boolean addLevelOfExperience(String levelName, int value) {
+        return expLevelsDAO.add(new ExpLevel(levelName, value));
     }
 
     public void removeLevelOfExperience() {
