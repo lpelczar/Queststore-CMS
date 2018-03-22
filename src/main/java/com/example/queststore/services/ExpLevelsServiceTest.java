@@ -27,7 +27,8 @@ class ExpLevelsServiceTest {
     }
 
     @AfterEach
-    void tearDown() {
+    void tearDown() throws IOException {
+        Files.deleteIfExists(new File(DbHelper.getDatabasePath()).toPath());
     }
 
     @BeforeEach
