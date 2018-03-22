@@ -2,11 +2,13 @@ package com.example.queststore.controllers;
 
 import com.example.queststore.dao.StudentDataDAO;
 import com.example.queststore.dao.UserDAO;
+import com.example.queststore.models.Group;
 import com.example.queststore.services.ExpLevelsService;
 import com.example.queststore.services.GroupService;
 import com.example.queststore.services.MentorService;
 import com.example.queststore.views.AdminView;
 import com.example.queststore.views.ExpLevelsView;
+import com.example.queststore.views.GroupView;
 import com.example.queststore.views.UserView;
 
 public class AdminController extends UserController {
@@ -15,7 +17,9 @@ public class AdminController extends UserController {
     private GroupService groupService;
     private ExpLevelsService expLevelsService;
     private MentorService mentorService;
+    // fields below need to be refactored
     private ExpLevelsView expLevelsView;
+    private GroupView groupView;
 
     public AdminController(UserDAO userDAO, UserView userView, StudentDataDAO studentDataDAO, AdminView adminView,
                            GroupService groupService, ExpLevelsService expLevelsService, MentorService mentorService) {
@@ -25,6 +29,7 @@ public class AdminController extends UserController {
         this.expLevelsService = expLevelsService;
         this.mentorService = mentorService;
         this.expLevelsView = new ExpLevelsView();
+        this.groupView = new GroupView();
 
     }
 
@@ -43,7 +48,12 @@ public class AdminController extends UserController {
                     promoteBlankUser();
                     break;
                 case 2:
-                    groupService.createGroup();
+                    String name = groupView.getGroupNameInput();
+                    if (groupService.createGroup(name)) {
+                        groupView.displayGroupAdded();
+                    } else {
+                        groupView.displayGroupWithThisNameAlreadyExists();
+                    }
                     break;
                 case 3:
                     groupService.assignMentorToGroup();

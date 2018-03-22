@@ -30,15 +30,8 @@ public class GroupService {
         this.studentDataDAO = studentDataDAO;
     }
 
-    public void createGroup() {
-
-        String name = groupView.getGroupNameInput();
-        Group group = new Group(name);
-        if (groupDAO.add(group)) {
-            groupView.displayGroupAdded();
-        } else {
-            groupView.displayGroupWithThisNameAlreadyExists();
-        }
+    public boolean createGroup(String name) {
+        return groupDAO.add(new Group(name));
     }
 
     public void assignMentorToGroup() {

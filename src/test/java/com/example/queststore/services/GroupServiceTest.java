@@ -25,10 +25,20 @@ class GroupServiceTest {
 
     @Mock
     private GroupView mockGroupView;
+
+    @Mock
     private MentorView mockMentorView;
+
+    @Mock
     private GroupDAO mockGroupDAO;
+
+    @Mock
     private UserDAO mockUserDAO;
+
+    @Mock
     private MentorGroupDAO mockMentorGroupDAO;
+
+    @Mock
     private StudentDataDAO mockStudentDataDAO;
 
     private DbGroupDAO testDao;
@@ -37,9 +47,6 @@ class GroupServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        testDao = new DbGroupDAO();
-        service = new GroupService(mockGroupView, mockMentorView, mockGroupDAO,
-                mockUserDAO, mockMentorGroupDAO, mockStudentDataDAO);
     }
 
     @BeforeEach
@@ -58,6 +65,10 @@ class GroupServiceTest {
 
     @Test
     void testIfCreateGroupCompletes() {
+        testDao = new DbGroupDAO();
+        service = new GroupService(mockGroupView, mockMentorView, testDao,
+                mockUserDAO, mockMentorGroupDAO, mockStudentDataDAO);
+
         boolean actual = service.createGroup("test name");
         Assertions.assertTrue(actual);
 
