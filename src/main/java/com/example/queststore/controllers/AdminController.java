@@ -84,7 +84,6 @@ public class AdminController extends UserController {
                     } else {
                         expLevelsView.displayThereIsNoLevelWithThisNameMessage();
                     }
-                    break;
                 case 11:
                     expLevelsView.displayEntries(expLevelsService.getAllLevelsOfExperience());
                     expLevelsService.getAllLevelsOfExperience();
