@@ -1,15 +1,16 @@
 package com.example.queststore.controllers;
 
-import com.example.queststore.dao.StudentDataDAO;
-import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.*;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Group;
+import com.example.queststore.models.User;
 import com.example.queststore.services.ExpLevelsService;
 import com.example.queststore.services.GroupService;
 import com.example.queststore.services.MentorService;
-import com.example.queststore.views.AdminView;
-import com.example.queststore.views.ExpLevelsView;
-import com.example.queststore.views.GroupView;
-import com.example.queststore.views.UserView;
+import com.example.queststore.views.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminController extends UserController {
 
@@ -17,9 +18,13 @@ public class AdminController extends UserController {
     private GroupService groupService;
     private ExpLevelsService expLevelsService;
     private MentorService mentorService;
-    // fields below need to be refactored
+    // fields below need to be included in AdminController object creation
     private ExpLevelsView expLevelsView;
     private GroupView groupView;
+    private MentorView mentorView;
+    private UserDAO userDAO;
+    private GroupDAO groupDAO;
+    private MentorGroupDAO mentorGroupDAO;
 
     public AdminController(UserDAO userDAO, UserView userView, StudentDataDAO studentDataDAO, AdminView adminView,
                            GroupService groupService, ExpLevelsService expLevelsService, MentorService mentorService) {
@@ -30,6 +35,10 @@ public class AdminController extends UserController {
         this.mentorService = mentorService;
         this.expLevelsView = new ExpLevelsView();
         this.groupView = new GroupView();
+        this.mentorView = new MentorView();
+        this.userDAO = userDAO;
+        this.groupDAO = new DbGroupDAO();
+        this.mentorGroupDAO = new DbMentorGroupDAO();
 
     }
 
@@ -56,7 +65,19 @@ public class AdminController extends UserController {
                     }
                     break;
                 case 3:
-                    groupService.assignMentorToGroup();
+                    List<User> mentors = new ArrayList<>(userDAO.getAllByRole(UserEntry.MENTOR_ROLE));
+                    groupView.displayEntriesNoInput(mentors);
+                    if (mentors.isEmpty()) {
+                        groupView.displayPressAnyKeyToContinueMessage();
+                        break;
+                    }
+
+                    String mentorLogin = mentorView.getMentorLoginToAssignGroup();
+                    if (groupService.verifyMentorExists(mentorLogin)) {
+                        chooseGroupAndAssignToMentor(mentorLogin);
+                    } else {
+                        mentorView.displayThereIsNoMentorWithThisLogin();
+                    }
                     break;
                 case 4:
                     groupService.revokeMentorFromGroup();
@@ -103,4 +124,29 @@ public class AdminController extends UserController {
             }
         }
     }
+
+    private void chooseGroupAndAssignToMentor(String mentorLogin) {
+        List<Group> groups = groupService.getAllGroups();
+        groupView.displayEntriesNoInput(groups);
+        if (groups.isEmpty()) {
+            groupView.displayPressAnyKeyToContinueMessage();
+            return;
+        }
+
+        String groupName = groupView.getGroupNameInput();
+        if (groupDAO.getByName(groupName) != null) {
+            Group group = groupDAO.getByName(groupName);
+            User mentor = userDAO.getByLogin(mentorLogin);
+            boolean isAdded = mentorGroupDAO.add(group.getId(), mentor.getId());
+            if (isAdded) {
+                groupView.displayGroupConnectionAdded();
+            } else {
+                groupView.displayErrorAddingGroupConnection();
+            }
+        } else {
+            groupView.displayThereIsNoGroupWithThisName();
+        }
+    }
 }
+
+

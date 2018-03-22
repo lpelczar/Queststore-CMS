@@ -71,6 +71,17 @@ class GroupServiceTest {
 
         boolean actual = service.createGroup("test name");
         Assertions.assertTrue(actual);
+    }
 
+    @Test
+    void testIfCreatedGroupExists() {
+        testDao = new DbGroupDAO();
+        service = new GroupService(mockGroupView, mockMentorView, testDao,
+                mockUserDAO, mockMentorGroupDAO, mockStudentDataDAO);
+
+        service.createGroup("test 1");
+        service.createGroup("test 2");
+
+        Assertions.assertEquals("test 2", testDao.getByName("test 2").getGroupName());
     }
 }
