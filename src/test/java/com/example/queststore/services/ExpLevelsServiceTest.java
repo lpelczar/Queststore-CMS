@@ -60,7 +60,8 @@ class ExpLevelsServiceTest {
         DbExpLevelsDAO testDao = new DbExpLevelsDAO();
 
         ExpLevelsService service = new ExpLevelsService(mockView, testDao);
-        boolean actual = service.removeLevelOfExperience();
+        service.addLevelOfExperience("test", 1);
+        boolean actual = service.removeLevelOfExperience("test");
         Assertions.assertTrue(actual);
     }
 }
