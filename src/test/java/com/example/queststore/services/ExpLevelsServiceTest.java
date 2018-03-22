@@ -51,4 +51,16 @@ class ExpLevelsServiceTest {
         boolean actual = service.addLevelOfExperience(mockView.getLevelNameInput(), mockView.getLevelValueInput());
         Assertions.assertTrue(actual);
     }
+
+    @Test
+    void testIfRemoveLevelOfExperienceCompletes() {
+        when(mockView.getLevelNameInput()).thenReturn("test");
+        when(mockView.getLevelValueInput()).thenReturn(1);
+
+        DbExpLevelsDAO testDao = new DbExpLevelsDAO();
+
+        ExpLevelsService service = new ExpLevelsService(mockView, testDao);
+        boolean actual = service.removeLevelOfExperience();
+        Assertions.assertTrue(actual);
+    }
 }
