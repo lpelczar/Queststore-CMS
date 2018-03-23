@@ -1,3 +1,82 @@
+CREATE TABLE IF NOT EXISTS `users` (
+	`ID`	INTEGER,
+	`name`	TEXT NOT NULL,
+	`login`	TEXT NOT NULL UNIQUE,
+	`email`	TEXT NOT NULL UNIQUE,
+	`password`	TEXT NOT NULL,
+	`phone_number`	TEXT NOT NULL UNIQUE,
+	`role`	TEXT,
+	PRIMARY KEY(`ID`)
+);
+
+CREATE TABLE IF NOT EXISTS `tasks` (
+	`ID`	INTEGER,
+	`name`	TEXT NOT NULL UNIQUE,
+	`points`	INTEGER NOT NULL,
+	`description`	TEXT,
+	`category`	TEXT,
+	PRIMARY KEY(`ID`)
+);
+
+CREATE TABLE IF NOT EXISTS `students_tasks` (
+	`id_student`	INTEGER,
+	`id_task`	INTEGER,
+	PRIMARY KEY(`id_student`,`id_task`),
+	FOREIGN KEY(`id_task`) REFERENCES `tasks`(`ID`) ON DELETE CASCADE,
+	FOREIGN KEY(`id_student`) REFERENCES `users`(`ID`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `students_items` (
+	`id_student`	INTEGER,
+	`id_item`	INTEGER,
+	`is_used`	BOOLEAN,
+	FOREIGN KEY(`id_student`) REFERENCES `users`(`ID`) ON DELETE CASCADE,
+	PRIMARY KEY(`id_student`,`id_item`),
+	FOREIGN KEY(`id_item`) REFERENCES `items`(`ID`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `students_data` (
+	`id_user`	INTEGER,
+	`id_group`	INTEGER DEFAULT 1,
+	`team_name`	TEXT,
+	`level`	TEXT,
+	`balance`	INTEGER,
+	`experience`	INTEGER,
+	FOREIGN KEY(`id_group`) REFERENCES `groups`(`ID`) ON DELETE SET DEFAULT,
+	PRIMARY KEY(`id_user`,`id_group`),
+	FOREIGN KEY(`id_user`) REFERENCES `users`(`ID`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `mentors_groups` (
+	`id_mentor`	INTEGER,
+	`id_group`	INTEGER,
+	FOREIGN KEY(`id_group`) REFERENCES `groups`(`ID`) ON DELETE CASCADE,
+	PRIMARY KEY(`id_mentor`,`id_group`),
+	FOREIGN KEY(`id_mentor`) REFERENCES `users`(`ID`) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `items` (
+	`ID`	INTEGER,
+	`item_name`	TEXT NOT NULL,
+	`description`	TEXT NOT NULL,
+	`price`	INTEGER NOT NULL,
+	`category`	TEXT,
+	PRIMARY KEY(`ID`)
+);
+
+CREATE TABLE IF NOT EXISTS `groups` (
+	`ID`	INTEGER,
+	`group_name`	TEXT NOT NULL UNIQUE,
+	PRIMARY KEY(`ID`)
+);
+
+CREATE TABLE IF NOT EXISTS `experience_levels` (
+	`name`	TEXT UNIQUE,
+	`level`	INTEGER NOT NULL,
+	PRIMARY KEY(`name`)
+);
+
+
 INSERT INTO users (name,login,email,password,phone_number,role)
 VALUES ("Admin","Admin","admin@codecool.com","admin123","123-456-789","Admin");
 

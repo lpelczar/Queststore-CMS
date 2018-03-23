@@ -15,7 +15,7 @@ import java.util.List;
 
 public class DbHelper {
 
-    private static String DATABASE_PATH = "queststore.db";
+    private static String DATABASE_PATH = "test.db"; // "queststore.db";
     private static final String DRIVER = "org.sqlite.JDBC";
     private Connection connection;
 
@@ -106,7 +106,6 @@ public class DbHelper {
             return rowsUpdated > 0;
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -118,4 +117,5 @@ public class DbHelper {
     }
 
     public static String getDatabasePath() { return DATABASE_PATH; }
+
 }

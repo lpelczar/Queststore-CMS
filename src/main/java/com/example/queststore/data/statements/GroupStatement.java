@@ -23,7 +23,7 @@ public class GroupStatement {
 
     public String deleteGroupStatement() {
         return "DELETE FROM " + GroupEntry.TABLE_NAME +
-                " WHERE " + GroupEntry.ID + " = ?;" ;
+                " WHERE " + GroupEntry.GROUP_NAME + " = ?;" ;
     }
 
     public String selectGroupsNamesByMentorId() {
