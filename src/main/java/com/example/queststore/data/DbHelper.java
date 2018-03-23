@@ -101,9 +101,9 @@ public class DbHelper {
         try {
             openConnection();
             connection.setAutoCommit(false);
-            statement.executeUpdate();
+            final int rowsUpdated = statement.executeUpdate();
             connection.commit();
-            return true;
+            return rowsUpdated > 0;
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -116,5 +116,6 @@ public class DbHelper {
     public static void setDatabasePath(String path) {
         DATABASE_PATH = path;
     }
+
     public static String getDatabasePath() { return DATABASE_PATH; }
 }
