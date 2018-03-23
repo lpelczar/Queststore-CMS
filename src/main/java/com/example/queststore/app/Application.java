@@ -32,7 +32,7 @@ public class Application {
         TaskDAO taskDAO = new DbTaskDAO();
         UserDAO userDAO = new DbUserDAO();
 
-        ExpLevelsService expLevelsService = new ExpLevelsService(expLevelsView, expLevelsDAO);
+        ExpLevelsService expLevelsService = new ExpLevelsService(expLevelsDAO);
         GroupService groupService = new GroupService(groupView, mentorView, groupDAO, userDAO,
                 mentorGroupDAO, studentDataDAO);
         ItemService itemService = new ItemService(itemDAO, userDAO, studentItemDAO, itemView);
