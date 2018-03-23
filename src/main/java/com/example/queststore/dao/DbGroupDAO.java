@@ -87,6 +87,9 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
 
     @Override
     public boolean add(Group group) {
+        if(group==null){
+            return false;
+        }
         String sqlStatement = groupStatement.insertGroupStatement();
         PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(group.getGroupName()),
                 sqlStatement);
@@ -95,6 +98,9 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
 
     @Override
     public boolean delete(Group group) {
+        if(group==null){
+            return false;
+        }
         String sqlStatement = groupStatement.deleteGroupStatement();
         PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(group.getId()), sqlStatement);
         return update(statement);
