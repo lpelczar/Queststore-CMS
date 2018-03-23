@@ -11,11 +11,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
+
+@DisplayName("Tests for groupDAO:")
 class DbGroupDaoTest {
 
     private static String DATABASE_PATH = "test.db";
@@ -158,5 +162,35 @@ class DbGroupDaoTest {
         dao.delete(testGroup);
         assertNull(dao.getByName(name));
 
+    }
+
+    @Test
+    @DisplayName("Test if get by mentor ID returns proper data")
+    void getGroupsNameByMentorIdTest(){
+
+        DbGroupDAO dao = new DbGroupDAO();
+        int testMentorId = 2;
+        ArrayList<String> testGroups = new ArrayList<>();
+        testGroups.add("Masters");
+        testGroups.add("Dragons");
+        testGroups.add("Kings");
+
+        List<String> returnedList = dao.getGroupsNamesByMentorId(testMentorId);
+
+        assertTrue(returnedList.size()==3);
+        assertTrue(testGroups.contains(returnedList.get(0)));
+        assertTrue(testGroups.contains(returnedList.get(1)));
+        assertTrue(testGroups.contains(returnedList.get(2)));
+
+    }
+
+    @Test
+    @DisplayName("Test if getByMentorID handles non existing ids")
+    void getGroupsNameByMentorNonExistentIdTest(){
+
+        DbGroupDAO dao = new DbGroupDAO();
+        int testMentorId = 0;
+
+        assertTrue(dao.getGroupsNamesByMentorId(testMentorId).size()==0);
     }
 }

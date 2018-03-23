@@ -102,7 +102,7 @@ public class DbGroupDAO extends DbHelper implements GroupDAO {
             return false;
         }
         String sqlStatement = groupStatement.deleteGroupStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(group.getId()), sqlStatement);
+        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(group.getGroupName()), sqlStatement);
         return update(statement);
     }
 }
