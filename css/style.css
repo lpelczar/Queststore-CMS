@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Serif');
+
+html {
+    position: relative;
+    min-height: 100%;
+    font-family: 'IBM Plex Serif', sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: white;
+}
+
+#title-bar {
+    height: 100px;
+    background-color: red;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#bottom-bar {
+    height: 50px;
+    background-color: red;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    overflow:hidden;
+}
+
+#copyright {
+    color: white;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+#title-text {
+    font-family: 'IBM Plex Serif', sans-serif;
+    margin-left: 150px;
+    color: whitesmoke;
+    font-size: 35px;
+}
+
