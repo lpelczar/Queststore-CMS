@@ -28,6 +28,8 @@
 #name {
     margin-top: 0;
     padding-left: 10%;
+    padding-bottom: 10%;
+    border-bottom: 3px solid;
 }
 
 ul {
