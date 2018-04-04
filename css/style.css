@@ -24,6 +24,13 @@ body {
     width: 100%;
 }
 
+#title-text {
+    font-family: 'IBM Plex Serif', sans-serif;
+    margin-left: 45px;
+    color: whitesmoke;
+    font-size: 35px;
+}
+
 #bottom-bar {
     height: 50px;
     background-color: #48b983;
@@ -31,7 +38,8 @@ body {
     width: 100%;
     left: 0;
     bottom: 0;
-    overflow:hidden;
+    padding-bottom: 10px;
+    overflow: hidden;
 }
 
 #copyright {
@@ -40,49 +48,3 @@ body {
     justify-content: center;
     margin-bottom: 15px;
 }
-
-#title-text {
-    font-family: 'IBM Plex Serif', sans-serif;
-    margin-left: 90px;
-    color: whitesmoke;
-    font-size: 35px;
-}
-
-.container {
-    margin-top: 100px;
-    margin-bottom: 50px;
-    overflow: hidden;
-    height: 100%;
-}
-
-.sidebar {
-    background: lightgray;
-    padding-top: 25px;
-    padding-left: 25px;
-    padding-right: 25px;
-    width: 15%;
-    float: left;
-    height: 100%;
-}
-
-.content {
-    background: blue;
-    width: 85%;
-    max-height: 100%;
-    float: right;
-}
-
-#name {
-    margin-top: 0;
-}
-
-ul {
-    padding-left: 0;
-}
-
-.nav-element {
-    list-style-type: none;
-    padding-top: 2px;
-    font-weight: bold;
-}
-
