@@ -32,14 +32,12 @@ body {
 }
 
 #bottom-bar {
-    height: 50px;
+    height: 8%;
     background-color: #48b983;
-    position: absolute;
+    position: fixed;
     width: 100%;
     left: 0;
     bottom: 0;
-    padding-bottom: 10px;
-    overflow: hidden;
 }
 
 #copyright {
