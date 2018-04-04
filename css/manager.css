@@ -1,24 +1,25 @@
 .container {
     margin-top: 100px;
     margin-bottom: 50px;
-    overflow: hidden;
     height: 100%;
+    padding: 0;
+    overflow: hidden;
 }
 
 .sidebar {
     background: lightgray;
     padding-top: 25px;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
     width: 15%;
     float: left;
     height: 100%;
 }
 
 .content {
-    background: blue;
-    width: 85%;
-    max-height: 100%;
+    background: white;
+    width: 80%;
+    height: 100%;
     float: right;
 }
 
@@ -34,4 +35,9 @@ ul {
     list-style-type: none;
     padding-top: 2px;
     font-weight: bold;
+}
+
+.nav-element a {
+    text-decoration: none;
+    color: black;
 }
