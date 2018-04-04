@@ -81,32 +81,19 @@
 
 #mentors-list-box {
     display: flex;
-    background-color: rgba(220,220,220,0.9);
+    background-color: rgba(220, 220, 220, 0.9);
     width: 80%;
     border-radius: 10px;
     height: 30%;
 
-    animation-name: opacity;
-    -webkit-animation-duration: 2s;
-    animation-duration: 2s;
 }
-
-
-@-webkit-keyframes slide{
-    0% {left: -2000px}
-    100% {left: 0px}
-}
-
-@keyframes slide {
-    0% {left: -2000px}
-    100% {left: 0px}
-}
-
 
 .back-button {
     align-self: flex-end;
     text-align: center;
-    width: 15%;
+    width: 20%;
+    padding-top: .5%;
+    padding-bottom: .5%;
     background-color: black;
     color: white;
     cursor: pointer;
