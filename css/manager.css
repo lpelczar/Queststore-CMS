@@ -10,7 +10,7 @@
     padding-top: 25px;
     width: 15%;
     float: left;
-    height: 95%;
+    height: 100%;
 }
 
 .content {
@@ -27,6 +27,7 @@
 
 #name {
     margin-top: 0;
+    padding-left: 10%;
 }
 
 ul {
