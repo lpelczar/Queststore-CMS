@@ -18,9 +18,16 @@
 
 .content {
     background: white;
-    width: 80%;
+    width: 75%;
     height: 100%;
     float: right;
+    padding-top: 25px;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+}
+
+.content p {
+    margin-top: 0;
 }
 
 #name {

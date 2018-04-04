@@ -24,6 +24,13 @@ body {
     width: 100%;
 }
 
+#title-text {
+    font-family: 'IBM Plex Serif', sans-serif;
+    margin-left: 45px;
+    color: whitesmoke;
+    font-size: 35px;
+}
+
 #bottom-bar {
     height: 50px;
     background-color: #48b983;
@@ -31,6 +38,7 @@ body {
     width: 100%;
     left: 0;
     bottom: 0;
+    padding-bottom: 10px;
     overflow: hidden;
 }
 
@@ -39,11 +47,4 @@ body {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
-}
-
-#title-text {
-    font-family: 'IBM Plex Serif', sans-serif;
-    margin-left: 45px;
-    color: whitesmoke;
-    font-size: 35px;
 }
