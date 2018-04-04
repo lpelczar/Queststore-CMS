@@ -43,6 +43,7 @@ ul {
     padding-bottom: 5px;
     padding-top: 5px;
     font-weight: bold;
+
 }
 
 .nav-element a {
@@ -56,6 +57,7 @@ a {
 
 .nav-element:hover {
     background-color: rgba(0,0,0,0.5);
-    border-radius: 10px;
+    border-radius: 25px;
+    transition: all .4s ease-out;
 
 }
