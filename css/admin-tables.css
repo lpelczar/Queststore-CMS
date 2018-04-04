@@ -14,6 +14,10 @@
     border-radius: 25px;
 }
 
+#mentors-table:hover {
+    background-color: rgba(176, 196, 222, 0.8);
+}
+
 
 #groups-table {
     height: 60%;
@@ -23,6 +27,10 @@
     margin: 2%;
     padding: 1%;
     border-radius: 25px;
+}
+
+#groups-table:hover {
+    background-color: rgba(176, 196, 222, 0.8);
 }
 
 #mentors-table-name {
