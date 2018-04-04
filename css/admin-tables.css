@@ -27,10 +27,17 @@
 
 #mentors-table-name {
     text-align: center;
+    padding-top: 10px;
 }
 
 #groups-table-name {
     text-align: center;
+    padding-top: 10px;
+}
+
+.tables-lists {
+    margin-top: 5%;
+    padding-left: 10%;
 }
 
 
