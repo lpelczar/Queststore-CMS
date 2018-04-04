@@ -8,8 +8,6 @@
 .sidebar {
     background: lightgray;
     padding-top: 25px;
-    padding-left: 2.5%;
-    padding-right: 2.5%;
     width: 15%;
     float: left;
     height: 100%;
@@ -37,7 +35,10 @@ ul {
 
 .nav-element {
     list-style-type: none;
-    padding-top: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
     font-weight: bold;
 }
 
@@ -46,6 +47,12 @@ ul {
     color: black;
 }
 
+a {
+    padding-left: 10%;
+}
+
 .nav-element:hover {
     background-color: rgba(0,0,0,0.5);
+    border-radius: 10px;
+
 }
