@@ -1,0 +1,36 @@
+.content-admin {
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+}
+
+#mentors-table {
+    height: 60%;
+    width: 90%;
+    box-shadow: 10px 10px 10px gainsboro;
+    background-color: rgba(176, 196, 222, 0.5);
+    margin: 2%;
+    padding: 1%;
+    border-radius: 25px;
+}
+
+
+#groups-table {
+    height: 60%;
+    width: 90%;
+    box-shadow: 10px 10px 10px gainsboro;
+    background-color: rgba(176, 196, 222, 0.5);
+    margin: 2%;
+    padding: 1%;
+    border-radius: 25px;
+}
+
+#mentors-table-name {
+    text-align: center;
+}
+
+#groups-table-name {
+    text-align: center;
+}
+
+
