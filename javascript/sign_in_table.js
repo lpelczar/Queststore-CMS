@@ -6,11 +6,11 @@ function textAnimation() {
 
     login.onfocus = function () {
         login_text.style.animation = "1.5s slide";
-        login_text.style.left = "27.5%";
+        login_text.style.left = "35%";
     };
 
     password.onfocus = function () {
         password_text.style.animation = "1.5s slide-password"
-        password_text.style.left = "25%"
+        password_text.style.left = "32%"
     }
 }
