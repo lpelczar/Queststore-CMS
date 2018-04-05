@@ -18,7 +18,8 @@ body {
 #title-bar {
     height: 100px;
     background-color: #48b983;
-    position: fixed;
+    display: flex;
+    margin: 0;
     top: 0;
     left: 0;
     width: 100%;
@@ -26,7 +27,7 @@ body {
 
 #title-text {
     font-family: 'IBM Plex Serif', sans-serif;
-    margin-left: 45px;
+    margin-left: 40px;
     color: whitesmoke;
     font-size: 35px;
 }
