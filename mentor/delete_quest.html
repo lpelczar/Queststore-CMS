@@ -6,55 +6,68 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/manager.css" rel="stylesheet">
     <link href="../css/forms.css" rel="stylesheet">
+    <script src="../js/sidenav.js"></script>
 </head>
 <body>
-<header>
-    <div id="title-bar">
-        <h1 id="title-text">Queststore</h1>
-    </div>
-</header>
 
-<div class="container">
-    <nav class="sidebar">
-        <p id="name">Name: <strong>Mentor</strong></p>
-        <ul>
-            <li class="nav-element">
-                <a href="create_student.html">Create student</a>
-            </li>
-            <li class="nav-element">
-                <a href="edit_student.html">Edit student</a>
-            </li>
-            <li class="nav-element">
-                <a href="add_quest.html">Add quest</a>
-            </li>
-            <li class="nav-element">
-                <a href="display_quests.html">Display all quests</a>
-            </li>
-            <li class="nav-element">
-                <a href="edit_quest.html">Edit quest</a>
-            </li>
-            <li class="nav-element">
-                <a href="delete_quest.html">Delete quest</a>
-            </li>
-            <li class="nav-element">
-                <a href="">Logout</a>
-            </li>
-        </ul>
-    </nav>
-    <div class="content">
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <p id="name">Name: <strong>Łukasz</strong></p>
+    <ul>
+        <li class="nav-element">
+            <a href="create_student.html">Create student</a>
+        </li>
+        <li class="nav-element">
+            <a href="edit_student.html">Edit student</a>
+        </li>
+        <li class="nav-element">
+            <a href="add_quest.html">Add quest</a>
+        </li>
+        <li class="nav-element">
+            <a href="display_quests.html">Display all quests</a>
+        </li>
+        <li class="nav-element">
+            <a href="edit_quest.html">Edit quest</a>
+        </li>
+        <li class="nav-element">
+            <a href="delete_quest.html">Delete quest</a>
+        </li>
+        <li class="nav-element">
+            <a href="">Logout</a>
+        </li>
+    </ul>
+</div>
+
+<div id="main">
+
+    <header>
+        <div id="title-bar">
+            <div id="menu" onclick="openNav()">
+                <div class="menu-icon"></div>
+                <div class="menu-icon"></div>
+                <div class="menu-icon"></div>
+            </div>
+            <h1 id="title-text">Queststore</h1>
+        </div>
+    </header>
+
+    <div class="container">
+
         <div class="form">
             <p>Enter ID to delete quest!</p>
             <input type="text" placeholder="ID" required>
             <a id="create-button">Delete quest</a>
         </div>
-    </div>
-</div>
 
-<footer>
-    <div id="bottom-bar">
-        <p id="copyright">© 2018 Design & Implementation : Łukasz Pelczar, Nikodem Ciołczyk</p>
     </div>
-</footer>
+
+    <footer>
+        <div id="bottom-bar">
+            <p id="copyright">© 2018 Design & Implementation : Łukasz Pelczar, Nikodem Ciołczyk</p>
+        </div>
+    </footer>
+
+</div>
 
 </body>
 </html>
