@@ -1,4 +1,5 @@
 .container {
+    display: block;
     height: 100%;
     padding: 0;
 }
@@ -13,7 +14,7 @@
     left: 0;
     background-color: lightgray; /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
+    padding-top: 70px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
@@ -44,6 +45,7 @@
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
 #main {
     transition: margin-left .5s;
+    height: 80%;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -52,20 +54,8 @@
     .sidenav a {font-size: 18px;}
 }
 
-.content {
-    background: white;
-    width: 100%;
-    height: 100%;
-    float: right;
-    padding: 25px 2.5%;
-}
-
 #welcome-message {
     text-align: center;
-}
-
-.content p {
-    margin-top: 0;
 }
 
 .nav-top-element {
@@ -118,4 +108,9 @@ header {
     background-color: #48b983;
     align-self: center;
     justify-self: center;
+}
+
+#name {
+    font-size: larger;
+    margin-left: 32px;
 }
