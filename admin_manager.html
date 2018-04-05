@@ -6,11 +6,10 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/manager.css" rel="stylesheet">
     <link href="css/admin-tables.css" rel="stylesheet">
-    <script type="text/javascript" src="javascript/admin_manager.js"></script>
 </head>
 
 
-<body onload="tablesEvent()">
+<body>
 <header>
     <div id="title-bar">
         <h1 id="title-text">Queststore</h1>
@@ -22,7 +21,7 @@
         <p id="name">Name: <strong>Admin</strong></p>
         <ul>
             <li class="nav-element">
-                <button class="navi-button" onclick="displayWindow()">Show all mentors</button>
+                <a class="navi-button" onclick="displayWindow()">Show all mentors</a>
 
                 <div id="window" class="window-modal">
                     <div id="mentors-list-box">
@@ -31,13 +30,13 @@
                     </div>
                 </div>
             </li>
-            <script type="text/javascript" src="javascript/admin_manager.js"></script>
+
 
             <li class="nav-element">
                 <a href="">Add new mentor</a>
             </li>
             <li class="nav-element">
-                <a href="">Edit mentor profile</a>
+                <a id="edit_mentor" onclick="display_mentors_profile()">Edit mentor profile</a>
             </li>
             <li class="nav-element">
                 <a href="">Assign mentor-group</a>
@@ -53,19 +52,20 @@
 
     <div class="content-admin">
 
-        <div id="mentors-table">
+        <div class="mentors-table" onclick="mentor_table_center()">
             <div id="mentors-table-name">Mentors Table</div>
-            <ul class="tables-lists">
-                <li class="mentor-list">Mentor 1</li>
-                <li class="mentor-list">Mentor 2</li>
-                <li class="mentor-list">Mentor 3</li>
+
+            <ul class="mentors-lists">
+                <li><a class="mentor-list">Mentor 1</a></li>
+                <li><a class="mentor-list">Mentor 2</a></li>
+                <li><a class="mentor-list">Mentor 3</a></li>
             </ul>
         </div>
 
-        <div id="groups-table">
+        <div class="groups-table" onclick="group_table_center()">
             <div id="groups-table-name">Groups Table</div>
-            <ul class="tables-lists">
-                <li class="group-list">Group A</li>
+            <ul class="groups-lists">
+                <li class="group-list" onclick="">Group A</li>
                 <li class="group-list">Group B</li>
                 <li class="group-list">Group C</li>
             </ul>
@@ -79,6 +79,6 @@
         <p id="copyright">© 2018 Design & Implementation : Łukasz Pelczar, Nikodem Ciołczyk</p>
     </div>
 </footer>
-
+<script type="text/javascript" src="javascript/admin_manager.js"></script>
 </body>
 </html>
