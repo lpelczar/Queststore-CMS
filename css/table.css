@@ -23,6 +23,10 @@ table {
     border: solid 1px black;
 }
 
+.container h1 {
+    text-align: center;
+}
+
 .tbl-content {
     height: 100%;
     overflow-x:auto;
