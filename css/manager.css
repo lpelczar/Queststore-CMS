@@ -133,3 +133,7 @@ header {
     font-size: larger;
     margin-left: 32px;
 }
+
+h2 {
+    padding-top: 10px;
+}
