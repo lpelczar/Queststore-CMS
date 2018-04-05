@@ -52,11 +52,10 @@ function display_mentors_profile() {
     mentor_table.style.backgroundColor = "rgba(176, 196, 222, 0.8)";
 
     for (let i=0; i < mentor_list.length; i++) {
-        console.log(mentor_list[i].childNodes.forEach( value => {
+        mentor_list[i].childNodes.forEach( value => {
             if (value.tagName === 'LI') {
                 value.childNodes[0].setAttribute('href', "edit_mentor_profile.html")
             }
-        }));
+        });
     }
-
 }
