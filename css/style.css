@@ -42,8 +42,8 @@ body {
 }
 
 #copyright {
+    padding-top: 10px;
     color: white;
     display: flex;
     justify-content: center;
-    margin-bottom: 15px;
 }
