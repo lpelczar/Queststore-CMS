@@ -1,0 +1,21 @@
+.content h2 {
+    font-size: larger;
+    margin-top: 5px;
+    text-align: center;
+}
+
+#artifacts-table h1 {
+    font-size: 17px;
+}
+
+#artifacts-table {
+    margin-top: 0;
+}
+
+#quests-table h1 {
+    font-size: 17px;
+}
+
+.tbl-content {
+    height: 134px;
+}
