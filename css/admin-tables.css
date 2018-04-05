@@ -4,7 +4,7 @@
     height: 100%;
 }
 
-#mentors-table {
+.mentors-table {
     height: 60%;
     width: 90%;
     box-shadow: 10px 10px 10px gainsboro;
@@ -14,12 +14,11 @@
     border-radius: 25px;
 }
 
-#mentors-table:hover {
+.mentors-table:hover {
     background-color: rgba(176, 196, 222, 0.8);
 }
 
-
-#groups-table {
+.groups-table {
     height: 60%;
     width: 90%;
     box-shadow: 10px 10px 10px gainsboro;
@@ -27,10 +26,21 @@
     margin: 2%;
     padding: 1%;
     border-radius: 25px;
+
 }
 
-#groups-table:hover {
+.groups-table:hover {
     background-color: rgba(176, 196, 222, 0.8);
+}
+
+@keyframes hideTable {
+    from {left: auto;}
+    to {left: 1500px;}
+}
+
+@-webkit-keyframes hideTable {
+    from {left: auto;}
+    to {left: 1500px;}
 }
 
 #mentors-table-name {
@@ -43,7 +53,12 @@
     padding-top: 10px;
 }
 
-.tables-lists {
+.groups-lists {
+    margin-top: 5%;
+    padding-left: 10%;
+}
+
+.mentors-lists {
     margin-top: 5%;
     padding-left: 10%;
 }
@@ -105,6 +120,12 @@
     justify-content: center;
     width: 100%;
     text-align: center;
+}
+
+.mentor-list {
+    padding-left: 0;
+    text-decoration: none;
+    color: black;
 }
 
 
