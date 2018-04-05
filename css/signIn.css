@@ -35,20 +35,20 @@ form {
 
 
 @keyframes slide {
-    from {left: 438px}
-    to {left: 250px}
+    from {left: 50%}
+    to {left: 27.5%}
 }
 @-webkit-keyframes slide {
-    from {left: 438px}
-    to {left: 250px}
+    from {left: 50%}
+    to {left: 27.5%}
 }
 @keyframes slide-password {
-    from {left: 418px}
-    to {left: 210px}
+    from {left: 50%}
+    to {left: 25%}
 }
 @-webkit-keyframes slide-password {
-    from {left: 418px}
-    to {left: 210px}
+    from {left: 50%}
+    to {left: 25%}
 }
 
 #password-title {
