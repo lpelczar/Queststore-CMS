@@ -16,11 +16,12 @@ function mentor_table_center() {
     content.style.justifyContent = "center";
     mentor_table.style.position = "relative";
     mentor_table.style.width = "70%";
+
     group_table.style.display = "none";
 
-    mentor_table.onclick = function () {
+    /*mentor_table.onclick = function () {
         window.location.href = "admin_manager.html";
-    }
+    }*/
     return mentor_table;
 }
 
@@ -45,17 +46,31 @@ function display_mentors_profile() {
     let title_table = document.getElementById("mentors-table-name");
     let mentor_list = document.getElementsByClassName("mentors-lists");
 
-    let editorLink = document.createAttribute("href");
-    editorLink.value = "edit_mentor_profile.html";
-
     title_table.textContent = "Select mentor to edit";
     mentor_table.style.backgroundColor = "rgba(176, 196, 222, 0.8)";
 
     for (let i=0; i < mentor_list.length; i++) {
         mentor_list[i].childNodes.forEach( value => {
             if (value.tagName === 'LI') {
-                value.childNodes[0].setAttribute('href', "edit_mentor_profile.html")
+                /*value.childNodes[0].setAttribute('href', "edit_mentor_profile.html")*/
+                value.childNodes[0].setAttribute('onclick', "edit_profile(this.textContent)");
             }
         });
     }
+}
+
+function edit_profile(mentor) {
+    let mentor_table = document.getElementsByClassName('mentors-table')[0];
+    let title_table = document.getElementById("mentors-table-name");
+    let mentor_list = document.getElementsByClassName("mentors-lists")[0];
+
+    mentor_table.style.height = "80%";
+    title_table.textContent = mentor + " profile editor";
+    mentor_list.style.display = "none";
+
+    mentor_table.style.display = "initial";
+
+    let profile_editor = document.getElementById('profile-editor');
+    profile_editor.style.display = "flex";
+
 }

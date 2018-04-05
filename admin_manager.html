@@ -6,6 +6,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/manager.css" rel="stylesheet">
     <link href="css/admin-tables.css" rel="stylesheet">
+    <link href="css/profile-editor.css" rel="stylesheet">
 </head>
 
 
@@ -42,7 +43,7 @@
                 <a href="">Assign mentor-group</a>
             </li>
             <li class="nav-element">
-                <a href="">Edit mentor profile</a>
+                <a href="">Edit my profile</a>
             </li>
             <li class="nav-element">
                 <a href="">Logout</a>
@@ -60,6 +61,37 @@
                 <li><a class="mentor-list">Mentor 2</a></li>
                 <li><a class="mentor-list">Mentor 3</a></li>
             </ul>
+
+            <div id="profile-editor">
+                <div class="editor-table">
+                    <form>
+
+                        <div class="mentor-login">
+                            <div class="mentor-profile">Login</div>
+                            <input type="text" class="mentor-editor">
+                        </div>
+
+                        <div class="mentor-login">
+                            <div class="mentor-profile">Name</div>
+                            <input type="text" class="mentor-editor">
+                        </div>
+
+                        <div class="mentor-login">
+                            <div class="mentor-profile">Surname</div>
+                            <input type="text" class="mentor-editor">
+                        </div>
+
+                        <div class="mentor-login">
+                            <div class="mentor-profile">Email</div>
+                            <input type="text" class="mentor-editor">
+                        </div>
+                        <a href="admin_manager.html" id="editor-back-button" >BACK</a>
+                </form>
+
+                </div>
+            </div>
+
+
         </div>
 
         <div class="groups-table" onclick="group_table_center()">
