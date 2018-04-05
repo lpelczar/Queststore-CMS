@@ -10,7 +10,7 @@ input {
 }
 
 form {
-    width: 30%;
+    width: 20%;
 }
 
 .login-table {
@@ -36,19 +36,19 @@ form {
 
 @keyframes slide {
     from {left: 50%}
-    to {left: 27.5%}
+    to {left: 35%}
 }
 @-webkit-keyframes slide {
     from {left: 50%}
-    to {left: 27.5%}
+    to {left: 35%}
 }
 @keyframes slide-password {
     from {left: 50%}
-    to {left: 25%}
+    to {left: 32%}
 }
 @-webkit-keyframes slide-password {
     from {left: 50%}
-    to {left: 25%}
+    to {left: 32%}
 }
 
 #password-title {
