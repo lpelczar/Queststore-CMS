@@ -24,7 +24,7 @@ table {
 }
 
 .tbl-content {
-    height:314px;
+    height: 100%;
     overflow-x:auto;
     margin-top: 0;
     border-left: solid 1px black;
