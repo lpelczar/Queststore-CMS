@@ -17,7 +17,7 @@ form {
     display: flex;
     justify-content: center;
     position: relative;
-    top: 10%;
+    top: 0;
 }
 
 .login {
