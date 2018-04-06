@@ -60,60 +60,70 @@
 
         <div class="content-admin">
 
-            <div class="mentors-table" onclick="mentor_table_center()">
-                <div id="mentors-table-name">Mentors Table</div>
+            <div id="column-tables">
+                <div class="mentors table" onclick="mentor_table_center()">
+                    <div id="mentors-table-name">Mentors Table</div>
 
-                <ul class="mentors-lists">
-                    <li><a class="mentor-list">Mentor 1</a></li>
-                    <li><a class="mentor-list">Mentor 2</a></li>
-                    <li><a class="mentor-list">Mentor 3</a></li>
-                </ul>
+                    <ul class="mentors-lists">
+                        <li><a class="mentor-list">Mentor 1</a></li>
+                        <li><a class="mentor-list">Mentor 2</a></li>
+                        <li><a class="mentor-list">Mentor 3</a></li>
+                    </ul>
 
-                <div id="profile-editor">
-                    <div class="editor-table">
-                        <form>
+                    <div id="profile-editor">
+                        <div class="editor-table">
+                            <form>
 
-                            <div class="mentor-login">
-                                <div class="mentor-profile">Login</div>
-                                <label>
-                                    <input type="text" class="mentor-editor">
-                                </label>
-                            </div>
+                                <div class="mentor-login">
+                                    <div class="mentor-profile">Login</div>
+                                    <label>
+                                        <input type="text" class="mentor-editor">
+                                    </label>
+                                </div>
 
-                            <div class="mentor-login">
-                                <div class="mentor-profile">Name</div>
-                                <label>
-                                    <input type="text" class="mentor-editor">
-                                </label>
-                            </div>
+                                <div class="mentor-login">
+                                    <div class="mentor-profile">Name</div>
+                                    <label>
+                                        <input type="text" class="mentor-editor">
+                                    </label>
+                                </div>
 
-                            <div class="mentor-login">
-                                <div class="mentor-profile">Surname</div>
-                                <label>
-                                    <input type="text" class="mentor-editor">
-                                </label>
-                            </div>
+                                <div class="mentor-login">
+                                    <div class="mentor-profile">Surname</div>
+                                    <label>
+                                        <input type="text" class="mentor-editor">
+                                    </label>
+                                </div>
 
-                            <div class="mentor-login">
-                                <div class="mentor-profile">Email</div>
-                                <label>
-                                    <input type="text" class="mentor-editor">
-                                </label>
-                            </div>
-                        </form>
+                                <div class="mentor-login">
+                                    <div class="mentor-profile">Email</div>
+                                    <label>
+                                        <input type="text" class="mentor-editor">
+                                    </label>
+                                </div>
+                            </form>
+                        </div>
+                        <a href="admin_manager.html" id="editor-back-button">BACK</a>
                     </div>
-                    <a href="admin_manager.html" id="editor-back-button">BACK</a>
+                </div>
+
+                <div class="groups table" onclick="group_table_center()">
+                    <div id="groups-table-name">Groups Table</div>
+                    <ul class="groups-lists">
+                        <li class="group-list" onclick="">Group A</li>
+                        <li class="group-list">Group B</li>
+                        <li class="group-list">Group C</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="groups-table" onclick="group_table_center()">
-                <div id="groups-table-name">Groups Table</div>
-                <ul class="groups-lists">
-                    <li class="group-list" onclick="">Group A</li>
-                    <li class="group-list">Group B</li>
-                    <li class="group-list">Group C</li>
-                </ul>
+            <div id="row-table">
+                <div class="assigned table">
+                    <div id="assigned-table-name">Mentors assigned to groups</div>
+                    <ul></ul>
+                </div>
             </div>
+
         </div>
     </div>
 

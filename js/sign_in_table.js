@@ -10,7 +10,7 @@ function textAnimation() {
     };
 
     password.onfocus = function () {
-        password_text.style.animation = "1.5s slide-password"
+        password_text.style.animation = "1.5s slide-password";
         password_text.style.left = "32%"
     }
 }

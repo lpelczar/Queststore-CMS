@@ -9,15 +9,13 @@ function displayWindow() {
 }
 
 function mentor_table_center() {
-    let mentor_table = document.getElementsByClassName('mentors-table')[0];
-    let group_table = document.getElementsByClassName('groups-table')[0];
-    let content = document.getElementsByClassName('content-admin')[0];
+    let mentor_table = document.getElementsByClassName('mentors table')[0];
+    let group_table = document.getElementsByClassName('groups table')[0];
+    let content = document.getElementById('column-tables');
 
-    content.style.justifyContent = "center";
-    mentor_table.style.position = "relative";
-    mentor_table.style.width = "70%";
-
+    mentor_table.style.width = "80%";
     group_table.style.display = "none";
+    content.style.justifyContent = "center";
 
     /*mentor_table.onclick = function () {
         window.location.href = "admin_manager.html";
@@ -26,14 +24,14 @@ function mentor_table_center() {
 }
 
 function group_table_center() {
-    let mentor_table = document.getElementsByClassName('mentors-table')[0];
-    let group_table = document.getElementsByClassName('groups-table')[0];
-    let content = document.getElementsByClassName('content-admin')[0];
+    let mentor_table = document.getElementsByClassName('mentors table')[0];
+    let group_table = document.getElementsByClassName('groups table')[0];
+    let content = document.getElementById('column-tables');
 
-    content.style.justifyContent = "center";
-    group_table.style.position = "relative";
-    group_table.style.width = "70%";
+
+    group_table.style.width = "80%";
     mentor_table.style.display = "none";
+    content.style.justifyContent = "center";
 
 
     group_table.onclick = function () {

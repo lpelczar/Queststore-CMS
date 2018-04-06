@@ -1,35 +1,29 @@
 .content-admin {
-    display: flex;
-    justify-content: space-around;
     height: 100%;
 }
 
-.mentors-table {
-    height: 60%;
-    width: 90%;
+#column-tables {
+    display: flex;
+    height: 50%;
+    width: 100%;
+}
+
+#row-table {
+    display: flex;
+    height: 35%;
+    margin-top: 2%;
+}
+
+.table {
+    height: 100%;
+    width: 100%;
     box-shadow: 10px 10px 10px gainsboro;
     background-color: rgba(176, 196, 222, 0.5);
     margin: 2%;
-    padding: 1%;
     border-radius: 25px;
 }
 
-.mentors-table:hover {
-    background-color: rgba(176, 196, 222, 0.8);
-}
-
-.groups-table {
-    height: 60%;
-    width: 90%;
-    box-shadow: 10px 10px 10px gainsboro;
-    background-color: rgba(176, 196, 222, 0.5);
-    margin: 2%;
-    padding: 1%;
-    border-radius: 25px;
-
-}
-
-.groups-table:hover {
+.table:hover {
     background-color: rgba(176, 196, 222, 0.8);
 }
 
@@ -49,6 +43,11 @@
 }
 
 #groups-table-name {
+    text-align: center;
+    padding-top: 10px;
+}
+
+#assigned-table-name {
     text-align: center;
     padding-top: 10px;
 }
