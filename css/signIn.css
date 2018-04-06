@@ -44,11 +44,11 @@ form {
 }
 @keyframes slide-password {
     from {left: 50%}
-    to {left: 32%}
+    to {left: 33%}
 }
 @-webkit-keyframes slide-password {
     from {left: 50%}
-    to {left: 32%}
+    to {left: 33%}
 }
 
 #password-title {
