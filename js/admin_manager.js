@@ -11,27 +11,34 @@ function displayWindow() {
 function mentor_table_center() {
     let mentor_table = document.getElementsByClassName('mentors table')[0];
     let group_table = document.getElementsByClassName('groups table')[0];
+    let assign_table = document.getElementById('row-table');
     let content = document.getElementById('column-tables');
 
     mentor_table.style.width = "80%";
     group_table.style.display = "none";
-    content.style.justifyContent = "center";
+    assign_table.style.display = "none";
 
-    /*mentor_table.onclick = function () {
+    content.style.justifyContent = "center";
+    content.style.height = "90%";
+
+    mentor_table.onclick = function () {
         window.location.href = "admin_manager.html";
-    }*/
-    return mentor_table;
+    }
 }
 
 function group_table_center() {
     let mentor_table = document.getElementsByClassName('mentors table')[0];
     let group_table = document.getElementsByClassName('groups table')[0];
+    let assign_table = document.getElementById('row-table');
     let content = document.getElementById('column-tables');
 
 
     group_table.style.width = "80%";
     mentor_table.style.display = "none";
+    assign_table.style.display = "none";
+
     content.style.justifyContent = "center";
+    content.style.height = "90%";
 
 
     group_table.onclick = function () {
