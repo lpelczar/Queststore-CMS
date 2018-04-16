@@ -1,0 +1,13 @@
+00,Finishing a Teamwork week,100
+01,Finishing an SI assignment,150
+02,Passing a Checkpoint in the first attempt,300
+03,Spot a major mistake in the assignment,50
+04,Doing a demo about a pet project,200
+05,Taking part in the student screening process,100
+06,Organizing a workshop for other students,200
+07,Attend 1 months without being late,200
+08,Deliver 4 consecutive SI week assignments on time,350
+09,Set up a SMART goal accepted by a mentor; then achieve it,300
+10,Students choose the best project of the week. Selected team scores,300
+11,Creating extra material for the current TW/SI topic (should be revised by mentors),350
+12,Do a presentation on a meet-up,200

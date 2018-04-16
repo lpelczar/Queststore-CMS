@@ -2,47 +2,34 @@
     display: block;
     height: 100%;
     padding: 0;
+    transition: margin-top .5s;
 }
 
 /* The side navigation menu */
 .sidenav {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    top: 0;
-    left: 0;
-    background-color: lightgray; /* Black*/
+    right: 0;
+    height: 0;
+    top: 80px;
+    width: 100%;
+    position: absolute;
+    background-color: #48b983;
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 70px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-}
-
-/* The navigation menu links */
-.sidenav a {
-    padding: 8px 32px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover{
-    color: #f1f1f1;
+    color: gray;
 }
 
 /* Position and style the close button (top right corner) */
-.sidenav .closebtn {
+.sidenav {
     position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
+    color: black;
+    text-decoration: none;
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation*/
 #main {
     transition: margin-left .5s;
     height: 80%;
@@ -66,48 +53,52 @@
     border-color: rgba(0,0,0,0.5);
 }
 
-ul {
-    padding-left: 0;
-}
-
-.nav-element {
-    list-style-type: none;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    padding-top: 5px;
-    font-weight: bold;
-
+#navi-list {
+    display: flex;
+    justify-content: flex-end;
 }
 
 .nav-element a {
+    border: 2px solid;
+    border-radius: 25px;
+    box-shadow: 2px 2px 2px;
+
     text-decoration: none;
-    text-align: left;
+    text-align: center;
     color: black;
-    display: block;
     cursor: pointer;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-left: 15%;
+    padding-right: 15%;
 }
 
 a {
-    padding-left: 5%;
+    padding-left: 3%;
 }
 
 .navi-button {
+    border: 2px solid;
+    border-radius: 25px;
+    margin: 1.5%;
+    box-shadow: 2px 2px 2px;
+
     text-decoration: none;
     color: black;
     padding-left: 5%;
-    border: none;
     background: none;
     font-weight: bold;
     font-size: large;
     font-family: 'IBM Plex Serif', sans-serif;
 }
 
-.nav-element:hover {
-    background-color: rgba(0,0,0,0.5);
-    border-radius: 25px;
-    transition: all .4s ease-out;
-
+.nav-element {
+    display: flex;
+    justify-content: space-around;
+    margin-right: 2%;
 }
 
 .menu-icon {
@@ -123,16 +114,12 @@ header {
 }
 
 #menu {
-    margin-left: 40px;
+    position: absolute;
+    right: 20px;
     background-color: #48b983;
     align-self: center;
-    justify-self: center;
 }
 
-#name {
-    font-size: larger;
-    margin-left: 32px;
-}
 
 h2 {
     padding-top: 10px;
