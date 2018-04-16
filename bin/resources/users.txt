@@ -1,0 +1,6 @@
+00,Pan,Admin,Pan.Admin@codecool.com,A
+01,Augustyn,Sybidlo,Augustyn.Sybidlo@codecool.com,S,A
+02,Konrad,Gadzina,Konrad.Gadzina@codecool.com,M,A
+03,Sebastian,Slupinski,Sebastian.Slupinski@codecool.com,S,A
+04,Wiola,Szczepanik,Wiola.Szczepanik@codecool.com,S,A
+05,Mentor2,Mentor22,Mentor@codecool.cin,M,A

@@ -1,0 +1,8 @@
+01,Private mentoring,200
+02,You can spend a day in home office,500
+03,extend SI week assignment deadline by one day,300
+04,60 min workshop by a mentor(s) of the chosen topic,1000
+05,mentor joins a students' team for a one hour,3000
+06,Extra materials for the current topic,500
+07,All mentors should dress up as pirates (or just funny) for the day,10000
+08,The whole course goes to an off-school program instead for a day,5000
