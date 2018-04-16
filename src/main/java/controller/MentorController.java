@@ -3,13 +3,12 @@ package controller;
 import model.GroupModel;
 import dao.LoginDB;
 import dao.LoginDBImplement;
-import dao.OpenCloseConnectionWithDB;
 import dao.StudentDB;
 import dao.StudentDBImplement;
 import model.StudentModel;
+import utils.InputGetter;
 import view.MentorView;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 
 public class MentorController {
@@ -30,7 +29,7 @@ public class MentorController {
                                         "Surname", "Email"};
 
 
-    public MentorController() {
+    MentorController() {
         this.loginDB = new LoginDBImplement();
         this.quest = new QuestController();
         this.studentDB = new StudentDBImplement();
@@ -39,13 +38,13 @@ public class MentorController {
         this.existingStudents = studentDB.getAllStudents();
     }
 
-    public void run(String id) {
+    void run(String id) {
         GroupModel mentorGroup = studentDB.getMentorGroupByMentorID(id);
         Integer option = 1;
 
         while (!(option == 6)) {
             mentorView.displayMenu(HEADER, OPTIONS);
-            option = InputController.getNumber("Choose option: ");
+            option = InputGetter.getNumber("Choose option: ");
 
             switch (option) {
                 case 1:
@@ -74,14 +73,13 @@ public class MentorController {
 
     public void createStudent(StudentDB studentDB, GroupModel mentorGroup) {
         mentorView.displayText("This student will be added to your group, press enter to continue");
-        InputController.getString();
+        InputGetter.getString();
 
         String id = loginDB.getLastId();
-        String login = InputController.getString("Please enter student login: ");
-        String password = InputController.getString("Please enter student password: ");
-        String name = InputController.getString("Please enter student name: ");
-        String lastName = InputController.getString("Please enter student lastName: ");
-//        String group = setGroupForMentor(getExistingGroups(admin));
+        String login = InputGetter.getString("Please enter student login: ");
+        String password = InputGetter.getString("Please enter student password: ");
+        String name = InputGetter.getString("Please enter student name: ");
+        String lastName = InputGetter.getString("Please enter student lastName: ");
 
         StudentModel newStudent = new StudentModel(id, login, password, name, lastName);
 
@@ -91,36 +89,36 @@ public class MentorController {
         mentorView.displayText("Student created successfully");
     }
 
-    public StudentModel editStudent() {
+    private StudentModel editStudent() {
         boolean optionChosen = false;
         StudentModel studentToEdit = getStudent();
 
         while(!optionChosen) {
             mentorView.displayMenu(HEADER2, OPTIONS2);
-            Integer option = InputController.getNumber("Enter your option");
+            Integer option = InputGetter.getNumber("Enter your option");
             switch (option) {
                 case 1:
-                    String newLogin = InputController.getString("Enter new login");
+                    String newLogin = InputGetter.getString("Enter new login");
                     studentToEdit.setLogin(newLogin);
                     optionChosen = true;
                     break;
                 case 2:
-                    String newPassword = InputController.getString("Enter new password");
+                    String newPassword = InputGetter.getString("Enter new password");
                     studentToEdit.setPassword(newPassword);
                     optionChosen = true;
                     break;
                 case 3:
-                    String newName = InputController.getString("Enter new name");
+                    String newName = InputGetter.getString("Enter new name");
                     studentToEdit.setName(newName);
                     optionChosen = true;
                     break;
                 case 4:
-                    String newLastName = InputController.getString("Enter new lastname");
+                    String newLastName = InputGetter.getString("Enter new lastname");
                     studentToEdit.setLastName(newLastName);
                     optionChosen = true;
                     break;
                 case 5:
-                    String newEmail = InputController.getString("Enter new email");
+                    String newEmail = InputGetter.getString("Enter new email");
                     studentToEdit.setEmail(newEmail);
                     optionChosen = true;
                     break;
@@ -136,7 +134,7 @@ public class MentorController {
         while(studentNotChosen){
 
             mentorView.displayListOfObjects(this.existingStudents);
-            studentIndex = InputController.getNumber("Please enter a mentor number");
+            studentIndex = InputGetter.getNumber("Please enter a mentor number");
 
             if (studentIndex < this.existingStudents.size()){
                 studentNotChosen = false;

@@ -3,14 +3,12 @@ package controller;
 import dao.OpenCloseConnectionWithDB;
 import view.RootView;
 
-import java.sql.Connection;
-
 
 public class RootController{
 
     private RootView rootView = new RootView();
     private OpenCloseConnectionWithDB connectionWithDB = new OpenCloseConnectionWithDB();
-    private LoginDBController loginController = new LoginDBController();
+    private LoginController loginController = new LoginController();
 
     public void startApplication(){
  

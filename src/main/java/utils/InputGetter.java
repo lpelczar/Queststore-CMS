@@ -1,11 +1,11 @@
-package controller;
+package utils;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class InputController{
+public class InputGetter {
 
     public static String getString(String message) {
         String input = null;

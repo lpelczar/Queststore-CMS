@@ -2,12 +2,11 @@ package controller;
 
 import dao.*;
 import model.WalletModel;
+import utils.InputGetter;
 import view.StudentView;
 import model.StudentModel;
 
-import java.sql.Connection;
-
-public class StudentController {
+class StudentController {
 
     private StudentDB studentDB;
     private WalletDBImplement walletDB;
@@ -20,28 +19,28 @@ public class StudentController {
                                       "Buy artifact",
                                       "Exit"};
 
-    public StudentController() {
+    StudentController() {
         this.studentDB = new StudentDBImplement();
         this.walletDB = new WalletDBImplement();
         this.view = new StudentView();
     }
 
-    public void run(String id) {
+    void run(String id) {
         StudentModel student = studentDB.loadStudent(Integer.valueOf(id));
         WalletModel wallet = walletDB.loadWalletModel(Integer.valueOf(id));
         Integer option = 1;
         while (!(option == 6)) {
             view.displayMenu(HEADER, OPTIONS);
-            option = InputController.getNumber("Choose option: ");
+            option = InputGetter.getNumber("Choose option: ");
             switch (option) {
                 case 1:
                     view.displayStudentData(student.toString());
-                    InputController.getString();
+                    InputGetter.getString();
                     break;
                 case 2:
                     view.displayText(wallet.toString());
                     view.displayListOfObjects(wallet.getArtefacts());
-                    InputController.getString();
+                    InputGetter.getString();
                     break;
                 case 3:
                     //this.displayQuests();
@@ -67,31 +66,31 @@ public class StudentController {
 
         while (!(option == 6)) {
             view.displayMenu(header, options);
-            option = InputController.getNumber("Choose option: ");
+            option = InputGetter.getNumber("Choose option: ");
             switch (option) {
                 case 1:
                     view.displayText(student.getLogin());
-                    String newLogin = InputController.getString("Type new login");
+                    String newLogin = InputGetter.getString("Type new login");
                     student.setLogin(newLogin);
                     break;
                 case 2:
                     view.displayText(student.getPassword());
-                    String newPassword = InputController.getString("Type new password");
+                    String newPassword = InputGetter.getString("Type new password");
                     student.setPassword(newPassword);
                     break;
                 case 3:
                     view.displayText(student.getName());
-                    String newName = InputController.getString("Type new Name");
+                    String newName = InputGetter.getString("Type new Name");
                     student.setName(newName);
                     break;
                 case 4:
                     view.displayText(student.getLastName());
-                    String newLastName = InputController.getString("Type new Last name");
+                    String newLastName = InputGetter.getString("Type new Last name");
                     student.setLastName(newLastName);
                     break;
                 case 5:
                     view.displayText(student.getEmail());
-                    String newEmail = InputController.getString("Type new Email");
+                    String newEmail = InputGetter.getString("Type new Email");
                     student.setEmail(newEmail);
                     break;
             }
