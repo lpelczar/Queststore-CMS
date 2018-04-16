@@ -11,6 +11,7 @@ public class RootHandler {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(7000), 0);
         server.createContext("/login", new LoginHandler());
+        server.createContext("/static", new StaticHandler());
         server.setExecutor(null);
         server.start();
     }
