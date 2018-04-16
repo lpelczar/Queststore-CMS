@@ -1,9 +1,11 @@
-import controller.RootController;
+import handlers.RootHandler;
+
+import java.io.IOException;
 
 public class Application {
   
-    public static void main(String[] args) {
-        RootController rootApplication = new RootController();
-        rootApplication.startApplication();
+    public static void main(String[] args) throws IOException {
+        RootHandler rootHandler = new RootHandler();
+        rootHandler.start();
     }
 }
