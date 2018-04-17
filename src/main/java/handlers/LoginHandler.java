@@ -3,6 +3,7 @@ package handlers;
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import com.google.common.io.Resources;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.LoginDAO;
@@ -11,6 +12,7 @@ import model.database.User;
 
 import java.io.*;
 import java.net.HttpCookie;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -66,7 +68,7 @@ public class LoginHandler implements HttpHandler {
 
         HttpCookie cookie;
         Pair<String, String> loginPassword = parseLoginData(formData);
-        System.out.println(loginPassword);
+        System.out.println(loginPassword.getKey() + " " + loginPassword.getValue());
 
         if (loginDAO.getByLoginAndPassword(loginPassword.getKey(), loginPassword.getValue()) != null) {
 
@@ -87,14 +89,16 @@ public class LoginHandler implements HttpHandler {
 
     private void makeRedirection(HttpExchange httpExchange, String sessionId) throws IOException {
 
-//        int userId = sessionsUsers.get(sessionId);
-//        User user = userDAO.getById(userId);
-//        model.with("userLogin", user.getLogin());
-//        String response = template.render(model);
-//        httpExchange.sendResponseHeaders(200, response.length());
-//        OutputStream os = httpExchange.getResponseBody();
-//        os.write(response.getBytes());
-//        os.close();
+        int userId = sessionsUsers.get(sessionId);
+        User user = loginDAO.getById(userId);
+
+        if (user.getRoleId() == 2) {
+            System.out.println("Mentor logged!");
+            Headers headers = httpExchange.getResponseHeaders();
+            String redirect = "/mentor";
+            headers.add("Location", redirect);
+            httpExchange.sendResponseHeaders(301, -1);
+        }
     }
 
     private void sendLoginPage(HttpExchange httpExchange) throws IOException {
@@ -119,10 +123,6 @@ public class LoginHandler implements HttpHandler {
             String[] keyValue = pair.split("=");
             values.add(URLDecoder.decode(keyValue[VALUE_INDEX], Charsets.UTF_8.displayName()));
         }
-        return new Pair<>(values.get(LOGIN_INDEX), makeSHA256Hash(values.get(PASSWORD_INDEX)));
-    }
-
-    private String makeSHA256Hash(String input) {
-        return Hashing.sha256().hashString(input, Charsets.UTF_8).toString();
+        return new Pair<>(values.get(LOGIN_INDEX), values.get(PASSWORD_INDEX));
     }
 }
