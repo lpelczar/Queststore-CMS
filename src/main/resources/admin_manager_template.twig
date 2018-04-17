@@ -30,7 +30,7 @@
                         <a class="navi-button" onclick="displayWindow()">Show all mentors</a>
                     </li>
                     <li class="nav-element">
-                        <a href="">Add new mentor</a>
+                        <a class="navi-button" onclick="displayAddMentorTable()">Add new mentor</a>
                     </li>
                     <li class="nav-element">
                         <a id="edit_mentor" onclick="display_mentors_profile()">Edit mentor profile</a>
@@ -71,9 +71,9 @@
                     <div id="mentors-table-name">Mentors Table</div>
 
                     <ul class="mentors-lists">
-                        <li><a class="mentor-list">Mentor 1</a></li>
-                        <li><a class="mentor-list">Mentor 2</a></li>
-                        <li><a class="mentor-list">Mentor 3</a></li>
+                        {% for element in mentors %}
+                        <li> {{ element.getName() }} {{ mentor.getLastName() }}</li>
+                        {% endfor %}
                     </ul>
 
                     <div id="profile-editor">
@@ -116,9 +116,9 @@
                 <div class="groups table" onclick="group_table_center()">
                     <div id="groups-table-name">Groups Table</div>
                     <ul class="groups-lists">
-                        <li class="group-list" onclick="">Group A</li>
-                        <li class="group-list">Group B</li>
-                        <li class="group-list">Group C</li>
+                        {% for element in groups %}
+                        <li> {{ element.getGroupName() }}</li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -126,7 +126,29 @@
             <div id="row-table">
                 <div class="assigned table">
                     <div id="assigned-table-name">Mentors assigned to groups</div>
-                    <ul></ul>
+
+                    <form method="POST" id="add-mentor-form">
+
+                        <div>
+                            <div class="input-labels">Name</div>
+                            <input class="add-input" type="text" name="name">
+                        </div>
+
+                        <div>
+                            <div class="input-labels">Last name</div>
+                            <input class="add-input" type="text" name="last-name">
+                        </div>
+
+                        <div>
+                            <div class="input-labels">Email</div>
+                            <input class="add-input" type="text" name="email">
+                        </div>
+
+                        <div class="mentor-profile-button">
+                            <input type="button" value="Cancel" class="mentor-profile-button" formmethod="get">
+                            <input type="submit" value="Accept" class="mentor-profile-button">
+                        </div>
+                    </form>
                 </div>
             </div>
 
