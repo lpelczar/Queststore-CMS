@@ -12,7 +12,6 @@ import model.database.User;
 
 import java.io.*;
 import java.net.HttpCookie;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ public class LoginHandler implements HttpHandler {
             if (sessionCookie != null) {
                 cookie = HttpCookie.parse(sessionCookie).get(0);
                 if (sessionsUsers.containsKey(cookie.getValue())) {
-                    makeRedirection(httpExchange, cookie.getValue());
+                    makeRedirection(httpExchange, cookie);
                     return;
                 }
             }
@@ -80,15 +79,16 @@ public class LoginHandler implements HttpHandler {
             httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
             sessionsUsers.put(sessionId, user.getUserId());
             System.out.println(sessionsUsers.toString());
-            makeRedirection(httpExchange, sessionId);
+            makeRedirection(httpExchange, cookie);
 
         } else {
             sendLoggingErrorPage(httpExchange);
         }
     }
 
-    private void makeRedirection(HttpExchange httpExchange, String sessionId) throws IOException {
+    private void makeRedirection(HttpExchange httpExchange, HttpCookie cookie) throws IOException {
 
+        String sessionId = cookie.getValue();
         int userId = sessionsUsers.get(sessionId);
         User user = loginDAO.getById(userId);
 
@@ -97,6 +97,7 @@ public class LoginHandler implements HttpHandler {
             Headers headers = httpExchange.getResponseHeaders();
             String redirect = "/mentor";
             headers.add("Location", redirect);
+            headers.add("Set-Cookie", cookie.toString());
             httpExchange.sendResponseHeaders(301, -1);
         }
     }
