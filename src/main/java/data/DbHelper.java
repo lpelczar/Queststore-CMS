@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class DbHelper {
 
-    private static String DATABASE_PATH = "queststore.db";
+    private String databasePath = "queststore.db";
     private static final String DRIVER = "org.sqlite.JDBC";
     private Connection connection;
 
@@ -17,9 +17,9 @@ public class DbHelper {
             SQLiteConfig config = new SQLiteConfig();
             config.enforceForeignKeys(true);
             Class.forName(DRIVER);
-            connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_PATH, config.toProperties());
+            connection = DriverManager.getConnection("jdbc:sqlite:" + databasePath, config.toProperties());
         } catch ( Exception e ) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.err.println(e.getMessage());
             System.exit(0);
         }
     }
@@ -53,5 +53,9 @@ public class DbHelper {
             closeConnection();
         }
         return false;
+    }
+
+    public void setDatabasePath(String databasePath) {
+        this.databasePath = databasePath;
     }
 }
