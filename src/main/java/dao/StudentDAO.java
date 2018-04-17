@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public interface StudentDB {
+public interface StudentDAO {
 
     StudentModel loadStudent(int id);
     void exportStudent(StudentModel student);

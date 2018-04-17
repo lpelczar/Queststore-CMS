@@ -2,6 +2,6 @@ package dao;
 
 import model.GroupModel;
 
-public interface GroupDB {
+public interface GroupDAO {
     void add(GroupModel groupModel);
 }

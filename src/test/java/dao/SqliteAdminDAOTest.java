@@ -13,10 +13,10 @@ import java.nio.file.Files;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AdminDBImplementTest {
+class SqliteAdminDAOTest {
 
-    private AdminDB adminDao;
-    private LoginDB userDao;
+    private AdminDAO adminDao;
+    private UserDAO userDao;
     private String testDbPath = "testDb.db";
     private String createTables = "CreateTables.sql";
     private AdminModel admin;
@@ -30,8 +30,8 @@ class AdminDBImplementTest {
 
     @BeforeEach
     void createAdminDao() throws IOException {
-        adminDao = new AdminDBImplement();
-        userDao = new LoginDBImplement();
+        adminDao = new SqliteAdminDAO();
+        userDao = new SqliteUserDAO();
         admin = new AdminModel("1", "login", "password", "name", "lastName", "email");
         mentor = new MentorModel("2", "loginMentor", "passwordMentor", "nameMentor", "lastNameMentor", "emailMentor");
 

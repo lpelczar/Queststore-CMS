@@ -15,10 +15,10 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class StudentDBTest {
+class StudentDAOTest {
 
-    private StudentDB studentDB;
-    private LoginDB loginDB;
+    private StudentDAO studentDAO;
+    private UserDAO userDAO;
 
     @BeforeAll
     static void beforeAll() throws IOException {
@@ -32,18 +32,18 @@ class StudentDBTest {
     @BeforeEach
     void beforeEach() {
         truncateAllTables();
-        studentDB = new StudentDBImplement();
-        loginDB = new LoginDBImplement();
+        studentDAO = new SqliteStudentDAO();
+        userDAO = new SqliteUserDAO();
     }
 
     @Test
     void exportingStudentToDatabaseTest() {
         StudentModel expected = new StudentModel("0", "TestLogin", "TestPassword",
                 "TestName","TestLastName");
-        loginDB.saveNewUserToDatabase(expected);
+        userDAO.saveNewUserToDatabase(expected);
         expected.setLogin("New login");
-        studentDB.exportStudent(expected);
-        StudentModel result = studentDB.loadStudent(1);
+        studentDAO.exportStudent(expected);
+        StudentModel result = studentDAO.loadStudent(1);
         assertEquals(expected, result);
     }
 
@@ -53,12 +53,12 @@ class StudentDBTest {
                 "TestName1","TestLastName1");
         StudentModel studentModel2 = new StudentModel("2", "TestLogin2", "TestPassword2",
                 "TestName2","TestLastName2");
-        loginDB.saveNewUserToDatabase(studentModel1);
-        loginDB.saveNewUserToDatabase(studentModel2);
+        userDAO.saveNewUserToDatabase(studentModel1);
+        userDAO.saveNewUserToDatabase(studentModel2);
         ArrayList<StudentModel> expected = new ArrayList<>();
         expected.add(studentModel1);
         expected.add(studentModel2);
-        ArrayList<StudentModel> result = studentDB.getAllStudents();
+        ArrayList<StudentModel> result = studentDAO.getAllStudents();
         assertEquals(expected, result);
     }
 

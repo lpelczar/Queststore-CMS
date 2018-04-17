@@ -5,7 +5,7 @@ import model.GroupModel;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class GroupDBImplement extends OpenCloseConnectionWithDB implements GroupDB {
+public class SqliteGroupDAO extends OpenCloseConnectionWithDB implements GroupDAO {
 
     @Override
     public void add(GroupModel groupModel) {

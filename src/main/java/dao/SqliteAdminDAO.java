@@ -6,14 +6,14 @@ import utils.ProcessManager;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class AdminDBImplement extends OpenCloseConnectionWithDB implements AdminDB {
+public class SqliteAdminDAO extends OpenCloseConnectionWithDB implements AdminDAO {
 
     private String idColumnName;
     private String tableName;
     private QueriesGenerator generator;
     private ProcessManager processManager = new ProcessManager();
 
-    public AdminDBImplement() {
+    public SqliteAdminDAO() {
         this.tableName = "admins";
         this.idColumnName = "admin_id";
         this.generator = new QueriesGenerator();

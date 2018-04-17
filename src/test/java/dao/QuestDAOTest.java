@@ -11,13 +11,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class QuestDBTest {
+class QuestDAOTest {
 
-    private QuestDB questDB;
+    private QuestDAO questDAO;
 
     @BeforeAll
     static void beforeAll() throws IOException {
@@ -31,31 +30,31 @@ class QuestDBTest {
     @BeforeEach
     void beforeEach() {
         truncateAllTables();
-        questDB = new QuestDBImplement();
+        questDAO = new SqliteQuestDAO();
     }
 
     @Test
     void savingNewQuestToDbAndGettingQuestByIdTest() {
         QuestModel expected = new QuestModel("1", "TestQuest1", "TestDesc1", 15);
-        questDB.saveNewQuestToDatabase(expected);
-        QuestModel result = questDB.getQuestById(1);
+        questDAO.saveNewQuestToDatabase(expected);
+        QuestModel result = questDAO.getQuestById(1);
         assertEquals(expected, result);
     }
 
     @Test
     void updatingQuestTest() {
         QuestModel questModel1 = new QuestModel("1", "TestQuest1", "TestDesc1", 15);
-        questDB.saveNewQuestToDatabase(questModel1);
+        questDAO.saveNewQuestToDatabase(questModel1);
         questModel1.setDescription("NewDescription");
         questModel1.setName("NewName");
         questModel1.setPrice(150);
-        questDB.updateEditedQuestInDatabase(questModel1);
+        questDAO.updateEditedQuestInDatabase(questModel1);
         assertEquals(questModel1, QuestModel.getQuests().get(0));
     }
 
     @Test
     void gettingLastIdIfNoEntitiesInDbTest() {
-        Integer result = questDB.getLastId();
+        Integer result = questDAO.getLastId();
         assertEquals(new Integer(0), result);
     }
 
@@ -63,10 +62,10 @@ class QuestDBTest {
     void gettingLastIdTest() {
         QuestModel questModel1 = new QuestModel("1", "TestQuest1", "TestDesc1", 15);
         QuestModel questModel2 = new QuestModel("2", "TestQuest2", "TestDesc2", 15);
-        questDB.saveNewQuestToDatabase(questModel1);
-        questDB.saveNewQuestToDatabase(questModel2);
+        questDAO.saveNewQuestToDatabase(questModel1);
+        questDAO.saveNewQuestToDatabase(questModel2);
         Integer expected = 2;
-        Integer result = questDB.getLastId();
+        Integer result = questDAO.getLastId();
         assertEquals(expected, result);
     }
 

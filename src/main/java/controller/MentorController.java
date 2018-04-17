@@ -1,10 +1,10 @@
 package controller;
 
 import model.GroupModel;
-import dao.LoginDB;
-import dao.LoginDBImplement;
-import dao.StudentDB;
-import dao.StudentDBImplement;
+import dao.UserDAO;
+import dao.SqliteUserDAO;
+import dao.StudentDAO;
+import dao.SqliteStudentDAO;
 import model.StudentModel;
 import utils.InputGetter;
 import view.MentorView;
@@ -12,8 +12,8 @@ import view.MentorView;
 import java.util.ArrayList;
 
 public class MentorController {
-    private LoginDB loginDB;
-    private StudentDB studentDB;
+    private UserDAO userDAO;
+    private StudentDAO studentDAO;
     private QuestController quest;
     private MentorView mentorView;
     private String HEADER = "======= HELLO-MENTOR =======\n";
@@ -30,16 +30,16 @@ public class MentorController {
 
 
     MentorController() {
-        this.loginDB = new LoginDBImplement();
+        this.userDAO = new SqliteUserDAO();
         this.quest = new QuestController();
-        this.studentDB = new StudentDBImplement();
+        this.studentDAO = new SqliteStudentDAO();
         // this.wallet = new WalletModel();
         this.mentorView = new MentorView();
-        this.existingStudents = studentDB.getAllStudents();
+        this.existingStudents = studentDAO.getAllStudents();
     }
 
     void run(String id) {
-        GroupModel mentorGroup = studentDB.getMentorGroupByMentorID(id);
+        GroupModel mentorGroup = studentDAO.getMentorGroupByMentorID(id);
         Integer option = 1;
 
         while (!(option == 6)) {
@@ -48,11 +48,11 @@ public class MentorController {
 
             switch (option) {
                 case 1:
-                    createStudent(studentDB, mentorGroup);
+                    createStudent(studentDAO, mentorGroup);
                     break;
                 case 2:
                     StudentModel studentToEdit = this.editStudent();
-                    studentDB.exportStudent(studentToEdit);
+                    studentDAO.exportStudent(studentToEdit);
                     break;
                 case 3:
                     mentorView.displayListOfObjects(mentorGroup.getStudents());
@@ -71,11 +71,11 @@ public class MentorController {
     }
 
 
-    public void createStudent(StudentDB studentDB, GroupModel mentorGroup) {
+    public void createStudent(StudentDAO studentDAO, GroupModel mentorGroup) {
         mentorView.displayText("This student will be added to your group, press enter to continue");
         InputGetter.getString();
 
-        String id = loginDB.getLastId();
+        String id = userDAO.getLastId();
         String login = InputGetter.getString("Please enter student login: ");
         String password = InputGetter.getString("Please enter student password: ");
         String name = InputGetter.getString("Please enter student name: ");
@@ -83,8 +83,8 @@ public class MentorController {
 
         StudentModel newStudent = new StudentModel(id, login, password, name, lastName);
 
-        loginDB.saveNewUserToDatabase(newStudent);
-        studentDB.insertNewStudentToGroup(Integer.valueOf(newStudent.getId()), mentorGroup.getGroupId());
+        userDAO.saveNewUserToDatabase(newStudent);
+        studentDAO.insertNewStudentToGroup(Integer.valueOf(newStudent.getId()), mentorGroup.getGroupId());
 
         mentorView.displayText("Student created successfully");
     }

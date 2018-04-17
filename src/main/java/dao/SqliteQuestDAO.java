@@ -3,14 +3,13 @@ package dao;
 import model.QuestModel;
 
 import java.sql.*;
-import java.util.ArrayList;
 
-public class QuestDBImplement extends OpenCloseConnectionWithDB implements QuestDB {
+public class SqliteQuestDAO extends OpenCloseConnectionWithDB implements QuestDAO {
 
     private QueriesGenerator generator;
     private String tableName;
 
-    public QuestDBImplement() {
+    public SqliteQuestDAO() {
         this.tableName = "quests";
         this.generator = new QueriesGenerator();
     }

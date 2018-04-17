@@ -8,14 +8,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class WalletDBImplement {
+public class SqliteWalletDAO {
 
     private QueriesGenerator generator;
     private String artefactTableName;
     private String studentsTableName;
     private String artefactIdColumn;
 
-    public WalletDBImplement() {
+    public SqliteWalletDAO() {
         this.generator = new QueriesGenerator();
         this.artefactTableName = "artefacts";
         this.studentsTableName = "students_artefacts";

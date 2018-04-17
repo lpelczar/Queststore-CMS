@@ -12,9 +12,9 @@ import java.util.Set;
 
 class AdminController {
 
-    private LoginDB loginDB;
-    private AdminDB adminDB;
-    private StudentDB studentDB;
+    private UserDAO userDAO;
+    private AdminDAO adminDB;
+    private StudentDAO studentDAO;
     private AdminView view;
     private String HEADER2 = "Choose what attribute you want to edit";
     private final String[] OPTIONS = {"Display existing mentors", "Create Mentor",
@@ -26,9 +26,9 @@ class AdminController {
                                        "Surname", "Email"};
 
     AdminController() {
-        this.loginDB = new LoginDBImplement();
-        this.adminDB = new AdminDBImplement();
-        this.studentDB = new StudentDBImplement();
+        this.userDAO = new SqliteUserDAO();
+        this.adminDB = new SqliteAdminDAO();
+        this.studentDAO = new SqliteStudentDAO();
         this.view = new AdminView();
 
     }
@@ -57,7 +57,7 @@ class AdminController {
                     assignMentorToGroup(admin);
                     break;
                 case 5:
-                    displayMentorsGroup(admin, studentDB);
+                    displayMentorsGroup(admin, studentDAO);
                     break;
                 case 6:
                     editAdminInfo(admin);
@@ -123,7 +123,7 @@ class AdminController {
         }
     }
 
-    private void addExistingMentors(AdminDB database, AdminModel admin) {
+    private void addExistingMentors(AdminDAO database, AdminModel admin) {
         ArrayList<String[]> loginsInfo = database.getMentorsDataFromDatabase(2);
         for (String[] userInfo : loginsInfo) {
             MentorModel mentorToAdd;
@@ -149,7 +149,7 @@ class AdminController {
 
     private void addMentorToDb(MentorModel mentor, AdminModel admin) {
         admin.getMentors().add(mentor);
-        loginDB.saveNewUserToDatabase(mentor);
+        userDAO.saveNewUserToDatabase(mentor);
         view.displayText("Mentor created successfully");
     }
 
@@ -172,19 +172,19 @@ class AdminController {
        return admin.getMentors().get(mentorIndex);
      }
 
-     private void displayMentorsGroup(AdminModel admin, StudentDB studentDB){
+     private void displayMentorsGroup(AdminModel admin, StudentDAO studentDAO){
         view.displayText("Choose admin to show his class (press enter to continue)");
         InputGetter.getString();
 
         MentorModel mentorToShow = getMentor(admin);
         String mentorId = mentorToShow.getId();
-        GroupModel groupToShow = studentDB.getMentorGroupByMentorID(mentorId);
+        GroupModel groupToShow = studentDAO.getMentorGroupByMentorID(mentorId);
 
         view.displayText(mentorToShow.getName() + " " + mentorToShow.getLastName() + " Group:");
         view.displayListOfObjects(groupToShow.getStudents());
      }
 
-     private void editMentorProfile(AdminModel admin, AdminDB database) {
+     private void editMentorProfile(AdminModel admin, AdminDAO database) {
        boolean optionChosen = false;
 
        while(!optionChosen) {
@@ -248,7 +248,7 @@ class AdminController {
             else
                 {mentorNotChosen = false;}
         }
-           String newGroup = this.setGroupForMentor(loginDB.getExistingGroups());
+           String newGroup = this.setGroupForMentor(userDAO.getExistingGroups());
            adminDB.createNewGroupAndAssignMentorToIt(newGroup, mentorId);
            view.displayText("Mentor assigned successfully");
  }

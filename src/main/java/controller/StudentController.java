@@ -8,8 +8,8 @@ import model.StudentModel;
 
 class StudentController {
 
-    private StudentDB studentDB;
-    private WalletDBImplement walletDB;
+    private StudentDAO studentDAO;
+    private SqliteWalletDAO walletDB;
     private StudentView view;
     private final String HEADER = "======= HELLO-STUDENT =======\n";
     private final String[] OPTIONS = {"Display my profile",
@@ -20,13 +20,13 @@ class StudentController {
                                       "Exit"};
 
     StudentController() {
-        this.studentDB = new StudentDBImplement();
-        this.walletDB = new WalletDBImplement();
+        this.studentDAO = new SqliteStudentDAO();
+        this.walletDB = new SqliteWalletDAO();
         this.view = new StudentView();
     }
 
     void run(String id) {
-        StudentModel student = studentDB.loadStudent(Integer.valueOf(id));
+        StudentModel student = studentDAO.loadStudent(Integer.valueOf(id));
         WalletModel wallet = walletDB.loadWalletModel(Integer.valueOf(id));
         Integer option = 1;
         while (!(option == 6)) {
@@ -47,7 +47,7 @@ class StudentController {
                     break;
                 case 4:
                     this.editProfile(student);
-                    studentDB.exportStudent(student);
+                    studentDAO.exportStudent(student);
                     break;
                 case 5:
 

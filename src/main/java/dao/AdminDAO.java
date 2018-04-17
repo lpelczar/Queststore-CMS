@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Set;
 
-public interface AdminDB {
+public interface AdminDAO {
 
     void findAllDataOfAdmin(int admin_id);
     void insertAdminData(String name, String lastname, String email);

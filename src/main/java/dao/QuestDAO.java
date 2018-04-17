@@ -5,7 +5,7 @@ import model.QuestModel;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-public interface QuestDB {
+public interface QuestDAO {
 
     Integer getLastId();
     QuestModel getQuestById(int id);

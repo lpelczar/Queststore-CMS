@@ -1,17 +1,17 @@
 package controller;
 
-import dao.LoginDBImplement;
+import dao.SqliteUserDAO;
 import utils.InputGetter;
 import view.LoginView;
 
 
 class LoginController {
 
-    private LoginDBImplement loginDB;
+    private SqliteUserDAO loginDB;
     private LoginView view;
 
     LoginController() {
-        this.loginDB = new LoginDBImplement();
+        this.loginDB = new SqliteUserDAO();
         this.view = new LoginView();
     }
 

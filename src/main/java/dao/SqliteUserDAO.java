@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class LoginDBImplement extends OpenCloseConnectionWithDB implements LoginDB {
+public class SqliteUserDAO extends OpenCloseConnectionWithDB implements UserDAO {
 
     private ProcessManager processManager = new ProcessManager();
 

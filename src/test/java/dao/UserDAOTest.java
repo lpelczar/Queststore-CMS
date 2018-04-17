@@ -23,10 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-class LoginDBTest {
+class UserDAOTest {
 
-    private LoginDB loginDB;
-    private GroupDB groupDB;
+    private UserDAO userDAO;
+    private GroupDAO groupDAO;
 
     @BeforeAll
     static void beforeAll() throws IOException {
@@ -40,8 +40,8 @@ class LoginDBTest {
     @BeforeEach
     void beforeEach() {
         truncateAllTables();
-        loginDB = new LoginDBImplement();
-        groupDB = new GroupDBImplement();
+        userDAO = new SqliteUserDAO();
+        groupDAO = new SqliteGroupDAO();
     }
 
     @Test
@@ -51,8 +51,8 @@ class LoginDBTest {
         String role = "TestRole";
         String id = "1";
         String[] expected = {id, role};
-        loginDB.insertAllLoginData(login, password, role);
-        String[] results = loginDB.findUserIdAndRole(login, password);
+        userDAO.insertAllLoginData(login, password, role);
+        String[] results = userDAO.findUserIdAndRole(login, password);
         assertArrayEquals(expected, results);
     }
 
@@ -60,9 +60,9 @@ class LoginDBTest {
     void savingStudentUserToDatabaseTest() {
         StudentModel userModel = new StudentModel("1", "TestLogin", "TestPassword",
                 "Jerzy", "Mardaus");
-        loginDB.saveNewUserToDatabase(userModel);
+        userDAO.saveNewUserToDatabase(userModel);
         String[] expected = {userModel.getId(), "3"};
-        String[] results = loginDB.findUserIdAndRole(userModel.getLogin(), userModel.getPassword());
+        String[] results = userDAO.findUserIdAndRole(userModel.getLogin(), userModel.getPassword());
         assertArrayEquals(expected, results);
     }
 
@@ -70,9 +70,9 @@ class LoginDBTest {
     void savingMentorUserToDatabaseTest() {
         MentorModel userModel = new MentorModel("1", "TestLogin", "TestPassword",
                 "Jerzy", "Mardaus");
-        loginDB.saveNewUserToDatabase(userModel);
+        userDAO.saveNewUserToDatabase(userModel);
         String[] expected = {userModel.getId(), "2"};
-        String[] results = loginDB.findUserIdAndRole(userModel.getLogin(), userModel.getPassword());
+        String[] results = userDAO.findUserIdAndRole(userModel.getLogin(), userModel.getPassword());
         assertArrayEquals(expected, results);
     }
 
@@ -80,9 +80,9 @@ class LoginDBTest {
     void savingAdminUserToDatabaseTest() {
         AdminModel userModel = new AdminModel("1", "TestLogin", "TestPassword",
                 "Jerzy", "Mardaus");
-        loginDB.saveNewUserToDatabase(userModel);
+        userDAO.saveNewUserToDatabase(userModel);
         String[] expected = {userModel.getId(), "1"};
-        String[] results = loginDB.findUserIdAndRole(userModel.getLogin(), userModel.getPassword());
+        String[] results = userDAO.findUserIdAndRole(userModel.getLogin(), userModel.getPassword());
         assertArrayEquals(expected, results);
     }
 
@@ -91,11 +91,11 @@ class LoginDBTest {
         String login = "TestLogin";
         String password = "TestPassword";
         String role = "TestRole";
-        loginDB.insertAllLoginData(login, password, role);
+        userDAO.insertAllLoginData(login, password, role);
         String newLogin = "NewLogin";
         String newPassword = "NewPassword";
-        loginDB.updateUserLoginAndPassword(newLogin, newPassword, 1);
-        String[] results = loginDB.findUserIdAndRole(newLogin, newPassword);
+        userDAO.updateUserLoginAndPassword(newLogin, newPassword, 1);
+        String[] results = userDAO.findUserIdAndRole(newLogin, newPassword);
         String[] expected = {"1", role};
         assertArrayEquals(expected, results);
     }
@@ -105,24 +105,24 @@ class LoginDBTest {
         String login = "TestLogin";
         String password = "TestPassword";
         String role = "TestRole";
-        loginDB.insertAllLoginData(login, password, role);
-        loginDB.deleteAllUserLoginData(1);
-        String[] results = loginDB.findUserIdAndRole(login, password);
+        userDAO.insertAllLoginData(login, password, role);
+        userDAO.deleteAllUserLoginData(1);
+        String[] results = userDAO.findUserIdAndRole(login, password);
         assertNull(results[0]);
         assertNull(results[1]);
     }
 
     @Test
     void gettingLastIdIfNoEntitiesInDatabaseTest() {
-        String id = loginDB.getLastId();
+        String id = userDAO.getLastId();
         assertNull(id);
     }
 
     @Test
     void gettingLastIdTest() {
-        loginDB.insertAllLoginData("TestLogin1", "TestPassword1", "TestRole1");
-        loginDB.insertAllLoginData("TestLogin2", "TestPassword2", "TestRole2");
-        String id = loginDB.getLastId();
+        userDAO.insertAllLoginData("TestLogin1", "TestPassword1", "TestRole1");
+        userDAO.insertAllLoginData("TestLogin2", "TestPassword2", "TestRole2");
+        String id = userDAO.getLastId();
         assertEquals("2", id);
     }
 
@@ -130,10 +130,10 @@ class LoginDBTest {
     void gettingExistingGroupsTest() {
         GroupModel groupModel1 = new GroupModel("Sign1", 1, 1, new ArrayList<>());
         GroupModel groupModel2 = new GroupModel("Sign2", 2, 2, new ArrayList<>());
-        groupDB.add(groupModel1);
-        groupDB.add(groupModel2);
+        groupDAO.add(groupModel1);
+        groupDAO.add(groupModel2);
         Set<String> expected = new HashSet<>(Arrays.asList("Sign1", "Sign2"));
-        Set<String> result = loginDB.getExistingGroups();
+        Set<String> result = userDAO.getExistingGroups();
         assertEquals(expected, result);
     }
 

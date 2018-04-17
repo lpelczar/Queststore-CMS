@@ -8,7 +8,7 @@ import dao.*;
 
 public class QuestController {
 
-    private QuestDBImplement questDB;
+    private SqliteQuestDAO questDB;
     private QuestView viewQuest;
     private final String HEADER = "======= QUEST OPTION =======\n";
     private final String[] OPTIONS = {"Create new Quest",
@@ -20,7 +20,7 @@ public class QuestController {
 
     public QuestController() {
         viewQuest = new QuestView();
-        questDB = new QuestDBImplement();
+        questDB = new SqliteQuestDAO();
 
     }
 

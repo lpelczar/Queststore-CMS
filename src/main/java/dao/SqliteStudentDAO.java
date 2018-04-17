@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import model.GroupModel;
 import model.StudentModel;
 
-public class StudentDBImplement extends OpenCloseConnectionWithDB implements StudentDB {
+public class SqliteStudentDAO extends OpenCloseConnectionWithDB implements StudentDAO {
 
     private String idColumnName;
     private String tableName;
     QueriesGenerator generator;
     private int role;
 
-    public StudentDBImplement() {
+    public SqliteStudentDAO() {
         this.tableName = "students";
         this.idColumnName = "student_id";
         this.role = 3;
