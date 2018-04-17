@@ -143,4 +143,9 @@ public class QueriesGenerator {
 
     }
 
+    public PreparedStatement getAllMentors() {
+        String sqlStatement = "SELECT * FROM mentors";
+        return processManager.getPreparedStatement(sqlStatement);
+    }
+
 }
