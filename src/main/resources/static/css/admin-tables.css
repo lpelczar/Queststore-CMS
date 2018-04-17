@@ -125,5 +125,32 @@
     color: black;
 }
 
+#add-mentor-form {
+    display: none;
+    justify-content: center;
+    height: 50%;
+    padding-top: 5%;
+}
+
+.input-labels {
+    text-align: center;
+}
+
+.add-input {
+    background-color: darkgrey;
+    height: 30%;
+    width: 200px;
+    border-radius: 10px;
+    border-width: 0;
+    box-shadow: 2px 2px ghostwhite;
+
+}
+
+.mentor-profile-button {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 100%;
+}
 
 
