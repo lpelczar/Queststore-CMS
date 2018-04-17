@@ -7,6 +7,12 @@ public class Mentor {
     private String lastName;
     private String email;
 
+    public Mentor(String name, String lastName, String email) {
+        this.name = name;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
     public Mentor(int mentor_id, String name, String lastName, String email) {
         this.mentor_id = mentor_id;
         this.name = name;
