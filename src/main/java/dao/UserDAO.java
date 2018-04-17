@@ -1,6 +1,7 @@
 package dao;
 
 import model.UserModel;
+import model.database.User;
 
 import java.sql.Connection;
 import java.util.ArrayList;
