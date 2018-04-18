@@ -1,5 +1,6 @@
 package handlers;
 
+import com.google.common.io.Resources;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -15,6 +16,7 @@ import org.jtwig.JtwigTemplate;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpCookie;
+import java.net.URL;
 
 public class MentorHandler implements HttpHandler {
 
@@ -38,6 +40,10 @@ public class MentorHandler implements HttpHandler {
             }
             redirectToLogin(httpExchange);
         }
+
+        if (method.equals("POST")) {
+            // TODO 1: post methods
+        }
     }
 
     private void redirectToLogin(HttpExchange httpExchange) throws IOException {
@@ -57,13 +63,18 @@ public class MentorHandler implements HttpHandler {
         int userId = session.getUserId();
         User user = loginDAO.getById(userId);
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
-        JtwigModel model = JtwigModel.newModel();
-        model.with("userName", user.getLogin());
-        String response = template.render(model);
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        if (path.contains("add")) {
+            URL fileURL = Resources.getResource("static/mentor/add_quest.html");
+            StaticHandler.sendFile(httpExchange, fileURL);
+        } else {
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
+            JtwigModel model = JtwigModel.newModel();
+            model.with("userName", user.getLogin());
+            String response = template.render(model);
+            httpExchange.sendResponseHeaders(200, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
     }
 }
