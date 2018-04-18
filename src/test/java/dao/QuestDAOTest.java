@@ -24,7 +24,7 @@ class QuestDAOTest {
         Files.deleteIfExists(new File(testDbPath).toPath());
         OpenCloseConnectionWithDB.setDatabasePath(testDbPath);
         DatabaseCreator.setDatabasePath(testDbPath);
-        new DatabaseCreator().createDatabaseFromScript("CreateTables.sql");
+        new DatabaseCreator().createDatabaseFromScript("createTables.sql");
     }
 
     @BeforeEach

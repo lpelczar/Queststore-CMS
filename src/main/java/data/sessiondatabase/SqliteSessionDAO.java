@@ -1,13 +1,10 @@
 package data.sessiondatabase;
 
 import data.DbHelper;
-import data.PreparedStatementCreator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class SqliteSessionDAO extends DbHelper implements SessionDAO {
 
@@ -15,16 +12,15 @@ public class SqliteSessionDAO extends DbHelper implements SessionDAO {
         setDatabasePath("sessions.db");
     }
 
-    private PreparedStatementCreator psc = new PreparedStatementCreator();
-
     @Override
     public Session getById(String id) {
 
-        String statement = "SELECT * FROM sessions WHERE session_id = ?;";
-        PreparedStatement preparedStatement = psc.getPreparedStatementBy(Collections.singletonList(id), statement);
-
+        String statement = "SELECT * FROM sessions_table WHERE session_id = ?;";
         Session session = null;
+
         try {
+            PreparedStatement preparedStatement = getPreparedStatement(statement);
+            preparedStatement.setString(1, id);
             ResultSet resultSet = query(preparedStatement);
             while (resultSet.next())
                 session = new Session(
@@ -43,9 +39,18 @@ public class SqliteSessionDAO extends DbHelper implements SessionDAO {
 
     @Override
     public boolean add(Session session) {
-        String sqlStatement = "INSERT INTO sessions (session_id, user_id) VALUES (?,?); " ;
-        PreparedStatement statement = psc.getPreparedStatementBy(
-                Arrays.asList(session.getSessionId(), session.getUserId()), sqlStatement);
-        return update(statement);
+        String statement = "INSERT INTO sessions_table (session_id, user_id) VALUES (?,?); " ;
+        boolean isAdded = false;
+        try {
+            PreparedStatement preparedStatement = getPreparedStatement(statement);
+            preparedStatement.setString(1, session.getSessionId());
+            preparedStatement.setInt(2, session.getUserId());
+            if (update(preparedStatement)) {
+                isAdded = true;
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return isAdded;
     }
 }

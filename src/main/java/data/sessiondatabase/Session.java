@@ -1,20 +1,20 @@
 package data.sessiondatabase;
 
-class Session {
+public class Session {
 
     private String sessionId;
     private int userId;
 
-    Session(String sessionId, int userId) {
+    public Session(String sessionId, int userId) {
         this.sessionId = sessionId;
         this.userId = userId;
     }
 
-    String getSessionId() {
+    public String getSessionId() {
         return sessionId;
     }
 
-    int getUserId() {
+    public int getUserId() {
         return userId;
     }
 }

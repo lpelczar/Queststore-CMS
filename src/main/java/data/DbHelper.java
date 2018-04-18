@@ -41,8 +41,7 @@ public class DbHelper {
         return statement.executeQuery();
     }
 
-    public boolean update(PreparedStatement statement) {
-
+    protected boolean update(PreparedStatement statement) {
         try {
             openConnection();
             statement.executeUpdate();
@@ -55,7 +54,7 @@ public class DbHelper {
         return false;
     }
 
-    public void setDatabasePath(String databasePath) {
+    protected void setDatabasePath(String databasePath) {
         this.databasePath = databasePath;
     }
 }
