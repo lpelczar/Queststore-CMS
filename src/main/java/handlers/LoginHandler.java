@@ -99,7 +99,7 @@ public class LoginHandler implements HttpHandler {
         if (user.getRoleId() == 2) {
             System.out.println("Mentor logged!");
             Headers headers = httpExchange.getResponseHeaders();
-            String redirect = "/mentor";
+            String redirect = "/mentor/" + userId;
             headers.add("Location", redirect);
             headers.add("Set-Cookie", cookie.toString());
             httpExchange.sendResponseHeaders(301, -1);
