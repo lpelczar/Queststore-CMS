@@ -55,7 +55,7 @@
         <div id="window" class="window-modal">
             <div id="mentors-list-box">
                 <p id="title-mentor-box">Mentors List BOX</p>
-                <ul>
+                <ul id="mentors">
                     {% for mentor in mentors %}
                         <li id="mentor-data">{{ mentor.getName() }} {{ mentor.getLastName() }}</li>
                     {% endfor %}
