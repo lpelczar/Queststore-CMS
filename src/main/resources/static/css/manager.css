@@ -92,6 +92,15 @@ a {
     padding-left: 5%;
 }
 
+.nav-element input {
+    text-decoration: none;
+    text-align: left;
+    color: black;
+    display: block;
+    cursor: pointer;
+    padding-left: 5%;
+}
+
 .navi-button {
     text-decoration: none;
     color: black;

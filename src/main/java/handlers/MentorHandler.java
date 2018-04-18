@@ -1,5 +1,6 @@
 package handlers;
 
+import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
@@ -13,7 +14,9 @@ import model.database.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.net.URL;
@@ -42,7 +45,14 @@ public class MentorHandler implements HttpHandler {
         }
 
         if (method.equals("POST")) {
-            // TODO 1: post methods
+
+            String formData = getFormData(httpExchange);
+            System.out.println("Form data: " + formData);
+
+            if (formData.contains("logout")) {
+                // Delete cookies, delete session from db
+                redirectToLogin(httpExchange);
+            }
         }
     }
 
@@ -95,5 +105,11 @@ public class MentorHandler implements HttpHandler {
     private void showStaticPage(HttpExchange httpExchange, String pagePath) throws IOException {
         URL fileURL = Resources.getResource(pagePath);
         StaticHandler.sendFile(httpExchange, fileURL);
+    }
+
+    private String getFormData(HttpExchange httpExchange) throws IOException {
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), Charsets.UTF_8);
+        BufferedReader br = new BufferedReader(isr);
+        return br.readLine();
     }
 }
