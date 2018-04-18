@@ -127,25 +127,25 @@
                 <div class="assigned table">
                     <div id="assigned-table-name">Mentors assigned to groups</div>
 
-                    <form method="POST" id="add-mentor-form">
+                    <form method="POST" id="add-mentor-form" onsubmit="returnValidateInputs()">
 
                         <div>
                             <div class="input-labels">Name</div>
-                            <input class="add-input" type="text" name="name">
+                            <input class="add-input" type="text" name="name" required>
                         </div>
 
                         <div>
                             <div class="input-labels">Last name</div>
-                            <input class="add-input" type="text" name="last-name">
+                            <input class="add-input" type="text" name="last-name" required>
                         </div>
 
                         <div>
                             <div class="input-labels">Email</div>
-                            <input class="add-input" type="text" name="email">
+                            <input class="add-input" type="text" name="email" required>
                         </div>
 
                         <div class="mentor-profile-button">
-                            <input type="button" value="Cancel" class="mentor-profile-button" formmethod="get">
+                            <input type="button" value="Cancel" class="mentor-profile-button" onclick="cancelAddingMentor()">
                             <input type="submit" value="Accept" class="mentor-profile-button">
                         </div>
                     </form>
@@ -162,5 +162,6 @@
     </footer>
 </div>
 <script type="text/javascript" src="static/js/admin_manager.js"></script>
+<script type="text/javascript" src="static/js/add_mentor_manager.js"></script>
 </body>
 </html>
