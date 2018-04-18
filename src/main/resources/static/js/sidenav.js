@@ -1,13 +1,11 @@
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 function openNav() {
-    let menu = document.getElementById("mySidenav");
-    let main = document.getElementsByClassName("container")[0];
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
 
-    if (menu.style.height === "10%") {
-        menu.style.height = "0";
-        main.style.marginTop = "0";
-    }
-    else {
-        menu.style.height = "10%";
-        main.style.marginTop = "5%";
-    }
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
 }
