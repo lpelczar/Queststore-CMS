@@ -55,17 +55,31 @@ public class MentorHandler implements HttpHandler {
 
     private void showMentorPage(HttpExchange httpExchange, HttpCookie cookie) throws IOException {
 
-        String path = httpExchange.getRequestURI().getPath();
-        System.out.println("Path: " + path);
-
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
         int userId = session.getUserId();
         User user = loginDAO.getById(userId);
 
-        if (path.contains("add")) {
-            URL fileURL = Resources.getResource("static/mentor/add_quest.html");
-            StaticHandler.sendFile(httpExchange, fileURL);
+        handleShowingSubPage(httpExchange, user);
+    }
+
+    private void handleShowingSubPage(HttpExchange httpExchange, User user) throws IOException {
+
+        String path = httpExchange.getRequestURI().getPath();
+        System.out.println("Path: " + path);
+
+        if (path.contains("addstudent")) {
+            showStaticPage(httpExchange, "static/mentor/create_student.html");
+        } else if (path.contains("editstudent")) {
+            showStaticPage(httpExchange, "static/mentor/edit_student.html");
+        } else if (path.contains("addquest")) {
+            showStaticPage(httpExchange, "static/mentor/add_quest.html");
+        } else if (path.contains("showquests")) {
+            showStaticPage(httpExchange, "static/mentor/display_quests.html");
+        } else if (path.contains("editquest")) {
+            showStaticPage(httpExchange, "static/mentor/edit_quest.html");
+        } else if (path.contains("deletequest")) {
+            showStaticPage(httpExchange, "static/mentor/delete_quest.html");
         } else {
             JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
             JtwigModel model = JtwigModel.newModel();
@@ -76,5 +90,10 @@ public class MentorHandler implements HttpHandler {
             os.write(response.getBytes());
             os.close();
         }
+    }
+
+    private void showStaticPage(HttpExchange httpExchange, String pagePath) throws IOException {
+        URL fileURL = Resources.getResource(pagePath);
+        StaticHandler.sendFile(httpExchange, fileURL);
     }
 }
