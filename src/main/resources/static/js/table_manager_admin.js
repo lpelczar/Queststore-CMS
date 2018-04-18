@@ -1,13 +1,9 @@
 var row_table = document.getElementById('row-table');
-
 var columnTables = document.getElementById('column-tables');
 var title_table = document.getElementById("assigned-table-name");
 var form = document.getElementById("add-mentor-form");
 let mentor_table = document.getElementsByClassName('mentors table')[0];
-
 let group_table = document.getElementsByClassName('groups table')[0];
-let assign_table = document.getElementById('row-table');
-let content = document.getElementById('column-tables');
 
 function displayWindow() {
     let window = document.getElementById("window");
@@ -22,10 +18,10 @@ function displayWindow() {
 function mentor_table_center() {
     mentor_table.style.width = "80%";
     group_table.style.display = "none";
-    assign_table.style.display = "none";
+    row_table.style.display = "none";
 
-    content.style.justifyContent = "center";
-    content.style.height = "90%";
+    columnTables.style.justifyContent = "center";
+    columnTables.style.height = "90%";
 
     mentor_table.onclick = function () {
         window.location.href = "admin_manager.html";
@@ -35,10 +31,10 @@ function mentor_table_center() {
 function group_table_center() {
     group_table.style.width = "80%";
     mentor_table.style.display = "none";
-    assign_table.style.display = "none";
+    row_table.style.display = "none";
 
-    content.style.justifyContent = "center";
-    content.style.height = "90%";
+    columnTables.style.justifyContent = "center";
+    columnTables.style.height = "90%";
 
 
     group_table.onclick = function () {
