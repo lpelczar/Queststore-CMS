@@ -27,13 +27,13 @@
             <div id="mySidenav" class="sidenav">
                 <ul id="navi-list">
                     <li class="nav-element">
-                        <a class="navi-button" onclick="displayWindow()">Show all mentors</a>
+                        <a class="navi-button" onclick="displayWindow(); closeNav()">Show all mentors</a>
                     </li>
                     <li class="nav-element">
-                        <a class="navi-button" onclick="displayAddMentorTable()">Add new mentor</a>
+                        <a class="navi-button" onclick="displayEditWindow(); prepareTableForAddMentor(); closeNav()">Add new mentor</a>
                     </li>
                     <li class="nav-element">
-                        <a id="edit_mentor" onclick="display_mentors_profile()">Edit mentor profile</a>
+                        <a id="edit_mentor" onclick="displayEditWindow(); closeNav()">Edit mentor profile</a>
                     </li>
                     <li class="nav-element">
                         <a href="">Assign mentor-group</a>
@@ -161,7 +161,7 @@
         </div>
     </footer>
 </div>
-<script type="text/javascript" src="static/js/admin_manager.js"></script>
+<script type="text/javascript" src="static/js/table_manager_admin.js"></script>
 <script type="text/javascript" src="static/js/add_mentor_manager.js"></script>
 </body>
 </html>
