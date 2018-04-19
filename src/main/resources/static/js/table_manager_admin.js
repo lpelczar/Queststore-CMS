@@ -4,6 +4,7 @@ var title_table = document.getElementById("assigned-table-name");
 var form = document.getElementById("add-mentor-form");
 let mentor_table = document.getElementsByClassName('mentors table')[0];
 let group_table = document.getElementsByClassName('groups table')[0];
+let table_form = document.getElementsByClassName('table-form');
 
 function displayWindow() {
     let window = document.getElementById("window");
@@ -45,12 +46,13 @@ function group_table_center() {
 function displayEditWindow() {
     title_table.style.fontSize = "30px";
     title_table.style.backgroundColor = "background: rgba(180, 180, 180, 0.9)";
+    row_table.style.height = "80%";
+
     try {
         columnTables.style.display = "none";
     } catch (TypeError ) {
         ;
     }
-    row_table.style.height = "80%";
 }
 
 
@@ -59,24 +61,16 @@ function prepareTableForAddMentor() {
     form.style.display = "grid";
 }
 
+function prepareTableForEditMentor() {
+    title_table.textContent = "Profile editor";
+    form.style.display = "grid";
+
+    for (var i = 0; i < table_form.length; i++) {
+        table_form[i].style.textAlign = "-webkit-center";
+
+    }
+}
+
 function prepareTableForPickMentor() {
     title_table.textContent = "Choose mentor";
 }
-
-
-//
-// function edit_profile(mentor) {
-//     let mentor_table = document.getElementsByClassName('mentors-table')[0];
-//     let title_table = document.getElementById("mentors-table-name");
-//     let mentor_list = document.getElementsByClassName("mentors-lists")[0];
-//
-//     mentor_table.style.height = "80%";
-//     title_table.textContent = mentor + " profile editor";
-//     mentor_list.style.display = "none";
-//
-//     mentor_table.style.display = "initial";
-//
-//     let profile_editor = document.getElementById('profile-editor');
-//     profile_editor.style.display = "flex";
-//
-// }
