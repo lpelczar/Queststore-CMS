@@ -12,16 +12,19 @@ import dao.SqliteQuestDAO;
 import data.sessiondatabase.Session;
 import data.sessiondatabase.SessionDAO;
 import data.sessiondatabase.SqliteSessionDAO;
+import jdk.nashorn.internal.parser.JSONParser;
+import model.database.Quest;
 import model.database.User;
+import org.json.JSONObject;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpCookie;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import static handlers.MentorOptions.*;
 
@@ -56,8 +59,34 @@ public class MentorHandler implements HttpHandler {
 
             if (formData.contains("logout")) {
                 handleLogout(httpExchange);
+            } else if (formData.contains("add-quest")) {
+                handleAddingQuest(httpExchange, formData);
             }
         }
+    }
+
+    private void handleAddingQuest(HttpExchange httpExchange, String formData) throws IOException {
+
+        final int NAME_INDEX = 0;
+        final int DESCRIPTION_INDEX = 1;
+        final int PRICE_INDEX = 2;
+        final int VALUE_INDEX = 1;
+
+        String[] pairs = formData.split("&");
+        List<String> values = new ArrayList<>();
+        for (String pair : pairs) {
+            String[] keyValue = pair.split("=");
+            values.add(URLDecoder.decode(keyValue[VALUE_INDEX], Charsets.UTF_8.displayName()));
+        }
+
+        Quest quest = new Quest(values.get(NAME_INDEX), values.get(DESCRIPTION_INDEX),
+                Integer.parseInt(values.get(PRICE_INDEX)));
+        if (questDAO.add(quest)) {
+            System.out.println("Success adding quest!");
+        }
+
+        httpExchange.getResponseHeaders().add("Location", "/mentor/showquests");
+        httpExchange.sendResponseHeaders(301, -1);
     }
 
     private void handleLogout(HttpExchange httpExchange) throws IOException {

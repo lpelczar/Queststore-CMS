@@ -7,11 +7,15 @@ public class Quest {
     private String description;
     private int price;
 
-    public Quest(int questId, String name, String description, int price) {
-        this.questId = questId;
+    public Quest(String name, String description, int price) {
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public Quest(int questId, String name, String description, int price) {
+        this(name, description, price);
+        this.questId = questId;
     }
 
     public int getQuestId() {

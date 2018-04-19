@@ -55,11 +55,13 @@
     <div class="container">
 
         <div class="form">
-            <p>Please fill in the data to add new quest!</p>
-            <input type="text" placeholder="Name" required>
-            <input type="text" placeholder="Description" required>
-            <input type="text" placeholder="Price" required>
-            <a id="create-button">Add quest</a>
+            <form class="form" method="post">
+                <p>Please fill in the data to add new quest!</p>
+                <input class="field" type="text" name="name" placeholder="Name" required>
+                <input class="field" type="text" name="description" placeholder="Description" required>
+                <input class="field" type="number" name="price" placeholder="Price" required>
+                <input type="submit" name="add-quest" id="create-button" value="Add quest">
+            </form>
         </div>
 
     </div>

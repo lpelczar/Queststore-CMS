@@ -11,7 +11,7 @@ public class QuestStatement {
     }
 
     public String insertQuestStatement() {
-        return "INSERT INTO quests VALUES (?,?,?,?); ";
+        return "INSERT INTO quests (name, description, price) VALUES (?,?,?); ";
     }
 
     public String updateQuestStatement() {
