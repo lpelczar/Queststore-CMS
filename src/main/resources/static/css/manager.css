@@ -1,4 +1,5 @@
 .container {
+    overflow: scroll;
     display: block;
     height: 100%;
     padding: 0;
