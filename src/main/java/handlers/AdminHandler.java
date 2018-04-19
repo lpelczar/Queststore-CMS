@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AdminHandler implements HttpHandler {
+    Integer mentorId;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -33,7 +34,7 @@ public class AdminHandler implements HttpHandler {
             URI uri = httpExchange.getRequestURI();
 
             if (uri.toString().contains("edit")) {
-                Integer mentorId = getIdMentorFrom(uri);
+                mentorId = getIdMentorFrom(uri);
                 Mentor mentor = getMentor(mentorId);
                 response = prepareTemplateEdit(mentor);
             }
@@ -49,9 +50,15 @@ public class AdminHandler implements HttpHandler {
 
             System.out.println(formData);
             Map<String, String> profileData = parseDataAddMentor(formData);
-
             Mentor mentor = createMentor(profileData);
-            handleUpdateDB(mentor);
+
+            if (checkPostType(formData).contains("Edit")) {
+                handleUpdate(mentor);
+                redirectToAdmin(httpExchange);
+            }
+            else {
+                handleAddMentorDB(mentor);
+            }
 
             response = prepareTemplateMain();
         }
@@ -107,6 +114,12 @@ public class AdminHandler implements HttpHandler {
         }
     }
 
+    private String checkPostType(String formData) {
+        String[] form = formData.split("&");
+        int TYPE_INDEX = form.length-1;
+        return form[TYPE_INDEX];
+    }
+
     private Map<String, String> parseDataAddMentor(String formData) {
         int VALUE_INDEX = 1;
         int FORM_NAME_INDEX = 0;
@@ -132,7 +145,12 @@ public class AdminHandler implements HttpHandler {
         return "";
     }
 
-    private void handleUpdateDB(Mentor mentor) {
+    private void handleUpdate(Mentor mentor) {
+        MentorDAO mentorDAO = new SqliteMentorDAO();
+        mentorDAO.updateMentor(mentor, mentorId);
+    }
+
+    private void handleAddMentorDB(Mentor mentor) {
         MentorDAO mentorDAO = new SqliteMentorDAO();
         mentorDAO.addMentor(mentor);
     }
@@ -161,5 +179,18 @@ public class AdminHandler implements HttpHandler {
             return mentorDAO.getMentorBy(mentorId);
         }
         throw new IllegalArgumentException("Wrong ID!");
+    }
+
+    private void redirectToAdmin(HttpExchange httpExchange) {
+        Headers responseHeaders = httpExchange.getResponseHeaders();
+
+        responseHeaders.add("Location", "/admin");
+
+        try {
+            httpExchange.sendResponseHeaders(302, -1);
+        }
+        catch (IOException e) {
+            System.err.println(e.getClass().getName() + " --> " + e.getMessage());
+        }
     }
 }
