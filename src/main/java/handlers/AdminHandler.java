@@ -1,29 +1,30 @@
 package handlers;
 
-import com.google.common.io.BaseEncoding;
-import com.google.common.io.Resources;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.*;
+import data.sessiondatabase.SessionDAO;
+import data.sessiondatabase.SqliteSessionDAO;
 import model.Group;
 import model.Mentor;
 
-import model.MentorModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 
 import java.io.*;
+import java.net.HttpCookie;
 import java.net.URI;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class AdminHandler implements HttpHandler {
-    Integer mentorId;
+
+    private Integer mentorId;
+    private SessionDAO sessionDAO = new SqliteSessionDAO();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -51,8 +52,9 @@ public class AdminHandler implements HttpHandler {
             System.out.println(formData);
             Map<String, String> profileData = parseDataAddMentor(formData);
             Mentor mentor = createMentor(profileData);
-
-            if (checkPostType(formData).contains("Edit")) {
+            if (formData.contains("logout")) {
+                handleLogout(httpExchange);
+            } else if (checkPostType(formData).contains("Edit")) {
                 handleUpdate(mentor);
                 redirectToAdmin(httpExchange);
             }
@@ -68,11 +70,28 @@ public class AdminHandler implements HttpHandler {
 
     }
 
+    private void handleLogout(HttpExchange httpExchange) throws IOException {
+        HttpCookie cookie;
+        String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
+        if (sessionCookie != null) {
+            cookie = HttpCookie.parse(sessionCookie).get(0);
+            sessionDAO.deleteBySessionId(cookie.getValue());
+        }
+        redirectToLogin(httpExchange);
+    }
+
+    private void redirectToLogin(HttpExchange httpExchange) throws IOException {
+        Headers headers = httpExchange.getResponseHeaders();
+        String redirect = "/login";
+        headers.add("Location", redirect);
+        httpExchange.sendResponseHeaders(301, -1);
+    }
+
     private String prepareTemplateMain() {
         List<Mentor> mentors = getAllMentors();
         List<Group> groups = getAllGroups();
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("admin_manager_template.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin_manager_template.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("mentors", mentors);
@@ -82,7 +101,7 @@ public class AdminHandler implements HttpHandler {
     }
 
     private String prepareTemplateEdit(Mentor mentor) {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("edit_mentor_by_admin.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/edit_mentor_by_admin.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("name", mentor.getName());
