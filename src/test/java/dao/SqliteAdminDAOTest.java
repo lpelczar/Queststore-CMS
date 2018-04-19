@@ -18,7 +18,7 @@ class SqliteAdminDAOTest {
     private AdminDAO adminDao;
     private UserDAO userDao;
     private String testDbPath = "testDb.db";
-    private String createTables = "CreateTables.sql";
+    private String createTables = "createTables.sql";
     private AdminModel admin;
     private MentorModel mentor;
 

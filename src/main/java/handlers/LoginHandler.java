@@ -7,6 +7,8 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.LoginDAO;
+import data.sessiondatabase.Session;
+import data.sessiondatabase.SessionDAO;
 import javafx.util.Pair;
 import model.database.User;
 
@@ -15,18 +17,17 @@ import java.net.HttpCookie;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class LoginHandler implements HttpHandler {
 
-    private Map<String, Integer> sessionsUsers = new HashMap<>();
     private int sessionCounter = 0;
     private LoginDAO loginDAO;
+    private SessionDAO sessionDAO;
 
-    LoginHandler(LoginDAO loginDAO) {
+    LoginHandler(LoginDAO loginDAO, SessionDAO sessionDAO) {
         this.loginDAO = loginDAO;
+        this.sessionDAO = sessionDAO;
     }
 
     @Override
@@ -42,7 +43,7 @@ public class LoginHandler implements HttpHandler {
             String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
             if (sessionCookie != null) {
                 cookie = HttpCookie.parse(sessionCookie).get(0);
-                if (sessionsUsers.containsKey(cookie.getValue())) {
+                if (sessionDAO.getById(cookie.getValue()) != null) {
                     makeRedirection(httpExchange, cookie);
                     return;
                 }
@@ -77,8 +78,10 @@ public class LoginHandler implements HttpHandler {
             User user = loginDAO.getByLoginAndPassword(loginPassword.getKey(), loginPassword.getValue());
             cookie = new HttpCookie("sessionId", sessionId);
             httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
-            sessionsUsers.put(sessionId, user.getUserId());
-            System.out.println(sessionsUsers.toString());
+
+            System.out.println("Session id: " + sessionId + " User id: " + user.getUserId());
+
+            sessionDAO.add(new Session(sessionId, user.getUserId()));
             makeRedirection(httpExchange, cookie);
 
         } else {
@@ -89,13 +92,14 @@ public class LoginHandler implements HttpHandler {
     private void makeRedirection(HttpExchange httpExchange, HttpCookie cookie) throws IOException {
 
         String sessionId = cookie.getValue();
-        int userId = sessionsUsers.get(sessionId);
+        Session session = sessionDAO.getById(sessionId);
+        int userId = session.getUserId();
         User user = loginDAO.getById(userId);
 
         if (user.getRoleId() == 2) {
             System.out.println("Mentor logged!");
             Headers headers = httpExchange.getResponseHeaders();
-            String redirect = "/mentor";
+            String redirect = "/mentor/" + userId;
             headers.add("Location", redirect);
             headers.add("Set-Cookie", cookie.toString());
             httpExchange.sendResponseHeaders(301, -1);

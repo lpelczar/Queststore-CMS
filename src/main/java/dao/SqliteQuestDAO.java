@@ -1,114 +1,93 @@
 package dao;
 
-import model.QuestModel;
 
-import java.sql.*;
+import data.DbHelper;
+import data.PreparedStatementCreator;
+import data.statements.QuestStatement;
+import model.database.Quest;
 
-public class SqliteQuestDAO extends OpenCloseConnectionWithDB implements QuestDAO {
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-    private QueriesGenerator generator;
-    private String tableName;
+public class SqliteQuestDAO extends DbHelper implements QuestDAO {
 
-    public SqliteQuestDAO() {
-        this.tableName = "quests";
-        this.generator = new QueriesGenerator();
-    }
+    private PreparedStatementCreator psc = new PreparedStatementCreator();
+    private QuestStatement questStatement = new QuestStatement();
 
-    public Integer getLastId() {
-        String sql = "SELECT quest_id FROM quests;";
-        Integer lastId = 0;
+    @Override
+    public List<Quest> getAll() {
+        String sqlStatement = questStatement.selectAllQuests();
 
+        List<Quest> quests = new ArrayList<>();
         try {
-            openConnection();
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-
-            while (rs.next()) {
-                lastId = rs.getInt("quest_id");
-            }
-        } catch (Exception e) {
+            PreparedStatement statement = getPreparedStatement(sqlStatement);
+            ResultSet resultSet = query(statement);
+            while (resultSet.next())
+                quests.add(new Quest(
+                        resultSet.getInt("quest_id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getInt("price")));
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+        } finally {
+            closeConnection();
         }
-        return lastId;
+        return quests;
     }
 
     @Override
-    public QuestModel getQuestById(int id) {
-        PreparedStatement statement = generator.getQuestById(id);
-        QuestModel quest = null;
+    public Quest getById(int id) {
+        String sqlStatement = questStatement.selectQuestById();
+        Quest quest = null;
         try {
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                int quest_id = resultSet.getInt("quest_id");
-                String name = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                int price = resultSet.getInt("price");
-                quest = new QuestModel(String.valueOf(quest_id), name, description, price);
-            }
+            PreparedStatement statement = getPreparedStatement(sqlStatement);
+            statement.setInt(1, id);
+            ResultSet resultSet = query(statement);
+            while (resultSet.next())
+                quest = new Quest(
+                        resultSet.getInt("quest_id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getInt("price"));
+            resultSet.close();
+            statement.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
         }
         return quest;
     }
 
-
-    public QuestModel getAllQuests() {
-
-        PreparedStatement statement = generator.getAllQuests(tableName);
-        QuestModel quest = null;
-
-        try {
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                int id = resultSet.getInt("quest_id");
-                String name = resultSet.getString("name");
-                String description = resultSet.getString("description");
-                int price = resultSet.getInt("price");
-                quest = new QuestModel(String.valueOf(id), name, description, price);
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return quest;
+    @Override
+    public boolean add(Quest quest) {
+        String sqlStatement = questStatement.insertQuestStatement();
+        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(quest.getName(),
+                quest.getDescription(), quest.getPrice()), sqlStatement);
+        return update(statement);
     }
 
-    public void saveNewQuestToDatabase(QuestModel quest) {
-        PreparedStatement statement = generator.insertItem(tableName,
-                quest.getId(), quest.getName(), quest.getDescription(), quest.getPrice());
-
-        try {
-            statement.executeUpdate();
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+    @Override
+    public boolean update(Quest quest) {
+        String sqlStatement = questStatement.updateQuestStatement();
+        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(quest.getQuestId(), quest.getName(),
+                quest.getDescription(), quest.getPrice(), quest.getQuestId()), sqlStatement);
+        return update(statement);
     }
 
-    public void updateEditedQuestInDatabase(QuestModel quest) {
-        PreparedStatement statement = generator.updateItem(tableName, quest.getId(), quest.getName(),
-                quest.getDescription(), quest.getPrice());
-
-        try {
-            statement.executeUpdate();
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+    @Override
+    public boolean delete(Quest quest) {
+        String sqlStatement = questStatement.deleteQuestStatement();
+        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(quest.getQuestId()),
+                sqlStatement);
+        return update(statement);
     }
-
-    public void deleteQuestByID (QuestModel quest){
-        PreparedStatement statement = generator.deleteItem(tableName, quest.getId());
-
-        try {
-            statement.executeUpdate();
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-            }
-        }
-
-
 }

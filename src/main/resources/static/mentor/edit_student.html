@@ -3,37 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Queststore</title>
-    <link href="static/css/style.css" type="text/css" rel="stylesheet">
-    <link href="static/css/manager.css" type="text/css" rel="stylesheet">
-    <link href="static/css/forms.css" type="text/css" rel="stylesheet">
-    <script src="static/js/sidenav.js" type="text/javascript"></script>
+    <link href="/static/css/style.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/manager.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/forms.css" type="text/css" rel="stylesheet">
+    <script src="/static/js/sidenav.js" type="text/javascript"></script>
 </head>
 <body>
 
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <p id="name">Name: <strong>Łukasz</strong></p>
     <ul>
         <li class="nav-element">
-            <a href="create_student.html">Create student</a>
+            <a href="addstudent">Create student</a>
         </li>
         <li class="nav-element">
-            <a href="edit_student.html">Edit student</a>
+            <a href="editstudent">Edit student</a>
         </li>
         <li class="nav-element">
-            <a href="add_quest.html">Add quest</a>
+            <a href="addquest">Add quest</a>
         </li>
         <li class="nav-element">
-            <a href="display_quests.html">Display all quests</a>
+            <a href="showquests">Display all quests</a>
         </li>
         <li class="nav-element">
-            <a href="edit_quest.html">Edit quest</a>
+            <a href="editquest">Edit quest</a>
         </li>
         <li class="nav-element">
-            <a href="delete_quest.html">Delete quest</a>
+            <a href="deletequest">Delete quest</a>
         </li>
         <li class="nav-element">
-            <a href="">Logout</a>
+            <form method="post">
+                <input type="submit" name="logout" value="Logout">
+            </form>
         </li>
     </ul>
 </div>
@@ -54,13 +55,15 @@
     <div class="container">
 
         <div class="form">
-            <p>Please fill in the data to edit!</p>
-            <input type="text" placeholder="Login" required>
-            <input type="text" placeholder="Password" required>
-            <input type="text" placeholder="First name" required>
-            <input type="text" placeholder="Last name" required>
-            <input type="text" placeholder="Email" required>
-            <a id="create-button">Edit student</a>
+            <form class="form" method="post">
+                <p>Please fill in the data to edit!</p>
+                <input class="field" type="text" placeholder="Login" required>
+                <input class="field" type="text" placeholder="Password" required>
+                <input class="field" type="text" placeholder="First name" required>
+                <input class="field" type="text" placeholder="Last name" required>
+                <input class="field" type="text" placeholder="Email" required>
+                <a id="create-button">Edit student</a>
+            </form>
         </div>
 
     </div>

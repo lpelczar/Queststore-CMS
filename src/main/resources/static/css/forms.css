@@ -7,7 +7,7 @@
     align-items: center;
 }
 
-.form input {
+.form .field {
     font-size: large;
     display: flex;
     flex-direction: column;
@@ -31,4 +31,9 @@
 
 #create-button:hover {
     background-color: #48b983;
+}
+
+.combo-box {
+    font-size: larger;
+    margin-bottom: 20px;
 }

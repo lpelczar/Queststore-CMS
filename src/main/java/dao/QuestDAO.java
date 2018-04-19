@@ -1,16 +1,14 @@
 package dao;
 
-import model.QuestModel;
+import model.database.Quest;
 
-import java.sql.Connection;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface QuestDAO {
 
-    Integer getLastId();
-    QuestModel getQuestById(int id);
-    void saveNewQuestToDatabase(QuestModel quest);
-    void updateEditedQuestInDatabase(QuestModel quest);
-    QuestModel getAllQuests();
-
+    List<Quest> getAll();
+    Quest getById(int id);
+    boolean add(Quest quest);
+    boolean update(Quest quest);
+    boolean delete(Quest quest);
 }
