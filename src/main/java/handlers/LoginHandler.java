@@ -96,6 +96,14 @@ public class LoginHandler implements HttpHandler {
         int userId = session.getUserId();
         User user = loginDAO.getById(userId);
 
+        if (user.getRoleId() == 1) {
+            Headers headers = httpExchange.getResponseHeaders();
+            String redirect = "/admin";
+            headers.add("Location", redirect);
+            headers.add("Set-Cookie", cookie.toString());
+            httpExchange.sendResponseHeaders(301, -1);
+        }
+
         if (user.getRoleId() == 2) {
             System.out.println("Mentor logged!");
             Headers headers = httpExchange.getResponseHeaders();
