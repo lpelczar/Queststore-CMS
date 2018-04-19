@@ -50,7 +50,12 @@ public class MentorHandler implements HttpHandler {
             System.out.println("Form data: " + formData);
 
             if (formData.contains("logout")) {
-                // Delete cookies, delete session from db
+                String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
+                System.out.println("session cookie: " + sessionCookie);
+                if (sessionCookie != null) {
+                    cookie = HttpCookie.parse(sessionCookie).get(0);
+                    sessionDAO.deleteBySessionId(cookie.getValue());
+                }
                 redirectToLogin(httpExchange);
             }
         }

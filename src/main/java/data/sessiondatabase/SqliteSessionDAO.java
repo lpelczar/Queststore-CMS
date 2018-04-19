@@ -53,4 +53,20 @@ public class SqliteSessionDAO extends DbHelper implements SessionDAO {
         }
         return isAdded;
     }
+
+    @Override
+    public boolean deleteBySessionId(String id) {
+        String statement = "DELETE FROM sessions_table WHERE session_id = ?; " ;
+        boolean isDeleted = false;
+        try {
+            PreparedStatement preparedStatement = getPreparedStatement(statement);
+            preparedStatement.setString(1, id);
+            if (update(preparedStatement)) {
+                isDeleted = true;
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return isDeleted;
+    }
 }
