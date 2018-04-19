@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SqliteQuestDAO extends DbHelper implements QuestDAO {
@@ -84,6 +85,9 @@ public class SqliteQuestDAO extends DbHelper implements QuestDAO {
 
     @Override
     public boolean delete(Quest quest) {
-        return false;
+        String sqlStatement = questStatement.deleteQuestStatement();
+        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(quest.getQuestId()),
+                sqlStatement);
+        return update(statement);
     }
 }

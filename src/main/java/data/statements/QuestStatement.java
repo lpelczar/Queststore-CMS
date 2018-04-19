@@ -17,4 +17,8 @@ public class QuestStatement {
     public String updateQuestStatement() {
         return "UPDATE quests SET quest_id = ?, name = ?, description = ?, price = ? WHERE quest_id = ?; ";
     }
+
+    public String deleteQuestStatement() {
+        return "DELETE FROM quests WHERE quest_id = ?; ";
+    }
 }
