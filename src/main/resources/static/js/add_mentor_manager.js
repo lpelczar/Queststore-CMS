@@ -7,6 +7,7 @@ function cancelAddingMentor() {
     columnTables.style.display = "flex";
     form.style.display = "none";
     row_table.style.height = "35%";
+    assigned_table.style.width = "100%";
 }
 
 function  returnValidateInputs() {
