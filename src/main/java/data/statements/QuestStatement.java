@@ -9,4 +9,8 @@ public class QuestStatement {
     public String selectQuestById() {
         return "SELECT * FROM quests WHERE quest_id = ?; ";
     }
+
+    public String insertQuestStatement() {
+        return "INSERT INTO quests VALUES (?,?,?,?); ";
+    }
 }

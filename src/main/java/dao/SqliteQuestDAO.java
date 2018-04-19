@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SqliteQuestDAO extends DbHelper implements QuestDAO {
@@ -67,7 +68,10 @@ public class SqliteQuestDAO extends DbHelper implements QuestDAO {
 
     @Override
     public boolean add(Quest quest) {
-        return false;
+        String sqlStatement = questStatement.insertQuestStatement();
+        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(quest.getQuestId(), quest.getName(),
+                quest.getDescription(), quest.getPrice()), sqlStatement);
+        return update(statement);
     }
 
     @Override
