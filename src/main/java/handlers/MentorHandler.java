@@ -55,15 +55,20 @@ public class MentorHandler implements HttpHandler {
             System.out.println("Form data: " + formData);
 
             if (formData.contains("logout")) {
-                String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
-                System.out.println("session cookie: " + sessionCookie);
-                if (sessionCookie != null) {
-                    cookie = HttpCookie.parse(sessionCookie).get(0);
-                    sessionDAO.deleteBySessionId(cookie.getValue());
-                }
-                redirectToLogin(httpExchange);
+                handleLogout(httpExchange);
             }
         }
+    }
+
+    private void handleLogout(HttpExchange httpExchange) throws IOException {
+        HttpCookie cookie;
+        String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
+        System.out.println("session cookie: " + sessionCookie);
+        if (sessionCookie != null) {
+            cookie = HttpCookie.parse(sessionCookie).get(0);
+            sessionDAO.deleteBySessionId(cookie.getValue());
+        }
+        redirectToLogin(httpExchange);
     }
 
     private void redirectToLogin(HttpExchange httpExchange) throws IOException {
@@ -112,7 +117,10 @@ public class MentorHandler implements HttpHandler {
                 showStaticPage(httpExchange, "static/mentor/edit_quest.html");
                 break;
             case DELETE_QUEST:
-                showStaticPage(httpExchange, "static/mentor/delete_quest.html");
+                template = JtwigTemplate.classpathTemplate("templates/delete_quest.twig");
+                model = JtwigModel.newModel();
+                model.with("quests", questDAO.getAll());
+                sendResponse(httpExchange, template.render(model));
                 break;
             default:
                 template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
