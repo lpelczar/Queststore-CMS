@@ -6,7 +6,9 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.LoginDAO;
+import dao.QuestDAO;
 import dao.SqliteLoginDAO;
+import dao.SqliteQuestDAO;
 import data.sessiondatabase.Session;
 import data.sessiondatabase.SessionDAO;
 import data.sessiondatabase.SqliteSessionDAO;
@@ -27,6 +29,7 @@ public class MentorHandler implements HttpHandler {
 
     private SessionDAO sessionDAO = new SqliteSessionDAO();
     private LoginDAO loginDAO = new SqliteLoginDAO();
+    private QuestDAO questDAO = new SqliteQuestDAO();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -84,6 +87,8 @@ public class MentorHandler implements HttpHandler {
 
         String path = httpExchange.getRequestURI().getPath();
         System.out.println("Path: " + path);
+        JtwigTemplate template;
+        JtwigModel model;
 
         String lastSegment = path.substring(path.lastIndexOf('/') + 1);
 
@@ -98,7 +103,10 @@ public class MentorHandler implements HttpHandler {
                 showStaticPage(httpExchange, "static/mentor/add_quest.html");
                 break;
             case SHOW_QUESTS:
-                showStaticPage(httpExchange, "static/mentor/display_quests.html");
+                template = JtwigTemplate.classpathTemplate("templates/display_quests.twig");
+                model = JtwigModel.newModel();
+                model.with("quests", questDAO.getAll());
+                sendResponse(httpExchange, template.render(model));
                 break;
             case EDIT_QUEST:
                 showStaticPage(httpExchange, "static/mentor/edit_quest.html");
@@ -107,13 +115,13 @@ public class MentorHandler implements HttpHandler {
                 showStaticPage(httpExchange, "static/mentor/delete_quest.html");
                 break;
             default:
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
-                JtwigModel model = JtwigModel.newModel();
+                template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
+                model = JtwigModel.newModel();
                 model.with("userName", user.getLogin());
                 sendResponse(httpExchange, template.render(model));
         }
     }
-    
+
     private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
         httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
