@@ -33,7 +33,7 @@
                         <a class="navi-button" onclick="displayEditWindow(); prepareTableForAddMentor(); closeNav()">Add new mentor</a>
                     </li>
                     <li class="nav-element">
-                        <a id="edit_mentor" onclick="displayEditWindow(); prepareTableForPickMentor(); closeNav()">Edit mentor profile</a>
+                        <a id="edit_mentor" onclick="displayEditWindow(); prepareTableForPickMentor(); displayMentors(); closeNav()">Edit mentor profile</a>
                     </li>
                     <li class="nav-element">
                         <a href="">Assign mentor-group</a>
@@ -72,7 +72,7 @@
 
                     <ul class="mentors-lists">
                         {% for element in mentors %}
-                        <li> {{ element.getName() }} {{ mentor.getLastName() }}</li>
+                        <li> {{ element.getName() }} {{ element.getLastName() }}</li>
                         {% endfor %}
                     </ul>
 
@@ -151,9 +151,9 @@
                     </form>
 
                     <div id="edit-table">
-                        <ul class="mentors-lists">
+                        <ul class="mentors-lists-edit">
                             {% for element in mentors %}
-                                <li><a href="admin/edit/{{ element.getMentorId() }}" id="mentor-name-button" onclose="editPage()"> {{ element.getName() }} {{ mentor.getLastName() }}</a></li>
+                                <li><a href="admin/edit/{{ element.getMentorId() }}" class="mentor-name-button" onclose="editPage()"> {{ element.getName() }} {{ element.getLastName() }}</a></li>
                             {% endfor %}
                         </ul>
 

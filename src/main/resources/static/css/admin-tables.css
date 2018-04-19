@@ -164,4 +164,23 @@
     justify-content: center;
 }
 
+.mentor-name-button {
+    text-decoration: none;
+    box-shadow: 2px 2px black;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 5px;
+
+}
+
+.mentors-lists-edit li {
+    display: grid;
+    justify-content: center;
+    margin: 2%;
+}
+
+#edit-table {
+    display: none;
+}
+
 
