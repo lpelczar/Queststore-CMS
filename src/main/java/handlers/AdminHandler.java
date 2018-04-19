@@ -2,17 +2,20 @@ package handlers;
 
 import com.google.common.io.BaseEncoding;
 import com.google.common.io.Resources;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.*;
 import model.Group;
 import model.Mentor;
 
+import model.MentorModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 
 import java.io.*;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -27,7 +30,16 @@ public class AdminHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")) {
-            response = prepareTemplate();
+            URI uri = httpExchange.getRequestURI();
+
+            if (uri.toString().contains("edit")) {
+                Integer mentorId = getIdMentorFrom(uri);
+                Mentor mentor = getMentor(mentorId);
+                response = prepareTemplateEdit(mentor);
+            }
+            else{
+                response = prepareTemplateMain();
+            }
         }
 
         if (method.equals("POST")) {
@@ -35,11 +47,13 @@ public class AdminHandler implements HttpHandler {
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
 
+            System.out.println(formData);
             Map<String, String> profileData = parseDataAddMentor(formData);
+
             Mentor mentor = createMentor(profileData);
             handleUpdateDB(mentor);
 
-            response = prepareTemplate();
+            response = prepareTemplateMain();
         }
 
 
@@ -47,7 +61,7 @@ public class AdminHandler implements HttpHandler {
 
     }
 
-    private String prepareTemplate() {
+    private String prepareTemplateMain() {
         List<Mentor> mentors = getAllMentors();
         List<Group> groups = getAllGroups();
 
@@ -56,6 +70,13 @@ public class AdminHandler implements HttpHandler {
 
         model.with("mentors", mentors);
         model.with("groups", groups);
+
+        return template.render(model);
+    }
+
+    private String prepareTemplateEdit(Mentor mentor) {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("edit_mentor_by_admin.twig");
+        JtwigModel model = JtwigModel.newModel();
 
         return template.render(model);
     }
@@ -118,5 +139,23 @@ public class AdminHandler implements HttpHandler {
                 mentorData.get("last-name"),
                 mentorData.get("email")
         );
+    }
+
+    private Integer getIdMentorFrom(URI uri) {
+        String[] values = uri.toString().split("/");
+        for (String element : values) {
+            if (element.matches("[0-9]+")) {
+                return Integer.valueOf(element);
+            }
+        }
+        return null;
+    }
+
+    private Mentor getMentor(Integer mentorId) {
+        if (mentorId != null) {
+            MentorDAO mentorDAO = new SqliteMentorDAO();
+            return mentorDAO.getMentorBy(mentorId);
+        }
+        throw new IllegalArgumentException("Wrong ID!");
     }
 }
