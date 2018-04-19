@@ -45,8 +45,11 @@ function group_table_center() {
 function displayEditWindow() {
     title_table.style.fontSize = "30px";
     title_table.style.backgroundColor = "background: rgba(180, 180, 180, 0.9)";
-
-    columnTables.style.display = "none";
+    try {
+        columnTables.style.display = "none";
+    } catch (TypeError ) {
+        ;
+    }
     row_table.style.height = "80%";
 }
 
@@ -54,6 +57,10 @@ function displayEditWindow() {
 function prepareTableForAddMentor() {
     title_table.textContent = "Add new mentor profile";
     form.style.display = "grid";
+}
+
+function prepareTableForPickMentor() {
+    title_table.textContent = "Choose mentor";
 }
 
 
