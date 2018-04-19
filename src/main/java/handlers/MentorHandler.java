@@ -21,6 +21,8 @@ import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.net.URL;
 
+import static handlers.MentorOptions.*;
+
 public class MentorHandler implements HttpHandler {
 
     private SessionDAO sessionDAO = new SqliteSessionDAO();
@@ -83,27 +85,36 @@ public class MentorHandler implements HttpHandler {
         String path = httpExchange.getRequestURI().getPath();
         System.out.println("Path: " + path);
 
-        if (path.contains("addstudent")) {
-            showStaticPage(httpExchange, "static/mentor/create_student.html");
-        } else if (path.contains("editstudent")) {
-            showStaticPage(httpExchange, "static/mentor/edit_student.html");
-        } else if (path.contains("addquest")) {
-            showStaticPage(httpExchange, "static/mentor/add_quest.html");
-        } else if (path.contains("showquests")) {
-            showStaticPage(httpExchange, "static/mentor/display_quests.html");
-        } else if (path.contains("editquest")) {
-            showStaticPage(httpExchange, "static/mentor/edit_quest.html");
-        } else if (path.contains("deletequest")) {
-            showStaticPage(httpExchange, "static/mentor/delete_quest.html");
-        } else {
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
-            JtwigModel model = JtwigModel.newModel();
-            model.with("userName", user.getLogin());
-            String response = template.render(model);
-            httpExchange.sendResponseHeaders(200, response.length());
-            OutputStream os = httpExchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
+        String lastSegment = path.substring(path.lastIndexOf('/') + 1);
+
+        switch (lastSegment) {
+            case ADD_STUDENT:
+                showStaticPage(httpExchange, "static/mentor/create_student.html");
+                break;
+            case EDIT_STUDENT:
+                showStaticPage(httpExchange, "static/mentor/edit_student.html");
+                break;
+            case ADD_QUEST:
+                showStaticPage(httpExchange, "static/mentor/add_quest.html");
+                break;
+            case SHOW_QUESTS:
+                showStaticPage(httpExchange, "static/mentor/display_quests.html");
+                break;
+            case EDIT_QUEST:
+                showStaticPage(httpExchange, "static/mentor/edit_quest.html");
+                break;
+            case DELETE_QUEST:
+                showStaticPage(httpExchange, "static/mentor/delete_quest.html");
+                break;
+            default:
+                JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
+                JtwigModel model = JtwigModel.newModel();
+                model.with("userName", user.getLogin());
+                String response = template.render(model);
+                httpExchange.sendResponseHeaders(200, response.length());
+                OutputStream os = httpExchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
         }
     }
 
