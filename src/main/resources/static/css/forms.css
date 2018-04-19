@@ -32,3 +32,8 @@
 #create-button:hover {
     background-color: #48b983;
 }
+
+.combo-box {
+    font-size: larger;
+    margin-bottom: 20px;
+}

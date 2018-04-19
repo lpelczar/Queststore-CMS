@@ -55,16 +55,24 @@
     <div class="container">
 
         <div class="form">
-            <p>Enter ID to delete quest!</p>
-            <input type="text" placeholder="ID" required>
-            <a id="create-button">Delete quest</a>
+            <form class="form" method="post">
+                <p style="font-size: larger">Select a quest to delete!</p>
+
+                <select name="delete-quest-id" class="combo-box" title="Available quests">
+                    {% for quest in quests %}
+                    <option value="{{ quest.getQuestId() }}">{{ quest.getName() }}</option>
+                    {% endfor %}
+                </select>
+
+                <input type="submit" name="delete-quest" id="create-button" value="Delete quest">
+            </form>
         </div>
 
     </div>
 
     <footer>
         <div id="bottom-bar">
-            <p id="copyright">© 2018 Design & Implementation : Łukasz Pelczar, Nikodem Ciołczyk</p>
+            <p id="copyright">2018 Design and Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
         </div>
     </footer>
 

@@ -12,10 +12,8 @@ import dao.SqliteQuestDAO;
 import data.sessiondatabase.Session;
 import data.sessiondatabase.SessionDAO;
 import data.sessiondatabase.SqliteSessionDAO;
-import jdk.nashorn.internal.parser.JSONParser;
 import model.database.Quest;
 import model.database.User;
-import org.json.JSONObject;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -61,8 +59,27 @@ public class MentorHandler implements HttpHandler {
                 handleLogout(httpExchange);
             } else if (formData.contains("add-quest")) {
                 handleAddingQuest(httpExchange, formData);
+            } else if (formData.contains("delete-quest")) {
+                handleDeletingQuest(httpExchange, formData);
             }
         }
+    }
+
+    private void handleDeletingQuest(HttpExchange httpExchange, String formData) throws IOException {
+
+        final int ID_INDEX = 0;
+        List<String> values = parseFormData(formData);
+        int questId = Integer.parseInt(values.get(ID_INDEX));
+
+        if (questDAO.getById(questId) != null) {
+            Quest quest = questDAO.getById(questId);
+            if (questDAO.delete(quest)) {
+                System.out.println("Success deleting quest!");
+            }
+        }
+
+        httpExchange.getResponseHeaders().add("Location", "/mentor/showquests");
+        httpExchange.sendResponseHeaders(301, -1);
     }
 
     private void handleAddingQuest(HttpExchange httpExchange, String formData) throws IOException {
@@ -70,15 +87,8 @@ public class MentorHandler implements HttpHandler {
         final int NAME_INDEX = 0;
         final int DESCRIPTION_INDEX = 1;
         final int PRICE_INDEX = 2;
-        final int VALUE_INDEX = 1;
 
-        String[] pairs = formData.split("&");
-        List<String> values = new ArrayList<>();
-        for (String pair : pairs) {
-            String[] keyValue = pair.split("=");
-            values.add(URLDecoder.decode(keyValue[VALUE_INDEX], Charsets.UTF_8.displayName()));
-        }
-
+        List<String> values = parseFormData(formData);
         Quest quest = new Quest(values.get(NAME_INDEX), values.get(DESCRIPTION_INDEX),
                 Integer.parseInt(values.get(PRICE_INDEX)));
         if (questDAO.add(quest)) {
@@ -87,6 +97,17 @@ public class MentorHandler implements HttpHandler {
 
         httpExchange.getResponseHeaders().add("Location", "/mentor/showquests");
         httpExchange.sendResponseHeaders(301, -1);
+    }
+
+    private List<String> parseFormData(String formData) throws UnsupportedEncodingException {
+        int VALUE_INDEX = 1;
+        String[] pairs = formData.split("&");
+        List<String> values = new ArrayList<>();
+        for (String pair : pairs) {
+            String[] keyValue = pair.split("=");
+            values.add(URLDecoder.decode(keyValue[VALUE_INDEX], Charsets.UTF_8.displayName()));
+        }
+        return values;
     }
 
     private void handleLogout(HttpExchange httpExchange) throws IOException {
