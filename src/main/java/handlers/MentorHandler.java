@@ -110,12 +110,15 @@ public class MentorHandler implements HttpHandler {
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
                 JtwigModel model = JtwigModel.newModel();
                 model.with("userName", user.getLogin());
-                String response = template.render(model);
-                httpExchange.sendResponseHeaders(200, response.length());
-                OutputStream os = httpExchange.getResponseBody();
-                os.write(response.getBytes());
-                os.close();
+                sendResponse(httpExchange, template.render(model));
         }
+    }
+    
+    private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
+        httpExchange.sendResponseHeaders(200, response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 
     private void showStaticPage(HttpExchange httpExchange, String pagePath) throws IOException {
