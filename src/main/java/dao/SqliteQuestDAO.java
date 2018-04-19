@@ -76,7 +76,10 @@ public class SqliteQuestDAO extends DbHelper implements QuestDAO {
 
     @Override
     public boolean update(Quest quest) {
-        return false;
+        String sqlStatement = questStatement.updateQuestStatement();
+        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(quest.getQuestId(), quest.getName(),
+                quest.getDescription(), quest.getPrice(), quest.getQuestId()), sqlStatement);
+        return update(statement);
     }
 
     @Override
