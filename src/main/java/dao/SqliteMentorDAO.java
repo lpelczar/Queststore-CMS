@@ -26,6 +26,20 @@ public class SqliteMentorDAO extends DbHelper implements MentorDAO {
     }
 
     @Override
+    public void updateMentor(Mentor mentor, int id) {
+        String sqlStatement = "UPDATE mentors SET name = ? , lastname = ? , email = ? WHERE mentor_id = ? ;";
+
+        PreparedStatement statement = statementGenerator.getPreparedStatementBy(Arrays.asList(
+                mentor.getName(),
+                mentor.getLastName(),
+                mentor.getEmail(),
+                id
+        ), sqlStatement);
+
+        update(statement);
+    }
+
+    @Override
     public Mentor getMentorBy(int mentorId) {
         String sqlStatement = "SELECT * FROM mentors WHERE mentor_id = ? ;";
 
@@ -46,6 +60,10 @@ public class SqliteMentorDAO extends DbHelper implements MentorDAO {
 
         } catch (SQLException e) {
             System.err.println(e.getClass().getName() + " --> " + e.getMessage());
+        }
+
+        finally {
+            closeConnection();
         }
         return null;
     }
