@@ -22,6 +22,7 @@ public class RootHandler {
         HttpServer server = HttpServer.create(new InetSocketAddress(7000), 0);
         server.createContext("/login", new LoginHandler(loginDAO, sessionDAO));
         server.createContext("/static", new StaticHandler());
+        server.createContext("/admin", new AdminHandler());
         server.createContext("/mentor/", new MentorHandler());
         server.setExecutor(null);
         server.start();

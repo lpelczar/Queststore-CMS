@@ -1,10 +1,13 @@
 package dao;
 
 import model.AdminModel;
+import model.Mentor;
+import model.MentorModel;
 import utils.ProcessManager;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SqliteAdminDAO extends OpenCloseConnectionWithDB implements AdminDAO {
 
@@ -133,6 +136,29 @@ public class SqliteAdminDAO extends OpenCloseConnectionWithDB implements AdminDA
         return allIdsLoginsAndPasswords;
     }
 
+    public List<Mentor> getAllMentors() {
+        List<Mentor> allMentors = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = generator.getAllMentors();
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                allMentors.add(
+                        new Mentor(
+                                resultSet.getInt("mentor_id"),
+                                resultSet.getString("name"),
+                                resultSet.getString("lastname"),
+                                resultSet.getString("email")
+                        )
+                );
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + " --> " + e.getMessage());
+        }
+        return allMentors;
+    }
 
     public void findAllDataOfAdmin(int admin_id) {
 

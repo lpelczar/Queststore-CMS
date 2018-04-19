@@ -1,9 +1,11 @@
 package dao;
 
 import model.AdminModel;
+import model.Mentor;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public interface AdminDAO {
@@ -20,4 +22,6 @@ public interface AdminDAO {
     void createNewGroupAndAssignMentorToIt(String newGroup, String mentorId);
     ArrayList<String> getIdsOfMentorsHavingGroupsAlready();
     void exportAdmin(AdminModel admin);
+
+    List<Mentor> getAllMentors();
 }
