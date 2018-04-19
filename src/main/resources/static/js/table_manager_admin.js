@@ -48,7 +48,7 @@ function group_table_center() {
 
 function displayEditWindow() {
     title_table.style.fontSize = "30px";
-    title_table.style.backgroundColor = "background: rgba(180, 180, 180, 0.9)";
+    title_table.style.backgroundColor= "#808080a3;";
     row_table.style.height = "80%";
     row_table.style.justifyContent = "center";
     assigned_table.style.width = "60%";
@@ -76,10 +76,11 @@ function prepareTableForEditMentor() {
 
     for (var i = 0; i < table_form.length; i++) {
         table_form[i].style.textAlign = "-webkit-center";
-
     }
 }
 
 function prepareTableForPickMentor() {
+    title_table.style.fontSize = "30px";
+    title_table.style.backgroundColor = "background: rgba(180, 180, 180, 0.9)";
     title_table.textContent = "Choose mentor";
 }
