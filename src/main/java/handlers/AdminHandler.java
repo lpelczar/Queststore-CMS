@@ -78,6 +78,10 @@ public class AdminHandler implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("edit_mentor_by_admin.twig");
         JtwigModel model = JtwigModel.newModel();
 
+        model.with("name", mentor.getName());
+        model.with("lastName", mentor.getLastName());
+        model.with("email", mentor.getEmail());
+
         return template.render(model);
     }
 
