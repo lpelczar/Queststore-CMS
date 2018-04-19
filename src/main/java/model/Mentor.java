@@ -20,7 +20,7 @@ public class Mentor {
         this.email = email;
     }
 
-    public int getMentor_id() {
+    public int getMentorId() {
         return mentor_id;
     }
 

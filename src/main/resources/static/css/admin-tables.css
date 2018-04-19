@@ -98,7 +98,6 @@
     background-color: rgba(220, 220, 220, 0.9);
     width: 80%;
     border-radius: 10px;
-    height: 30%;
 
 }
 
@@ -151,6 +150,37 @@
     justify-content: space-evenly;
     align-items: center;
     font-size: 100%;
+}
+
+#mentor-data {
+    display: flex;
+    margin: 2%;
+}
+
+#mentors {
+    padding: auto;
+    overflow: scroll;
+    display: grid;
+    justify-content: center;
+}
+
+.mentor-name-button {
+    text-decoration: none;
+    box-shadow: 2px 2px black;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 5px;
+
+}
+
+.mentors-lists-edit li {
+    display: grid;
+    justify-content: center;
+    margin: 2%;
+}
+
+#edit-table {
+    display: none;
 }
 
 

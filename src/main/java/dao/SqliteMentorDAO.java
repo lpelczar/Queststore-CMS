@@ -5,6 +5,8 @@ import data.PreparedStatementCreator;
 import model.Mentor;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 public class SqliteMentorDAO extends DbHelper implements MentorDAO {
@@ -21,5 +23,48 @@ public class SqliteMentorDAO extends DbHelper implements MentorDAO {
         );
         update(statement);
 
+    }
+
+    @Override
+    public void updateMentor(Mentor mentor, int id) {
+        String sqlStatement = "UPDATE mentors SET name = ? , lastname = ? , email = ? WHERE mentor_id = ? ;";
+
+        PreparedStatement statement = statementGenerator.getPreparedStatementBy(Arrays.asList(
+                mentor.getName(),
+                mentor.getLastName(),
+                mentor.getEmail(),
+                id
+        ), sqlStatement);
+
+        update(statement);
+    }
+
+    @Override
+    public Mentor getMentorBy(int mentorId) {
+        String sqlStatement = "SELECT * FROM mentors WHERE mentor_id = ? ;";
+
+        try {
+            PreparedStatement statement = getPreparedStatement(sqlStatement);
+            statement.setObject(1, mentorId);
+
+            ResultSet resultSet = query(statement);
+
+            while (resultSet.next()) {
+                return new Mentor(
+                        resultSet.getInt("mentor_id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("lastname"),
+                        resultSet.getString("email")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + " --> " + e.getMessage());
+        }
+
+        finally {
+            closeConnection();
+        }
+        return null;
     }
 }

@@ -2,17 +2,20 @@ package handlers;
 
 import com.google.common.io.BaseEncoding;
 import com.google.common.io.Resources;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import dao.*;
 import model.Group;
 import model.Mentor;
 
+import model.MentorModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 
 import java.io.*;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -20,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AdminHandler implements HttpHandler {
+    Integer mentorId;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -27,7 +31,16 @@ public class AdminHandler implements HttpHandler {
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")) {
-            response = prepareTemplate();
+            URI uri = httpExchange.getRequestURI();
+
+            if (uri.toString().contains("edit")) {
+                mentorId = getIdMentorFrom(uri);
+                Mentor mentor = getMentor(mentorId);
+                response = prepareTemplateEdit(mentor);
+            }
+            else{
+                response = prepareTemplateMain();
+            }
         }
 
         if (method.equals("POST")) {
@@ -35,11 +48,19 @@ public class AdminHandler implements HttpHandler {
             BufferedReader br = new BufferedReader(isr);
             String formData = br.readLine();
 
+            System.out.println(formData);
             Map<String, String> profileData = parseDataAddMentor(formData);
             Mentor mentor = createMentor(profileData);
-            handleUpdateDB(mentor);
 
-            response = prepareTemplate();
+            if (checkPostType(formData).contains("Edit")) {
+                handleUpdate(mentor);
+                redirectToAdmin(httpExchange);
+            }
+            else {
+                handleAddMentorDB(mentor);
+            }
+
+            response = prepareTemplateMain();
         }
 
 
@@ -47,7 +68,7 @@ public class AdminHandler implements HttpHandler {
 
     }
 
-    private String prepareTemplate() {
+    private String prepareTemplateMain() {
         List<Mentor> mentors = getAllMentors();
         List<Group> groups = getAllGroups();
 
@@ -56,6 +77,17 @@ public class AdminHandler implements HttpHandler {
 
         model.with("mentors", mentors);
         model.with("groups", groups);
+
+        return template.render(model);
+    }
+
+    private String prepareTemplateEdit(Mentor mentor) {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("edit_mentor_by_admin.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("name", mentor.getName());
+        model.with("lastName", mentor.getLastName());
+        model.with("email", mentor.getEmail());
 
         return template.render(model);
     }
@@ -80,6 +112,12 @@ public class AdminHandler implements HttpHandler {
         catch (IOException e) {
             System.err.println(e.getClass().getName() + " --> " + e.getMessage());
         }
+    }
+
+    private String checkPostType(String formData) {
+        String[] form = formData.split("&");
+        int TYPE_INDEX = form.length-1;
+        return form[TYPE_INDEX];
     }
 
     private Map<String, String> parseDataAddMentor(String formData) {
@@ -107,7 +145,12 @@ public class AdminHandler implements HttpHandler {
         return "";
     }
 
-    private void handleUpdateDB(Mentor mentor) {
+    private void handleUpdate(Mentor mentor) {
+        MentorDAO mentorDAO = new SqliteMentorDAO();
+        mentorDAO.updateMentor(mentor, mentorId);
+    }
+
+    private void handleAddMentorDB(Mentor mentor) {
         MentorDAO mentorDAO = new SqliteMentorDAO();
         mentorDAO.addMentor(mentor);
     }
@@ -118,5 +161,36 @@ public class AdminHandler implements HttpHandler {
                 mentorData.get("last-name"),
                 mentorData.get("email")
         );
+    }
+
+    private Integer getIdMentorFrom(URI uri) {
+        String[] values = uri.toString().split("/");
+        for (String element : values) {
+            if (element.matches("[0-9]+")) {
+                return Integer.valueOf(element);
+            }
+        }
+        return null;
+    }
+
+    private Mentor getMentor(Integer mentorId) {
+        if (mentorId != null) {
+            MentorDAO mentorDAO = new SqliteMentorDAO();
+            return mentorDAO.getMentorBy(mentorId);
+        }
+        throw new IllegalArgumentException("Wrong ID!");
+    }
+
+    private void redirectToAdmin(HttpExchange httpExchange) {
+        Headers responseHeaders = httpExchange.getResponseHeaders();
+
+        responseHeaders.add("Location", "/admin");
+
+        try {
+            httpExchange.sendResponseHeaders(302, -1);
+        }
+        catch (IOException e) {
+            System.err.println(e.getClass().getName() + " --> " + e.getMessage());
+        }
     }
 }
