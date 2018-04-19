@@ -23,7 +23,7 @@ public class RootHandler {
         server.createContext("/login", new LoginHandler(loginDAO, sessionDAO));
         server.createContext("/static", new StaticHandler());
         server.createContext("/admin", new AdminHandler());
-        server.createContext("/mentor/", new MentorHandler());
+        server.createContext("/mentor", new MentorHandler());
         server.setExecutor(null);
         server.start();
     }
