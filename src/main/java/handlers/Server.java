@@ -7,12 +7,12 @@ import data.sessiondatabase.SessionDAO;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-public class RootHandler {
+public class Server {
 
     private LoginDAO loginDAO;
     private SessionDAO sessionDAO;
 
-    public RootHandler(LoginDAO loginDAO, SessionDAO sessionDAO) {
+    public Server(LoginDAO loginDAO, SessionDAO sessionDAO) {
         this.loginDAO = loginDAO;
         this.sessionDAO = sessionDAO;
     }

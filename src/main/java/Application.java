@@ -2,7 +2,7 @@ import dao.LoginDAO;
 import dao.SqliteLoginDAO;
 import data.sessiondatabase.SessionDAO;
 import data.sessiondatabase.SqliteSessionDAO;
-import handlers.RootHandler;
+import handlers.Server;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class Application {
         LoginDAO loginDAO = new SqliteLoginDAO();
         SessionDAO sessionDAO = new SqliteSessionDAO();
 
-        RootHandler rootHandler = new RootHandler(loginDAO, sessionDAO);
-        rootHandler.start();
+        Server server = new Server(loginDAO, sessionDAO);
+        server.start();
     }
 }
