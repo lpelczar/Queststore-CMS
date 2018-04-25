@@ -1,0 +1,196 @@
+.content-admin {
+    height: 100%;
+}
+
+#column-tables {
+    display: flex;
+    height: 50%;
+    width: 100%;
+}
+
+#row-table {
+    display: flex;
+    height: 35%;
+    margin-top: 2%;
+}
+
+.table {
+    height: 100%;
+    width: 100%;
+    box-shadow: 10px 10px 10px gainsboro;
+    background-color: rgba(176, 196, 222, 0.5);
+    margin: 2%;
+    border-radius: 25px;
+}
+
+.table:hover {
+    background-color: rgba(176, 196, 222, 0.8);
+}
+
+@keyframes hideTable {
+    from {left: auto;}
+    to {left: 1500px;}
+}
+
+@-webkit-keyframes hideTable {
+    from {left: auto;}
+    to {left: 1500px;}
+}
+
+#mentors-table-name {
+    text-align: center;
+    padding-top: 10px;
+}
+
+#groups-table-name {
+    text-align: center;
+    padding-top: 10px;
+}
+
+#assigned-table-name {
+    text-align: center;
+    padding: 10px;
+}
+
+.groups-lists {
+    margin-top: 5%;
+    padding-left: 10%;
+}
+
+.mentors-lists {
+    margin-top: 5%;
+    padding-left: 10%;
+}
+
+#window {
+    justify-content: center;
+    align-items: center;
+
+}
+
+.window-modal {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+
+    animation-name: opacity;
+    -webkit-animation-duration: .4s;
+    animation-duration: .4s;
+}
+
+@-webkit-keyframes opacity{
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+
+@keyframes opacity {
+    0% {opacity: 0}
+    100% {opacity: 1}
+}
+
+#mentors-list-box {
+    display: grid;
+    background-color: rgba(220, 220, 220, 0.9);
+    width: 80%;
+    border-radius: 10px;
+
+}
+
+.back-button {
+    align-self: flex-end;
+    text-align: center;
+    width: 20%;
+    padding-top: .5%;
+    padding-bottom: .5%;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#title-mentor-box {
+    text-align: center;
+}
+
+.mentor-list {
+    padding-left: 0;
+    text-decoration: none;
+    color: black;
+}
+
+#add-mentor-form {
+    display: none;
+    justify-content: center;
+    height: 50%;
+    padding-top: 5%;
+}
+
+.input-labels {
+    text-align: center;
+}
+
+.add-input {
+    background-color: darkgrey;
+    height: 30%;
+    width: 200px;
+    border-radius: 10px;
+    border-width: 0;
+    box-shadow: 2px 2px ghostwhite;
+
+}
+
+.mentor-profile-button {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 100%;
+}
+
+#mentor-data {
+    display: flex;
+    margin: 2%;
+}
+
+#mentors {
+    padding: auto;
+    overflow: scroll;
+    display: grid;
+    justify-content: center;
+}
+
+.mentor-name-button {
+    text-decoration: none;
+    box-shadow: 2px 2px black;
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 5px;
+    font-family: sans-serif;
+    font-size: 25px;
+    color: black;
+}
+
+.mentor-name-button:hover {
+    background-color: #48b983;
+}
+
+.mentors-lists-edit li {
+    display: grid;
+    justify-content: left;
+    margin: 3%;
+}
+
+#edit-table {
+    display: none;
+}
+
+.assigned {
+    overflow: scroll;
+}
+
+

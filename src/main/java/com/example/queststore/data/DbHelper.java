@@ -100,9 +100,7 @@ public class DbHelper {
 
         try {
             openConnection();
-            connection.setAutoCommit(false);
             statement.executeUpdate();
-            connection.commit();
             return true;
         } catch (SQLException e) {
             QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
