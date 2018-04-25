@@ -83,9 +83,9 @@ var indexHTML ='<!DOCTYPE HTML>' +
 						((this.link !=="" && this.link !== undefined && this.target !== "none")?' href="'+
 							((this.link.substr(0,7) ==='http://' || this.link.substr(0,8) ==='https://')?'':settings.Global.path)+
 							this.link+'"':'')+
-						((this.target === "lightbox")?' data-gallery="gallery"':'')+
+						((this.target === "lightbox")?' com.example.queststore.data-gallery="gallery"':'')+
 						((this.target ==="_blank" || this.target === "_self")?' target="'+this.target+'"':'')+
-						((this.lightboxCaption !== "" && this.lightboxCaption)? ' data-cap="'+this.lightboxCaption+'"':'')+
+						((this.lightboxCaption !== "" && this.lightboxCaption)? ' com.example.queststore.data-cap="'+this.lightboxCaption+'"':'')+
 						'>'+
 							'\n\t\t\t\t<img src="'+
 								((this.imageURL.substr(0,7)==='http://' || this.imageURL.substr(0,8)==='https://')?'':settings.Global.path)+
