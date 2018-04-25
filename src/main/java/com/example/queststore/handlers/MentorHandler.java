@@ -1,19 +1,18 @@
 package com.example.queststore.handlers;
 
+import com.example.queststore.dao.DbTaskDAO;
+import com.example.queststore.dao.DbUserDAO;
+import com.example.queststore.dao.TaskDAO;
+import com.example.queststore.dao.UserDAO;
+import com.example.queststore.data.sessiondatabase.Session;
+import com.example.queststore.data.sessiondatabase.SessionDAO;
+import com.example.queststore.data.sessiondatabase.SqliteSessionDAO;
+import com.example.queststore.models.User;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import dao.LoginDAO;
-import dao.QuestDAO;
-import dao.SqliteLoginDAO;
-import dao.SqliteQuestDAO;
-import com.example.queststore.data.sessiondatabase.Session;
-import com.example.queststore.data.sessiondatabase.SessionDAO;
-import com.example.queststore.data.sessiondatabase.SqliteSessionDAO;
-import model.database.Quest;
-import model.database.User;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -29,8 +28,8 @@ import static com.example.queststore.handlers.MentorOptions.*;
 public class MentorHandler implements HttpHandler {
 
     private SessionDAO sessionDAO = new SqliteSessionDAO();
-    private LoginDAO loginDAO = new SqliteLoginDAO();
-    private QuestDAO questDAO = new SqliteQuestDAO();
+    private UserDAO userDAO = new DbUserDAO();
+    private TaskDAO taskDAO = new DbTaskDAO();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -67,16 +66,17 @@ public class MentorHandler implements HttpHandler {
 
     private void handleDeletingQuest(HttpExchange httpExchange, String formData) throws IOException {
 
-        final int ID_INDEX = 0;
-        List<String> values = parseFormData(formData);
-        int questId = Integer.parseInt(values.get(ID_INDEX));
-
-        if (questDAO.getById(questId) != null) {
-            Quest quest = questDAO.getById(questId);
-            if (questDAO.delete(quest)) {
-                System.out.println("Success deleting quest!");
-            }
-        }
+        // TODO 1 Modify to use name
+//        final int ID_INDEX = 0;
+//        List<String> values = parseFormData(formData);
+//        int questId = Integer.parseInt(values.get(ID_INDEX));
+//
+//        if (taskDAO.getById(questId) != null) {
+//            Quest quest = questDAO.getById(questId);
+//            if (questDAO.delete(quest)) {
+//                System.out.println("Success deleting quest!");
+//            }
+//        }
 
         httpExchange.getResponseHeaders().add("Location", "/mentor/showquests");
         httpExchange.sendResponseHeaders(301, -1);
@@ -84,16 +84,17 @@ public class MentorHandler implements HttpHandler {
 
     private void handleAddingQuest(HttpExchange httpExchange, String formData) throws IOException {
 
-        final int NAME_INDEX = 0;
-        final int DESCRIPTION_INDEX = 1;
-        final int PRICE_INDEX = 2;
-
-        List<String> values = parseFormData(formData);
-        Quest quest = new Quest(values.get(NAME_INDEX), values.get(DESCRIPTION_INDEX),
-                Integer.parseInt(values.get(PRICE_INDEX)));
-        if (questDAO.add(quest)) {
-            System.out.println("Success adding quest!");
-        }
+        // TODO 2 Modify adding quest
+//        final int NAME_INDEX = 0;
+//        final int DESCRIPTION_INDEX = 1;
+//        final int PRICE_INDEX = 2;
+//
+//        List<String> values = parseFormData(formData);
+//        Quest quest = new Quest(values.get(NAME_INDEX), values.get(DESCRIPTION_INDEX),
+//                Integer.parseInt(values.get(PRICE_INDEX)));
+//        if (questDAO.add(quest)) {
+//            System.out.println("Success adding quest!");
+//        }
 
         httpExchange.getResponseHeaders().add("Location", "/mentor/showquests");
         httpExchange.sendResponseHeaders(301, -1);
@@ -133,7 +134,7 @@ public class MentorHandler implements HttpHandler {
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
         int userId = session.getUserId();
-        User user = loginDAO.getById(userId);
+        User user = userDAO.getById(userId);
 
         handleShowingSubPage(httpExchange, user);
     }
@@ -160,7 +161,7 @@ public class MentorHandler implements HttpHandler {
             case SHOW_QUESTS:
                 template = JtwigTemplate.classpathTemplate("templates/display_quests.twig");
                 model = JtwigModel.newModel();
-                model.with("quests", questDAO.getAll());
+                model.with("quests", taskDAO.getAll());
                 sendResponse(httpExchange, template.render(model));
                 break;
             case EDIT_QUEST:
@@ -169,7 +170,7 @@ public class MentorHandler implements HttpHandler {
             case DELETE_QUEST:
                 template = JtwigTemplate.classpathTemplate("templates/delete_quest.twig");
                 model = JtwigModel.newModel();
-                model.with("quests", questDAO.getAll());
+                model.with("quests", taskDAO.getAll());
                 sendResponse(httpExchange, template.render(model));
                 break;
             default:

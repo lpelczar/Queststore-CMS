@@ -1,18 +1,21 @@
 package com.example.queststore.handlers;
 
+import com.example.queststore.dao.UserDAO;
+import com.example.queststore.data.sessiondatabase.Session;
+import com.example.queststore.data.sessiondatabase.SessionDAO;
+import com.example.queststore.models.User;
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import com.google.common.io.Resources;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import dao.LoginDAO;
-import com.example.queststore.data.sessiondatabase.Session;
-import com.example.queststore.data.sessiondatabase.SessionDAO;
 import javafx.util.Pair;
-import model.database.User;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpCookie;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -22,11 +25,11 @@ import java.util.List;
 public class LoginHandler implements HttpHandler {
 
     private int sessionCounter = 0;
-    private LoginDAO loginDAO;
+    private UserDAO userDAO;
     private SessionDAO sessionDAO;
 
-    LoginHandler(LoginDAO loginDAO, SessionDAO sessionDAO) {
-        this.loginDAO = loginDAO;
+    LoginHandler(UserDAO userDAO, SessionDAO sessionDAO) {
+        this.userDAO = userDAO;
         this.sessionDAO = sessionDAO;
     }
 
@@ -70,18 +73,18 @@ public class LoginHandler implements HttpHandler {
         Pair<String, String> loginPassword = parseLoginData(formData);
         System.out.println(loginPassword.getKey() + " " + loginPassword.getValue());
 
-        if (loginDAO.getByLoginAndPassword(loginPassword.getKey(), loginPassword.getValue()) != null) {
+        if (userDAO.getByLoginAndPassword(loginPassword.getKey(), loginPassword.getValue()) != null) {
 
             sessionCounter++;
             String sessionId = Hashing.sha256().hashString(loginPassword.getKey() +
                     Integer.toString(sessionCounter), Charsets.UTF_8).toString();
-            User user = loginDAO.getByLoginAndPassword(loginPassword.getKey(), loginPassword.getValue());
+            User user = userDAO.getByLoginAndPassword(loginPassword.getKey(), loginPassword.getValue());
             cookie = new HttpCookie("sessionId", sessionId);
             httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
 
-            System.out.println("Session id: " + sessionId + " User id: " + user.getUserId());
+            System.out.println("Session id: " + sessionId + " User id: " + user.getId());
 
-            sessionDAO.add(new Session(sessionId, user.getUserId()));
+            sessionDAO.add(new Session(sessionId, user.getId()));
             makeRedirection(httpExchange, cookie);
 
         } else {
@@ -94,9 +97,9 @@ public class LoginHandler implements HttpHandler {
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
         int userId = session.getUserId();
-        User user = loginDAO.getById(userId);
+        User user = userDAO.getById(userId);
 
-        if (user.getRoleId() == 1) {
+        if (user.getRole().equals("Admin")) {
             Headers headers = httpExchange.getResponseHeaders();
             String redirect = "/admin";
             headers.add("Location", redirect);
@@ -104,7 +107,7 @@ public class LoginHandler implements HttpHandler {
             httpExchange.sendResponseHeaders(301, -1);
         }
 
-        if (user.getRoleId() == 2) {
+        if (user.getRole().equals("Mentor")) {
             System.out.println("Mentor logged!");
             Headers headers = httpExchange.getResponseHeaders();
             String redirect = "/mentor/" + userId;

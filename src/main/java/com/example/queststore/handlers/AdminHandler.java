@@ -1,24 +1,19 @@
 package com.example.queststore.handlers;
 
+import com.example.queststore.dao.GroupDAO;
+import com.example.queststore.data.sessiondatabase.SessionDAO;
+import com.example.queststore.data.sessiondatabase.SqliteSessionDAO;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import dao.*;
-import com.example.queststore.data.sessiondatabase.SessionDAO;
-import com.example.queststore.data.sessiondatabase.SqliteSessionDAO;
-import model.Group;
-import model.Mentor;
-
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
-
 
 import java.io.*;
 import java.net.HttpCookie;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AdminHandler implements HttpHandler {
