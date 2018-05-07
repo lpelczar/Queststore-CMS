@@ -8,7 +8,7 @@ import com.example.queststore.dao.*;
 import com.example.queststore.services.*;
 import com.example.queststore.views.*;
 
-public class Application {
+public class ConsoleApp {
 
     public static void main(String... args) {
 
