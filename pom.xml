@@ -16,7 +16,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.example.queststore.app.Application</mainClass>
+                            <mainClass>com.example.queststore.app.ConsoleApp</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

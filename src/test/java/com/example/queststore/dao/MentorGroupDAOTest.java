@@ -1,5 +1,8 @@
 package com.example.queststore.dao;
 
+import com.example.queststore.dao.sqlite.SqliteGroupDAO;
+import com.example.queststore.dao.sqlite.SqliteMentorGroupDAO;
+import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.models.Group;
 import com.example.queststore.models.User;
@@ -26,9 +29,9 @@ class MentorGroupDAOTest {
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
         new DbHelper().createDatabase();
-        this.mentorGroupDAO = new DbMentorGroupDAO();
-        this.groupDAO = new DbGroupDAO();
-        this.userDAO = new DbUserDAO();
+        this.mentorGroupDAO = new SqliteMentorGroupDAO();
+        this.groupDAO = new SqliteGroupDAO();
+        this.userDAO = new SqliteUserDAO();
     }
 
     @Test

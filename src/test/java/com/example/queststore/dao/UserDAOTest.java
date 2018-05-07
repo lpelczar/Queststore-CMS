@@ -1,6 +1,7 @@
 package com.example.queststore.dao;
 
 
+import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.models.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +24,7 @@ class UserDAOTest {
         Files.deleteIfExists(new File(DATABASE_PATH).toPath());
         DbHelper.setDatabasePath(DATABASE_PATH);
         new DbHelper().createDatabase();
-        userDAO = new DbUserDAO();
+        userDAO = new SqliteUserDAO();
 
         user1 = new User(
                 1,

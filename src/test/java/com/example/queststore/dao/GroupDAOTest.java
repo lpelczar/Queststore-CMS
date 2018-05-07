@@ -1,5 +1,6 @@
 package com.example.queststore.dao;
 
+import com.example.queststore.dao.sqlite.SqliteGroupDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.models.Group;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +24,7 @@ class GroupDAOTest {
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
         new DbHelper().createDatabase();
-        this.groupDAO = new DbGroupDAO();
+        this.groupDAO = new SqliteGroupDAO();
     }
 
     @Test
