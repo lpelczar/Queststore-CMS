@@ -20,7 +20,7 @@ public class MentorController {
         this.mentorView = mentorView;
     }
 
-    public void deleteMentor() {
+    void deleteMentor() {
         List<User> mentors = new ArrayList<>(userDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         mentorView.displayEntriesNoInput(mentors);
         if (mentors.isEmpty()) {
@@ -37,7 +37,7 @@ public class MentorController {
         }
     }
 
-    public void showMentorProfileAndHisGroups() {
+    void showMentorProfileAndHisGroups() {
         List<User> mentors = new ArrayList<>(userDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         mentorView.displayEntriesNoInput(mentors);
         if (mentors.isEmpty()) {
@@ -55,7 +55,7 @@ public class MentorController {
         }
     }
 
-    public void editMentorData() {
+    void editMentorData() {
 
         final String QUIT_OPTION = "q";
 

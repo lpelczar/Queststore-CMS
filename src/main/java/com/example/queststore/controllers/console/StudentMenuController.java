@@ -19,7 +19,7 @@ public class StudentMenuController {
         this.studentController = studentController;
     }
 
-    public void start(int studentId) {
+    void start(int studentId) {
         StudentData student = getStudentDataBy(studentId);
         boolean isLoopEnd = false;
         int option = 0;

@@ -17,7 +17,7 @@ class UserController {
     private UserView userView;
     private StudentDataDAO studentDataDAO;
 
-    public UserController(UserDAO userDAO, UserView userView, StudentDataDAO studentDataDAO) {
+    UserController(UserDAO userDAO, UserView userView, StudentDataDAO studentDataDAO) {
         this.userDAO = userDAO;
         this.userView = userView;
         this.studentDataDAO = studentDataDAO;
@@ -78,7 +78,7 @@ class UserController {
         return userDAO;
     }
 
-    public StudentDataDAO getStudentDataDAO() {
+    StudentDataDAO getStudentDataDAO() {
         return studentDataDAO;
     }
 }

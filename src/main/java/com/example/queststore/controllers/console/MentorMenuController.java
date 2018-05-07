@@ -29,7 +29,7 @@ public class MentorMenuController extends UserController {
         this.itemController = itemController;
     }
 
-    public void start() {
+    void start() {
         int option;
         boolean isAppRunning = true;
 

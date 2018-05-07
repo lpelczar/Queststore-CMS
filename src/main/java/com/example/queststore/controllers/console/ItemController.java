@@ -24,7 +24,7 @@ public class ItemController {
         this.itemView = itemView;
     }
 
-    public void addNewItem() {
+    void addNewItem() {
         SqliteItemDAO sqliteItemDAO = new SqliteItemDAO();
 
         itemView.displayCreatingItem();
@@ -43,7 +43,7 @@ public class ItemController {
         }
     }
 
-    public void editItem() {
+    void editItem() {
         itemView.clearConsole();
         List<Item> items = new ArrayList<>(itemDAO.getAllItems());
 
@@ -95,7 +95,7 @@ public class ItemController {
         }
     }
 
-    public void markStudentUsedItem() {
+    void markStudentUsedItem() {
         List<User> students = new ArrayList<>(userDAO.getAllByRole(UserEntry.STUDENT_ROLE));
         itemView.displayEntriesNoInput(students);
         if (students.isEmpty()) {

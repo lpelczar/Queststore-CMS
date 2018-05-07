@@ -30,7 +30,7 @@ public class GroupController {
         this.studentDataDAO = studentDataDAO;
     }
 
-    public void createGroup() {
+    void createGroup() {
 
         String name = groupView.getGroupNameInput();
         Group group = new Group(name);
@@ -41,7 +41,7 @@ public class GroupController {
         }
     }
 
-    public void assignMentorToGroup() {
+    void assignMentorToGroup() {
         List<User> mentors = new ArrayList<>(userDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         groupView.displayEntriesNoInput(mentors);
         if (mentors.isEmpty()) {
@@ -78,7 +78,7 @@ public class GroupController {
         }
     }
 
-    public void revokeMentorFromGroup() {
+    void revokeMentorFromGroup() {
         List<User> mentors = new ArrayList<>(userDAO.getAllByRole(UserEntry.MENTOR_ROLE));
         groupView.displayEntriesNoInput(mentors);
         if (mentors.isEmpty()) {
@@ -115,7 +115,7 @@ public class GroupController {
         }
     }
 
-    public void deleteGroup() {
+    void deleteGroup() {
         List<Group> groups = new ArrayList<>(groupDAO.getAll());
         groupView.displayEntriesNoInput(groups);
         if (groups.isEmpty()) {
@@ -132,7 +132,7 @@ public class GroupController {
         }
     }
 
-    public void showMentorGroups(int mentorID) {
+    void showMentorGroups(int mentorID) {
         List<String> groupsNames = new ArrayList<>(groupDAO.getGroupsNamesByMentorId(mentorID));
         if (!groupsNames.isEmpty()) {
             for (String groupName : groupsNames) {
@@ -151,7 +151,7 @@ public class GroupController {
         mentorView.displayPressAnyKeyToContinueMessage();
     }
 
-    public void addStudentToGroup() {
+    void addStudentToGroup() {
 
         List<User> students = new ArrayList<>(userDAO.getAllByRole(UserEntry.STUDENT_ROLE));
         mentorView.displayEntriesNoInput(students);

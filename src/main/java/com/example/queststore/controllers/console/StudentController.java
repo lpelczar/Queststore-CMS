@@ -33,12 +33,12 @@ public class StudentController {
         this.studentView = studentView;
     }
 
-    public void updateStudentBalance(int studentId, int points) {
+    void updateStudentBalance(int studentId, int points) {
         StudentData studentData = studentDataDAO.getStudentDataByStudentId(studentId);
         studentData.setBalance(studentData.getBalance() + points);
     }
 
-    public void updateStudentExperienceAndLevel(int studentId, int points) {
+    void updateStudentExperienceAndLevel(int studentId, int points) {
         StudentData studentData = studentDataDAO.getStudentDataByStudentId(studentId);
         studentData.setExperience(studentData.getExperience() + points);
         studentDataDAO.updateStudentData(studentData);
@@ -61,7 +61,7 @@ public class StudentController {
         }
     }
 
-    public void showStudentSummary() {
+    void showStudentSummary() {
         studentView.clearConsole();
 
         List<User> students = userDAO.getAllByRole(UserEntry.STUDENT_ROLE);
@@ -84,12 +84,12 @@ public class StudentController {
         } else { studentView.displayNoStudents(); }
     }
 
-    public void showStudentBackPack(int studentId) {
+    void showStudentBackPack(int studentId) {
         List<Item> backpack = itemDAO.getItemsByStudentId(studentId);
         studentView.displayStudentBackpack(backpack);
     }
 
-    public void buyArtifact(int studentId) {
+    void buyArtifact(int studentId) {
         Item item = chooseItemToBuy(ItemEntry.BASIC_ITEM);
 
         if (item != null) {
@@ -136,7 +136,7 @@ public class StudentController {
         return studentBalance > price;
     }
 
-    public void buyArtifactForTeam(int studentId) {
+    void buyArtifactForTeam(int studentId) {
         StudentData studentData = studentDataDAO.getStudentDataByStudentId(studentId);
         if (studentData.getTeamName().isEmpty()) {
             studentView.displayStudentHaveNoTeamAssignedMessage();

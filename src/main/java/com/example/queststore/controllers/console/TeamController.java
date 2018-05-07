@@ -23,7 +23,7 @@ public class TeamController {
         this.userView = userView;
     }
 
-    public void handleReshuffleStudentsTeams() {
+    void handleReshuffleStudentsTeams() {
         List<StudentData> students = studentDataDAO.getAllStudentsData();
         List<StudentData> teams = reshuffleStudentsTeam(students);
 

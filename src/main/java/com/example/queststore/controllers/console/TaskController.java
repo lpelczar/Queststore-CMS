@@ -30,7 +30,7 @@ public class TaskController {
         this.taskView = taskView;
     }
 
-    public void addNewQuest() {
+    void addNewQuest() {
         String questName = taskView.getQuestNameInput();
         if (taskDAO.getByName(questName) != null) {
             taskView.displayQuestAlreadyExists();
@@ -47,7 +47,7 @@ public class TaskController {
         }
     }
 
-    public void editQuest() {
+    void editQuest() {
 
         List<Task> quests = new ArrayList<>(taskDAO.getAll());
         taskView.displayEntriesNoInput(quests);
@@ -98,7 +98,7 @@ public class TaskController {
         }
     }
 
-    public void markStudentAchievedQuest() {
+    void markStudentAchievedQuest() {
 
         List<User> students = new ArrayList<>(userDAO.getAllByRole(UserEntry.STUDENT_ROLE));
         taskView.displayEntriesNoInput(students);

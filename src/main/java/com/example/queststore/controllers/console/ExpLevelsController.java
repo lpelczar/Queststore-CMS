@@ -17,7 +17,7 @@ public class ExpLevelsController {
         this.expLevelsDAO = expLevelsDAO;
     }
 
-    public void addLevelOfExperience() {
+    void addLevelOfExperience() {
 
         String levelName = expLevelsView.getLevelNameInput();
         int value = expLevelsView.getLevelValueInput();
@@ -29,7 +29,7 @@ public class ExpLevelsController {
         }
     }
 
-    public void removeLevelOfExperience() {
+    void removeLevelOfExperience() {
 
         List<ExpLevel> levels = new ArrayList<>(expLevelsDAO.getAll());
         expLevelsView.displayEntriesNoInput(levels);
@@ -50,7 +50,7 @@ public class ExpLevelsController {
         }
     }
 
-    public void showAllLevelsOfExperience() {
+    void showAllLevelsOfExperience() {
 
         List<ExpLevel> expLevels = new ArrayList<>(expLevelsDAO.getAll());
         expLevelsView.displayEntries(expLevels);
