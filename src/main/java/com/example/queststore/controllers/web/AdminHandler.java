@@ -4,6 +4,7 @@ import com.example.queststore.dao.GroupDAO;
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.dao.sqlite.SqliteGroupDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.sessions.SessionDAO;
 import com.example.queststore.data.sessions.SqliteSessionDAO;
 import com.example.queststore.models.Group;
@@ -116,7 +117,7 @@ public class AdminHandler implements HttpHandler {
 //    }
 
     private List<User> getAllMentors() {
-        String mentors = "mentor";
+        String mentors = UserEntry.MENTOR_ROLE;
 
         UserDAO userDAO = new SqliteUserDAO();
         return userDAO.getAllByRole(mentors);
