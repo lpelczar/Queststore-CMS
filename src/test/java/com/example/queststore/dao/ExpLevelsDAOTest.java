@@ -26,6 +26,7 @@ class ExpLevelsDAOTest {
         dbHelper.setDatabasePath(testDbPath);
         dbHelper.createDatabase();
         this.expLevelsDAO = new SqliteExpLevelsDAO();
+        this.expLevelsDAO.setDatabasePath(testDbPath);
     }
 
     @Test

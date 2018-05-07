@@ -2,7 +2,6 @@ package com.example.queststore.dao.sqlite;
 
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.statements.UserStatement;
 import com.example.queststore.models.User;
@@ -19,13 +18,12 @@ import java.util.List;
 public class SqliteUserDAO extends DbHelper implements UserDAO {
 
     private UserStatement userStatement = new UserStatement();
-    private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
     public List<User> getAll() {
 
         String sqlStatement = userStatement.selectAllUsers();
-        PreparedStatement statement = psc.getPreparedStatementBy(new ArrayList<>(), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(new ArrayList<>(), sqlStatement);
         return getUsers(statement);
     }
 
@@ -33,14 +31,14 @@ public class SqliteUserDAO extends DbHelper implements UserDAO {
     public List<User> getAllByRole(String role) {
 
         String sqlStatement = userStatement.selectAllUsersByRole();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(role), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(role), sqlStatement);
         return getUsers(statement);
     }
 
     @Override
     public List<User> getStudentsByGroupId(int groupID) {
         String sqlStatement = userStatement.selectAllStudentsByGroupId();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(groupID), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(groupID), sqlStatement);
         return getUsers(statement);
     }
 
@@ -72,42 +70,42 @@ public class SqliteUserDAO extends DbHelper implements UserDAO {
     public User getById(int id) {
 
         String sqlStatement = userStatement.selectUserById();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(id), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(id), sqlStatement);
         return getUser(statement);
     }
 
     public User getByLoginAndPassword(String login, String password) {
 
         String sqlStatement = userStatement.selectUserByLoginAndPassword();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(login, password), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Arrays.asList(login, password), sqlStatement);
         return getUser(statement);
     }
 
     public User getByLoginAndRole(String login, String role) {
 
         String sqlStatement = userStatement.selectUserByLoginAndRole();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(login, role), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Arrays.asList(login, role), sqlStatement);
         return getUser(statement);
     }
 
     public User getByLogin(String login) {
 
         String sqlStatement = userStatement.selectUserByLogin();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(login), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(login), sqlStatement);
         return getUser(statement);
     }
 
     public User getByEmail(String email) {
 
         String sqlStatement = userStatement.selectUserByEmail();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(email), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(email), sqlStatement);
         return getUser(statement);
     }
 
     public User getByPhoneNumber(String phoneNumber) {
 
         String sqlStatement = userStatement.selectUserByPhoneNumber();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(phoneNumber), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(phoneNumber), sqlStatement);
         return getUser(statement);
     }
 
@@ -138,7 +136,7 @@ public class SqliteUserDAO extends DbHelper implements UserDAO {
     @Override
     public boolean add(User user) {
         String sqlStatement = userStatement.insertUserStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(user.getName(), user.getLogin(),
+        PreparedStatement statement = getPreparedStatementBy(Arrays.asList(user.getName(), user.getLogin(),
                 user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.getRole()), sqlStatement);
         return update(statement);
     }
@@ -146,7 +144,7 @@ public class SqliteUserDAO extends DbHelper implements UserDAO {
     @Override
     public boolean update(User user) {
         String sqlStatement = userStatement.updateUserStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(user.getName(), user.getLogin(),
+        PreparedStatement statement = getPreparedStatementBy(Arrays.asList(user.getName(), user.getLogin(),
                 user.getEmail(), user.getPassword(), user.getPhoneNumber(), user.getRole(), user.getId()), sqlStatement);
         return update(statement);
     }
@@ -154,7 +152,7 @@ public class SqliteUserDAO extends DbHelper implements UserDAO {
     @Override
     public boolean delete(User user) {
         String sqlStatement = userStatement.deleteUserStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(user.getId()), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(user.getId()), sqlStatement);
         return update(statement);
     }
 }

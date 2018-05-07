@@ -2,7 +2,6 @@ package com.example.queststore.dao.sqlite;
 
 import com.example.queststore.dao.StudentDataDAO;
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.StudentDataEntry;
 import com.example.queststore.data.statements.StudentDataStatement;
 import com.example.queststore.models.StudentData;
@@ -18,7 +17,6 @@ import java.util.List;
 public class SqliteStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     private StudentDataStatement studentDataStatement = new StudentDataStatement();
-    private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
     public StudentData getStudentDataByStudentId(int student_id) {
@@ -104,7 +102,7 @@ public class SqliteStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     public boolean add(StudentData student) {
         String sqlStatement = studentDataStatement.createStudentData();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(student.getId(), student.getGroupId(),
+        PreparedStatement statement = getPreparedStatementBy(Arrays.asList(student.getId(), student.getGroupId(),
                 student.getTeamName(),student.getLevel(), student.getBalance(), student.getExperience()), sqlStatement);
         return update(statement);
     }
@@ -113,7 +111,7 @@ public class SqliteStudentDataDAO extends DbHelper implements StudentDataDAO {
     public boolean updateStudentData(StudentData student) {
         if (student != null) {
             String sqlStatement = studentDataStatement.updateStudentData();
-            PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(student.getGroupId(), student.getTeamName(),
+            PreparedStatement statement = getPreparedStatementBy(Arrays.asList(student.getGroupId(), student.getTeamName(),
                     student.getLevel(), student.getBalance(), student.getExperience(), student.getId()), sqlStatement);
             return update(statement);
 

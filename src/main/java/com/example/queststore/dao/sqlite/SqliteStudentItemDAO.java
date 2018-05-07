@@ -2,7 +2,6 @@ package com.example.queststore.dao.sqlite;
 
 import com.example.queststore.dao.StudentItemDAO;
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.StudentItemEntry;
 import com.example.queststore.data.statements.StudentItemStatement;
 import com.example.queststore.utils.QueryLogger;
@@ -18,19 +17,18 @@ import java.util.List;
 public class SqliteStudentItemDAO extends DbHelper implements StudentItemDAO {
 
     private StudentItemStatement studentItemStatement = new StudentItemStatement();
-    private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
     public boolean add(int studentId, int itemId, int isUsed) {
         String sqlStatement = studentItemStatement.addStudentItemConnection();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(studentId, itemId, isUsed), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Arrays.asList(studentId, itemId, isUsed), sqlStatement);
         return update(statement);
     }
 
     @Override
     public boolean markItemAsUsed(int studentId, int itemId) {
         String sqlStatement = studentItemStatement.markItemAsUsed();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(studentId, itemId), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Arrays.asList(studentId, itemId), sqlStatement);
         return update(statement);
     }
 
@@ -40,7 +38,7 @@ public class SqliteStudentItemDAO extends DbHelper implements StudentItemDAO {
         List<Integer> studentsItems = new ArrayList<>();
 
         try {
-            PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(studentID), sqlStatement);
+            PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(studentID), sqlStatement);
             ResultSet resultSet = query(statement);
 
             while (resultSet.next()) {
@@ -60,7 +58,7 @@ public class SqliteStudentItemDAO extends DbHelper implements StudentItemDAO {
     @Override
     public boolean removeTeamItems() {
         String sqlStatement = studentItemStatement.deleteTeamItemsStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.emptyList(), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.emptyList(), sqlStatement);
         return update(statement);
     }
 }

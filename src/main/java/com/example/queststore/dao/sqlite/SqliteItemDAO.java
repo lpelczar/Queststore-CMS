@@ -2,7 +2,6 @@ package com.example.queststore.dao.sqlite;
 
 import com.example.queststore.dao.ItemDAO;
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.ItemEntry;
 import com.example.queststore.data.statements.ItemStatement;
 import com.example.queststore.models.Item;
@@ -20,26 +19,25 @@ import java.util.List;
 public class SqliteItemDAO extends DbHelper implements ItemDAO {
 
     private ItemStatement itemStatement = new ItemStatement();
-    private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
     public List<Item> getItemsByStudentId(int studentId) {
         String sqlStatement = itemStatement.getItemsByStudentId();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(studentId), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(studentId), sqlStatement);
         return getItemsBy(statement);
     }
 
     @Override
     public List<Item> getItemsByCategory(String category) {
         String sqlStatement = itemStatement.getItemsByCategory();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(category), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(category), sqlStatement);
         return getItemsBy(statement);
     }
 
     @Override
     public List<Item> getAllItems() {
         String sqlStatement = itemStatement.getAllItems();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.emptyList(), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.emptyList(), sqlStatement);
         return getItemsBy(statement);
     }
 
@@ -71,14 +69,14 @@ public class SqliteItemDAO extends DbHelper implements ItemDAO {
     @Override
     public Item getItemById(int id) {
         String sqlStatement = itemStatement.getItemById();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(id), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(id), sqlStatement);
         return getItemFromStore(statement);
     }
 
     @Override
     public Item getItemByName(String itemName) {
         String sqlStatement = itemStatement.getItemByName();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(itemName), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(itemName), sqlStatement);
         return getItemFromStore(statement);
     }
 
@@ -111,14 +109,14 @@ public class SqliteItemDAO extends DbHelper implements ItemDAO {
 
     public boolean add(Item item) {
         String sqlStatement = itemStatement.addItemStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(item.getName(), item.getDescription(),
+        PreparedStatement statement = getPreparedStatementBy(Arrays.asList(item.getName(), item.getDescription(),
                 item.getPrice(), item.getCategory()), sqlStatement);
         return update(statement);
     }
 
     public boolean update(Item item) {
         String sqlStatement = itemStatement.updateQueryStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(item.getName(), item.getDescription(),
+        PreparedStatement statement = getPreparedStatementBy(Arrays.asList(item.getName(), item.getDescription(),
                 item.getPrice(), item.getCategory(), item.getId()), sqlStatement);
         return update(statement);
     }

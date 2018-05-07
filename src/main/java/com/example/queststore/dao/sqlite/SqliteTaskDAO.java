@@ -2,7 +2,6 @@ package com.example.queststore.dao.sqlite;
 
 import com.example.queststore.dao.TaskDAO;
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.TaskEntry;
 import com.example.queststore.data.statements.TaskStatement;
 import com.example.queststore.models.Task;
@@ -18,7 +17,6 @@ import java.util.List;
 public class SqliteTaskDAO extends DbHelper implements TaskDAO {
 
     private TaskStatement taskStatement = new TaskStatement();
-    private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
     public List<Task> getAll() {
@@ -75,7 +73,7 @@ public class SqliteTaskDAO extends DbHelper implements TaskDAO {
     @Override
     public boolean add(Task task) {
         String sqlStatement = taskStatement.insertTaskStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(task.getName(), task.getPoints(),
+        PreparedStatement statement = getPreparedStatementBy(Arrays.asList(task.getName(), task.getPoints(),
                 task.getDescription(), task.getCategory()), sqlStatement);
         return update(statement);
     }
@@ -83,7 +81,7 @@ public class SqliteTaskDAO extends DbHelper implements TaskDAO {
     @Override
     public boolean update(Task task) {
         String sqlStatement = taskStatement.updateTaskStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Arrays.asList(task.getId(), task.getName(),
+        PreparedStatement statement = getPreparedStatementBy(Arrays.asList(task.getId(), task.getName(),
                 task.getPoints(), task.getDescription(), task.getCategory(), task.getId()), sqlStatement);
         return update(statement);
     }
