@@ -17,4 +17,5 @@ public interface UserDAO {
     boolean add(User user);
     boolean update(User user);
     boolean delete(User user);
+    void setDatabasePath(String path);
 }

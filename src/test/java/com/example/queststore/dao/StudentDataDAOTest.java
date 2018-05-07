@@ -27,11 +27,15 @@ class StudentDataDAOTest {
     void before() throws IOException {
         String testDbPath = "testDb.db";
         Files.deleteIfExists(new File(testDbPath).toPath());
-        DbHelper.setDatabasePath(testDbPath);
-        new DbHelper().createDatabase();
+        DbHelper dbHelper = new DbHelper();
+        dbHelper.setDatabasePath(testDbPath);
+        dbHelper.createDatabase();
         this.studentDataDAO = new SqliteStudentDataDAO();
+        this.studentDataDAO.setDatabasePath(testDbPath);
         this.userDAO = new SqliteUserDAO();
+        this.userDAO.setDatabasePath(testDbPath);
         this.groupDAO = new SqliteGroupDAO();
+        this.groupDAO.setDatabasePath(testDbPath);
     }
 
     @Test

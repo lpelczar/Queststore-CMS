@@ -10,4 +10,5 @@ public interface TaskDAO {
     Task getByName(String name);
     boolean add(Task task);
     boolean update(Task task);
+    void setDatabasePath(String path);
 }
