@@ -1,5 +1,6 @@
 package com.example.queststore.dao;
 
+import com.example.queststore.dao.sqlite.SqliteTaskDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.models.Task;
 import org.junit.jupiter.api.BeforeEach;

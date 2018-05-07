@@ -5,6 +5,7 @@ import com.example.queststore.controllers.MentorController;
 import com.example.queststore.controllers.RootController;
 import com.example.queststore.controllers.StudentController;
 import com.example.queststore.dao.*;
+import com.example.queststore.dao.sqlite.*;
 import com.example.queststore.services.*;
 import com.example.queststore.views.*;
 

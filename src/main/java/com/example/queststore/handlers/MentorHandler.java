@@ -1,7 +1,7 @@
 package com.example.queststore.handlers;
 
-import com.example.queststore.dao.SqliteTaskDAO;
-import com.example.queststore.dao.SqliteUserDAO;
+import com.example.queststore.dao.sqlite.SqliteTaskDAO;
+import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.dao.TaskDAO;
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.data.sessiondatabase.Session;

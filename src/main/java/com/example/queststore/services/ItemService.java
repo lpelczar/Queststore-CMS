@@ -1,6 +1,7 @@
 package com.example.queststore.services;
 
 import com.example.queststore.dao.*;
+import com.example.queststore.dao.sqlite.SqliteItemDAO;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.User;

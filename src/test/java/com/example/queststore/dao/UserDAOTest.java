@@ -1,6 +1,7 @@
 package com.example.queststore.dao;
 
 
+import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.models.User;
 import org.junit.jupiter.api.BeforeEach;

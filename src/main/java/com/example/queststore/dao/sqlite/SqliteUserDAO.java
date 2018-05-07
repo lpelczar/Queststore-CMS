@@ -1,5 +1,6 @@
-package com.example.queststore.dao;
+package com.example.queststore.dao.sqlite;
 
+import com.example.queststore.dao.UserDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.UserEntry;
