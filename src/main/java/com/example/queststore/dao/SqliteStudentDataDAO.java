@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DbStudentDataDAO extends DbHelper implements StudentDataDAO {
+public class SqliteStudentDataDAO extends DbHelper implements StudentDataDAO {
 
     private StudentDataStatement studentDataStatement = new StudentDataStatement();
     private PreparedStatementCreator psc = new PreparedStatementCreator();

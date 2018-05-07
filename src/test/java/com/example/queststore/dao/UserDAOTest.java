@@ -23,7 +23,7 @@ class UserDAOTest {
         Files.deleteIfExists(new File(DATABASE_PATH).toPath());
         DbHelper.setDatabasePath(DATABASE_PATH);
         new DbHelper().createDatabase();
-        userDAO = new DbUserDAO();
+        userDAO = new SqliteUserDAO();
 
         user1 = new User(
                 1,

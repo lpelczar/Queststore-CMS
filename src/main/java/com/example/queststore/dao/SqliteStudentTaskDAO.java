@@ -7,7 +7,7 @@ import com.example.queststore.data.statements.StudentTaskStatement;
 import java.sql.PreparedStatement;
 import java.util.Arrays;
 
-public class DbStudentTaskDAO extends DbHelper implements StudentTaskDAO {
+public class SqliteStudentTaskDAO extends DbHelper implements StudentTaskDAO {
 
     private StudentTaskStatement studentTaskStatement = new StudentTaskStatement();
     private PreparedStatementCreator psc = new PreparedStatementCreator();

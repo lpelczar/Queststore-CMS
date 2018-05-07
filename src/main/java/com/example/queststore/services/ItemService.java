@@ -24,7 +24,7 @@ public class ItemService {
     }
 
     public void addNewItem() {
-        DbItemDAO dbItemDAO = new DbItemDAO();
+        SqliteItemDAO sqliteItemDAO = new SqliteItemDAO();
 
         itemView.displayCreatingItem();
 
@@ -35,7 +35,7 @@ public class ItemService {
 
         Item item = new Item(name, price, description, category);
 
-        if (dbItemDAO.add(item)) {
+        if (sqliteItemDAO.add(item)) {
             itemView.displayItemHasBeenAdded();
         } else {
             itemView.displayOperationFailed();

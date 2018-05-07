@@ -26,9 +26,9 @@ class StudentDataDAOTest {
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
         new DbHelper().createDatabase();
-        this.studentDataDAO = new DbStudentDataDAO();
-        this.userDAO = new DbUserDAO();
-        this.groupDAO = new DbGroupDAO();
+        this.studentDataDAO = new SqliteStudentDataDAO();
+        this.userDAO = new SqliteUserDAO();
+        this.groupDAO = new SqliteGroupDAO();
     }
 
     @Test

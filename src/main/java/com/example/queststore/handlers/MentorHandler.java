@@ -1,7 +1,7 @@
 package com.example.queststore.handlers;
 
-import com.example.queststore.dao.DbTaskDAO;
-import com.example.queststore.dao.DbUserDAO;
+import com.example.queststore.dao.SqliteTaskDAO;
+import com.example.queststore.dao.SqliteUserDAO;
 import com.example.queststore.dao.TaskDAO;
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.data.sessiondatabase.Session;
@@ -28,8 +28,8 @@ import static com.example.queststore.handlers.MentorOptions.*;
 public class MentorHandler implements HttpHandler {
 
     private SessionDAO sessionDAO = new SqliteSessionDAO();
-    private UserDAO userDAO = new DbUserDAO();
-    private TaskDAO taskDAO = new DbTaskDAO();
+    private UserDAO userDAO = new SqliteUserDAO();
+    private TaskDAO taskDAO = new SqliteTaskDAO();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {

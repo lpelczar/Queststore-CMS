@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class DbExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
+public class SqliteExpLevelsDAO extends DbHelper implements ExpLevelsDAO {
 
     private ExperienceLevelStatement expStatement = new ExperienceLevelStatement();
     private PreparedStatementCreator psc = new PreparedStatementCreator();

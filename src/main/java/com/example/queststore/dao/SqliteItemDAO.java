@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class DbItemDAO extends DbHelper implements ItemDAO {
+public class SqliteItemDAO extends DbHelper implements ItemDAO {
 
     private ItemStatement itemStatement = new ItemStatement();
     private PreparedStatementCreator psc = new PreparedStatementCreator();

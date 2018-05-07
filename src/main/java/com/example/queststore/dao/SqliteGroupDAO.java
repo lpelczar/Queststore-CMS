@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DbGroupDAO extends DbHelper implements GroupDAO {
+public class SqliteGroupDAO extends DbHelper implements GroupDAO {
 
     private GroupStatement groupStatement = new GroupStatement();
     private PreparedStatementCreator psc = new PreparedStatementCreator();

@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class DbUserDAO extends DbHelper implements UserDAO {
+public class SqliteUserDAO extends DbHelper implements UserDAO {
 
     private UserStatement userStatement = new UserStatement();
     private PreparedStatementCreator psc = new PreparedStatementCreator();

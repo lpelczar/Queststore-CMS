@@ -26,9 +26,9 @@ class MentorGroupDAOTest {
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
         new DbHelper().createDatabase();
-        this.mentorGroupDAO = new DbMentorGroupDAO();
-        this.groupDAO = new DbGroupDAO();
-        this.userDAO = new DbUserDAO();
+        this.mentorGroupDAO = new SqliteMentorGroupDAO();
+        this.groupDAO = new SqliteGroupDAO();
+        this.userDAO = new SqliteUserDAO();
     }
 
     @Test

@@ -22,15 +22,15 @@ public class Application {
         TaskView taskView = new TaskView();
         UserView userView = new UserView();
 
-        ExpLevelsDAO expLevelsDAO = new DbExpLevelsDAO();
-        GroupDAO groupDAO = new DbGroupDAO();
-        ItemDAO itemDAO = new DbItemDAO();
-        MentorGroupDAO mentorGroupDAO = new DbMentorGroupDAO();
-        StudentDataDAO studentDataDAO = new DbStudentDataDAO();
-        StudentItemDAO studentItemDAO = new DbStudentItemDAO();
-        StudentTaskDAO studentTaskDAO = new DbStudentTaskDAO();
-        TaskDAO taskDAO = new DbTaskDAO();
-        UserDAO userDAO = new DbUserDAO();
+        ExpLevelsDAO expLevelsDAO = new SqliteExpLevelsDAO();
+        GroupDAO groupDAO = new SqliteGroupDAO();
+        ItemDAO itemDAO = new SqliteItemDAO();
+        MentorGroupDAO mentorGroupDAO = new SqliteMentorGroupDAO();
+        StudentDataDAO studentDataDAO = new SqliteStudentDataDAO();
+        StudentItemDAO studentItemDAO = new SqliteStudentItemDAO();
+        StudentTaskDAO studentTaskDAO = new SqliteStudentTaskDAO();
+        TaskDAO taskDAO = new SqliteTaskDAO();
+        UserDAO userDAO = new SqliteUserDAO();
 
         ExpLevelsService expLevelsService = new ExpLevelsService(expLevelsView, expLevelsDAO);
         GroupService groupService = new GroupService(groupView, mentorView, groupDAO, userDAO,

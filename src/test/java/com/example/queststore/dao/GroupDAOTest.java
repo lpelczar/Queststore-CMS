@@ -23,7 +23,7 @@ class GroupDAOTest {
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
         new DbHelper().createDatabase();
-        this.groupDAO = new DbGroupDAO();
+        this.groupDAO = new SqliteGroupDAO();
     }
 
     @Test

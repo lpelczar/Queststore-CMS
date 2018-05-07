@@ -22,7 +22,7 @@ class TaskDAOTest {
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
         new DbHelper().createDatabase();
-        this.taskDAO = new DbTaskDAO();
+        this.taskDAO = new SqliteTaskDAO();
     }
 
     @Test

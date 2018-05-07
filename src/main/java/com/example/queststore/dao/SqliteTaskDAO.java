@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DbTaskDAO extends DbHelper implements TaskDAO {
+public class SqliteTaskDAO extends DbHelper implements TaskDAO {
 
     private TaskStatement taskStatement = new TaskStatement();
     private PreparedStatementCreator psc = new PreparedStatementCreator();

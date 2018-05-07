@@ -23,7 +23,7 @@ class ExpLevelsDAOTest {
         Files.deleteIfExists(new File(testDbPath).toPath());
         DbHelper.setDatabasePath(testDbPath);
         new DbHelper().createDatabase();
-        this.expLevelsDAO = new DbExpLevelsDAO();
+        this.expLevelsDAO = new SqliteExpLevelsDAO();
     }
 
     @Test
