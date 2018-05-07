@@ -20,6 +20,7 @@ public class WebServer {
     public void start() throws IOException {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(7000), 0);
+        server.createContext("/register", new RegistrationHandler(userDAO));
         server.createContext("/login", new LoginHandler(userDAO, sessionDAO));
         server.createContext("/static", new StaticHandler());
         server.createContext("/admin", new AdminHandler());
