@@ -11,4 +11,5 @@ public interface GroupDAO {
     boolean add(Group group);
     boolean delete(Group group);
     List<String> getGroupsNamesByMentorId(int mentorID);
+    void setDatabasePath(String path);
 }

@@ -55,7 +55,7 @@ public class RootController {
     private void checkDatabaseSetup() {
         DbHelper dbHelper = new DbHelper();
         if (!dbHelper.isDatabaseFileExists()) {
-            DbHelper.setDatabasePath("queststore.db");
+            dbHelper.setDatabasePath("queststore.db");
             dbHelper.createDatabase();
             dbHelper.runSqlScriptsFromFile("InsertFakeData.sql");
         }
