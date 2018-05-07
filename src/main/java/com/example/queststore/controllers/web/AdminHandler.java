@@ -1,31 +1,38 @@
 package com.example.queststore.controllers.web;
 
+import com.example.queststore.dao.GroupDAO;
+import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.sqlite.SqliteGroupDAO;
+import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.sessions.SessionDAO;
 import com.example.queststore.data.sessions.SqliteSessionDAO;
+import com.example.queststore.models.Group;
+import com.example.queststore.models.User;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpCookie;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AdminHandler implements HttpHandler {
 
     private Integer mentorId;
     private SessionDAO sessionDAO = new SqliteSessionDAO();
-
+//
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
         String method = httpExchange.getRequestMethod();
 
-//        if (method.equals("GET")) {
+        if (method.equals("GET")) {
 //            URI uri = httpExchange.getRequestURI();
 //
 //            if (uri.toString().contains("edit")) {
@@ -36,18 +43,21 @@ public class AdminHandler implements HttpHandler {
 //            else{
 //                response = prepareTemplateMain();
 //            }
-//        }
-//
-//        if (method.equals("POST")) {
-//            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-//            BufferedReader br = new BufferedReader(isr);
-//            String formData = br.readLine();
-//
-//            System.out.println(formData);
+            response = prepareTemplateMain();
+        }
+
+        if (method.equals("POST")) {
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String formData = br.readLine();
+
+            System.out.println(formData);
 //            Map<String, String> profileData = parseDataAddMentor(formData);
 //            Mentor mentor = createMentor(profileData);
+//
 //            if (formData.contains("logout")) {
 //                handleLogout(httpExchange);
+//
 //            } else if (checkPostType(formData).contains("Edit")) {
 //                handleUpdate(mentor);
 //                redirectToAdmin(httpExchange);
@@ -55,9 +65,9 @@ public class AdminHandler implements HttpHandler {
 //            else {
 //                handleAddMentorDB(mentor);
 //            }
-//
-//            response = prepareTemplateMain();
-//        }
+
+            response = prepareTemplateMain();
+        }
 
 
         renderWebsite(httpExchange, response);
@@ -81,18 +91,18 @@ public class AdminHandler implements HttpHandler {
         httpExchange.sendResponseHeaders(301, -1);
     }
 
-//    private String prepareTemplateMain() {
-//        List<Mentor> mentors = getAllMentors();
-//        List<Group> groups = getAllGroups();
-//
-//        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin_manager_template.twig");
-//        JtwigModel model = JtwigModel.newModel();
-//
-//        model.with("mentors", mentors);
-//        model.with("groups", groups);
-//
-//        return template.render(model);
-//    }
+    private String prepareTemplateMain() {
+        List<User> mentors = getAllMentors();
+        List<Group> groups = getAllGroups();
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin_manager_template.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("mentors", mentors);
+        model.with("groups", groups);
+
+        return template.render(model);
+    }
 
 //    private String prepareTemplateEdit(Mentor mentor) {
 //        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/edit_mentor_by_admin.twig");
@@ -105,15 +115,17 @@ public class AdminHandler implements HttpHandler {
 //        return template.render(model);
 //    }
 
-//    private List<Mentor> getAllMentors() {
-//        AdminDAO adminDAO = new SqliteAdminDAO();
-//        return adminDAO.getAllMentors();
-//    }
-//
-//    private List<Group> getAllGroups() {
-//        GroupDAO groupDAO = new SqliteGroupDAO();
-//        return groupDAO.getAllGroups();
-//    }
+    private List<User> getAllMentors() {
+        String mentors = "mentor";
+
+        UserDAO userDAO = new SqliteUserDAO();
+        return userDAO.getAllByRole(mentors);
+    }
+
+    private List<Group> getAllGroups() {
+        GroupDAO groupDAO = new SqliteGroupDAO();
+        return groupDAO.getAll();
+    }
 
     private void renderWebsite(HttpExchange httpExchange, String response) {
         try {
@@ -186,10 +198,11 @@ public class AdminHandler implements HttpHandler {
         return null;
     }
 
-//    private Mentor getMentor(Integer mentorId) {
+//    private User getMentor(Integer mentorId) {
+//
 //        if (mentorId != null) {
-//            MentorDAO mentorDAO = new SqliteMentorDAO();
-//            return mentorDAO.getMentorBy(mentorId);
+//            UserDAO userDAO = new SqliteUserDAO();
+//            return userDAO.getAllByRole(mentors);
 //        }
 //        throw new IllegalArgumentException("Wrong ID!");
 //    }
