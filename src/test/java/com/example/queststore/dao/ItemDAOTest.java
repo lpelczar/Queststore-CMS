@@ -30,11 +30,15 @@ class ItemDAOTest {
     @BeforeEach
     void setUpConnectionDB() throws Exception {
         Files.deleteIfExists(new File(DATABASE_PATH).toPath());
-        DbHelper.setDatabasePath(DATABASE_PATH);
-        new DbHelper().createDatabase();
+        DbHelper dbHelper = new DbHelper();
+        dbHelper.setDatabasePath(DATABASE_PATH);
+        dbHelper.createDatabase();
         studentItemDAO = new SqliteStudentItemDAO();
+        studentItemDAO.setDatabasePath(DATABASE_PATH);
         userDAO = new SqliteUserDAO();
+        userDAO.setDatabasePath(DATABASE_PATH);
         itemDAO = new SqliteItemDAO();
+        itemDAO.setDatabasePath(DATABASE_PATH);
 
         item1 = new Item(
                 1,

@@ -22,9 +22,11 @@ class UserDAOTest {
     @BeforeEach
     void setUpConnectionDB() throws Exception {
         Files.deleteIfExists(new File(DATABASE_PATH).toPath());
-        DbHelper.setDatabasePath(DATABASE_PATH);
-        new DbHelper().createDatabase();
+        DbHelper dbHelper = new DbHelper();
+        dbHelper.setDatabasePath(DATABASE_PATH);
+        dbHelper.createDatabase();
         userDAO = new SqliteUserDAO();
+        userDAO.setDatabasePath(DATABASE_PATH);
 
         user1 = new User(
                 1,
