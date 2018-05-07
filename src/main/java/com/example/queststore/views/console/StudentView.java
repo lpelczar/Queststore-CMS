@@ -1,8 +1,8 @@
 package com.example.queststore.views.console;
 
 import com.example.queststore.models.Item;
-import com.example.queststore.utils.Iterator;
 import com.example.queststore.utils.ConsoleInputGetter;
+import com.example.queststore.utils.Iterator;
 
 import java.util.*;
 
@@ -102,8 +102,8 @@ public class StudentView extends AbstractView {
 
             while (iterator.hasNext()) {
                 System.out.println();
-                System.out.format("%-30s%-20s%-40s", iterator.next().getName(), iterator.next().getCategory(),
-                        iterator.next().getDescription());
+                Item item = iterator.next();
+                System.out.format("%-30s%-20s%-40s", item.getName(), item.getCategory(), item.getDescription());
             }
 
         } else { displayStudentHaveNotItems(); }
