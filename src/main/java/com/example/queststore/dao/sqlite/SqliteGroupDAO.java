@@ -2,7 +2,6 @@ package com.example.queststore.dao.sqlite;
 
 import com.example.queststore.dao.GroupDAO;
 import com.example.queststore.data.DbHelper;
-import com.example.queststore.data.PreparedStatementCreator;
 import com.example.queststore.data.contracts.GroupEntry;
 import com.example.queststore.data.statements.GroupStatement;
 import com.example.queststore.models.Group;
@@ -18,7 +17,6 @@ import java.util.List;
 public class SqliteGroupDAO extends DbHelper implements GroupDAO {
 
     private GroupStatement groupStatement = new GroupStatement();
-    private PreparedStatementCreator psc = new PreparedStatementCreator();
 
     @Override
     public List<Group> getAll() {
@@ -47,7 +45,7 @@ public class SqliteGroupDAO extends DbHelper implements GroupDAO {
         String sqlStatement = groupStatement.selectGroupByName();
         Group group = null;
         try {
-            PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(name), sqlStatement);
+            PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(name), sqlStatement);
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 group = new Group(
@@ -70,7 +68,7 @@ public class SqliteGroupDAO extends DbHelper implements GroupDAO {
         String sqlStatement = groupStatement.selectGroupsNamesByMentorId();
         List<String> groupNames = new ArrayList<>();
         try {
-            PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(mentorID), sqlStatement);
+            PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(mentorID), sqlStatement);
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 groupNames.add(
@@ -89,7 +87,7 @@ public class SqliteGroupDAO extends DbHelper implements GroupDAO {
     @Override
     public boolean add(Group group) {
         String sqlStatement = groupStatement.insertGroupStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(group.getGroupName()),
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(group.getGroupName()),
                 sqlStatement);
         return update(statement);
     }
@@ -97,7 +95,7 @@ public class SqliteGroupDAO extends DbHelper implements GroupDAO {
     @Override
     public boolean delete(Group group) {
         String sqlStatement = groupStatement.deleteGroupStatement();
-        PreparedStatement statement = psc.getPreparedStatementBy(Collections.singletonList(group.getId()), sqlStatement);
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(group.getId()), sqlStatement);
         return update(statement);
     }
 }
