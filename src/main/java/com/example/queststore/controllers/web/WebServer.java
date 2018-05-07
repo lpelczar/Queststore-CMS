@@ -7,12 +7,12 @@ import com.example.queststore.data.sessions.SessionDAO;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
-public class Server {
+public class WebServer {
 
     private UserDAO userDAO;
     private SessionDAO sessionDAO;
 
-    public Server(UserDAO userDAO, SessionDAO sessionDAO) {
+    public WebServer(UserDAO userDAO, SessionDAO sessionDAO) {
         this.userDAO = userDAO;
         this.sessionDAO = sessionDAO;
     }
