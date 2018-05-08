@@ -1,6 +1,8 @@
 package com.example.queststore.controllers.web;
 
+import com.example.queststore.dao.TaskDAO;
 import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.sqlite.SqliteTaskDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.sessions.Session;
@@ -23,11 +25,13 @@ import java.net.HttpCookie;
 import java.net.URL;
 
 import static com.example.queststore.controllers.web.MentorOptions.PROMOTE_USER;
+import static com.example.queststore.controllers.web.MentorOptions.TASKS;
 
 public class MentorHandler implements HttpHandler {
 
     private SessionDAO sessionDAO = new SqliteSessionDAO();
     private UserDAO userDAO = new SqliteUserDAO();
+    private TaskDAO taskDAO = new SqliteTaskDAO();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -102,6 +106,12 @@ public class MentorHandler implements HttpHandler {
                 template = JtwigTemplate.classpathTemplate("templates/promote_user.twig");
                 model = JtwigModel.newModel();
                 model.with("users", userDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
+                sendResponse(httpExchange, template.render(model));
+                break;
+            case TASKS:
+                template = JtwigTemplate.classpathTemplate("templates/display_tasks.twig");
+                model = JtwigModel.newModel();
+                model.with("tasks", taskDAO.getAll());
                 sendResponse(httpExchange, template.render(model));
                 break;
             default:

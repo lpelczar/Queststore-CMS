@@ -15,22 +15,10 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <ul>
         <li class="nav-element">
-            <a href="addstudent">Create student</a>
+            <a href="promote">Promote user</a>
         </li>
         <li class="nav-element">
-            <a href="editstudent">Edit student</a>
-        </li>
-        <li class="nav-element">
-            <a href="addquest">Add quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="showquests">Display all quests</a>
-        </li>
-        <li class="nav-element">
-            <a href="editquest">Edit quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="deletequest">Delete quest</a>
+            <a href="tasks">Tasks</a>
         </li>
         <li class="nav-element">
             <form method="post">
@@ -56,14 +44,15 @@
     <div class="container">
 
         <section>
-            <h1>Available quests</h1>
+            <h1>Available tasks</h1>
             <div class="tbl-header">
                 <table cellpadding="0" cellspacing="0" border="0">
                     <thead>
                     <tr>
                         <th width="20%">Name</th>
-                        <th width="65%">Description</th>
-                        <th width="15%">Price</th>
+                        <th width="50%">Description</th>
+                        <th width="15%">Points</th>
+                        <th width="15%">Category</th>
                     </tr>
                     </thead>
                 </table>
@@ -71,11 +60,12 @@
             <div class="tbl-content">
                 <table cellpadding="0" cellspacing="0" border="0">
                     <tbody>
-                    {% for quest in quests %}
+                    {% for task in tasks %}
                         <tr>
-                            <td width="20%">{{ quest.getName() }}</td>
-                            <td width="65%">{{ quest.getDescription() }}</td>
-                            <td width="15%">{{ quest.getPrice() }}</td>
+                            <td width="20%">{{ task.getName() }}</td>
+                            <td width="50%">{{ task.getDescription() }}</td>
+                            <td width="15%">{{ task.getPoints() }}</td>
+                            <td width="15%">{{ task.getCategory() }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
