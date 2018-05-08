@@ -51,8 +51,9 @@
                     <tr>
                         <th width="20%">Name</th>
                         <th width="50%">Description</th>
-                        <th width="15%">Points</th>
-                        <th width="15%">Category</th>
+                        <th width="10%">Points</th>
+                        <th width="10%">Category</th>
+                        <th width="10%">Option</th>
                     </tr>
                     </thead>
                 </table>
@@ -64,8 +65,15 @@
                         <tr>
                             <td width="20%">{{ task.getName() }}</td>
                             <td width="50%">{{ task.getDescription() }}</td>
-                            <td width="15%">{{ task.getPoints() }}</td>
-                            <td width="15%">{{ task.getCategory() }}</td>
+                            <td width="10%">{{ task.getPoints() }}</td>
+                            <td width="10%">{{ task.getCategory() }}</td>
+                            <td width="10%">
+                                <form method="post">
+                                    <label>
+                                        <input type="submit" name="{{ task.getId() }}" value="Delete">
+                                    </label>
+                                </form>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

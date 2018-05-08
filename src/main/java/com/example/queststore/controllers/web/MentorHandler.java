@@ -60,6 +60,8 @@ public class MentorHandler implements HttpHandler {
                 handleLogout(httpExchange);
             } else if (formData.contains("promote")) {
                 new PromotionHandler(httpExchange).handleUserPromotion(formData);
+            } else if (formData.contains("Delete")) {
+                new TaskHandler(httpExchange).handleDeletingTask(formData);
             }
         }
     }

@@ -9,6 +9,11 @@ public class TaskStatement {
                 " WHERE " + TaskEntry.NAME + " = ?;" ;
     }
 
+    public String selectTaskById() {
+        return "SELECT * FROM " + TaskEntry.TABLE_NAME +
+                " WHERE " + TaskEntry.ID + " = ?;" ;
+    }
+
     public String insertTaskStatement() {
         return "INSERT INTO " + TaskEntry.TABLE_NAME + " (" +
                 TaskEntry.NAME + "," +
@@ -29,6 +34,11 @@ public class TaskStatement {
 
     public String selectAllTasks() {
         return "SELECT * FROM " + TaskEntry.TABLE_NAME + ";" ;
+    }
+
+    public String deleteTaskStatement() {
+        return "DELETE FROM " + TaskEntry.TABLE_NAME +
+                " WHERE " + TaskEntry.ID + " = ?;" ;
     }
 
     public String createTable() {
