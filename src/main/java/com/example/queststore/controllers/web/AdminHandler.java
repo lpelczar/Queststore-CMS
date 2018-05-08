@@ -5,6 +5,7 @@ import com.example.queststore.dao.UserDAO;
 import com.example.queststore.dao.sqlite.SqliteGroupDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.contracts.UserEntry;
+import com.example.queststore.data.sessions.Session;
 import com.example.queststore.data.sessions.SessionDAO;
 import com.example.queststore.data.sessions.SqliteSessionDAO;
 import com.example.queststore.models.Group;
@@ -27,26 +28,31 @@ public class AdminHandler implements HttpHandler {
 
     private String mentors = UserEntry.MENTOR_ROLE;
     private User mentor;
+    private User admin;
+    private UserDAO userDAO = new SqliteUserDAO();
 
     private Integer mentorId;
     private SessionDAO sessionDAO = new SqliteSessionDAO();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        HttpCookie cookie;
         String response = "";
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")) {
-            URI uri = httpExchange.getRequestURI();
+            String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
 
-            if (uri.toString().contains("edit")) {
-                mentorId = getIdMentorFrom(uri);
-                mentor = getMentor(mentorId);
-                response = prepareTemplateEdit(mentor);
+            if (sessionCookie != null) {
+                cookie = HttpCookie.parse(sessionCookie).get(0);
+
+                if (sessionDAO.getById(cookie.getValue()) != null) {
+                    showAdminPage(httpExchange, cookie);
+                    return;
+                }
             }
-            else{
-                response = prepareTemplateMain();
-            }
+
+            redirectToLogin(httpExchange);
         }
 
         if (method.equals("POST")) {
@@ -76,6 +82,25 @@ public class AdminHandler implements HttpHandler {
 
         renderWebsite(httpExchange, response);
 
+    }
+
+    private void showAdminPage(HttpExchange httpExchange, HttpCookie cookie) {
+        String sessionId = cookie.getValue();
+        Session session = sessionDAO.getById(sessionId);
+
+        int userId = session.getUserId();
+        admin = userDAO.getById(userId);
+
+        URI uri = httpExchange.getRequestURI();
+
+        if (uri.toString().contains("edit")) {
+            mentorId = getIdMentorFrom(uri);
+            mentor = getMentor(mentorId);
+            response = prepareTemplateEdit(mentor);
+        }
+        else{
+            response = prepareTemplateMain();
+        }
     }
 
     private void handleLogout(HttpExchange httpExchange) throws IOException {
