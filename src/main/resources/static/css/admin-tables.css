@@ -166,11 +166,8 @@
 
 .mentor-name-button {
     text-decoration: none;
-    box-shadow: 2px 2px black;
     border-radius: 10px;
-    border: 1px solid black;
-    padding: 5px;
-    font-family: sans-serif;
+    padding: 2px;
     font-size: 25px;
     color: black;
 }
@@ -181,7 +178,7 @@
 
 .mentors-lists-edit li {
     display: grid;
-    justify-content: left;
+    justify-content: center;
     margin: 3%;
 }
 

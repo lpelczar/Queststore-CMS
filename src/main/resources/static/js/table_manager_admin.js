@@ -5,13 +5,13 @@ var assigned_table = document.getElementsByClassName('assigned table')[0];
 var form = document.getElementById("add-mentor-form");
 var edit_table = document.getElementById("edit-table");
 
-let mentor_table = document.getElementsByClassName('mentors table')[0];
-let group_table = document.getElementsByClassName('groups table')[0];
-let table_form = document.getElementsByClassName('table-form');
+var mentor_table = document.getElementsByClassName('mentors table')[0];
+var group_table = document.getElementsByClassName('groups table')[0];
+var table_form = document.getElementsByClassName('table-form');
 
 function displayWindow() {
-    let window = document.getElementById("window");
-    let close = document.getElementsByClassName('back-button')[0];
+    var window = document.getElementById("window");
+    var close = document.getElementsByClassName('back-button')[0];
     window.style.display = "flex";
 
     close.onclick = function () {
