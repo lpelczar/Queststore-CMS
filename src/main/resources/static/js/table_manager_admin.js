@@ -50,7 +50,6 @@ function group_table_center() {
 }
 
 function displayEditWindow() {
-    hideMentors()
     title_table.style.fontSize = "30px";
     title_table.style.backgroundColor= "#808080a3;";
     row_table.style.height = "80%";

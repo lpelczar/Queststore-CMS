@@ -26,13 +26,12 @@ import java.util.Map;
 
 public class AdminHandler implements HttpHandler {
 
-    private String mentors = UserEntry.MENTOR_ROLE;
+    private SessionDAO sessionDAO = new SqliteSessionDAO();
+    private UserDAO userDAO = new SqliteUserDAO();
     private User mentor;
     private User admin;
-    private UserDAO userDAO = new SqliteUserDAO();
-
     private Integer mentorId;
-    private SessionDAO sessionDAO = new SqliteSessionDAO();
+
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -87,6 +86,7 @@ public class AdminHandler implements HttpHandler {
     private void showAdminPage(HttpExchange httpExchange, HttpCookie cookie) {
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
+        String response;
 
         int userId = session.getUserId();
         admin = userDAO.getById(userId);
@@ -101,23 +101,8 @@ public class AdminHandler implements HttpHandler {
         else{
             response = prepareTemplateMain();
         }
-    }
 
-    private void handleLogout(HttpExchange httpExchange) throws IOException {
-        HttpCookie cookie;
-        String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
-        if (sessionCookie != null) {
-            cookie = HttpCookie.parse(sessionCookie).get(0);
-            sessionDAO.deleteBySessionId(cookie.getValue());
-        }
-        redirectToLogin(httpExchange);
-    }
-
-    private void redirectToLogin(HttpExchange httpExchange) throws IOException {
-        Headers headers = httpExchange.getResponseHeaders();
-        String redirect = "/login";
-        headers.add("Location", redirect);
-        httpExchange.sendResponseHeaders(301, -1);
+        renderWebsite(httpExchange, response);
     }
 
     private String prepareTemplateMain() {
@@ -148,7 +133,7 @@ public class AdminHandler implements HttpHandler {
 
     private List<User> getAllMentors() {
         UserDAO userDAO = new SqliteUserDAO();
-        return userDAO.getAllByRole(mentors);
+        return userDAO.getAllByRole(UserEntry.MENTOR_ROLE);
     }
 
     private List<Group> getAllGroups() {
@@ -226,14 +211,6 @@ public class AdminHandler implements HttpHandler {
         userDAO.update(mentor);
     }
 
-//    private Mentor createMentor(Map<String, String> mentorData) {
-//        return new Mentor(
-//                mentorData.get("name"),
-//                mentorData.get("last-name"),
-//                mentorData.get("email")
-//        );
-//    }
-
     private Integer getIdMentorFrom(URI uri) {
         String[] values = uri.toString().split("/");
 
@@ -264,5 +241,22 @@ public class AdminHandler implements HttpHandler {
         catch (IOException e) {
             System.err.println(e.getClass().getName() + " --> " + e.getMessage());
         }
+    }
+
+    private void handleLogout(HttpExchange httpExchange) throws IOException {
+        HttpCookie cookie;
+        String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
+        if (sessionCookie != null) {
+            cookie = HttpCookie.parse(sessionCookie).get(0);
+            sessionDAO.deleteBySessionId(cookie.getValue());
+        }
+        redirectToLogin(httpExchange);
+    }
+
+    private void redirectToLogin(HttpExchange httpExchange) throws IOException {
+        Headers headers = httpExchange.getResponseHeaders();
+        String redirect = "/login";
+        headers.add("Location", redirect);
+        httpExchange.sendResponseHeaders(301, -1);
     }
 }
