@@ -28,9 +28,7 @@ public class AdminHandler implements HttpHandler {
 
     private SessionDAO sessionDAO = new SqliteSessionDAO();
     private UserDAO userDAO = new SqliteUserDAO();
-    private User mentor;
     private User admin;
-    private Integer mentorId;
 
 
     @Override
@@ -66,14 +64,18 @@ public class AdminHandler implements HttpHandler {
             if (formData.contains("logout")) {
                 handleLogout(httpExchange);
 
-            } else if (checkPostType(formData).contains("Edit")) {
-                updateMentorField(profileData);
-                handleUpdate(mentor);
+            } else if (checkPostType(formData).contains("Accept")) {
+                int userId = getUserIdFrom(profileData);
+                User user = findUserBy(userId);
+
+                update(profileData, user);
+                updateDb(user);
+
                 redirectToAdmin(httpExchange);
             }
 //            else {
-////                handlePromoteUserToMentor(mentor);
-////            }
+//                handlePromoteUserToMentor(mentor);
+//            }
 
             response = prepareTemplateMain();
         }
@@ -88,15 +90,16 @@ public class AdminHandler implements HttpHandler {
         Session session = sessionDAO.getById(sessionId);
         String response;
 
-        int userId = session.getUserId();
-        admin = userDAO.getById(userId);
+        int adminId = session.getUserId();
+        admin = userDAO.getById(adminId);
 
         URI uri = httpExchange.getRequestURI();
 
         if (uri.toString().contains("edit")) {
-            mentorId = getIdMentorFrom(uri);
-            mentor = getMentor(mentorId);
-            response = prepareTemplateEdit(mentor);
+            Integer userId = getUserIdFrom(uri);
+            User user = findUserBy(userId);
+
+            response = prepareTemplateEdit(user);
         }
         else{
             response = prepareTemplateMain();
@@ -116,30 +119,48 @@ public class AdminHandler implements HttpHandler {
         model.with("mentors", mentors);
         model.with("groups", groups);
         model.with("blankUsers", blankUsers);
+        model.with("admin_id", admin.getId());
 
         return template.render(model);
     }
 
-    private String prepareTemplateEdit(User mentor) {
+    private String prepareTemplateEdit(User user) {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/edit_mentor_by_admin.twig");
         JtwigModel model = JtwigModel.newModel();
 
-        model.with("login", mentor.getLogin());
-        model.with("name", mentor.getName());
-        model.with("phoneNumber", mentor.getPhoneNumber());
-        model.with("email", mentor.getEmail());
+        model.with("login", user.getLogin());
+        model.with("password", user.getPassword());
+        model.with("name", user.getName());
+        model.with("phoneNumber", user.getPhoneNumber());
+        model.with("email", user.getEmail());
+        model.with("user_id", user.getId());
 
 
         return template.render(model);
     }
 
+    private User findUserBy(Integer userId) {
+        User user = userDAO.getById(userId);
+        if (user != null) {
+            return user;
+        }
+        throw new IllegalArgumentException("There is no user with thats ID!");
+    }
+
+    private int getUserIdFrom(Map<String, String> profileData) {
+        for (String key : profileData.keySet()) {
+            if (profileData.get(key).equals("Accept")) {
+                return Integer.valueOf(key);
+            }
+        }
+        throw new IllegalArgumentException("There is no id of user!");
+    }
+
     private List<User> getAllBlankUsers() {
-        UserDAO userDAO = new SqliteUserDAO();
         return userDAO.getAllByRole(UserEntry.BLANK_USER_ROLE);
     }
 
     private List<User> getAllMentors() {
-        UserDAO userDAO = new SqliteUserDAO();
         return userDAO.getAllByRole(UserEntry.MENTOR_ROLE);
     }
 
@@ -194,31 +215,36 @@ public class AdminHandler implements HttpHandler {
         return "";
     }
 
-    private void updateMentorField(Map<String, String> userProfile) {
+    private User update(Map<String, String> userProfile, User user) {
         for (String key : userProfile.keySet()) {
+
             switch (key) {
                 case "login":
-                    mentor.setLogin(userProfile.get("login"));
+                    user.setLogin(userProfile.get("login"));
+                    break;
+                case "password":
+                    user.setPassword(userProfile.get("password"));
                     break;
                 case "name":
-                    mentor.setName(userProfile.get("name"));
+                    user.setName(userProfile.get("name"));
                     break;
                 case "phone-number":
-                    mentor.setPhoneNumber(userProfile.get("phone-number"));
+                    user.setPhoneNumber(userProfile.get("phone-number"));
                     break;
                 case "email":
-                    mentor.setEmail(userProfile.get("email"));
+                    user.setEmail(userProfile.get("email"));
                     break;
             }
         }
+        return user;
     }
 
-    private void handleUpdate(User mentor) {
+    private void updateDb(User user) {
         UserDAO userDAO = new SqliteUserDAO();
-        userDAO.update(mentor);
+        userDAO.update(user);
     }
 
-    private Integer getIdMentorFrom(URI uri) {
+    private Integer getUserIdFrom(URI uri) {
         String[] values = uri.toString().split("/");
 
         for (String element : values) {
@@ -227,14 +253,6 @@ public class AdminHandler implements HttpHandler {
             }
         }
         return null;
-    }
-
-    private User getMentor(Integer mentorId) {
-        if (mentorId != null) {
-            UserDAO userDAO = new SqliteUserDAO();
-            return userDAO.getById(mentorId);
-        }
-        throw new IllegalArgumentException("Wrong ID!");
     }
 
     private void redirectToAdmin(HttpExchange httpExchange) {
