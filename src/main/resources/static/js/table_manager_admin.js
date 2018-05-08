@@ -20,8 +20,9 @@ function displayWindow() {
     }
 }
 
+
 function mentor_table_center() {
-    hideMentors()
+    hideMentors();
     mentor_table.style.width = "80%";
     group_table.style.display = "none";
     row_table.style.display = "none";
@@ -35,7 +36,7 @@ function mentor_table_center() {
 }
 
 function group_table_center() {
-    hideMentors()
+    hideMentors();
     group_table.style.width = "80%";
     mentor_table.style.display = "none";
     row_table.style.display = "none";
@@ -79,7 +80,7 @@ function hideMentors() {
 
 
 function prepareTableForAddMentor() {
-    hideMentors()
+    hideMentors();
     title_table.textContent = "Add new mentor profile";
     form.style.display = "grid";
 }
