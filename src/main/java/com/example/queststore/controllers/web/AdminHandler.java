@@ -30,7 +30,7 @@ public class AdminHandler implements HttpHandler {
 
     private Integer mentorId;
     private SessionDAO sessionDAO = new SqliteSessionDAO();
-//
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
@@ -56,18 +56,19 @@ public class AdminHandler implements HttpHandler {
 
             System.out.println(formData);
             Map<String, String> profileData = parseDataAddMentor(formData);
-            updateMentorField(profileData);
+
 
             if (formData.contains("logout")) {
                 handleLogout(httpExchange);
 
             } else if (checkPostType(formData).contains("Edit")) {
+                updateMentorField(profileData);
                 handleUpdate(mentor);
                 redirectToAdmin(httpExchange);
             }
 //            else {
-//                handlePromoteUserToMentor(mentor);
-//            }
+////                handlePromoteUserToMentor(mentor);
+////            }
 
             response = prepareTemplateMain();
         }
@@ -151,14 +152,17 @@ public class AdminHandler implements HttpHandler {
     private Map<String, String> parseDataAddMentor(String formData) {
         int VALUE_INDEX = 1;
         int FORM_NAME_INDEX = 0;
+
         Map<String, String> profileValues = new HashMap<>();
         String[] data = formData.split("&");
 
         for (String pair : data) {
             String[] keyValue = pair.split("=");
-            String value = decodeValue(keyValue[VALUE_INDEX]);
 
-            profileValues.put(keyValue[FORM_NAME_INDEX], value);
+            if (keyValue.length > 1) {
+                String value = decodeValue(keyValue[VALUE_INDEX]);
+                profileValues.put(keyValue[FORM_NAME_INDEX], value);
+            }
         }
         return profileValues;
     }
@@ -174,10 +178,22 @@ public class AdminHandler implements HttpHandler {
     }
 
     private void updateMentorField(Map<String, String> userProfile) {
-        mentor.setLogin(userProfile.get("login"));
-        mentor.setName(userProfile.get("name"));
-        mentor.setPhoneNumber(userProfile.get("phone-number"));
-        mentor.setEmail(userProfile.get("email"));
+        for (String key : userProfile.keySet()) {
+            switch (key) {
+                case "login":
+                    mentor.setLogin(userProfile.get("login"));
+                    break;
+                case "name":
+                    mentor.setName(userProfile.get("name"));
+                    break;
+                case "phone-number":
+                    mentor.setPhoneNumber(userProfile.get("phone-number"));
+                    break;
+                case "email":
+                    mentor.setEmail(userProfile.get("email"));
+                    break;
+            }
+        }
     }
 
     private void handleUpdate(User mentor) {
