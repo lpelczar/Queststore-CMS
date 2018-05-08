@@ -108,12 +108,14 @@ public class AdminHandler implements HttpHandler {
     private String prepareTemplateMain() {
         List<User> mentors = getAllMentors();
         List<Group> groups = getAllGroups();
+        List<User> blankUsers = getAllBlankUsers();
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin_manager_template.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("mentors", mentors);
         model.with("groups", groups);
+        model.with("blankUsers", blankUsers);
 
         return template.render(model);
     }
@@ -129,6 +131,11 @@ public class AdminHandler implements HttpHandler {
 
 
         return template.render(model);
+    }
+
+    private List<User> getAllBlankUsers() {
+        UserDAO userDAO = new SqliteUserDAO();
+        return userDAO.getAllByRole(UserEntry.BLANK_USER_ROLE);
     }
 
     private List<User> getAllMentors() {
