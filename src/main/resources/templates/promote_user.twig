@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Queststore</title>
+    <link href="/static/css/style.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/manager.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/forms.css" type="text/css" rel="stylesheet">
+    <script src="/static/js/sidenav.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <ul>
+        <li class="nav-element">
+            <a href="promote">Promote user</a>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="logout" value="Logout">
+            </form>
+        </li>
+    </ul>
+</div>
+
+<div id="main">
+
+    <header>
+        <div id="title-bar">
+            <div id="menu" onclick="openNav()">
+                <div class="menu-icon"></div>
+                <div class="menu-icon"></div>
+                <div class="menu-icon"></div>
+            </div>
+            <h1 id="title-text">Queststore</h1>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="form">
+            <form class="form" method="post">
+                <p style="font-size: x-large">Select user and role to promote.</p>
+
+                {% if (users.isEmpty()) %}
+
+                    <p style="font-size: x-large">Blank users list is empty.</p>
+
+                {% else %}
+
+                    <select name="promote-user-id" class="combo-box" title="Blank users" required>
+                        {% for user in users %}
+                            <option value="{{ user.getId() }}">{{ user.toString() }}</option>
+                        {% endfor %}
+                    </select>
+
+                {% endif %}
+
+                <input type="submit" name="promote" id="create-button" value="Promote to student">
+                <input type="submit" name="promote" id="create-button" value="Promote to mentor">
+
+            </form>
+        </div>
+
+    </div>
+
+    <footer>
+        <div id="bottom-bar">
+            <p id="copyright">2018 Design and Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>
