@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Queststore</title>
+    <link href="static/css/style.css" type="text/css" rel="stylesheet">
+    <link href="static/css/register.css" type="text/css" rel="stylesheet">
+</head>
+
+<body onload = textAnimation()>
+<header>
+    <div id="title-bar">
+        <h1 id="title-text">Queststore</h1>
+    </div>
+</header>
+
+<h2>Welcome to QuestStore system!</h2>
+<h3 id="info">User with this data already exists!</h3>
+
+<div class="center">
+
+    <div class="register">
+
+    <form method="post">
+
+        <div class="input-field">
+            <label>
+                <input type="text" placeholder="Login" name="login" class="input-element" required>
+            </label>
+        </div>
+
+        <div class="input-field">
+            <label>
+                <input type="password" placeholder="Password" name="password" class="input-element" required>
+            </label>
+        </div>
+
+        <div class="input-field">
+            <label>
+                <input type="text" placeholder="Full name" name="full-name" class="input-element" required>
+            </label>
+        </div>
+
+        <div class="input-field">
+            <label>
+                <input type="email" placeholder="E-mail" name="email" class="input-element" required>
+            </label>
+        </div>
+
+        <div class="input-field">
+            <label>
+                <input type="tel" pattern='\d{9}' placeholder="Phone number" name="phone" class="input-element" required>
+            </label>
+        </div>
+
+        <input type="submit" value="Register" id="register">
+    </form>
+    </div>
+</div>
+
+<footer>
+    <div id="bottom-bar">
+        <p id="copyright">© 2018 Design & Implementation : Łukasz Pelczar, Nikodem Ciołczyk</p>
+    </div>
+</footer>
+
+</body>
+</html>
