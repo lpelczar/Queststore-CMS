@@ -59,7 +59,7 @@
                 <p id="title-mentor-box">Mentors List BOX</p>
                 <ul id="mentors">
                     {% for mentor in mentors %}
-                        <li id="mentor-data">{{ mentor.getName() }} {{ mentor.getLastName() }}</li>
+                        <li id="mentor-data">{{ mentor.getName() }}</li>
                     {% endfor %}
                 </ul>
                 <span class="back-button">back</span>
@@ -74,7 +74,7 @@
 
                     <ul class="mentors-lists">
                         {% for element in mentors %}
-                        <li> {{ element.getName() }} {{ element.getLastName() }}</li>
+                        <li> {{ element.getName() }}</li>
                         {% endfor %}
                     </ul>
 
@@ -155,7 +155,7 @@
                     <div id="edit-table">
                         <ul class="mentors-lists-edit">
                             {% for element in mentors %}
-                                <li><a href="admin/edit/{{ element.getMentorId() }}" class="mentor-name-button" onclose="editPage()"> {{ element.getName() }} {{ element.getLastName() }}</a></li>
+                                <li><a href="admin/edit/{{ element.getId() }}" class="mentor-name-button" onclose="editPage()"> {{ element.getName() }}</a></li>
                             {% endfor %}
                         </ul>
 

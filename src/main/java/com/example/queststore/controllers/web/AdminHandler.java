@@ -1,63 +1,76 @@
 package com.example.queststore.controllers.web;
 
+import com.example.queststore.dao.GroupDAO;
+import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.sqlite.SqliteGroupDAO;
+import com.example.queststore.dao.sqlite.SqliteUserDAO;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.sessions.SessionDAO;
 import com.example.queststore.data.sessions.SqliteSessionDAO;
+import com.example.queststore.models.Group;
+import com.example.queststore.models.User;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpCookie;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AdminHandler implements HttpHandler {
 
+    private String mentors = UserEntry.MENTOR_ROLE;
+    private User mentor;
+
     private Integer mentorId;
     private SessionDAO sessionDAO = new SqliteSessionDAO();
-
+//
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
         String method = httpExchange.getRequestMethod();
 
-//        if (method.equals("GET")) {
-//            URI uri = httpExchange.getRequestURI();
-//
-//            if (uri.toString().contains("edit")) {
-//                mentorId = getIdMentorFrom(uri);
-//                Mentor mentor = getMentor(mentorId);
-//                response = prepareTemplateEdit(mentor);
-//            }
-//            else{
-//                response = prepareTemplateMain();
-//            }
-//        }
-//
-//        if (method.equals("POST")) {
-//            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-//            BufferedReader br = new BufferedReader(isr);
-//            String formData = br.readLine();
-//
-//            System.out.println(formData);
-//            Map<String, String> profileData = parseDataAddMentor(formData);
-//            Mentor mentor = createMentor(profileData);
-//            if (formData.contains("logout")) {
-//                handleLogout(httpExchange);
-//            } else if (checkPostType(formData).contains("Edit")) {
-//                handleUpdate(mentor);
-//                redirectToAdmin(httpExchange);
-//            }
+        if (method.equals("GET")) {
+            URI uri = httpExchange.getRequestURI();
+
+            if (uri.toString().contains("edit")) {
+                mentorId = getIdMentorFrom(uri);
+                mentor = getMentor(mentorId);
+                response = prepareTemplateEdit(mentor);
+            }
+            else{
+                response = prepareTemplateMain();
+            }
+        }
+
+        if (method.equals("POST")) {
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+            String formData = br.readLine();
+
+            System.out.println(formData);
+            Map<String, String> profileData = parseDataAddMentor(formData);
+            updateMentorField(profileData);
+
+            if (formData.contains("logout")) {
+                handleLogout(httpExchange);
+
+            } else if (checkPostType(formData).contains("Edit")) {
+                handleUpdate(mentor);
+                redirectToAdmin(httpExchange);
+            }
 //            else {
-//                handleAddMentorDB(mentor);
+//                handlePromoteUserToMentor(mentor);
 //            }
-//
-//            response = prepareTemplateMain();
-//        }
+
+            response = prepareTemplateMain();
+        }
 
 
         renderWebsite(httpExchange, response);
@@ -81,39 +94,41 @@ public class AdminHandler implements HttpHandler {
         httpExchange.sendResponseHeaders(301, -1);
     }
 
-//    private String prepareTemplateMain() {
-//        List<Mentor> mentors = getAllMentors();
-//        List<Group> groups = getAllGroups();
-//
-//        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin_manager_template.twig");
-//        JtwigModel model = JtwigModel.newModel();
-//
-//        model.with("mentors", mentors);
-//        model.with("groups", groups);
-//
-//        return template.render(model);
-//    }
+    private String prepareTemplateMain() {
+        List<User> mentors = getAllMentors();
+        List<Group> groups = getAllGroups();
 
-//    private String prepareTemplateEdit(Mentor mentor) {
-//        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/edit_mentor_by_admin.twig");
-//        JtwigModel model = JtwigModel.newModel();
-//
-//        model.with("name", mentor.getName());
-//        model.with("lastName", mentor.getLastName());
-//        model.with("email", mentor.getEmail());
-//
-//        return template.render(model);
-//    }
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin_manager_template.twig");
+        JtwigModel model = JtwigModel.newModel();
 
-//    private List<Mentor> getAllMentors() {
-//        AdminDAO adminDAO = new SqliteAdminDAO();
-//        return adminDAO.getAllMentors();
-//    }
-//
-//    private List<Group> getAllGroups() {
-//        GroupDAO groupDAO = new SqliteGroupDAO();
-//        return groupDAO.getAllGroups();
-//    }
+        model.with("mentors", mentors);
+        model.with("groups", groups);
+
+        return template.render(model);
+    }
+
+    private String prepareTemplateEdit(User mentor) {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/edit_mentor_by_admin.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("login", mentor.getLogin());
+        model.with("name", mentor.getName());
+        model.with("phoneNumber", mentor.getPhoneNumber());
+        model.with("email", mentor.getEmail());
+
+
+        return template.render(model);
+    }
+
+    private List<User> getAllMentors() {
+        UserDAO userDAO = new SqliteUserDAO();
+        return userDAO.getAllByRole(mentors);
+    }
+
+    private List<Group> getAllGroups() {
+        GroupDAO groupDAO = new SqliteGroupDAO();
+        return groupDAO.getAll();
+    }
 
     private void renderWebsite(HttpExchange httpExchange, String response) {
         try {
@@ -158,16 +173,18 @@ public class AdminHandler implements HttpHandler {
         return "";
     }
 
-//    private void handleUpdate(Mentor mentor) {
-//        MentorDAO mentorDAO = new SqliteMentorDAO();
-//        mentorDAO.updateMentor(mentor, mentorId);
-//    }
-//
-//    private void handleAddMentorDB(Mentor mentor) {
-//        MentorDAO mentorDAO = new SqliteMentorDAO();
-//        mentorDAO.addMentor(mentor);
-//    }
-//
+    private void updateMentorField(Map<String, String> userProfile) {
+        mentor.setLogin(userProfile.get("login"));
+        mentor.setName(userProfile.get("name"));
+        mentor.setPhoneNumber(userProfile.get("phone-number"));
+        mentor.setEmail(userProfile.get("email"));
+    }
+
+    private void handleUpdate(User mentor) {
+        UserDAO userDAO = new SqliteUserDAO();
+        userDAO.update(mentor);
+    }
+
 //    private Mentor createMentor(Map<String, String> mentorData) {
 //        return new Mentor(
 //                mentorData.get("name"),
@@ -178,6 +195,7 @@ public class AdminHandler implements HttpHandler {
 
     private Integer getIdMentorFrom(URI uri) {
         String[] values = uri.toString().split("/");
+
         for (String element : values) {
             if (element.matches("[0-9]+")) {
                 return Integer.valueOf(element);
@@ -186,13 +204,13 @@ public class AdminHandler implements HttpHandler {
         return null;
     }
 
-//    private Mentor getMentor(Integer mentorId) {
-//        if (mentorId != null) {
-//            MentorDAO mentorDAO = new SqliteMentorDAO();
-//            return mentorDAO.getMentorBy(mentorId);
-//        }
-//        throw new IllegalArgumentException("Wrong ID!");
-//    }
+    private User getMentor(Integer mentorId) {
+        if (mentorId != null) {
+            UserDAO userDAO = new SqliteUserDAO();
+            return userDAO.getById(mentorId);
+        }
+        throw new IllegalArgumentException("Wrong ID!");
+    }
 
     private void redirectToAdmin(HttpExchange httpExchange) {
         Headers responseHeaders = httpExchange.getResponseHeaders();
