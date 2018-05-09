@@ -70,7 +70,7 @@ public class MentorHandler implements HttpHandler {
                 new TaskHandler(httpExchange, mentorId).handle(formData);
             } else if (formData.contains("item")) {
                 new ItemHandler(httpExchange, mentorId).handle(formData);
-            } else if (formData.contains("group")) {
+            } else if (formData.contains("student")) {
                 new StudentHandler(httpExchange, mentorId).handle(formData);
             }
         }
