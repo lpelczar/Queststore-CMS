@@ -22,7 +22,31 @@ class TaskHandler {
         this.httpExchange = httpExchange;
     }
 
-    void handleDeletingTask(String formData) throws IOException {
+    void handle(String formData) throws IOException {
+        if (formData.contains("Delete+task")) {
+            handleDeletingTask(formData);
+        } else if (formData.contains("add-task")) {
+            handleAddingTask(formData);
+        } else if (formData.contains("edit-task-button")) {
+            handleEditingTask(formData);
+        } else if (formData.contains("Edit+task")) {
+            handleShowingEditPage(formData);
+        }
+    }
+
+    void showEditPage(String taskId) throws IOException {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/edit_task.twig");
+        JtwigModel model = JtwigModel.newModel();
+        Task task = taskDAO.getById(Integer.parseInt(taskId));
+        model.with("taskName", task.getName());
+        model.with("taskPoints", task.getPoints());
+        model.with("taskDescription", task.getDescription());
+        model.with("basicTask", task.getCategory().equals(TaskEntry.BASIC_TASK));
+        model.with("taskId", task.getId());
+        sendResponse(httpExchange, template.render(model));
+    }
+
+    private void handleDeletingTask(String formData) throws IOException {
 
         final int TASK_ID_INDEX = 0;
         List<String> values = new FormDataParser().getKeys(formData);
@@ -32,7 +56,7 @@ class TaskHandler {
         httpExchange.sendResponseHeaders(301, -1);
     }
 
-    void handleAddingTask(String formData) throws IOException {
+    private void handleAddingTask(String formData) throws IOException {
         final int NAME_INDEX = 0;
         final int POINTS_INDEX = 1;
         final int DESCRIPTION_INDEX = 2;
@@ -45,7 +69,7 @@ class TaskHandler {
         httpExchange.sendResponseHeaders(301, -1);
     }
 
-    void handleEditingTask(String formData) throws IOException {
+    private void handleEditingTask(String formData) throws IOException {
         final int NAME_INDEX = 0;
         final int POINTS_INDEX = 1;
         final int DESCRIPTION_INDEX = 2;
@@ -59,24 +83,12 @@ class TaskHandler {
         httpExchange.sendResponseHeaders(301, -1);
     }
 
-    void handleShowingEditPage(String formData) throws IOException {
+    private void handleShowingEditPage(String formData) throws IOException {
         final int TASK_ID_INDEX = 0;
         List<String> values = new FormDataParser().getKeys(formData);
         Task task = taskDAO.getById(Integer.parseInt(values.get(TASK_ID_INDEX)));
         httpExchange.getResponseHeaders().add("Location", "/mentor/tasks/" + task.getId() + "/edit-task");
         httpExchange.sendResponseHeaders(301, -1);
-    }
-
-    void showEditPage(String taskId) throws IOException {
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/edit_task.twig");
-        JtwigModel model = JtwigModel.newModel();
-        Task task = taskDAO.getById(Integer.parseInt(taskId));
-        model.with("taskName", task.getName());
-        model.with("taskPoints", task.getPoints());
-        model.with("taskDescription", task.getDescription());
-        model.with("basicTask", task.getCategory().equals(TaskEntry.BASIC_TASK));
-        model.with("taskId", task.getId());
-        sendResponse(httpExchange, template.render(model));
     }
 
     private void sendResponse(HttpExchange httpExchange, String response) throws IOException {

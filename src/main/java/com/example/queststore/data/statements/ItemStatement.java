@@ -39,6 +39,11 @@ public class ItemStatement {
                 " WHERE " + ItemEntry.CATEGORY + " = ?; ";
     }
 
+    public String deleteItemStatement() {
+        return "DELETE FROM " + ItemEntry.TABLE_NAME +
+                " WHERE " + ItemEntry.ID + " = ?;" ;
+    }
+
     public String addItemStatement() {
         return "INSERT INTO " + ItemEntry.TABLE_NAME + " (" +
                 ItemEntry.ITEM_NAME + ", " +

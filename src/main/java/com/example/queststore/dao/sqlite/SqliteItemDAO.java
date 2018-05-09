@@ -120,4 +120,11 @@ public class SqliteItemDAO extends DbHelper implements ItemDAO {
                 item.getPrice(), item.getCategory(), item.getId()), sqlStatement);
         return update(statement);
     }
+
+    @Override
+    public boolean delete(Item item) {
+        String sqlStatement = itemStatement.deleteItemStatement();
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(item.getId()), sqlStatement);
+        return update(statement);
+    }
 }

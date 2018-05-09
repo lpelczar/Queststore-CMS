@@ -57,21 +57,16 @@ public class MentorHandler implements HttpHandler {
 
             String formData = getFormData(httpExchange);
             System.out.println("Form :" + formData);
-
             if (formData.contains("logout")) {
                 handleLogout(httpExchange);
             } else if (formData.contains("redirect")) {
                 handleRedirection(httpExchange, formData);
             } else if (formData.contains("promote")) {
                 new PromotionHandler(httpExchange).handleUserPromotion(formData);
-            } else if (formData.contains("Delete+task")) {
-                new TaskHandler(httpExchange).handleDeletingTask(formData);
-            } else if (formData.contains("add-task")) {
-                new TaskHandler(httpExchange).handleAddingTask(formData);
-            } else if (formData.contains("edit-task-button")) {
-                new TaskHandler(httpExchange).handleEditingTask(formData);
-            } else if (formData.contains("Edit+task")) {
-                new TaskHandler(httpExchange).handleShowingEditPage(formData);
+            } else if (formData.contains("task")) {
+                new TaskHandler(httpExchange).handle(formData);
+            } else if (formData.contains("item")) {
+                new ItemHandler(httpExchange).handle(formData);
             }
         }
     }
@@ -125,6 +120,7 @@ public class MentorHandler implements HttpHandler {
         JtwigModel model;
 
         String lastSegment = path.substring(path.lastIndexOf('/') + 1);
+        String[] segments = path.split("/");;
 
         switch (lastSegment) {
             case PROMOTE_USER:
@@ -134,7 +130,6 @@ public class MentorHandler implements HttpHandler {
                 sendResponse(httpExchange, template.render(model));
                 break;
             case EDIT_TASK:
-                String[] segments = path.split("/");
                 String taskId = segments[segments.length - 2];
                 new TaskHandler(httpExchange).showEditPage(taskId);
                 break;
@@ -147,11 +142,18 @@ public class MentorHandler implements HttpHandler {
             case ADD_TASK:
                 sendStaticPage(httpExchange, "static/mentor/add_task.html");
                 break;
+            case EDIT_ITEM:
+                String itemId = segments[segments.length - 2];
+                new ItemHandler(httpExchange).showEditPage(itemId);
+                break;
             case ITEMS:
                 template = JtwigTemplate.classpathTemplate("templates/display_items.twig");
                 model = JtwigModel.newModel();
                 model.with("items", itemDAO.getAllItems());
                 sendResponse(httpExchange, template.render(model));
+                break;
+            case ADD_ITEM:
+                sendStaticPage(httpExchange, "static/mentor/add_item.html");
                 break;
             default:
                 template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
