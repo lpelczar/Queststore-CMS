@@ -24,6 +24,7 @@ import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.net.URL;
 
+import static com.example.queststore.controllers.web.MentorOptions.ADD_TASK;
 import static com.example.queststore.controllers.web.MentorOptions.PROMOTE_USER;
 import static com.example.queststore.controllers.web.MentorOptions.TASKS;
 
@@ -62,6 +63,8 @@ public class MentorHandler implements HttpHandler {
                 new PromotionHandler(httpExchange).handleUserPromotion(formData);
             } else if (formData.contains("Delete")) {
                 new TaskHandler(httpExchange).handleDeletingTask(formData);
+            } else if (formData.contains("add-task")) {
+                new TaskHandler(httpExchange).handleAddingNewTask(formData);
             }
         }
     }
@@ -85,12 +88,10 @@ public class MentorHandler implements HttpHandler {
     }
 
     private void showMentorPage(HttpExchange httpExchange, HttpCookie cookie) throws IOException {
-
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
         int userId = session.getUserId();
         User user = userDAO.getById(userId);
-
         handleShowingSubPage(httpExchange, user);
     }
 
@@ -116,6 +117,9 @@ public class MentorHandler implements HttpHandler {
                 model.with("tasks", taskDAO.getAll());
                 sendResponse(httpExchange, template.render(model));
                 break;
+            case ADD_TASK:
+                sendStaticPage(httpExchange, "static/mentor/add_task.html");
+                break;
             default:
                 template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
                 model = JtwigModel.newModel();
@@ -131,7 +135,7 @@ public class MentorHandler implements HttpHandler {
         os.close();
     }
 
-    private void showStaticPage(HttpExchange httpExchange, String pagePath) throws IOException {
+    private void sendStaticPage(HttpExchange httpExchange, String pagePath) throws IOException {
         URL fileURL = Resources.getResource(pagePath);
         StaticHandler.sendFile(httpExchange, fileURL);
     }

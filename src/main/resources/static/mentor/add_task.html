@@ -14,22 +14,13 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <ul>
         <li class="nav-element">
-            <a href="addstudent">Create student</a>
+            <a href="promote">Promote user</a>
         </li>
         <li class="nav-element">
-            <a href="editstudent">Edit student</a>
+            <a href="tasks">Tasks</a>
         </li>
         <li class="nav-element">
-            <a href="addquest">Add quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="showquests">Display all quests</a>
-        </li>
-        <li class="nav-element">
-            <a href="editquest">Edit quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="deletequest">Delete quest</a>
+            <a href="addtask">Add task</a>
         </li>
         <li class="nav-element">
             <form method="post">
@@ -56,11 +47,15 @@
 
         <div class="form">
             <form class="form" method="post">
-                <p>Please fill in the com.example.queststore.data to add new quest!</p>
+                <p>Please fill in the data to add new task!</p>
                 <input class="field" type="text" name="name" placeholder="Name" required>
+                <input class="field" type="number" name="points" placeholder="Points" required>
                 <input class="field" type="text" name="description" placeholder="Description" required>
-                <input class="field" type="number" name="price" placeholder="Price" required>
-                <input type="submit" name="add-quest" id="create-button" value="Add quest">
+                <select name="category" class="combo-box" title="Categories" required>
+                    <option value="Basic">Basic</option>
+                    <option value="Extra">Extra</option>
+                </select>
+                <input type="submit" name="add-task" id="create-button" value="Add task">
             </form>
         </div>
 

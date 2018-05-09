@@ -27,4 +27,20 @@ class TaskHandler {
         httpExchange.getResponseHeaders().add("Location", "/mentor/tasks");
         httpExchange.sendResponseHeaders(301, -1);
     }
+
+    void handleAddingNewTask(String formData) throws IOException {
+
+        final int NAME_INDEX = 0;
+        final int POINTS_INDEX = 1;
+        final int DESCRIPTION_INDEX = 2;
+        final int CATEGORY_INDEX = 3;
+
+        List<String> values = new FormDataParser().getValues(formData);
+        Task task = new Task(values.get(NAME_INDEX), Integer.parseInt(values.get(POINTS_INDEX)),
+                values.get(DESCRIPTION_INDEX), values.get(CATEGORY_INDEX));
+        taskDAO.add(task);
+
+        httpExchange.getResponseHeaders().add("Location", "/mentor/tasks");
+        httpExchange.sendResponseHeaders(301, -1);
+    }
 }

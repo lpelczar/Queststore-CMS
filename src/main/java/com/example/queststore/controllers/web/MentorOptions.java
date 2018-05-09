@@ -4,4 +4,5 @@ public interface MentorOptions {
 
     String PROMOTE_USER = "promote";
     String TASKS = "tasks";
+    String ADD_TASK = "addtask";
 }
