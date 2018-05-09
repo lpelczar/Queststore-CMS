@@ -57,7 +57,10 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
 
             if (formData.contains("logout")) {
                 handleLogout(httpExchange);
-
+            }
+            else if (formData.contains("main-page")) {
+                redirectToAdmin(httpExchange);
+                
             } else if (formData.contains("Accept")) {
                 int userId = profileHandler.getUserIdFrom(profileData);
                 User user = profileHandler.findUserBy(userId);
