@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class AdminHandler extends WebDataTools implements HttpHandler {
 
-    private ProfileEditorHandler profileEditorHandler = new ProfileEditorHandler();
+    private ProfileHandler profileHandler = new ProfileHandler();
     private SessionDAO sessionDAO = new SqliteSessionDAO();
     private UserDAO userDAO = new SqliteUserDAO();
     private User admin;
@@ -59,23 +59,16 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
                 handleLogout(httpExchange);
 
             } else if (formData.contains("Accept")) {
-                int userId = profileEditorHandler.getUserIdFrom(profileData);
-                User user = profileEditorHandler.findUserBy(userId);
+                int userId = profileHandler.getUserIdFrom(profileData);
+                User user = profileHandler.findUserBy(userId);
 
-                profileEditorHandler.update(profileData, user);
-                profileEditorHandler.updateDb(user);
+                profileHandler.update(profileData, user);
+                profileHandler.updateDb(user);
 
                 redirectToAdmin(httpExchange);
             }
-            else if (formData.contains("mentor profile")) {
-//                int mentorId =
-//                redirectToMentorProfile(httpExchange, mentorId);
-            }
-
             response = prepareTemplateMain();
         }
-
-
         renderWebsite(httpExchange, response);
 
     }
@@ -92,9 +85,15 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
 
         if (uri.toString().contains("edit")) {
             Integer userId = getUserIdFrom(uri);
-            User user = profileEditorHandler.findUserBy(userId);
+            User user = profileHandler.findUserBy(userId);
 
             response = prepareTemplateEdit(user);
+        }
+        else if (uri.toString().contains("mentor-profile")) {
+            Integer userId = getUserIdFrom(uri);
+            User user = profileHandler.findUserBy(userId);
+
+            response = prepareTemplateMentorProfile(user);
         }
         else{
             response = prepareTemplateMain();
@@ -104,9 +103,9 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
     }
 
     private String prepareTemplateMain() {
-        List<User> mentors = profileEditorHandler.getAllMentors();
-        List<Group> groups = profileEditorHandler.getAllGroups();
-        List<User> blankUsers = profileEditorHandler.getAllBlankUsers();
+        List<User> mentors = profileHandler.getAllMentors();
+        List<Group> groups = profileHandler.getAllGroups();
+        List<User> blankUsers = profileHandler.getAllBlankUsers();
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin_manager_template.twig");
         JtwigModel model = JtwigModel.newModel();
@@ -130,6 +129,18 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
         model.with("email", user.getEmail());
         model.with("user_id", user.getId());
 
+
+        return template.render(model);
+    }
+
+    private String prepareTemplateMentorProfile(User user) {
+        List<String> mentorGroups = profileHandler.getGroupsBy(user.getId());
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_profile_admin.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("mentor_info", user.toString());
+        model.with("group", mentorGroups);
 
         return template.render(model);
     }
@@ -170,10 +181,10 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
         httpExchange.sendResponseHeaders(301, -1);
     }
 
-    private void redirectToMentorProfile(HttpExchange httpExchange, Integer mentorId) throws IOException {
-        Headers headers = httpExchange.getResponseHeaders();
-        String redirect = "/mentor-profile/" + mentorId;
-        headers.add("Location", redirect);
-        httpExchange.sendResponseHeaders(301, -1);
-    }
+//    private void redirectToMentorProfile(HttpExchange httpExchange, Integer mentorId) throws IOException {
+//        Headers headers = httpExchange.getResponseHeaders();
+//        String redirect = "/mentor-profile/" + mentorId;
+//        headers.add("Location", redirect);
+//        httpExchange.sendResponseHeaders(301, -1);
+//    }
 }
