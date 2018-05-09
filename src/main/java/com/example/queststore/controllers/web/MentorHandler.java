@@ -1,7 +1,9 @@
 package com.example.queststore.controllers.web;
 
+import com.example.queststore.dao.ItemDAO;
 import com.example.queststore.dao.TaskDAO;
 import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.sqlite.SqliteItemDAO;
 import com.example.queststore.dao.sqlite.SqliteTaskDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.contracts.UserEntry;
@@ -31,6 +33,7 @@ public class MentorHandler implements HttpHandler {
     private SessionDAO sessionDAO = new SqliteSessionDAO();
     private UserDAO userDAO = new SqliteUserDAO();
     private TaskDAO taskDAO = new SqliteTaskDAO();
+    private ItemDAO itemDAO = new SqliteItemDAO();
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -57,12 +60,8 @@ public class MentorHandler implements HttpHandler {
 
             if (formData.contains("logout")) {
                 handleLogout(httpExchange);
-            } else if (formData.contains("redirect-promote-user")) {
-                redirectToPath(httpExchange, "/mentor/promote-user");
-            } else if (formData.contains("redirect-tasks")) {
-                redirectToPath(httpExchange, "/mentor/tasks");
-            } else if (formData.contains("redirect-add-task")) {
-                redirectToPath(httpExchange, "/mentor/add-task");
+            } else if (formData.contains("redirect")) {
+                handleRedirection(httpExchange, formData);
             } else if (formData.contains("promote")) {
                 new PromotionHandler(httpExchange).handleUserPromotion(formData);
             } else if (formData.contains("Delete+task")) {
@@ -74,6 +73,21 @@ public class MentorHandler implements HttpHandler {
             } else if (formData.contains("Edit+task")) {
                 new TaskHandler(httpExchange).handleShowingEditPage(formData);
             }
+        }
+    }
+
+    private void handleRedirection(HttpExchange httpExchange, String formData) throws IOException {
+
+        if (formData.contains("redirect-promote-user")) {
+            redirectToPath(httpExchange, "/mentor/promote-user");
+        } else if (formData.contains("redirect-tasks")) {
+            redirectToPath(httpExchange, "/mentor/tasks");
+        } else if (formData.contains("redirect-add-task")) {
+            redirectToPath(httpExchange, "/mentor/add-task");
+        } else if (formData.contains("redirect-items")) {
+            redirectToPath(httpExchange, "/mentor/items");
+        } else if (formData.contains("redirect-add-item")) {
+            redirectToPath(httpExchange, "/mentor/add-item");
         }
     }
 
@@ -132,6 +146,12 @@ public class MentorHandler implements HttpHandler {
                 break;
             case ADD_TASK:
                 sendStaticPage(httpExchange, "static/mentor/add_task.html");
+                break;
+            case ITEMS:
+                template = JtwigTemplate.classpathTemplate("templates/display_items.twig");
+                model = JtwigModel.newModel();
+                model.with("items", itemDAO.getAllItems());
+                sendResponse(httpExchange, template.render(model));
                 break;
             default:
                 template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
