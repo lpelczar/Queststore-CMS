@@ -7,6 +7,7 @@
     <link href="/static/css/manager.css" rel="stylesheet">
     <link href="/static/css/admin-tables.css" rel="stylesheet">
     <link href="/static/css/profile-editor.css" rel="stylesheet">
+    <link href="/static/css/window-modal-admin.css" rel="stylesheet">
     <script src="/static/js/sidenav.js"></script>
 </head>
 <body>
@@ -27,10 +28,10 @@
             <div id="mySidenav" class="sidenav">
                 <ul id="navi-list">
                     <li class="nav-element">
-                        <a class="navi-button" onclick="displayWindow(); closeNav()">Show all mentors</a>
+                        <a class="navi-button" onclick="displayWindow(); closeNav()">Show mentor profile</a>
                     </li>
                     <li class="nav-element">
-                        <a class="navi-button" onclick="displayEditWindow(); prepareTableForAddMentor(); closeNav()">Add new mentor</a>
+                        <a class="navi-button" onclick="closeNav()">Promote blank user</a>
                     </li>
                     <li class="nav-element">
                         <a id="edit_mentor" onclick="displayEditWindow(); prepareTableForPickMentor(); displayMentors(); closeNav()">Edit mentor profile</a>
@@ -39,7 +40,7 @@
                         <a href="">Assign mentor-group</a>
                     </li>
                     <li class="nav-element">
-                        <a href="">Edit my profile</a>
+                        <a href="admin/edit/{{ admin_id }}">Edit my profile</a>
                     </li>
                     <li class="nav-element">
                         <form method="post">
@@ -56,10 +57,14 @@
 
         <div id="window" class="window-modal">
             <div id="mentors-list-box">
-                <p id="title-mentor-box">Mentors List BOX</p>
+                <p id="title-mentor-box">Choose mentor for display his profile</p>
+
                 <ul id="mentors">
                     {% for mentor in mentors %}
-                        <li id="mentor-data">{{ mentor.getName() }}</li>
+                        <li id="mentor-data">
+                            <div class="mentor-name">
+                                <form method="POST"><input type="submit" name="mentor profile {{ mentor.getId() }}" value="{{ mentor.getName() }}" class="mentor-info" onclick=""></form>
+                            </div>
                     {% endfor %}
                 </ul>
                 <span class="back-button">back</span>
