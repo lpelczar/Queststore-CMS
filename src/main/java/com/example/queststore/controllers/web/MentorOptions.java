@@ -9,4 +9,5 @@ public interface MentorOptions {
     String ITEMS = "items";
     String EDIT_ITEM = "edit-item";
     String ADD_ITEM = "add-item";
+    String ADD_STUDENT_TO_GROUP = "add-student-to-group";
 }

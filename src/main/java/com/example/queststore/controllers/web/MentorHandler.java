@@ -1,8 +1,10 @@
 package com.example.queststore.controllers.web;
 
+import com.example.queststore.dao.GroupDAO;
 import com.example.queststore.dao.ItemDAO;
 import com.example.queststore.dao.TaskDAO;
 import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.sqlite.SqliteGroupDAO;
 import com.example.queststore.dao.sqlite.SqliteItemDAO;
 import com.example.queststore.dao.sqlite.SqliteTaskDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
@@ -33,6 +35,7 @@ public class MentorHandler implements HttpHandler {
     private UserDAO userDAO = new SqliteUserDAO();
     private TaskDAO taskDAO = new SqliteTaskDAO();
     private ItemDAO itemDAO = new SqliteItemDAO();
+    private GroupDAO groupDAO = new SqliteGroupDAO();
     private int mentorId;
 
     @Override
@@ -67,6 +70,8 @@ public class MentorHandler implements HttpHandler {
                 new TaskHandler(httpExchange, mentorId).handle(formData);
             } else if (formData.contains("item")) {
                 new ItemHandler(httpExchange, mentorId).handle(formData);
+            } else if (formData.contains("group")) {
+                new StudentHandler(httpExchange, mentorId).handle(formData);
             }
         }
     }
@@ -83,6 +88,8 @@ public class MentorHandler implements HttpHandler {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/items");
         } else if (formData.contains("redirect-add-item")) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-item");
+        } else if (formData.contains("redirect-add-student-to-group")) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-student-to-group");
         }
     }
 
@@ -149,6 +156,13 @@ public class MentorHandler implements HttpHandler {
                 break;
             case ADD_ITEM:
                 sendStaticPage(httpExchange, "static/mentor/add_item.html");
+                break;
+            case ADD_STUDENT_TO_GROUP:
+                template = JtwigTemplate.classpathTemplate("templates/add_student_to_group.twig");
+                model = JtwigModel.newModel();
+                model.with("students", userDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+                model.with("groups", groupDAO.getAll());
+                sendResponse(httpExchange, template.render(model));
                 break;
             default:
                 template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");

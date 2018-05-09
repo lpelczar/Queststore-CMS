@@ -68,23 +68,33 @@
 
         <div class="form">
             <form class="form" method="post">
-                <p>Please fill in the data to edit item!</p>
-                <input class="field" type="text" name="name" placeholder="Name" value="{{ itemName }}" required>
-                <input class="field" type="number" name="points" placeholder="Points" value="{{ itemPrice }}" required>
-                <input class="field" type="text" name="description" placeholder="Description" value="{{ itemDescription }}" required>
-                <select name="category" class="combo-box" title="Categories" required>
+                <p style="font-size: larger">Please choose student and a group to make connection!</p>
 
-                    {% if (basicItem) %}
-                        <option value="Basic" selected="selected">Basic</option>
-                        <option value="Extra">Extra</option>
-                    {% else %}
-                        <option value="Basic">Basic</option>
-                        <option value="Extra" selected="selected">Extra</option>
-                    {% endif %}
+                {% if (students.isEmpty()) %}
+                    <p style="font-size: x-large">Student list is empty.</p>
+                {% else %}
+                    <select name="student" class="auto-combo-box" title="Students" required>
+                        {% for student in students %}
+                        <option value="{{ student.getId() }}">{{ student.toString() }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
 
-                </select>
-                <input class="field" type="hidden" name="id" value="{{ itemId }}">
-                <input type="submit" name="edit-item-button" id="create-button" value="Edit item">
+                {% if (groups.isEmpty()) %}
+                    <p style="font-size: x-large">Group list is empty.</p>
+                {% else %}
+                    <select name="group" class="auto-combo-box" title="Groups" required>
+                        {% for group in groups %}
+                        <option value="{{ group.getId() }}">{{ group.toString() }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+
+                {% if (students.isEmpty() or groups.isEmpty()) %}
+                <input disabled type="submit" name="add-student-to-group-button" id="create-button" value="Add student to group">
+                {% else %}
+                <input type="submit" name="add-student-to-group-button" id="create-button" value="Add student to group">
+                {% endif %}
             </form>
         </div>
 
