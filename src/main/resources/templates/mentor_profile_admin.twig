@@ -26,23 +26,13 @@
             <div id="mySidenav" class="sidenav">
                 <ul id="navi-list">
                     <li class="nav-element">
-                        <a class="navi-button" onclick="displayWindow(); closeNav()">Show all mentors</a>
-                    </li>
-                    <li class="nav-element">
-                        <a class="navi-button" onclick="displayEditWindow(); prepareTableForAddMentor(); closeNav()">Add new mentor</a>
-                    </li>
-                    <li class="nav-element">
-                        <a id="edit_mentor" onclick="displayEditWindow(); prepareTableForPickMentor(); closeNav()">Edit mentor profile</a>
-                    </li>
-                    <li class="nav-element">
-                        <a href="">Assign mentor-group</a>
-                    </li>
-                    <li class="nav-element">
-                        <a href="">Edit my profile</a>
+                        <form method="post">
+                            <input type="submit" name="logout" value="Logout">
+                        </form>
                     </li>
                     <li class="nav-element">
                         <form method="post">
-                            <input type="submit" name="logout" value="Logout">
+                            <input type="submit" name="main-page" value="Back">
                         </form>
                     </li>
                 </ul>
@@ -68,10 +58,11 @@
                 <div id="groups-table-name">Groups</div>
                 <ul class="groups-lists">
                     {% for key, value in test %}
-                        <li> {{ key }}
+                        <li id="group-name">
+                            <div id="group-key">{{ key }}</div>
                             <ul>
                                 {% for student in value %}
-                                    <li>{{ student.getName() }}</li>
+                                    <div id="student-value"><li id="student-name">{{ student.getName() }}</li></div>
                                 {% endfor %}
                             </ul>
                         </li>

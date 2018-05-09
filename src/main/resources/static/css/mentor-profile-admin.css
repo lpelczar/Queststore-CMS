@@ -30,3 +30,30 @@
 #groups-table-name {
     font-size: 25px;
 }
+
+#group-name {
+    margin-bottom: 5%;
+    list-style-type: none;
+    text-align: center;
+    padding-right: 50px;
+}
+
+#group-key {
+    padding-right: 50px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#student-value {
+    text-align: center;
+    padding-top: 5px;
+}
+
+#student-name {
+    list-style-type: none;
+}
+
+.groups-lists {
+    padding-left: 0;
+}
