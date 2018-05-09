@@ -166,11 +166,8 @@
 
 .mentor-name-button {
     text-decoration: none;
-    box-shadow: 2px 2px black;
     border-radius: 10px;
-    border: 1px solid black;
-    padding: 5px;
-    font-family: sans-serif;
+    padding: 2px;
     font-size: 25px;
     color: black;
 }
@@ -181,13 +178,30 @@
 
 .mentors-lists-edit li {
     display: grid;
-    justify-content: left;
+    justify-content: center;
     margin: 3%;
 }
 
 #edit-table {
     display: none;
+    height: 80%;
 }
+
+#back-button-mentor-to-edit {
+    display: none;
+    justify-content: center;
+    text-align: right;
+    padding: 15px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+#back-button-mentor-to-edit:hover {
+    transition: .4s;
+    opacity: 0.7;
+}
+
 
 .assigned {
     overflow: scroll;
