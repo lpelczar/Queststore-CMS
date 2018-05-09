@@ -23,13 +23,13 @@ class TaskHandler {
     }
 
     void handle(String formData) throws IOException {
-        if (formData.contains("Delete+task")) {
+        if (formData.contains("delete-task-action")) {
             handleDeletingTask(formData);
-        } else if (formData.contains("add-task")) {
+        } else if (formData.contains("add-task-button")) {
             handleAddingTask(formData);
         } else if (formData.contains("edit-task-button")) {
             handleEditingTask(formData);
-        } else if (formData.contains("Edit+task")) {
+        } else if (formData.contains("edit-task-action")) {
             handleShowingEditPage(formData);
         }
     }

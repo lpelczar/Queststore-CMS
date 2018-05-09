@@ -90,12 +90,14 @@
                                 <div class="options">
                                     <form method="post" id="delete-form">
                                         <label>
-                                            <input type="submit" name="{{ item.getId() }}" value="Delete item">
+                                            <input type="submit" name="{{ item.getId() }}" value="Delete">
+                                            <input type="hidden" name="delete-item-action" value="">
                                         </label>
                                     </form>
                                     <form method="post">
                                         <label>
-                                            <input type="submit" name="{{ item.getId() }}" value="Edit item">
+                                            <input type="submit" name="{{ item.getId() }}" value="Edit">
+                                            <input type="hidden" name="edit-item-action" value="">
                                         </label>
                                     </form>
                                 </div>

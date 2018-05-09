@@ -90,12 +90,14 @@
                                 <div class="task-options">
                                     <form method="post" id="delete-form">
                                         <label>
-                                            <input type="submit" name="{{ task.getId() }}" value="Delete task">
+                                            <input type="submit" name="{{ task.getId() }}" value="Delete">
+                                            <input type="hidden" name="delete-task-action" value="">
                                         </label>
                                     </form>
                                     <form method="post">
                                         <label>
-                                            <input type="submit" name="{{ task.getId() }}" value="Edit task">
+                                            <input type="submit" name="{{ task.getId() }}" value="Edit">
+                                            <input type="hidden" name="edit-task-action" value="">
                                         </label>
                                     </form>
                                 </div>

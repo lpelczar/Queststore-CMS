@@ -23,13 +23,13 @@ class ItemHandler {
     }
 
     void handle(String formData) throws IOException {
-        if (formData.contains("Delete+item")) {
+        if (formData.contains("delete-item-action")) {
             handleDeletingItem(formData);
-        } else if (formData.contains("add-item")) {
+        } else if (formData.contains("add-item-button")) {
             handleAddingItem(formData);
         } else if (formData.contains("edit-item-button")) {
             handleEditingItem(formData);
-        } else if (formData.contains("Edit+item")) {
+        } else if (formData.contains("edit-item-action")) {
             handleShowingEditPage(formData);
         }
     }
