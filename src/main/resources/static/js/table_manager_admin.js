@@ -1,5 +1,5 @@
 var row_table = document.getElementById('row-table');
-var columnTables = document.getElementById('column-tables');
+var column_tables = document.getElementById('column-tables');
 var title_table = document.getElementById("assigned-table-name");
 var assigned_table = document.getElementsByClassName('assigned table')[0];
 var form = document.getElementById("add-mentor-form");
@@ -20,6 +20,10 @@ function displayWindow() {
     }
 }
 
+function displayProfileTables() {
+    column_tables.style.height = "90%";
+}
+
 
 function mentor_table_center() {
     hideMentors();
@@ -27,8 +31,8 @@ function mentor_table_center() {
     group_table.style.display = "none";
     row_table.style.display = "none";
 
-    columnTables.style.justifyContent = "center";
-    columnTables.style.height = "90%";
+    column_tables.style.justifyContent = "center";
+    column_tables.style.height = "90%";
 
     mentor_table.onclick = function () {
         window.location.href = "admin_manager.html";
@@ -41,8 +45,8 @@ function group_table_center() {
     mentor_table.style.display = "none";
     row_table.style.display = "none";
 
-    columnTables.style.justifyContent = "center";
-    columnTables.style.height = "90%";
+    column_tables.style.justifyContent = "center";
+    column_tables.style.height = "90%";
 
 
     group_table.onclick = function () {
@@ -58,7 +62,7 @@ function displayEditWindow() {
     assigned_table.style.width = "60%";
 
     try {
-        columnTables.style.display = "none";
+        column_tables.style.display = "none";
     } catch (TypeError ) {
         ;
     }
