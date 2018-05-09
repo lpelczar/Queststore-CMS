@@ -124,6 +124,8 @@
 
 .mentor-name-button:hover {
     background-color: #48b983;
+    transition: 1s;
+    border-radius: 25px;
 }
 
 .mentors-lists-edit li {
