@@ -34,7 +34,7 @@ class PromotionHandler {
             user.setRole(UserEntry.MENTOR_ROLE);
         }
         userDAO.update(user);
-        httpExchange.getResponseHeaders().add("Location", "/mentor/promote");
+        httpExchange.getResponseHeaders().add("Location", "/mentor/promote-user");
         httpExchange.sendResponseHeaders(301, -1);
     }
 }

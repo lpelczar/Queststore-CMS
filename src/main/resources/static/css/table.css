@@ -53,3 +53,7 @@ td {
     color: black;
     border-bottom: solid 1px black;
 }
+
+#delete-form {
+    margin-bottom: 5px;
+}

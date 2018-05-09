@@ -24,9 +24,7 @@ import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.net.URL;
 
-import static com.example.queststore.controllers.web.MentorOptions.ADD_TASK;
-import static com.example.queststore.controllers.web.MentorOptions.PROMOTE_USER;
-import static com.example.queststore.controllers.web.MentorOptions.TASKS;
+import static com.example.queststore.controllers.web.MentorOptions.*;
 
 public class MentorHandler implements HttpHandler {
 
@@ -59,12 +57,22 @@ public class MentorHandler implements HttpHandler {
 
             if (formData.contains("logout")) {
                 handleLogout(httpExchange);
+            } else if (formData.contains("redirect-promote-user")) {
+                redirectToPath(httpExchange, "/mentor/promote-user");
+            } else if (formData.contains("redirect-tasks")) {
+                redirectToPath(httpExchange, "/mentor/tasks");
+            } else if (formData.contains("redirect-add-task")) {
+                redirectToPath(httpExchange, "/mentor/add-task");
             } else if (formData.contains("promote")) {
                 new PromotionHandler(httpExchange).handleUserPromotion(formData);
-            } else if (formData.contains("Delete")) {
+            } else if (formData.contains("Delete+task")) {
                 new TaskHandler(httpExchange).handleDeletingTask(formData);
             } else if (formData.contains("add-task")) {
-                new TaskHandler(httpExchange).handleAddingNewTask(formData);
+                new TaskHandler(httpExchange).handleAddingTask(formData);
+            } else if (formData.contains("edit-task-button")) {
+                new TaskHandler(httpExchange).handleEditingTask(formData);
+            } else if (formData.contains("Edit+task")) {
+                new TaskHandler(httpExchange).handleShowingEditPage(formData);
             }
         }
     }
@@ -111,6 +119,11 @@ public class MentorHandler implements HttpHandler {
                 model.with("users", userDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
                 sendResponse(httpExchange, template.render(model));
                 break;
+            case EDIT_TASK:
+                String[] segments = path.split("/");
+                String taskId = segments[segments.length - 2];
+                new TaskHandler(httpExchange).showEditPage(taskId);
+                break;
             case TASKS:
                 template = JtwigTemplate.classpathTemplate("templates/display_tasks.twig");
                 model = JtwigModel.newModel();
@@ -144,5 +157,10 @@ public class MentorHandler implements HttpHandler {
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), Charsets.UTF_8);
         BufferedReader br = new BufferedReader(isr);
         return br.readLine();
+    }
+
+    private void redirectToPath(HttpExchange httpExchange, String path) throws IOException {
+        httpExchange.getResponseHeaders().add("Location", path);
+        httpExchange.sendResponseHeaders(301, -1);
     }
 }
