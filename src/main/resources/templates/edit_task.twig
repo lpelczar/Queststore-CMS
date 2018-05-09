@@ -14,13 +14,29 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <ul>
         <li class="nav-element">
-            <a href="promote">Promote user</a>
+            <form method="post">
+                <input type="submit" name="redirect-promote-user" value="Promote user">
+            </form>
         </li>
         <li class="nav-element">
-            <a href="tasks">Tasks</a>
+            <form method="post">
+                <input type="submit" name="redirect-tasks" value="Tasks">
+            </form>
         </li>
         <li class="nav-element">
-            <a href="addtask">Add task</a>
+            <form method="post">
+                <input type="submit" name="redirect-add-task" value="Add task">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-items" value="Items">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-add-item" value="Add item">
+            </form>
         </li>
         <li class="nav-element">
             <form method="post">
@@ -62,7 +78,6 @@
                     {% endif %}
                 </select>
                 <input class="field" type="hidden" name="id" value="{{ taskId }}">
-
                 <input type="submit" name="edit-task-button" id="create-button" value="Edit task">
             </form>
         </div>

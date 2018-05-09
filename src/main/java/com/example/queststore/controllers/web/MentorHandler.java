@@ -1,7 +1,9 @@
 package com.example.queststore.controllers.web;
 
+import com.example.queststore.dao.ItemDAO;
 import com.example.queststore.dao.TaskDAO;
 import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.sqlite.SqliteItemDAO;
 import com.example.queststore.dao.sqlite.SqliteTaskDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.contracts.UserEntry;
@@ -11,7 +13,6 @@ import com.example.queststore.data.sessions.SqliteSessionDAO;
 import com.example.queststore.models.User;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
@@ -31,6 +32,8 @@ public class MentorHandler implements HttpHandler {
     private SessionDAO sessionDAO = new SqliteSessionDAO();
     private UserDAO userDAO = new SqliteUserDAO();
     private TaskDAO taskDAO = new SqliteTaskDAO();
+    private ItemDAO itemDAO = new SqliteItemDAO();
+    private int mentorId;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -47,33 +50,39 @@ public class MentorHandler implements HttpHandler {
                     return;
                 }
             }
-            redirectToLogin(httpExchange);
+            redirectToPath(httpExchange, "/login");
         }
 
         if (method.equals("POST")) {
 
             String formData = getFormData(httpExchange);
             System.out.println("Form :" + formData);
-
             if (formData.contains("logout")) {
                 handleLogout(httpExchange);
-            } else if (formData.contains("redirect-promote-user")) {
-                redirectToPath(httpExchange, "/mentor/promote-user");
-            } else if (formData.contains("redirect-tasks")) {
-                redirectToPath(httpExchange, "/mentor/tasks");
-            } else if (formData.contains("redirect-add-task")) {
-                redirectToPath(httpExchange, "/mentor/add-task");
+            } else if (formData.contains("redirect")) {
+                handleRedirection(httpExchange, formData);
             } else if (formData.contains("promote")) {
                 new PromotionHandler(httpExchange).handleUserPromotion(formData);
-            } else if (formData.contains("Delete+task")) {
-                new TaskHandler(httpExchange).handleDeletingTask(formData);
-            } else if (formData.contains("add-task")) {
-                new TaskHandler(httpExchange).handleAddingTask(formData);
-            } else if (formData.contains("edit-task-button")) {
-                new TaskHandler(httpExchange).handleEditingTask(formData);
-            } else if (formData.contains("Edit+task")) {
-                new TaskHandler(httpExchange).handleShowingEditPage(formData);
+            } else if (formData.contains("task")) {
+                new TaskHandler(httpExchange, mentorId).handle(formData);
+            } else if (formData.contains("item")) {
+                new ItemHandler(httpExchange, mentorId).handle(formData);
             }
+        }
+    }
+
+    private void handleRedirection(HttpExchange httpExchange, String formData) throws IOException {
+
+        if (formData.contains("redirect-promote-user")) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/promote-user");
+        } else if (formData.contains("redirect-tasks")) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/tasks");
+        } else if (formData.contains("redirect-add-task")) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-task");
+        } else if (formData.contains("redirect-items")) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/items");
+        } else if (formData.contains("redirect-add-item")) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-item");
         }
     }
 
@@ -85,20 +94,14 @@ public class MentorHandler implements HttpHandler {
             cookie = HttpCookie.parse(sessionCookie).get(0);
             sessionDAO.deleteBySessionId(cookie.getValue());
         }
-        redirectToLogin(httpExchange);
-    }
-
-    private void redirectToLogin(HttpExchange httpExchange) throws IOException {
-        Headers headers = httpExchange.getResponseHeaders();
-        String redirect = "/login";
-        headers.add("Location", redirect);
-        httpExchange.sendResponseHeaders(301, -1);
+        redirectToPath(httpExchange, "/login");
     }
 
     private void showMentorPage(HttpExchange httpExchange, HttpCookie cookie) throws IOException {
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
         int userId = session.getUserId();
+        this.mentorId = userId;
         User user = userDAO.getById(userId);
         handleShowingSubPage(httpExchange, user);
     }
@@ -110,7 +113,9 @@ public class MentorHandler implements HttpHandler {
         JtwigTemplate template;
         JtwigModel model;
 
-        String lastSegment = path.substring(path.lastIndexOf('/') + 1);
+        String[] segments = path.split("/");
+        String lastSegment = segments[segments.length - 1].isEmpty() ?
+                segments[segments.length - 2] : segments[segments.length - 1];
 
         switch (lastSegment) {
             case PROMOTE_USER:
@@ -120,9 +125,8 @@ public class MentorHandler implements HttpHandler {
                 sendResponse(httpExchange, template.render(model));
                 break;
             case EDIT_TASK:
-                String[] segments = path.split("/");
                 String taskId = segments[segments.length - 2];
-                new TaskHandler(httpExchange).showEditPage(taskId);
+                new TaskHandler(httpExchange, mentorId).showEditPage(taskId);
                 break;
             case TASKS:
                 template = JtwigTemplate.classpathTemplate("templates/display_tasks.twig");
@@ -132,6 +136,19 @@ public class MentorHandler implements HttpHandler {
                 break;
             case ADD_TASK:
                 sendStaticPage(httpExchange, "static/mentor/add_task.html");
+                break;
+            case EDIT_ITEM:
+                String itemId = segments[segments.length - 2];
+                new ItemHandler(httpExchange, mentorId).showEditPage(itemId);
+                break;
+            case ITEMS:
+                template = JtwigTemplate.classpathTemplate("templates/display_items.twig");
+                model = JtwigModel.newModel();
+                model.with("items", itemDAO.getAllItems());
+                sendResponse(httpExchange, template.render(model));
+                break;
+            case ADD_ITEM:
+                sendStaticPage(httpExchange, "static/mentor/add_item.html");
                 break;
             default:
                 template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");

@@ -30,6 +30,16 @@
         </li>
         <li class="nav-element">
             <form method="post">
+                <input type="submit" name="redirect-items" value="Items">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-add-item" value="Add item">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
                 <input type="submit" name="logout" value="Logout">
             </form>
         </li>
@@ -59,6 +69,9 @@
 
                     <p style="font-size: x-large">Blank users list is empty.</p>
 
+                    <input disabled type="submit" name="promote" id="create-button" value="Promote to student">
+                    <input disabled type="submit" name="promote" id="create-button" value="Promote to mentor">
+
                 {% else %}
 
                     <select name="promote-user-id" class="promotion-combo-box" title="Blank users" required>
@@ -67,10 +80,11 @@
                         {% endfor %}
                     </select>
 
+                    <input type="submit" name="promote" id="create-button" value="Promote to student">
+                    <input type="submit" name="promote" id="create-button" value="Promote to mentor">
+
                 {% endif %}
 
-                <input type="submit" name="promote" id="create-button" value="Promote to student">
-                <input type="submit" name="promote" id="create-button" value="Promote to mentor">
 
             </form>
         </div>

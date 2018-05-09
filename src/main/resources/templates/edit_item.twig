@@ -63,15 +63,23 @@
 
         <div class="form">
             <form class="form" method="post">
-                <p>Please fill in the data to add new task!</p>
-                <input class="field" type="text" name="name" placeholder="Name" required>
-                <input class="field" type="number" name="points" placeholder="Points" required>
-                <input class="field" type="text" name="description" placeholder="Description" required>
+                <p>Please fill in the data to edit item!</p>
+                <input class="field" type="text" name="name" placeholder="Name" value="{{ itemName }}" required>
+                <input class="field" type="number" name="points" placeholder="Points" value="{{ itemPrice }}" required>
+                <input class="field" type="text" name="description" placeholder="Description" value="{{ itemDescription }}" required>
                 <select name="category" class="combo-box" title="Categories" required>
-                    <option value="Basic">Basic</option>
-                    <option value="Extra">Extra</option>
+
+                    {% if (basicItem) %}
+                        <option value="Basic" selected="selected">Basic</option>
+                        <option value="Extra">Extra</option>
+                    {% else %}
+                        <option value="Basic">Basic</option>
+                        <option value="Extra" selected="selected">Extra</option>
+                    {% endif %}
+
                 </select>
-                <input type="submit" name="add-task-button" id="create-button" value="Add task">
+                <input class="field" type="hidden" name="id" value="{{ itemId }}">
+                <input type="submit" name="edit-item-button" id="create-button" value="Edit item">
             </form>
         </div>
 
@@ -79,7 +87,7 @@
 
     <footer>
         <div id="bottom-bar">
-            <p id="copyright">© 2018 Design & Implementation : Łukasz Pelczar, Nikodem Ciołczyk</p>
+            <p id="copyright">2018 Design and Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
         </div>
     </footer>
 
