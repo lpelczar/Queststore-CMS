@@ -15,22 +15,19 @@
     <p id="name">Name: <strong> {{ userName }} </strong></p>
     <ul>
         <li class="nav-element">
-            <a href="addstudent">Create student</a>
+            <form method="post">
+                <input type="submit" name="redirect-promote-user" value="Promote user">
+            </form>
         </li>
         <li class="nav-element">
-            <a href="editstudent">Edit student</a>
+            <form method="post">
+                <input type="submit" name="redirect-tasks" value="Tasks">
+            </form>
         </li>
         <li class="nav-element">
-            <a href="addquest">Add quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="showquests">Display all quests</a>
-        </li>
-        <li class="nav-element">
-            <a href="editquest">Edit quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="deletequest">Delete quest</a>
+            <form method="post">
+                <input type="submit" name="redirect-add-task" value="Add task">
+            </form>
         </li>
         <li class="nav-element">
             <form method="post">

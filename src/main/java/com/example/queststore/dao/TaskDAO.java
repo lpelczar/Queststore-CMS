@@ -8,7 +8,9 @@ public interface TaskDAO {
 
     List<Task> getAll();
     Task getByName(String name);
+    Task getById(int id);
     boolean add(Task task);
     boolean update(Task task);
+    boolean delete(Task task);
     void setDatabasePath(String path);
 }

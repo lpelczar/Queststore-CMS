@@ -14,22 +14,19 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <ul>
         <li class="nav-element">
-            <a href="addstudent">Create student</a>
+            <form method="post">
+                <input type="submit" name="redirect-promote-user" value="Promote user">
+            </form>
         </li>
         <li class="nav-element">
-            <a href="editstudent">Edit student</a>
+            <form method="post">
+                <input type="submit" name="redirect-tasks" value="Tasks">
+            </form>
         </li>
         <li class="nav-element">
-            <a href="addquest">Add quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="showquests">Display all quests</a>
-        </li>
-        <li class="nav-element">
-            <a href="editquest">Edit quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="deletequest">Delete quest</a>
+            <form method="post">
+                <input type="submit" name="redirect-add-task" value="Add task">
+            </form>
         </li>
         <li class="nav-element">
             <form method="post">
@@ -55,18 +52,34 @@
     <div class="container">
 
         <div class="form">
-            <p>Please fill in the com.example.queststore.data to edit quest!</p>
-            <input class="field" type="text" placeholder="Name" required>
-            <input class="field" type="text" placeholder="Description" required>
-            <input class="field" type="text" placeholder="Price" required>
-            <a id="create-button">Edit quest</a>
+            <form class="form" method="post">
+                <p style="font-size: x-large">Select user and role to promote.</p>
+
+                {% if (users.isEmpty()) %}
+
+                    <p style="font-size: x-large">Blank users list is empty.</p>
+
+                {% else %}
+
+                    <select name="promote-user-id" class="promotion-combo-box" title="Blank users" required>
+                        {% for user in users %}
+                            <option value="{{ user.getId() }}">{{ user.toString() }}</option>
+                        {% endfor %}
+                    </select>
+
+                {% endif %}
+
+                <input type="submit" name="promote" id="create-button" value="Promote to student">
+                <input type="submit" name="promote" id="create-button" value="Promote to mentor">
+
+            </form>
         </div>
 
     </div>
 
     <footer>
         <div id="bottom-bar">
-            <p id="copyright">© 2018 Design & Implementation : Łukasz Pelczar, Nikodem Ciołczyk</p>
+            <p id="copyright">2018 Design and Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
         </div>
     </footer>
 

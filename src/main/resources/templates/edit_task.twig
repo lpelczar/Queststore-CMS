@@ -14,22 +14,13 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <ul>
         <li class="nav-element">
-            <a href="addstudent">Create student</a>
+            <a href="promote">Promote user</a>
         </li>
         <li class="nav-element">
-            <a href="editstudent">Edit student</a>
+            <a href="tasks">Tasks</a>
         </li>
         <li class="nav-element">
-            <a href="addquest">Add quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="showquests">Display all quests</a>
-        </li>
-        <li class="nav-element">
-            <a href="editquest">Edit quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="deletequest">Delete quest</a>
+            <a href="addtask">Add task</a>
         </li>
         <li class="nav-element">
             <form method="post">
@@ -56,12 +47,23 @@
 
         <div class="form">
             <form class="form" method="post">
-                <p>Please fill the com.example.queststore.data. Created student will be added to your group!</p>
-                <input class="field" type="text" placeholder="Login" required>
-                <input class="field" type="text" placeholder="Password" required>
-                <input class="field" type="text" placeholder="First name" required>
-                <input class="field" type="text" placeholder="Last name" required>
-                <a id="create-button">Create student</a>
+                <p>Please fill in the data to edit task!</p>
+                <input class="field" type="text" name="name" placeholder="Name" value="{{ taskName }}" required>
+                <input class="field" type="number" name="points" placeholder="Points" value="{{ taskPoints }}" required>
+                <input class="field" type="text" name="description" placeholder="Description" value="{{ taskDescription }}" required>
+                <select name="category" class="combo-box" title="Categories" required>
+
+                    {% if (basicTask) %}
+                        <option value="Basic" selected="selected">Basic</option>
+                        <option value="Extra">Extra</option>
+                    {% else %}
+                        <option value="Basic">Basic</option>
+                        <option value="Extra" selected="selected">Extra</option>
+                    {% endif %}
+                </select>
+                <input class="field" type="hidden" name="id" value="{{ taskId }}">
+
+                <input type="submit" name="edit-task-button" id="create-button" value="Edit task">
             </form>
         </div>
 
@@ -69,7 +71,7 @@
 
     <footer>
         <div id="bottom-bar">
-            <p id="copyright">© 2018 Design & Implementation : Łukasz Pelczar, Nikodem Ciołczyk</p>
+            <p id="copyright">2018 Design and Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
         </div>
     </footer>
 

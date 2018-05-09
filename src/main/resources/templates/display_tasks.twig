@@ -15,22 +15,19 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <ul>
         <li class="nav-element">
-            <a href="addstudent">Create student</a>
+            <form method="post">
+                <input type="submit" name="redirect-promote-user" value="Promote user">
+            </form>
         </li>
         <li class="nav-element">
-            <a href="editstudent">Edit student</a>
+            <form method="post">
+                <input type="submit" name="redirect-tasks" value="Tasks">
+            </form>
         </li>
         <li class="nav-element">
-            <a href="addquest">Add quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="showquests">Display all quests</a>
-        </li>
-        <li class="nav-element">
-            <a href="editquest">Edit quest</a>
-        </li>
-        <li class="nav-element">
-            <a href="deletequest">Delete quest</a>
+            <form method="post">
+                <input type="submit" name="redirect-add-task" value="Add task">
+            </form>
         </li>
         <li class="nav-element">
             <form method="post">
@@ -56,14 +53,16 @@
     <div class="container">
 
         <section>
-            <h1>Available quests</h1>
+            <h1>Available tasks</h1>
             <div class="tbl-header">
                 <table cellpadding="0" cellspacing="0" border="0">
                     <thead>
                     <tr>
                         <th width="20%">Name</th>
-                        <th width="65%">Description</th>
-                        <th width="15%">Price</th>
+                        <th width="50%">Description</th>
+                        <th width="10%">Points</th>
+                        <th width="10%">Category</th>
+                        <th width="10%">Option</th>
                     </tr>
                     </thead>
                 </table>
@@ -71,11 +70,26 @@
             <div class="tbl-content">
                 <table cellpadding="0" cellspacing="0" border="0">
                     <tbody>
-                    {% for quest in quests %}
+                    {% for task in tasks %}
                         <tr>
-                            <td width="20%">{{ quest.getName() }}</td>
-                            <td width="65%">{{ quest.getDescription() }}</td>
-                            <td width="15%">{{ quest.getPrice() }}</td>
+                            <td width="20%">{{ task.getName() }}</td>
+                            <td width="50%">{{ task.getDescription() }}</td>
+                            <td width="10%">{{ task.getPoints() }}</td>
+                            <td width="10%">{{ task.getCategory() }}</td>
+                            <td width="10%">
+                                <div class="task-options">
+                                    <form method="post" id="delete-form">
+                                        <label>
+                                            <input type="submit" name="{{ task.getId() }}" value="Delete task">
+                                        </label>
+                                    </form>
+                                    <form method="post">
+                                        <label>
+                                            <input type="submit" name="{{ task.getId() }}" value="Edit task">
+                                        </label>
+                                    </form>
+                                </div>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>

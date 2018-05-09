@@ -1,9 +1,10 @@
 package com.example.queststore.controllers.web;
 
-import com.example.queststore.dao.sqlite.SqliteTaskDAO;
-import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.dao.TaskDAO;
 import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.sqlite.SqliteTaskDAO;
+import com.example.queststore.dao.sqlite.SqliteUserDAO;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.sessions.Session;
 import com.example.queststore.data.sessions.SessionDAO;
 import com.example.queststore.data.sessions.SqliteSessionDAO;
@@ -16,12 +17,12 @@ import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.queststore.controllers.web.MentorOptions.*;
 
@@ -52,63 +53,28 @@ public class MentorHandler implements HttpHandler {
         if (method.equals("POST")) {
 
             String formData = getFormData(httpExchange);
-            System.out.println("Form com.example.queststore.data: " + formData);
+            System.out.println("Form :" + formData);
 
             if (formData.contains("logout")) {
                 handleLogout(httpExchange);
-            } else if (formData.contains("add-quest")) {
-                handleAddingQuest(httpExchange, formData);
-            } else if (formData.contains("delete-quest")) {
-                handleDeletingQuest(httpExchange, formData);
+            } else if (formData.contains("redirect-promote-user")) {
+                redirectToPath(httpExchange, "/mentor/promote-user");
+            } else if (formData.contains("redirect-tasks")) {
+                redirectToPath(httpExchange, "/mentor/tasks");
+            } else if (formData.contains("redirect-add-task")) {
+                redirectToPath(httpExchange, "/mentor/add-task");
+            } else if (formData.contains("promote")) {
+                new PromotionHandler(httpExchange).handleUserPromotion(formData);
+            } else if (formData.contains("Delete+task")) {
+                new TaskHandler(httpExchange).handleDeletingTask(formData);
+            } else if (formData.contains("add-task")) {
+                new TaskHandler(httpExchange).handleAddingTask(formData);
+            } else if (formData.contains("edit-task-button")) {
+                new TaskHandler(httpExchange).handleEditingTask(formData);
+            } else if (formData.contains("Edit+task")) {
+                new TaskHandler(httpExchange).handleShowingEditPage(formData);
             }
         }
-    }
-
-    private void handleDeletingQuest(HttpExchange httpExchange, String formData) throws IOException {
-
-        // TODO 1 Modify to use name
-//        final int ID_INDEX = 0;
-//        List<String> values = parseFormData(formData);
-//        int questId = Integer.parseInt(values.get(ID_INDEX));
-//
-//        if (taskDAO.getById(questId) != null) {
-//            Quest quest = questDAO.getById(questId);
-//            if (questDAO.delete(quest)) {
-//                System.out.println("Success deleting quest!");
-//            }
-//        }
-
-        httpExchange.getResponseHeaders().add("Location", "/mentor/showquests");
-        httpExchange.sendResponseHeaders(301, -1);
-    }
-
-    private void handleAddingQuest(HttpExchange httpExchange, String formData) throws IOException {
-
-        // TODO 2 Modify adding quest
-//        final int NAME_INDEX = 0;
-//        final int DESCRIPTION_INDEX = 1;
-//        final int PRICE_INDEX = 2;
-//
-//        List<String> values = parseFormData(formData);
-//        Quest quest = new Quest(values.get(NAME_INDEX), values.get(DESCRIPTION_INDEX),
-//                Integer.parseInt(values.get(PRICE_INDEX)));
-//        if (questDAO.add(quest)) {
-//            System.out.println("Success adding quest!");
-//        }
-
-        httpExchange.getResponseHeaders().add("Location", "/mentor/showquests");
-        httpExchange.sendResponseHeaders(301, -1);
-    }
-
-    private List<String> parseFormData(String formData) throws UnsupportedEncodingException {
-        int VALUE_INDEX = 1;
-        String[] pairs = formData.split("&");
-        List<String> values = new ArrayList<>();
-        for (String pair : pairs) {
-            String[] keyValue = pair.split("=");
-            values.add(URLDecoder.decode(keyValue[VALUE_INDEX], Charsets.UTF_8.displayName()));
-        }
-        return values;
     }
 
     private void handleLogout(HttpExchange httpExchange) throws IOException {
@@ -130,12 +96,10 @@ public class MentorHandler implements HttpHandler {
     }
 
     private void showMentorPage(HttpExchange httpExchange, HttpCookie cookie) throws IOException {
-
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
         int userId = session.getUserId();
         User user = userDAO.getById(userId);
-
         handleShowingSubPage(httpExchange, user);
     }
 
@@ -149,29 +113,25 @@ public class MentorHandler implements HttpHandler {
         String lastSegment = path.substring(path.lastIndexOf('/') + 1);
 
         switch (lastSegment) {
-            case ADD_STUDENT:
-                showStaticPage(httpExchange, "static/mentor/create_student.html");
-                break;
-            case EDIT_STUDENT:
-                showStaticPage(httpExchange, "static/mentor/edit_student.html");
-                break;
-            case ADD_QUEST:
-                showStaticPage(httpExchange, "static/mentor/add_quest.html");
-                break;
-            case SHOW_QUESTS:
-                template = JtwigTemplate.classpathTemplate("templates/display_quests.twig");
+            case PROMOTE_USER:
+                template = JtwigTemplate.classpathTemplate("templates/promote_user.twig");
                 model = JtwigModel.newModel();
-                model.with("quests", taskDAO.getAll());
+                model.with("users", userDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
                 sendResponse(httpExchange, template.render(model));
                 break;
-            case EDIT_QUEST:
-                showStaticPage(httpExchange, "static/mentor/edit_quest.html");
+            case EDIT_TASK:
+                String[] segments = path.split("/");
+                String taskId = segments[segments.length - 2];
+                new TaskHandler(httpExchange).showEditPage(taskId);
                 break;
-            case DELETE_QUEST:
-                template = JtwigTemplate.classpathTemplate("templates/delete_quest.twig");
+            case TASKS:
+                template = JtwigTemplate.classpathTemplate("templates/display_tasks.twig");
                 model = JtwigModel.newModel();
-                model.with("quests", taskDAO.getAll());
+                model.with("tasks", taskDAO.getAll());
                 sendResponse(httpExchange, template.render(model));
+                break;
+            case ADD_TASK:
+                sendStaticPage(httpExchange, "static/mentor/add_task.html");
                 break;
             default:
                 template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
@@ -188,7 +148,7 @@ public class MentorHandler implements HttpHandler {
         os.close();
     }
 
-    private void showStaticPage(HttpExchange httpExchange, String pagePath) throws IOException {
+    private void sendStaticPage(HttpExchange httpExchange, String pagePath) throws IOException {
         URL fileURL = Resources.getResource(pagePath);
         StaticHandler.sendFile(httpExchange, fileURL);
     }
@@ -197,5 +157,10 @@ public class MentorHandler implements HttpHandler {
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), Charsets.UTF_8);
         BufferedReader br = new BufferedReader(isr);
         return br.readLine();
+    }
+
+    private void redirectToPath(HttpExchange httpExchange, String path) throws IOException {
+        httpExchange.getResponseHeaders().add("Location", path);
+        httpExchange.sendResponseHeaders(301, -1);
     }
 }

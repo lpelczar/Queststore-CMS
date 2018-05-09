@@ -3,8 +3,10 @@ package com.example.queststore.dao.sqlite;
 import com.example.queststore.dao.TaskDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.data.contracts.TaskEntry;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.statements.TaskStatement;
 import com.example.queststore.models.Task;
+import com.example.queststore.models.User;
 import com.example.queststore.utils.QueryLogger;
 
 import java.sql.PreparedStatement;
@@ -12,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class SqliteTaskDAO extends DbHelper implements TaskDAO {
@@ -45,12 +48,22 @@ public class SqliteTaskDAO extends DbHelper implements TaskDAO {
     }
 
     @Override
+    public Task getById(int id) {
+        String sqlStatement = taskStatement.selectTaskById();
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(id), sqlStatement);
+        return getTask(statement);
+    }
+
+    @Override
     public Task getByName(String name) {
         String sqlStatement = taskStatement.selectTaskByName();
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(name), sqlStatement);
+        return getTask(statement);
+    }
+
+    private Task getTask(PreparedStatement statement) {
         Task task = null;
         try {
-            PreparedStatement statement = getPreparedStatement(sqlStatement);
-            statement.setString(1, name);
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 task = new Task(
@@ -83,6 +96,13 @@ public class SqliteTaskDAO extends DbHelper implements TaskDAO {
         String sqlStatement = taskStatement.updateTaskStatement();
         PreparedStatement statement = getPreparedStatementBy(Arrays.asList(task.getId(), task.getName(),
                 task.getPoints(), task.getDescription(), task.getCategory(), task.getId()), sqlStatement);
+        return update(statement);
+    }
+
+    @Override
+    public boolean delete(Task task) {
+        String sqlStatement = taskStatement.deleteTaskStatement();
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(task.getId()), sqlStatement);
         return update(statement);
     }
 }
