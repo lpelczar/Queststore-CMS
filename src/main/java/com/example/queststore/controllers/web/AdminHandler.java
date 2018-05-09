@@ -20,10 +20,9 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-public class AdminHandler implements HttpHandler {
+public class AdminHandler extends WebDataTools implements HttpHandler {
 
     private ProfileEditorHandler profileEditorHandler = new ProfileEditorHandler();
-    private WebDataTools webDataTools = new WebDataTools();
     private SessionDAO sessionDAO = new SqliteSessionDAO();
     private UserDAO userDAO = new SqliteUserDAO();
     private User admin;
@@ -51,8 +50,8 @@ public class AdminHandler implements HttpHandler {
         }
 
         if (method.equals("POST")) {
-            String formData = webDataTools.getSubmittedWebData(httpExchange);
-            Map<String, String> profileData = webDataTools.parseDataAddMentor(formData);
+            String formData = getSubmittedWebData(httpExchange);
+            Map<String, String> profileData = parseDataAddMentor(formData);
             System.out.println(formData);
 
 
@@ -92,7 +91,7 @@ public class AdminHandler implements HttpHandler {
         URI uri = httpExchange.getRequestURI();
 
         if (uri.toString().contains("edit")) {
-            Integer userId = webDataTools.getUserIdFrom(uri);
+            Integer userId = getUserIdFrom(uri);
             User user = profileEditorHandler.findUserBy(userId);
 
             response = prepareTemplateEdit(user);

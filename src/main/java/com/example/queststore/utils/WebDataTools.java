@@ -11,7 +11,7 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WebDataTools {
+public abstract class WebDataTools {
 
 
     public Map<String, String> parseDataAddMentor(String formData) {
