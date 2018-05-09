@@ -1,10 +1,7 @@
 package com.example.queststore.controllers.web;
 
-import com.example.queststore.dao.GroupDAO;
 import com.example.queststore.dao.UserDAO;
-import com.example.queststore.dao.sqlite.SqliteGroupDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
-import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.sessions.Session;
 import com.example.queststore.data.sessions.SessionDAO;
 import com.example.queststore.data.sessions.SqliteSessionDAO;
@@ -20,8 +17,6 @@ import org.jtwig.JtwigTemplate;
 import java.io.*;
 import java.net.HttpCookie;
 import java.net.URI;
-import java.net.URLDecoder;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,12 +51,9 @@ public class AdminHandler implements HttpHandler {
         }
 
         if (method.equals("POST")) {
-            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-            BufferedReader br = new BufferedReader(isr);
-            String formData = br.readLine();
-
-            System.out.println(formData);
+            String formData = webDataTools.getSubmittedWebData(httpExchange);
             Map<String, String> profileData = webDataTools.parseDataAddMentor(formData);
+            System.out.println(formData);
 
 
             if (formData.contains("logout")) {

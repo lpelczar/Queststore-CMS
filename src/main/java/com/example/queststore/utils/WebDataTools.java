@@ -1,5 +1,10 @@
 package com.example.queststore.utils;
 
+import com.sun.net.httpserver.HttpExchange;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
@@ -46,5 +51,11 @@ public class WebDataTools {
             }
         }
         return null;
+    }
+
+    public String getSubmittedWebData(HttpExchange httpExchange) throws IOException {
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
+        return br.readLine();
     }
 }
