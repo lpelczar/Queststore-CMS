@@ -67,8 +67,14 @@
             <div class="groups table">
                 <div id="groups-table-name">Groups</div>
                 <ul class="groups-lists">
-                    {% for element in group %}
-                        <li> {{ element }}</li>
+                    {% for key, value in test %}
+                        <li> {{ key }}
+                            <ul>
+                                {% for student in value %}
+                                    <li>{{ student.getName() }}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>

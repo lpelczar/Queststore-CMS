@@ -135,6 +135,7 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
 
     private String prepareTemplateMentorProfile(User user) {
         List<String> mentorGroups = profileHandler.getGroupsBy(user.getId());
+        Map<String, List<User>> groupStudent = profileHandler.getStudentsGroups(user.getId());
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_profile_admin.twig");
         JtwigModel model = JtwigModel.newModel();
@@ -144,6 +145,8 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
         model.with("phone_number", user.getPhoneNumber());
         model.with("email", user.getEmail());
         model.with("group", mentorGroups);
+
+        model.with("test", groupStudent);
 
         return template.render(model);
     }
