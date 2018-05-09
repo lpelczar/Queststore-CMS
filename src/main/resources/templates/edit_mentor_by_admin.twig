@@ -62,6 +62,11 @@
                             </div>
 
                             <div class="table-form">
+                                <div class="input-labels">Password: {{ password }}</div>
+                                <input class="add-input" type="text" name="password">
+                            </div>
+
+                            <div class="table-form">
                                 <div class="input-labels">Name: {{ name }}</div>
                                 <input class="add-input" type="text" name="name">
                             </div>
@@ -79,7 +84,7 @@
 
                             <div class="mentor-profile-button">
                                 <input type="button" value="Cancel" class="mentor-profile-button" onclick="backToMainPage()">
-                                <input type="submit" name="Edited" value="Accept" class="mentor-profile-button">
+                                <input type="submit" name="{{ user_id }}" value="Accept" class="mentor-profile-button">
                             </div>
                         </form>
                     </div>
