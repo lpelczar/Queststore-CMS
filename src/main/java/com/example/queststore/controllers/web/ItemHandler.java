@@ -17,9 +17,11 @@ class ItemHandler {
 
     private HttpExchange httpExchange;
     private ItemDAO itemDAO = new SqliteItemDAO();
+    private int mentorId;
 
-    ItemHandler(HttpExchange httpExchange) {
+    ItemHandler(HttpExchange httpExchange, int mentorId) {
         this.httpExchange = httpExchange;
+        this.mentorId = mentorId;
     }
 
     void handle(String formData) throws IOException {
@@ -43,7 +45,7 @@ class ItemHandler {
         Item item = new Item(values.get(NAME_INDEX), Integer.parseInt(values.get(POINTS_INDEX)),
                 values.get(DESCRIPTION_INDEX), values.get(CATEGORY_INDEX));
         itemDAO.add(item);
-        httpExchange.getResponseHeaders().add("Location", "/mentor/items");
+        httpExchange.getResponseHeaders().add("Location", "/mentor/" + mentorId + "/items");
         httpExchange.sendResponseHeaders(301, -1);
     }
 
@@ -57,7 +59,7 @@ class ItemHandler {
         Item item = new Item(Integer.parseInt(values.get(ITEM_ID_INDEX)), values.get(NAME_INDEX),
                 Integer.parseInt(values.get(POINTS_INDEX)), values.get(DESCRIPTION_INDEX), values.get(CATEGORY_INDEX));
         itemDAO.update(item);
-        httpExchange.getResponseHeaders().add("Location", "/mentor/items");
+        httpExchange.getResponseHeaders().add("Location", "/mentor/" + mentorId + "/items");
         httpExchange.sendResponseHeaders(301, -1);
     }
 
@@ -65,7 +67,7 @@ class ItemHandler {
         final int ITEM_ID_INDEX = 0;
         List<String> values = new FormDataParser().getKeys(formData);
         Item item = itemDAO.getItemById(Integer.parseInt(values.get(ITEM_ID_INDEX)));
-        httpExchange.getResponseHeaders().add("Location", "/mentor/items/" + item.getId() + "/edit-item");
+        httpExchange.getResponseHeaders().add("Location", "/mentor/" + mentorId + "/items/" + item.getId() + "/edit-item");
         httpExchange.sendResponseHeaders(301, -1);
     }
 
@@ -93,7 +95,7 @@ class ItemHandler {
         List<String> values = new FormDataParser().getKeys(formData);
         Item item = itemDAO.getItemById(Integer.parseInt(values.get(ITEM_ID_INDEX)));
         itemDAO.delete(item);
-        httpExchange.getResponseHeaders().add("Location", "/mentor/items");
+        httpExchange.getResponseHeaders().add("Location", "/mentor/" + mentorId + "/items");
         httpExchange.sendResponseHeaders(301, -1);
     }
 }

@@ -13,7 +13,6 @@ import com.example.queststore.data.sessions.SqliteSessionDAO;
 import com.example.queststore.models.User;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.jtwig.JtwigModel;
@@ -34,6 +33,7 @@ public class MentorHandler implements HttpHandler {
     private UserDAO userDAO = new SqliteUserDAO();
     private TaskDAO taskDAO = new SqliteTaskDAO();
     private ItemDAO itemDAO = new SqliteItemDAO();
+    private int mentorId;
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -50,7 +50,7 @@ public class MentorHandler implements HttpHandler {
                     return;
                 }
             }
-            redirectToLogin(httpExchange);
+            redirectToPath(httpExchange, "/login");
         }
 
         if (method.equals("POST")) {
@@ -64,9 +64,9 @@ public class MentorHandler implements HttpHandler {
             } else if (formData.contains("promote")) {
                 new PromotionHandler(httpExchange).handleUserPromotion(formData);
             } else if (formData.contains("task")) {
-                new TaskHandler(httpExchange).handle(formData);
+                new TaskHandler(httpExchange, mentorId).handle(formData);
             } else if (formData.contains("item")) {
-                new ItemHandler(httpExchange).handle(formData);
+                new ItemHandler(httpExchange, mentorId).handle(formData);
             }
         }
     }
@@ -74,15 +74,15 @@ public class MentorHandler implements HttpHandler {
     private void handleRedirection(HttpExchange httpExchange, String formData) throws IOException {
 
         if (formData.contains("redirect-promote-user")) {
-            redirectToPath(httpExchange, "/mentor/promote-user");
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/promote-user");
         } else if (formData.contains("redirect-tasks")) {
-            redirectToPath(httpExchange, "/mentor/tasks");
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/tasks");
         } else if (formData.contains("redirect-add-task")) {
-            redirectToPath(httpExchange, "/mentor/add-task");
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-task");
         } else if (formData.contains("redirect-items")) {
-            redirectToPath(httpExchange, "/mentor/items");
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/items");
         } else if (formData.contains("redirect-add-item")) {
-            redirectToPath(httpExchange, "/mentor/add-item");
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-item");
         }
     }
 
@@ -94,20 +94,14 @@ public class MentorHandler implements HttpHandler {
             cookie = HttpCookie.parse(sessionCookie).get(0);
             sessionDAO.deleteBySessionId(cookie.getValue());
         }
-        redirectToLogin(httpExchange);
-    }
-
-    private void redirectToLogin(HttpExchange httpExchange) throws IOException {
-        Headers headers = httpExchange.getResponseHeaders();
-        String redirect = "/login";
-        headers.add("Location", redirect);
-        httpExchange.sendResponseHeaders(301, -1);
+        redirectToPath(httpExchange, "/login");
     }
 
     private void showMentorPage(HttpExchange httpExchange, HttpCookie cookie) throws IOException {
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
         int userId = session.getUserId();
+        this.mentorId = userId;
         User user = userDAO.getById(userId);
         handleShowingSubPage(httpExchange, user);
     }
@@ -132,7 +126,7 @@ public class MentorHandler implements HttpHandler {
                 break;
             case EDIT_TASK:
                 String taskId = segments[segments.length - 2];
-                new TaskHandler(httpExchange).showEditPage(taskId);
+                new TaskHandler(httpExchange, mentorId).showEditPage(taskId);
                 break;
             case TASKS:
                 template = JtwigTemplate.classpathTemplate("templates/display_tasks.twig");
@@ -145,7 +139,7 @@ public class MentorHandler implements HttpHandler {
                 break;
             case EDIT_ITEM:
                 String itemId = segments[segments.length - 2];
-                new ItemHandler(httpExchange).showEditPage(itemId);
+                new ItemHandler(httpExchange, mentorId).showEditPage(itemId);
                 break;
             case ITEMS:
                 template = JtwigTemplate.classpathTemplate("templates/display_items.twig");

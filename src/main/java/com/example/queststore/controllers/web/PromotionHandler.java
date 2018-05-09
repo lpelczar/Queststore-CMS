@@ -19,7 +19,6 @@ class PromotionHandler {
         this.httpExchange = httpExchange;
     }
 
-
     void handleUserPromotion(String formData) throws IOException {
 
         final int USER_ID_INDEX = 0;
@@ -34,7 +33,7 @@ class PromotionHandler {
             user.setRole(UserEntry.MENTOR_ROLE);
         }
         userDAO.update(user);
-        httpExchange.getResponseHeaders().add("Location", "/mentor/promote-user");
+        httpExchange.getResponseHeaders().add("Location", httpExchange.getRequestURI().getPath());
         httpExchange.sendResponseHeaders(301, -1);
     }
 }
