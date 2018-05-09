@@ -119,8 +119,9 @@ public class MentorHandler implements HttpHandler {
         JtwigTemplate template;
         JtwigModel model;
 
-        String lastSegment = path.substring(path.lastIndexOf('/') + 1);
-        String[] segments = path.split("/");;
+        String[] segments = path.split("/");
+        String lastSegment = segments[segments.length - 1].isEmpty() ?
+                segments[segments.length - 2] : segments[segments.length - 1];
 
         switch (lastSegment) {
             case PROMOTE_USER:
