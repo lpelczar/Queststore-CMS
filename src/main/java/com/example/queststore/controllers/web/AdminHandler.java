@@ -139,7 +139,10 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_profile_admin.twig");
         JtwigModel model = JtwigModel.newModel();
 
-        model.with("mentor_info", user.toString());
+        model.with("id", user.getId());
+        model.with("name", user.getName());
+        model.with("phone_number", user.getPhoneNumber());
+        model.with("email", user.getEmail());
         model.with("group", mentorGroups);
 
         return template.render(model);
