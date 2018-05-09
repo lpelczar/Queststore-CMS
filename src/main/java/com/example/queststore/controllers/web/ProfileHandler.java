@@ -8,11 +8,13 @@ import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Group;
 import com.example.queststore.models.User;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProfileEditorHandler {
+public class ProfileHandler {
     UserDAO userDAO = new SqliteUserDAO();
+    GroupDAO groupDAO = new SqliteGroupDAO();
 
     public User findUserBy(Integer userId) {
         User user = userDAO.getById(userId);
@@ -73,5 +75,29 @@ public class ProfileEditorHandler {
         userDAO.update(user);
     }
 
+    public List<String> getGroupsBy(int id) {
+        return groupDAO.getGroupsNamesByMentorId(id);
+    }
 
+    public List<User> getStudentsBy(int groupId) {
+        return userDAO.getStudentsByGroupId(groupId);
+    }
+
+    public Map<String, List<User>> getStudentsGroups(int mentorId) {
+        Map<String, List<User>> groups = new HashMap<>();
+        List<String> groupNames = getGroupsBy(mentorId);
+
+        for (String name : groupNames) {
+            Group group = groupDAO.getByName(name);
+            List<User> students = getStudentsBy(group.getId());
+
+//            System.out.println(name);
+//
+//            for (User student : students) {
+//                System.out.println(student.getName());
+//            }
+            groups.put(name, students);
+        }
+        return groups;
+    }
 }

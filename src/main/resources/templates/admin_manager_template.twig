@@ -63,7 +63,7 @@
                     {% for mentor in mentors %}
                         <li id="mentor-data">
                             <div class="mentor-name">
-                                <form method="POST"><input type="submit" name="mentor profile {{ mentor.getId() }}" value="{{ mentor.getName() }}" class="mentor-info" onclick=""></form>
+                                <a href="/admin/mentor-profile/{{ mentor.getId() }}" class="mentor-name-button">{{ mentor.getName() }}</a>
                             </div>
                     {% endfor %}
                 </ul>
@@ -160,16 +160,14 @@
                     <div id="edit-table">
                         <ul class="mentors-lists-edit">
                             {% for element in mentors %}
-                                <li><a href="admin/edit/{{ element.getId() }}" class="mentor-name-button" onclose="editPage()"> {{ element.getName() }}</a></li>
+                                <li><a href="admin/edit/{{ element.getId() }}" class="mentor-name-button"> {{ element.getName() }}</a></li>
                             {% endfor %}
                         </ul>
 
                     </div>
                     <span id="back-button-mentor-to-edit">back</span>
                 </div>
-
             </div>
-
         </div>
     </div>
 

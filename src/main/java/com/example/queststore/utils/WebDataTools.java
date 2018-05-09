@@ -14,7 +14,7 @@ import java.util.Map;
 public abstract class WebDataTools {
 
 
-    public Map<String, String> parseDataAddMentor(String formData) {
+    protected Map<String, String> parseDataAddMentor(String formData) {
         int VALUE_INDEX = 1;
         int FORM_NAME_INDEX = 0;
 
@@ -42,7 +42,7 @@ public abstract class WebDataTools {
         return "";
     }
 
-    public Integer getUserIdFrom(URI uri) {
+    protected Integer getUserIdFrom(URI uri) {
         String[] values = uri.toString().split("/");
 
         for (String element : values) {
@@ -53,7 +53,7 @@ public abstract class WebDataTools {
         return null;
     }
 
-    public String getSubmittedWebData(HttpExchange httpExchange) throws IOException {
+    protected String getSubmittedWebData(HttpExchange httpExchange) throws IOException {
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);
         return br.readLine();

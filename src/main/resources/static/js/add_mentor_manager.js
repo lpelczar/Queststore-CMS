@@ -4,7 +4,7 @@ function cancelAddingMentor() {
     title_table.style.fontSize = "large";
     title_table.style.backgroundColor = "transparent";
 
-    columnTables.style.display = "flex";
+    column_tables.style.display = "flex";
     form.style.display = "none";
     row_table.style.height = "35%";
     assigned_table.style.width = "100%";
