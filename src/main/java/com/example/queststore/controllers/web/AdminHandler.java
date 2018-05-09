@@ -1,14 +1,13 @@
 package com.example.queststore.controllers.web;
 
-import com.example.queststore.dao.GroupDAO;
 import com.example.queststore.dao.UserDAO;
-import com.example.queststore.dao.sqlite.SqliteGroupDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
-import com.example.queststore.data.contracts.UserEntry;
+import com.example.queststore.data.sessions.Session;
 import com.example.queststore.data.sessions.SessionDAO;
 import com.example.queststore.data.sessions.SqliteSessionDAO;
 import com.example.queststore.models.Group;
 import com.example.queststore.models.User;
+import com.example.queststore.utils.WebDataTools;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -18,57 +17,60 @@ import org.jtwig.JtwigTemplate;
 import java.io.*;
 import java.net.HttpCookie;
 import java.net.URI;
-import java.net.URLDecoder;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdminHandler implements HttpHandler {
+public class AdminHandler extends WebDataTools implements HttpHandler {
 
-    private String mentors = UserEntry.MENTOR_ROLE;
-    private User mentor;
-
-    private Integer mentorId;
+    private ProfileEditorHandler profileEditorHandler = new ProfileEditorHandler();
     private SessionDAO sessionDAO = new SqliteSessionDAO();
+    private UserDAO userDAO = new SqliteUserDAO();
+    private User admin;
+
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        HttpCookie cookie;
         String response = "";
         String method = httpExchange.getRequestMethod();
 
         if (method.equals("GET")) {
-            URI uri = httpExchange.getRequestURI();
+            String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
 
-            if (uri.toString().contains("edit")) {
-                mentorId = getIdMentorFrom(uri);
-                mentor = getMentor(mentorId);
-                response = prepareTemplateEdit(mentor);
+            if (sessionCookie != null) {
+                cookie = HttpCookie.parse(sessionCookie).get(0);
+
+                if (sessionDAO.getById(cookie.getValue()) != null) {
+                    showAdminPage(httpExchange, cookie);
+                    return;
+                }
             }
-            else{
-                response = prepareTemplateMain();
-            }
+
+            redirectToLogin(httpExchange);
         }
 
         if (method.equals("POST")) {
-            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
-            BufferedReader br = new BufferedReader(isr);
-            String formData = br.readLine();
-
-            System.out.println(formData);
+            String formData = getSubmittedWebData(httpExchange);
             Map<String, String> profileData = parseDataAddMentor(formData);
+            System.out.println(formData);
 
 
             if (formData.contains("logout")) {
                 handleLogout(httpExchange);
 
-            } else if (checkPostType(formData).contains("Edit")) {
-                updateMentorField(profileData);
-                handleUpdate(mentor);
+            } else if (formData.contains("Accept")) {
+                int userId = profileEditorHandler.getUserIdFrom(profileData);
+                User user = profileEditorHandler.findUserBy(userId);
+
+                profileEditorHandler.update(profileData, user);
+                profileEditorHandler.updateDb(user);
+
                 redirectToAdmin(httpExchange);
             }
-//            else {
-////                handlePromoteUserToMentor(mentor);
-////            }
+            else if (formData.contains("mentor profile")) {
+//                int mentorId =
+//                redirectToMentorProfile(httpExchange, mentorId);
+            }
 
             response = prepareTemplateMain();
         }
@@ -78,57 +80,58 @@ public class AdminHandler implements HttpHandler {
 
     }
 
-    private void handleLogout(HttpExchange httpExchange) throws IOException {
-        HttpCookie cookie;
-        String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
-        if (sessionCookie != null) {
-            cookie = HttpCookie.parse(sessionCookie).get(0);
-            sessionDAO.deleteBySessionId(cookie.getValue());
-        }
-        redirectToLogin(httpExchange);
-    }
+    private void showAdminPage(HttpExchange httpExchange, HttpCookie cookie) {
+        String sessionId = cookie.getValue();
+        Session session = sessionDAO.getById(sessionId);
+        String response;
 
-    private void redirectToLogin(HttpExchange httpExchange) throws IOException {
-        Headers headers = httpExchange.getResponseHeaders();
-        String redirect = "/login";
-        headers.add("Location", redirect);
-        httpExchange.sendResponseHeaders(301, -1);
+        int adminId = session.getUserId();
+        admin = userDAO.getById(adminId);
+
+        URI uri = httpExchange.getRequestURI();
+
+        if (uri.toString().contains("edit")) {
+            Integer userId = getUserIdFrom(uri);
+            User user = profileEditorHandler.findUserBy(userId);
+
+            response = prepareTemplateEdit(user);
+        }
+        else{
+            response = prepareTemplateMain();
+        }
+
+        renderWebsite(httpExchange, response);
     }
 
     private String prepareTemplateMain() {
-        List<User> mentors = getAllMentors();
-        List<Group> groups = getAllGroups();
+        List<User> mentors = profileEditorHandler.getAllMentors();
+        List<Group> groups = profileEditorHandler.getAllGroups();
+        List<User> blankUsers = profileEditorHandler.getAllBlankUsers();
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/admin_manager_template.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("mentors", mentors);
         model.with("groups", groups);
+        model.with("blankUsers", blankUsers);
+        model.with("admin_id", admin.getId());
 
         return template.render(model);
     }
 
-    private String prepareTemplateEdit(User mentor) {
+    private String prepareTemplateEdit(User user) {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/edit_mentor_by_admin.twig");
         JtwigModel model = JtwigModel.newModel();
 
-        model.with("login", mentor.getLogin());
-        model.with("name", mentor.getName());
-        model.with("phoneNumber", mentor.getPhoneNumber());
-        model.with("email", mentor.getEmail());
+        model.with("login", user.getLogin());
+        model.with("password", user.getPassword());
+        model.with("name", user.getName());
+        model.with("phoneNumber", user.getPhoneNumber());
+        model.with("email", user.getEmail());
+        model.with("user_id", user.getId());
 
 
         return template.render(model);
-    }
-
-    private List<User> getAllMentors() {
-        UserDAO userDAO = new SqliteUserDAO();
-        return userDAO.getAllByRole(mentors);
-    }
-
-    private List<Group> getAllGroups() {
-        GroupDAO groupDAO = new SqliteGroupDAO();
-        return groupDAO.getAll();
     }
 
     private void renderWebsite(HttpExchange httpExchange, String response) {
@@ -143,101 +146,34 @@ public class AdminHandler implements HttpHandler {
         }
     }
 
-    private String checkPostType(String formData) {
-        String[] form = formData.split("&");
-        int TYPE_INDEX = form.length-1;
-        return form[TYPE_INDEX];
-    }
-
-    private Map<String, String> parseDataAddMentor(String formData) {
-        int VALUE_INDEX = 1;
-        int FORM_NAME_INDEX = 0;
-
-        Map<String, String> profileValues = new HashMap<>();
-        String[] data = formData.split("&");
-
-        for (String pair : data) {
-            String[] keyValue = pair.split("=");
-
-            if (keyValue.length > 1) {
-                String value = decodeValue(keyValue[VALUE_INDEX]);
-                profileValues.put(keyValue[FORM_NAME_INDEX], value);
-            }
+    private void handleLogout(HttpExchange httpExchange) throws IOException {
+        HttpCookie cookie;
+        String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
+        if (sessionCookie != null) {
+            cookie = HttpCookie.parse(sessionCookie).get(0);
+            sessionDAO.deleteBySessionId(cookie.getValue());
         }
-        return profileValues;
+        redirectToLogin(httpExchange);
     }
 
-    private String decodeValue(String value) {
-        try {
-            return new URLDecoder().decode(value, "UTF-8");
-        }
-        catch (UnsupportedEncodingException e) {
-            System.err.println(e.getClass().getName() + " --> " + e.getMessage());
-        }
-        return "";
-    }
-
-    private void updateMentorField(Map<String, String> userProfile) {
-        for (String key : userProfile.keySet()) {
-            switch (key) {
-                case "login":
-                    mentor.setLogin(userProfile.get("login"));
-                    break;
-                case "name":
-                    mentor.setName(userProfile.get("name"));
-                    break;
-                case "phone-number":
-                    mentor.setPhoneNumber(userProfile.get("phone-number"));
-                    break;
-                case "email":
-                    mentor.setEmail(userProfile.get("email"));
-                    break;
-            }
-        }
-    }
-
-    private void handleUpdate(User mentor) {
-        UserDAO userDAO = new SqliteUserDAO();
-        userDAO.update(mentor);
-    }
-
-//    private Mentor createMentor(Map<String, String> mentorData) {
-//        return new Mentor(
-//                mentorData.get("name"),
-//                mentorData.get("last-name"),
-//                mentorData.get("email")
-//        );
-//    }
-
-    private Integer getIdMentorFrom(URI uri) {
-        String[] values = uri.toString().split("/");
-
-        for (String element : values) {
-            if (element.matches("[0-9]+")) {
-                return Integer.valueOf(element);
-            }
-        }
-        return null;
-    }
-
-    private User getMentor(Integer mentorId) {
-        if (mentorId != null) {
-            UserDAO userDAO = new SqliteUserDAO();
-            return userDAO.getById(mentorId);
-        }
-        throw new IllegalArgumentException("Wrong ID!");
-    }
-
-    private void redirectToAdmin(HttpExchange httpExchange) {
+    private void redirectToAdmin(HttpExchange httpExchange) throws IOException {
         Headers responseHeaders = httpExchange.getResponseHeaders();
+        String redirect = "/admin";
+        responseHeaders.add("Location", redirect);
+        httpExchange.sendResponseHeaders(302, -1);
+    }
 
-        responseHeaders.add("Location", "/admin");
+    private void redirectToLogin(HttpExchange httpExchange) throws IOException {
+        Headers headers = httpExchange.getResponseHeaders();
+        String redirect = "/login";
+        headers.add("Location", redirect);
+        httpExchange.sendResponseHeaders(301, -1);
+    }
 
-        try {
-            httpExchange.sendResponseHeaders(302, -1);
-        }
-        catch (IOException e) {
-            System.err.println(e.getClass().getName() + " --> " + e.getMessage());
-        }
+    private void redirectToMentorProfile(HttpExchange httpExchange, Integer mentorId) throws IOException {
+        Headers headers = httpExchange.getResponseHeaders();
+        String redirect = "/mentor-profile/" + mentorId;
+        headers.add("Location", redirect);
+        httpExchange.sendResponseHeaders(301, -1);
     }
 }

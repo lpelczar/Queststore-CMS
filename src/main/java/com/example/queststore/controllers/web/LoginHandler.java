@@ -39,7 +39,6 @@ public class LoginHandler implements HttpHandler {
         final String GET_METHOD = "GET";
         final String POST_METHOD = "POST";
         String method = httpExchange.getRequestMethod();
-        System.out.println(method);
         HttpCookie cookie;
 
         if (method.equals(GET_METHOD)) {
@@ -56,7 +55,6 @@ public class LoginHandler implements HttpHandler {
 
         if (method.equals(POST_METHOD)) {
             String formData = getFormData(httpExchange);
-            System.out.println(formData);
             handleLoggingIn(httpExchange, formData);
         }
     }
@@ -71,7 +69,6 @@ public class LoginHandler implements HttpHandler {
 
         HttpCookie cookie;
         Pair<String, String> loginPassword = parseLoginData(formData);
-        System.out.println(loginPassword.getKey() + " " + loginPassword.getValue());
 
         if (userDAO.getByLoginAndPassword(loginPassword.getKey(), loginPassword.getValue()) != null) {
 
@@ -82,7 +79,6 @@ public class LoginHandler implements HttpHandler {
             cookie = new HttpCookie("sessionId", sessionId);
             httpExchange.getResponseHeaders().add("Set-Cookie", cookie.toString());
 
-            System.out.println("Session id: " + sessionId + " User id: " + user.getId());
 
             sessionDAO.add(new Session(sessionId, user.getId()));
             makeRedirection(httpExchange, cookie);
@@ -108,7 +104,6 @@ public class LoginHandler implements HttpHandler {
         }
 
         if (user.getRole().equals("Mentor")) {
-            System.out.println("Mentor logged!");
             Headers headers = httpExchange.getResponseHeaders();
             String redirect = "/mentor/" + userId;
             headers.add("Location", redirect);
