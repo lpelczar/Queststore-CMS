@@ -11,8 +11,9 @@ import com.example.queststore.models.User;
 import java.util.List;
 import java.util.Map;
 
-public class ProfileEditorHandler {
+public class ProfileHandler {
     UserDAO userDAO = new SqliteUserDAO();
+    GroupDAO groupDAO = new SqliteGroupDAO();
 
     public User findUserBy(Integer userId) {
         User user = userDAO.getById(userId);
@@ -73,5 +74,7 @@ public class ProfileEditorHandler {
         userDAO.update(user);
     }
 
-
+    public List<String> getGroupsBy(int id) {
+        return groupDAO.getGroupsNamesByMentorId(id);
+    }
 }
