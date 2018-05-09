@@ -68,20 +68,6 @@
 
 }
 
-.window-modal {
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.8);
-
-    animation-name: opacity;
-    -webkit-animation-duration: .4s;
-    animation-duration: .4s;
-}
 
 @-webkit-keyframes opacity{
     0% {opacity: 0}
@@ -93,30 +79,6 @@
     100% {opacity: 1}
 }
 
-#mentors-list-box {
-    display: grid;
-    background-color: rgba(220, 220, 220, 0.9);
-    width: 80%;
-    border-radius: 10px;
-
-}
-
-.back-button {
-    align-self: flex-end;
-    text-align: center;
-    width: 20%;
-    padding-top: .5%;
-    padding-bottom: .5%;
-    background-color: black;
-    color: white;
-    cursor: pointer;
-    border-top-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-}
-
-#title-mentor-box {
-    text-align: center;
-}
 
 .mentor-list {
     padding-left: 0;
@@ -127,7 +89,7 @@
 #add-mentor-form {
     display: none;
     justify-content: center;
-    height: 50%;
+    height: 70%;
     padding-top: 5%;
 }
 
@@ -150,18 +112,6 @@
     justify-content: space-evenly;
     align-items: center;
     font-size: 100%;
-}
-
-#mentor-data {
-    display: flex;
-    margin: 2%;
-}
-
-#mentors {
-    padding: auto;
-    overflow: scroll;
-    display: grid;
-    justify-content: center;
 }
 
 .mentor-name-button {
@@ -201,7 +151,6 @@
     transition: .4s;
     opacity: 0.7;
 }
-
 
 .assigned {
     overflow: scroll;
