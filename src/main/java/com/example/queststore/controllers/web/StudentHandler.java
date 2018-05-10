@@ -24,6 +24,7 @@ class StudentHandler {
     private GroupDAO groupDAO = new SqliteGroupDAO();
     private ItemDAO itemDAO = new SqliteItemDAO();
     private TaskDAO taskDAO = new SqliteTaskDAO();
+    private StudentTaskDAO studentTaskDAO = new SqliteStudentTaskDAO();
     private int mentorId;
 
     StudentHandler(HttpExchange httpExchange, int mentorId) {
@@ -36,6 +37,8 @@ class StudentHandler {
             handleAddingStudentGroupConnection(formData);
         } else if (formData.contains("show-student-details-action")) {
             sendStudentDetailsPage(formData);
+        } else if (formData.contains("mark-student-quest-button")) {
+            handleMarkingStudentTask(formData);
         }
     }
 
@@ -67,6 +70,17 @@ class StudentHandler {
         JtwigModel model = JtwigModel.newModel();
         model.with("student", student);
         sendResponse(httpExchange, template.render(model));
+    }
+
+    private void handleMarkingStudentTask(String formData) throws IOException {
+        final int STUDENT_ID_INDEX = 0;
+        final int TASK_ID_INDEX = 1;
+        List<String> values = new FormDataParser().getValues(formData);
+        int studentId = Integer.parseInt(values.get(STUDENT_ID_INDEX));
+        int taskId = Integer.parseInt(values.get(TASK_ID_INDEX));
+        studentTaskDAO.add(studentId, taskId);
+        httpExchange.getResponseHeaders().add("Location", "/mentor/" + mentorId + "/students");
+        httpExchange.sendResponseHeaders(301, -1);
     }
 
     void showStudentsPage() throws IOException {

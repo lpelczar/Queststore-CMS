@@ -96,6 +96,10 @@ public class MentorHandler implements HttpHandler {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-student-to-group");
         } else if (formData.contains("redirect-students")) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/students" );
+        } else if (formData.contains("redirect-mark-student-task")) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/mark-student-quest" );
+        } else if (formData.contains("redirect-mark-student-item")) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/mark-student-artifact" );
         }
     }
 
@@ -172,6 +176,14 @@ public class MentorHandler implements HttpHandler {
                 break;
             case STUDENTS:
                 new StudentHandler(httpExchange, mentorId).showStudentsPage();
+                break;
+            case MARK_STUDENT_QUEST:
+                template = JtwigTemplate.classpathTemplate("templates/mark_student_task.twig");
+                model = JtwigModel.newModel();
+                model.with("students", userDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+                model.with("tasks", taskDAO.getAll());
+                sendResponse(httpExchange, template.render(model));
+                break;
         }
     }
 
