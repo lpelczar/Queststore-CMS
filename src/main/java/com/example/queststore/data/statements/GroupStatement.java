@@ -43,4 +43,9 @@ public class GroupStatement {
     public String selectMentorAssignedToGroups() {
         return "SELECT * FROM " + MentorGroupEntry.TABLE_NAME + " ;";
     }
+
+    public String selectByGroupId() {
+        return "SELECT * FROM " + GroupEntry.TABLE_NAME +
+                " WHERE " + GroupEntry.ID + " = ?;" ;
+    }
 }
