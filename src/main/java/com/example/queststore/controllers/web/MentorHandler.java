@@ -23,7 +23,7 @@ import java.net.HttpCookie;
 import java.net.URL;
 import java.util.List;
 
-import static com.example.queststore.controllers.web.MentorOptions.*;
+import static com.example.queststore.controllers.web.values.MentorOptions.*;
 
 public class MentorHandler implements HttpHandler {
 

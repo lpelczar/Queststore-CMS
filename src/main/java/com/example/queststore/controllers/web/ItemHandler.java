@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+import static com.example.queststore.controllers.web.values.ItemOptions.*;
+
 class ItemHandler {
 
     private HttpExchange httpExchange;
@@ -25,13 +27,13 @@ class ItemHandler {
     }
 
     void handle(String formData) throws IOException {
-        if (formData.contains("delete-item-action")) {
+        if (formData.contains(DELETE_ITEM_ACTION)) {
             handleDeletingItem(formData);
-        } else if (formData.contains("add-item-button")) {
+        } else if (formData.contains(ADD_ITEM)) {
             handleAddingItem(formData);
-        } else if (formData.contains("edit-item-button")) {
+        } else if (formData.contains(EDIT_ITEM)) {
             handleEditingItem(formData);
-        } else if (formData.contains("edit-item-action")) {
+        } else if (formData.contains(EDIT_ITEM_ACTION)) {
             handleShowingEditPage(formData);
         }
     }

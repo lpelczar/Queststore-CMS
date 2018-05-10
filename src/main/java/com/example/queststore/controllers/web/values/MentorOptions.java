@@ -1,4 +1,4 @@
-package com.example.queststore.controllers.web;
+package com.example.queststore.controllers.web.values;
 
 public interface MentorOptions {
 
