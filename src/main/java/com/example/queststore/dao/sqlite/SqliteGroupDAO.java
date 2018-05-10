@@ -3,6 +3,7 @@ package com.example.queststore.dao.sqlite;
 import com.example.queststore.dao.GroupDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.data.contracts.GroupEntry;
+import com.example.queststore.data.contracts.MentorGroupEntry;
 import com.example.queststore.data.statements.GroupStatement;
 import com.example.queststore.models.Group;
 import com.example.queststore.utils.QueryLogger;
@@ -10,9 +11,7 @@ import com.example.queststore.utils.QueryLogger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class SqliteGroupDAO extends DbHelper implements GroupDAO {
 
@@ -82,6 +81,29 @@ public class SqliteGroupDAO extends DbHelper implements GroupDAO {
             closeConnection();
         }
         return groupNames;
+    }
+
+    @Override
+    public Map<Integer, Integer> getMentorAssignedToGroups() {
+        String sqlStatement = groupStatement.selectMentorAssignedToGroups();
+        Map<Integer, Integer> groupMentor = new HashMap<>();
+
+        try {
+            PreparedStatement statement = getPreparedStatement(sqlStatement);
+            ResultSet resultSet = query(statement);
+            while (resultSet.next()) {
+                groupMentor.put(
+                        resultSet.getInt(MentorGroupEntry.ID_GROUP),
+                        resultSet.getInt(MentorGroupEntry.ID_MENTOR)
+                );
+            }
+        } catch (SQLException e) {
+            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return groupMentor;
     }
 
     @Override
