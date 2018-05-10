@@ -39,4 +39,13 @@ public class GroupStatement {
                 GroupEntry.ID + " INTEGER PRIMARY KEY," +
                 GroupEntry.GROUP_NAME + " TEXT NOT NULL UNIQUE);" ;
     }
+
+    public String selectMentorAssignedToGroups() {
+        return "SELECT * FROM " + MentorGroupEntry.TABLE_NAME + " ;";
+    }
+
+    public String selectByGroupId() {
+        return "SELECT * FROM " + GroupEntry.TABLE_NAME +
+                " WHERE " + GroupEntry.ID + " = ?;" ;
+    }
 }

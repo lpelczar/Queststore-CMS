@@ -30,4 +30,9 @@ public class MentorGroupStatement {
                 "FOREIGN KEY (" + MentorGroupEntry.ID_GROUP + ") REFERENCES " + GroupEntry.TABLE_NAME +
                 "(" + GroupEntry.ID + ") ON DELETE CASCADE);" ;
     }
+
+    public String deleteConnectionStatementByMentorID() {
+        return "DELETE FROM " + MentorGroupEntry.TABLE_NAME +
+                " WHERE " + MentorGroupEntry.ID_MENTOR + " = ? ;";
+    }
 }

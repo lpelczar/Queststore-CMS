@@ -41,7 +41,7 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
                 cookie = HttpCookie.parse(sessionCookie).get(0);
 
                 if (sessionDAO.getById(cookie.getValue()) != null) {
-                    showAdminPage(httpExchange, cookie);
+                    showWebPage(httpExchange, cookie);
                     return;
                 }
             }
@@ -54,13 +54,15 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
             Map<String, String> profileData = parseDataAddMentor(formData);
             System.out.println(formData);
 
-
             if (formData.contains("logout")) {
                 handleLogout(httpExchange);
             }
             else if (formData.contains("main-page")) {
                 redirectToAdmin(httpExchange);
-                
+
+            } else if (formData.contains("group-manager")) {
+                redirectToGroupManager(httpExchange);
+
             } else if (formData.contains("Accept")) {
                 int userId = profileHandler.getUserIdFrom(profileData);
                 User user = profileHandler.findUserBy(userId);
@@ -70,13 +72,15 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
 
                 redirectToAdmin(httpExchange);
             }
-            response = prepareTemplateMain();
+            else {
+                response = prepareTemplateMain();
+            }
         }
         renderWebsite(httpExchange, response);
 
     }
 
-    private void showAdminPage(HttpExchange httpExchange, HttpCookie cookie) {
+    private void showWebPage(HttpExchange httpExchange, HttpCookie cookie) throws IOException {
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
         String response;
@@ -98,7 +102,22 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
 
             response = prepareTemplateMentorProfile(user);
         }
-        else{
+        else if (uri.toString().contains("group-manager")) {
+            response = prepareTemplateGroupManager();
+        }
+        else if (uri.toString().contains("revoke-mentor")) {
+            Integer userId = getUserIdFrom(uri);
+            String groupName = getGroupNameFrom(uri);
+
+            if (userId != null) {
+                Group group = profileHandler.getGroupByName(groupName);
+                profileHandler.revokeMentorFromGroup(userId, group.getId());
+
+            }
+            redirectToGroupManager(httpExchange);
+            response = prepareTemplateGroupManager();
+        }
+        else {
             response = prepareTemplateMain();
         }
 
@@ -137,7 +156,7 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
     }
 
     private String prepareTemplateMentorProfile(User user) {
-        List<String> mentorGroups = profileHandler.getGroupsBy(user.getId());
+        List<String> mentorGroups = profileHandler.getGroupsByMentorId(user.getId());
         Map<String, List<User>> groupStudent = profileHandler.getStudentsGroups(user.getId());
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_profile_admin.twig");
@@ -150,6 +169,18 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
         model.with("group", mentorGroups);
 
         model.with("test", groupStudent);
+
+        return template.render(model);
+    }
+
+    private String prepareTemplateGroupManager() {
+        Map<String, User> groupsAssignMentors = profileHandler.getAllGroupsAssignMentors();
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/group_manager.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("groups", groupsAssignMentors);
+
 
         return template.render(model);
     }
@@ -190,10 +221,10 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
         httpExchange.sendResponseHeaders(301, -1);
     }
 
-//    private void redirectToMentorProfile(HttpExchange httpExchange, Integer mentorId) throws IOException {
-//        Headers headers = httpExchange.getResponseHeaders();
-//        String redirect = "/mentor-profile/" + mentorId;
-//        headers.add("Location", redirect);
-//        httpExchange.sendResponseHeaders(301, -1);
-//    }
+    private void redirectToGroupManager(HttpExchange httpExchange) throws IOException {
+        Headers headers = httpExchange.getResponseHeaders();
+        String redirect = "/admin/group-manager";
+        headers.add("Location", redirect);
+        httpExchange.sendResponseHeaders(301, -1);
+    }
 }
