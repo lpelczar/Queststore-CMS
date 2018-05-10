@@ -166,3 +166,15 @@ header {
 h2 {
     padding-top: 10px;
 }
+
+.register {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 0;
+}
+
+#details li {
+    list-style-type: none;
+    margin-bottom: 3px;
+}
