@@ -53,6 +53,12 @@ public abstract class WebDataTools {
         return null;
     }
 
+    protected String getGroupNameFrom(URI uri) {
+        String[] values = uri.toString().split("/");
+        int GROUP_NAME_INDEX = values.length-1;
+        return values[GROUP_NAME_INDEX];
+    }
+
     protected String getSubmittedWebData(HttpExchange httpExchange) throws IOException {
         InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
         BufferedReader br = new BufferedReader(isr);

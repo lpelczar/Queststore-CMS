@@ -80,7 +80,7 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
 
     }
 
-    private void showWebPage(HttpExchange httpExchange, HttpCookie cookie) {
+    private void showWebPage(HttpExchange httpExchange, HttpCookie cookie) throws IOException {
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
         String response;
@@ -105,8 +105,18 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
         else if (uri.toString().contains("group-manager")) {
             response = prepareTemplateGroupManager();
         }
-//        else if (uri.toString().contains("revoke-manager")) {
-//        }
+        else if (uri.toString().contains("revoke-mentor")) {
+            Integer userId = getUserIdFrom(uri);
+            String groupName = getGroupNameFrom(uri);
+
+            if (userId != null) {
+                Group group = profileHandler.getGroupByName(groupName);
+                profileHandler.revokeMentorFromGroup(userId, group.getId());
+
+            }
+            redirectToGroupManager(httpExchange);
+            response = prepareTemplateGroupManager();
+        }
         else {
             response = prepareTemplateMain();
         }
@@ -146,7 +156,7 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
     }
 
     private String prepareTemplateMentorProfile(User user) {
-        List<String> mentorGroups = profileHandler.getGroupsBy(user.getId());
+        List<String> mentorGroups = profileHandler.getGroupsByMentorId(user.getId());
         Map<String, List<User>> groupStudent = profileHandler.getStudentsGroups(user.getId());
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/mentor_profile_admin.twig");
@@ -164,7 +174,7 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
     }
 
     private String prepareTemplateGroupManager() {
-        Map<Group, User> groupsAssignMentors = profileHandler.getAllGroupsAssignMentors();
+        Map<String, User> groupsAssignMentors = profileHandler.getAllGroupsAssignMentors();
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/group_manager.twig");
         JtwigModel model = JtwigModel.newModel();

@@ -43,7 +43,9 @@ public class ProfileHandler {
         return userDAO.getAllByRole(UserEntry.MENTOR_ROLE);
     }
 
-    public List<String> getGroupsBy(int id) { return groupDAO.getGroupsNamesByMentorId(id); }
+    public List<String> getGroupsByMentorId(int id) { return groupDAO.getGroupsNamesByMentorId(id); }
+
+    public Group getGroupByName(String groupName) { return groupDAO.getByName(groupName); }
 
     public List<User> getStudentsBy(int groupId) { return userDAO.getStudentsByGroupId(groupId); }
 
@@ -54,7 +56,7 @@ public class ProfileHandler {
 
     public Map<String, List<User>> getStudentsGroups(int mentorId) {
         Map<String, List<User>> groups = new HashMap<>();
-        List<String> groupNames = getGroupsBy(mentorId);
+        List<String> groupNames = getGroupsByMentorId(mentorId);
 
         for (String name : groupNames) {
             Group group = groupDAO.getByName(name);
@@ -127,8 +129,8 @@ public class ProfileHandler {
         userDAO.update(user);
     }
 
-    public void revokeMentorFromGroup(int mentorID) {
+    public void revokeMentorFromGroup(int mentorID, int groupId) {
         MentorGroupDAO mentorGroupDAO = new SqliteMentorGroupDAO();
-        mentorGroupDAO.deleteBy(mentorID);
+        mentorGroupDAO.delete(groupId, mentorID);
     }
 }
