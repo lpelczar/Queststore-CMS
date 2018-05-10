@@ -50,7 +50,8 @@ public class MentorHandler implements HttpHandler {
             String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
             if (sessionCookie != null) {
                 cookie = HttpCookie.parse(sessionCookie).get(0);
-                if (sessionDAO.getById(cookie.getValue()) != null) {
+                Session session = sessionDAO.getById(cookie.getValue());
+                if (session != null && isMentor(session.getUserId())) {
                     showMentorPage(httpExchange, cookie);
                     return;
                 }
@@ -78,6 +79,11 @@ public class MentorHandler implements HttpHandler {
                 new StudentHandler(httpExchange, mentorId).handle(formData);
             }
         }
+    }
+
+    private boolean isMentor(int userId) {
+        User user = userDAO.getById(userId);
+        return user.getRole().equals(UserEntry.MENTOR_ROLE);
     }
 
     private void handleRedirection(HttpExchange httpExchange, String formData) throws IOException {
