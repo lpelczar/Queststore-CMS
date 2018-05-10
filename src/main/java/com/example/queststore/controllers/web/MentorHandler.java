@@ -13,6 +13,7 @@ import com.example.queststore.data.sessions.Session;
 import com.example.queststore.data.sessions.SessionDAO;
 import com.example.queststore.data.sessions.SqliteSessionDAO;
 import com.example.queststore.models.User;
+import com.example.queststore.utils.FormDataParser;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.sun.net.httpserver.HttpExchange;
@@ -26,6 +27,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.net.URL;
+import java.util.List;
 
 import static com.example.queststore.controllers.web.MentorOptions.*;
 
@@ -60,17 +62,19 @@ public class MentorHandler implements HttpHandler {
 
             String formData = getFormData(httpExchange);
             System.out.println("Form :" + formData);
-            if (formData.contains("logout")) {
+            List<String> keys = new FormDataParser().getKeys(formData);
+            String lastKey = keys.get(keys.size() - 1);
+            if (lastKey.contains("logout")) {
                 handleLogout(httpExchange);
-            } else if (formData.contains("redirect")) {
+            } else if (lastKey.contains("redirect")) {
                 handleRedirection(httpExchange, formData);
-            } else if (formData.contains("promote")) {
+            } else if (lastKey.contains("promote")) {
                 new PromotionHandler(httpExchange).handleUserPromotion(formData);
-            } else if (formData.contains("task")) {
+            } else if (lastKey.contains("task")) {
                 new TaskHandler(httpExchange, mentorId).handle(formData);
-            } else if (formData.contains("item")) {
+            } else if (lastKey.contains("item")) {
                 new ItemHandler(httpExchange, mentorId).handle(formData);
-            } else if (formData.contains("student")) {
+            } else if (lastKey.contains("student")) {
                 new StudentHandler(httpExchange, mentorId).handle(formData);
             }
         }
