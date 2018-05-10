@@ -6,6 +6,7 @@ import com.example.queststore.data.statements.MentorGroupStatement;
 
 import java.sql.PreparedStatement;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class SqliteMentorGroupDAO extends DbHelper implements MentorGroupDAO {
 
@@ -23,6 +24,13 @@ public class SqliteMentorGroupDAO extends DbHelper implements MentorGroupDAO {
     public boolean delete(int groupID, int mentorID) {
         String sqlStatement = mentorGroupStatement.deleteConnectionStatement();
         PreparedStatement statement = getPreparedStatementBy(Arrays.asList(groupID, mentorID), sqlStatement);
+        return update(statement);
+    }
+
+    @Override
+    public boolean deleteBy(int mentorID) {
+        String sqlStatement = mentorGroupStatement.deleteConnectionStatementByMentorID();
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(mentorID), sqlStatement);
         return update(statement);
     }
 }
