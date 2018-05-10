@@ -41,7 +41,7 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
                 cookie = HttpCookie.parse(sessionCookie).get(0);
 
                 if (sessionDAO.getById(cookie.getValue()) != null) {
-                    showAdminPage(httpExchange, cookie);
+                    showWebPage(httpExchange, cookie);
                     return;
                 }
             }
@@ -72,16 +72,18 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
 
                 redirectToAdmin(httpExchange);
             }
-            response = prepareTemplateMain();
+            else {
+                response = prepareTemplateMain();
+            }
         }
         renderWebsite(httpExchange, response);
 
     }
 
-    private void showAdminPage(HttpExchange httpExchange, HttpCookie cookie) {
+    private void showWebPage(HttpExchange httpExchange, HttpCookie cookie) {
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
-        String response = "";
+        String response;
 
         int adminId = session.getUserId();
         admin = userDAO.getById(adminId);
@@ -101,7 +103,7 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
             response = prepareTemplateMentorProfile(user);
         }
         else if (uri.toString().contains("group-manager")) {
-//            response = prepareTemplateGroupManager();
+            response = prepareTemplateGroupManager();
         }
         else {
             response = prepareTemplateMain();
@@ -159,10 +161,12 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
         return template.render(model);
     }
 
-//    private String prepareTemplateGroupManager() {
-//        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/group_manager.twig");
-//        JtwigModel model = JtwigModel.newModel();
-//    }
+    private String prepareTemplateGroupManager() {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/group_manager.twig");
+        JtwigModel model = JtwigModel.newModel();
+
+        return template.render(model);
+    }
 
     private void renderWebsite(HttpExchange httpExchange, String response) {
         try {
@@ -202,7 +206,7 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
 
     private void redirectToGroupManager(HttpExchange httpExchange) throws IOException {
         Headers headers = httpExchange.getResponseHeaders();
-        String redirect = "/group-manager";
+        String redirect = "/admin/group-manager";
         headers.add("Location", redirect);
         httpExchange.sendResponseHeaders(301, -1);
     }
