@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+import static com.example.queststore.controllers.web.values.TaskOptions.*;
+
 class TaskHandler {
 
     private HttpExchange httpExchange;
@@ -25,13 +27,13 @@ class TaskHandler {
     }
 
     void handle(String formData) throws IOException {
-        if (formData.contains("delete-task-action")) {
+        if (formData.contains(DELETE_TASK_ACTION)) {
             handleDeletingTask(formData);
-        } else if (formData.contains("add-task-button")) {
+        } else if (formData.contains(ADD_TASK)) {
             handleAddingTask(formData);
-        } else if (formData.contains("edit-task-button")) {
+        } else if (formData.contains(EDIT_TASK)) {
             handleEditingTask(formData);
-        } else if (formData.contains("edit-task-action")) {
+        } else if (formData.contains(EDIT_TASK_ACTION)) {
             handleShowingEditPage(formData);
         }
     }
