@@ -26,6 +26,8 @@
 #title-mentor-box {
     text-align: center;
     width: 650px;
+    font-size: 25px;
+    font-weight: bold;
 }
 
 #mentors {
