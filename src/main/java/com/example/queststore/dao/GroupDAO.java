@@ -8,6 +8,7 @@ public interface GroupDAO {
 
     List<Group> getAll();
     Group getByName(String name);
+    Group getById(int id);
     boolean add(Group group);
     boolean delete(Group group);
     List<String> getGroupsNamesByMentorId(int mentorID);

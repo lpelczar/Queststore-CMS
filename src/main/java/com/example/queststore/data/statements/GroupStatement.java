@@ -15,6 +15,11 @@ public class GroupStatement {
                 " WHERE " + GroupEntry.GROUP_NAME + " = ?;" ;
     }
 
+    public String selectGroupById() {
+        return "SELECT * FROM " + GroupEntry.TABLE_NAME +
+                " WHERE " + GroupEntry.ID + " = ?;" ;
+    }
+
     public String insertGroupStatement() {
 
         return "INSERT INTO " + GroupEntry.TABLE_NAME + " (" +
