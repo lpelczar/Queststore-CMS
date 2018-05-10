@@ -22,7 +22,7 @@ public class Group {
 
     @Override
     public String toString() {
-        return String.format("Group name: %s", groupName);
+        return String.format(groupName);
     }
 
     public int getId() {
