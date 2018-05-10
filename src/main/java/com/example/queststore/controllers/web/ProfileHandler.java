@@ -41,9 +41,44 @@ public class ProfileHandler {
         return userDAO.getAllByRole(UserEntry.MENTOR_ROLE);
     }
 
+    public List<String> getGroupsBy(int id) { return groupDAO.getGroupsNamesByMentorId(id); }
+
+    public List<User> getStudentsBy(int groupId) { return userDAO.getStudentsByGroupId(groupId); }
+
     public List<Group> getAllGroups() {
         GroupDAO groupDAO = new SqliteGroupDAO();
         return groupDAO.getAll();
+    }
+
+    public Map<String, List<User>> getStudentsGroups(int mentorId) {
+        Map<String, List<User>> groups = new HashMap<>();
+        List<String> groupNames = getGroupsBy(mentorId);
+
+        for (String name : groupNames) {
+            Group group = groupDAO.getByName(name);
+            List<User> students = getStudentsBy(group.getId());
+
+            groups.put(name, students);
+        }
+        return groups;
+    }
+
+    public Map<String, String> prepareMentorsAssignToGroup() {
+        Map<Integer, Integer> groupMentorsId = groupDAO.getMentorAssignedToGroups();
+        Map<String, String> groupsMentorsNames = new HashMap<>();
+
+        for (Integer groupId : groupMentorsId.keySet()) {
+            int mentorId = groupMentorsId.get(groupId);
+
+            Group group = groupDAO.getById(groupId);
+            User mentor = userDAO.getById(mentorId);
+
+            groupsMentorsNames.put(
+                    group.getGroupName(),
+                    mentor.getName()
+            );
+        }
+        return groupsMentorsNames;
     }
 
     public User update(Map<String, String> userProfile, User user) {
@@ -73,31 +108,5 @@ public class ProfileHandler {
     public void updateDb(User user) {
         UserDAO userDAO = new SqliteUserDAO();
         userDAO.update(user);
-    }
-
-    public List<String> getGroupsBy(int id) {
-        return groupDAO.getGroupsNamesByMentorId(id);
-    }
-
-    public List<User> getStudentsBy(int groupId) {
-        return userDAO.getStudentsByGroupId(groupId);
-    }
-
-    public Map<String, List<User>> getStudentsGroups(int mentorId) {
-        Map<String, List<User>> groups = new HashMap<>();
-        List<String> groupNames = getGroupsBy(mentorId);
-
-        for (String name : groupNames) {
-            Group group = groupDAO.getByName(name);
-            List<User> students = getStudentsBy(group.getId());
-
-//            System.out.println(name);
-//
-//            for (User student : students) {
-//                System.out.println(student.getName());
-//            }
-            groups.put(name, students);
-        }
-        return groups;
     }
 }
