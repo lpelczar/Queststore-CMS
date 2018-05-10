@@ -6,8 +6,6 @@ import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.sessions.Session;
 import com.example.queststore.data.sessions.SessionDAO;
 import com.example.queststore.data.sessions.SqliteSessionDAO;
-import com.example.queststore.models.Student;
-import com.example.queststore.models.StudentData;
 import com.example.queststore.models.User;
 import com.example.queststore.utils.FormDataParser;
 import com.google.common.base.Charsets;
@@ -23,7 +21,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.queststore.controllers.web.MentorOptions.*;
@@ -35,7 +32,6 @@ public class MentorHandler implements HttpHandler {
     private TaskDAO taskDAO = new SqliteTaskDAO();
     private ItemDAO itemDAO = new SqliteItemDAO();
     private GroupDAO groupDAO = new SqliteGroupDAO();
-    private StudentDataDAO studentDataDAO = new SqliteStudentDataDAO();
     private int mentorId;
 
     @Override
@@ -173,20 +169,7 @@ public class MentorHandler implements HttpHandler {
                 sendResponse(httpExchange, template.render(model));
                 break;
             default:
-                template = JtwigTemplate.classpathTemplate("templates/display_students.twig");
-                model = JtwigModel.newModel();
-
-                List<Student> students = new ArrayList<>();
-                for (User u : userDAO.getAllByRole(UserEntry.STUDENT_ROLE)) {
-                    Student student = new Student(u);
-                    StudentData studentData = studentDataDAO.getStudentDataByStudentId(student.getId());
-                    student.setStudentData(studentData);
-                    student.setGroup(groupDAO.getById(studentData.getGroupId()));
-                    students.add(student);
-                }
-
-                model.with("students", students);
-                sendResponse(httpExchange, template.render(model));
+                new StudentHandler(httpExchange, mentorId).showStudentsPage();
         }
     }
 

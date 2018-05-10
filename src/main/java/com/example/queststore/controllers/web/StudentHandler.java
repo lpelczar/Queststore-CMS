@@ -1,18 +1,31 @@
 package com.example.queststore.controllers.web;
 
+import com.example.queststore.dao.GroupDAO;
 import com.example.queststore.dao.StudentDataDAO;
+import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.sqlite.SqliteGroupDAO;
 import com.example.queststore.dao.sqlite.SqliteStudentDataDAO;
+import com.example.queststore.dao.sqlite.SqliteUserDAO;
+import com.example.queststore.data.contracts.UserEntry;
+import com.example.queststore.models.Student;
 import com.example.queststore.models.StudentData;
+import com.example.queststore.models.User;
 import com.example.queststore.utils.FormDataParser;
 import com.sun.net.httpserver.HttpExchange;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 class StudentHandler {
 
     private HttpExchange httpExchange;
     private StudentDataDAO studentDataDAO = new SqliteStudentDataDAO();
+    private UserDAO userDAO = new SqliteUserDAO();
+    private GroupDAO groupDAO = new SqliteGroupDAO();
     private int mentorId;
 
     StudentHandler(HttpExchange httpExchange, int mentorId) {
@@ -37,5 +50,27 @@ class StudentHandler {
         studentDataDAO.updateStudentData(studentData);
         httpExchange.getResponseHeaders().add("Location", "/mentor/" + mentorId + "/students");
         httpExchange.sendResponseHeaders(301, -1);
+    }
+
+    void showStudentsPage() throws IOException {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/display_students.twig");
+        JtwigModel model = JtwigModel.newModel();
+        List<Student> students = new ArrayList<>();
+        for (User u : userDAO.getAllByRole(UserEntry.STUDENT_ROLE)) {
+            Student student = new Student(u);
+            StudentData studentData = studentDataDAO.getStudentDataByStudentId(student.getId());
+            student.setStudentData(studentData);
+            student.setGroup(groupDAO.getById(studentData.getGroupId()));
+            students.add(student);
+        }
+        model.with("students", students);
+        sendResponse(httpExchange, template.render(model));
+    }
+
+    private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
+        httpExchange.sendResponseHeaders(200, response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 }
