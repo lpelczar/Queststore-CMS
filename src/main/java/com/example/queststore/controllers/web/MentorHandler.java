@@ -31,6 +31,7 @@ import java.util.List;
 
 import static com.example.queststore.controllers.web.values.MentorOptions.*;
 import static com.example.queststore.controllers.web.values.MentorPages.*;
+import static com.example.queststore.controllers.web.values.RedirectOptions.*;
 
 public class MentorHandler implements HttpHandler {
 
@@ -89,23 +90,23 @@ public class MentorHandler implements HttpHandler {
 
     private void handleRedirection(HttpExchange httpExchange, String formData) throws IOException {
 
-        if (formData.contains("redirect-promote-user")) {
+        if (formData.contains(REDIRECT_TO_USER_PROMOTION)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/promote-user");
-        } else if (formData.contains("redirect-tasks")) {
+        } else if (formData.contains(REDIRECT_TO_TASKS)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/tasks");
-        } else if (formData.contains("redirect-add-task")) {
+        } else if (formData.contains(REDIRECT_TO_ADD_TASK)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-task");
-        } else if (formData.contains("redirect-items")) {
+        } else if (formData.contains(REDIRECT_TO_ITEMS)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/items");
-        } else if (formData.contains("redirect-add-item")) {
+        } else if (formData.contains(REDIRECT_TO_ADD_ITEM)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-item");
-        } else if (formData.contains("redirect-add-student-to-group")) {
+        } else if (formData.contains(REDIRECT_TO_ADD_STUDENT_TO_GROUP)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-student-to-group");
-        } else if (formData.contains("redirect-students")) {
+        } else if (formData.contains(REDIRECT_TO_STUDENTS)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/students" );
-        } else if (formData.contains("redirect-mark-student-task")) {
+        } else if (formData.contains(REDIRECT_TO_MARK_STUDENT_TASK)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/mark-student-quest" );
-        } else if (formData.contains("redirect-mark-student-item")) {
+        } else if (formData.contains(REDIRECT_TO_MARK_STUDENT_ITEM)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/mark-student-artifact" );
         }
     }
