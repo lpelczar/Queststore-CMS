@@ -79,6 +79,8 @@ public class MentorHandler implements HttpHandler {
                 new ItemHandler(httpExchange, mentorId).handle(formData);
             } else if (lastKey.contains(STUDENT)) {
                 new StudentHandler(httpExchange, mentorId).handle(formData);
+            } else if (lastKey.contains("reshuffle-teams")) {
+                new TeamHandler(httpExchange, mentorId).reshuffleTeams();
             }
         }
     }
@@ -125,13 +127,11 @@ public class MentorHandler implements HttpHandler {
     private void showMentorPage(HttpExchange httpExchange, HttpCookie cookie) throws IOException {
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
-        int userId = session.getUserId();
-        this.mentorId = userId;
-        User user = userDAO.getById(userId);
-        handleShowingSubPage(httpExchange, user);
+        this.mentorId = session.getUserId();
+        handleShowingSubPage(httpExchange);
     }
 
-    private void handleShowingSubPage(HttpExchange httpExchange, User user) throws IOException {
+    private void handleShowingSubPage(HttpExchange httpExchange) throws IOException {
 
         String path = httpExchange.getRequestURI().getPath();
         System.out.println("Path: " + path);
