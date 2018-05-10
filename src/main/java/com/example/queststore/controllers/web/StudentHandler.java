@@ -1,11 +1,7 @@
 package com.example.queststore.controllers.web;
 
-import com.example.queststore.dao.GroupDAO;
-import com.example.queststore.dao.StudentDataDAO;
-import com.example.queststore.dao.UserDAO;
-import com.example.queststore.dao.sqlite.SqliteGroupDAO;
-import com.example.queststore.dao.sqlite.SqliteStudentDataDAO;
-import com.example.queststore.dao.sqlite.SqliteUserDAO;
+import com.example.queststore.dao.*;
+import com.example.queststore.dao.sqlite.*;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Student;
 import com.example.queststore.models.StudentData;
@@ -26,6 +22,8 @@ class StudentHandler {
     private StudentDataDAO studentDataDAO = new SqliteStudentDataDAO();
     private UserDAO userDAO = new SqliteUserDAO();
     private GroupDAO groupDAO = new SqliteGroupDAO();
+    private ItemDAO itemDAO = new SqliteItemDAO();
+    private TaskDAO taskDAO = new SqliteTaskDAO();
     private int mentorId;
 
     StudentHandler(HttpExchange httpExchange, int mentorId) {
@@ -36,6 +34,8 @@ class StudentHandler {
     void handle(String formData) throws IOException {
         if (formData.contains("add-student-to-group")) {
             handleAddingStudentGroupConnection(formData);
+        } else if (formData.contains("show-student-details-action")) {
+            sendStudentDetailsPage(formData);
         }
     }
 
@@ -50,6 +50,23 @@ class StudentHandler {
         studentDataDAO.updateStudentData(studentData);
         httpExchange.getResponseHeaders().add("Location", "/mentor/" + mentorId + "/students");
         httpExchange.sendResponseHeaders(301, -1);
+    }
+
+    private void sendStudentDetailsPage(String formData) throws IOException {
+        final int STUDENT_ID_INDEX = 0;
+        List<String> values = new FormDataParser().getKeys(formData);
+        int studentId = Integer.parseInt(values.get(STUDENT_ID_INDEX));
+        Student student = new Student(userDAO.getById(studentId));
+        StudentData studentData = studentDataDAO.getStudentDataByStudentId(student.getId());
+        student.setStudentData(studentData);
+        student.setGroup(groupDAO.getById(studentData.getGroupId()));
+        student.setBoughtItems(itemDAO.getItemsByStudentId(studentId));
+        student.setDoneTasks(taskDAO.getTasksByStudentId(studentId));
+        System.out.println(student);
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/student_details.twig");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("student", student);
+        sendResponse(httpExchange, template.render(model));
     }
 
     void showStudentsPage() throws IOException {
