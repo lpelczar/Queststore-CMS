@@ -1,7 +1,13 @@
 package com.example.queststore.controllers.web;
 
-import com.example.queststore.dao.*;
-import com.example.queststore.dao.sqlite.*;
+import com.example.queststore.dao.GroupDAO;
+import com.example.queststore.dao.ItemDAO;
+import com.example.queststore.dao.TaskDAO;
+import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.sqlite.SqliteGroupDAO;
+import com.example.queststore.dao.sqlite.SqliteItemDAO;
+import com.example.queststore.dao.sqlite.SqliteTaskDAO;
+import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.sessions.Session;
 import com.example.queststore.data.sessions.SessionDAO;
@@ -24,6 +30,7 @@ import java.net.URL;
 import java.util.List;
 
 import static com.example.queststore.controllers.web.values.MentorOptions.*;
+import static com.example.queststore.controllers.web.values.MentorPages.*;
 
 public class MentorHandler implements HttpHandler {
 
@@ -59,17 +66,17 @@ public class MentorHandler implements HttpHandler {
             System.out.println("Form :" + formData);
             List<String> keys = new FormDataParser().getKeys(formData);
             String lastKey = keys.get(keys.size() - 1);
-            if (lastKey.contains("logout")) {
+            if (lastKey.contains(LOGOUT)) {
                 handleLogout(httpExchange);
-            } else if (lastKey.contains("redirect")) {
+            } else if (lastKey.contains(REDIRECT)) {
                 handleRedirection(httpExchange, formData);
-            } else if (lastKey.contains("promote")) {
+            } else if (lastKey.contains(PROMOTE)) {
                 new PromotionHandler(httpExchange).handleUserPromotion(formData);
-            } else if (lastKey.contains("task")) {
+            } else if (lastKey.contains(TASK)) {
                 new TaskHandler(httpExchange, mentorId).handle(formData);
-            } else if (lastKey.contains("item")) {
+            } else if (lastKey.contains(ITEM)) {
                 new ItemHandler(httpExchange, mentorId).handle(formData);
-            } else if (lastKey.contains("student")) {
+            } else if (lastKey.contains(STUDENT)) {
                 new StudentHandler(httpExchange, mentorId).handle(formData);
             }
         }
