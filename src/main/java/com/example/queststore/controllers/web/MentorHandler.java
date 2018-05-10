@@ -191,6 +191,8 @@ public class MentorHandler implements HttpHandler {
                 model.with("items", itemDAO.getAllItems());
                 sendResponse(httpExchange, template.render(model));
                 break;
+            default:
+                sendStaticPage(httpExchange, "static/error404.html");
         }
     }
 
