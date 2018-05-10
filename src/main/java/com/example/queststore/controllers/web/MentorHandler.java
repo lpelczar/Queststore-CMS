@@ -94,6 +94,8 @@ public class MentorHandler implements HttpHandler {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-item");
         } else if (formData.contains("redirect-add-student-to-group")) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-student-to-group");
+        } else if (formData.contains("redirect-students")) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/students" );
         }
     }
 
@@ -168,7 +170,7 @@ public class MentorHandler implements HttpHandler {
                 model.with("groups", groupDAO.getAll());
                 sendResponse(httpExchange, template.render(model));
                 break;
-            default:
+            case STUDENTS:
                 new StudentHandler(httpExchange, mentorId).showStudentsPage();
         }
     }
