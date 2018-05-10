@@ -105,7 +105,7 @@ public class LoginHandler implements HttpHandler {
 
         if (user.getRole().equals("Mentor")) {
             Headers headers = httpExchange.getResponseHeaders();
-            String redirect = "/mentor/" + userId;
+            String redirect = "/mentor/" + userId + "/students";
             headers.add("Location", redirect);
             headers.add("Set-Cookie", cookie.toString());
             httpExchange.sendResponseHeaders(301, -1);

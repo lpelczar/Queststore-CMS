@@ -88,15 +88,33 @@
 
         <div class="form">
             <form class="form" method="post">
-                <p>Please fill in the data to add new item!</p>
-                <input class="field" type="text" name="name" placeholder="Name" required>
-                <input class="field" type="number" name="price" placeholder="Price" required>
-                <input class="field" type="text" name="description" placeholder="Description" required>
-                <select name="category" class="combo-box" title="Categories" required>
-                    <option value="Basic">Basic</option>
-                    <option value="Extra">Extra</option>
-                </select>
-                <input type="submit" name="add-item-button" id="create-button" value="Add item">
+                <p style="font-size: larger">Please choose student and a group to make connection!</p>
+
+                {% if (students.isEmpty()) %}
+                    <p style="font-size: x-large">Student list is empty.</p>
+                {% else %}
+                    <select name="student" class="auto-combo-box" title="Students" required>
+                        {% for student in students %}
+                        <option value="{{ student.getId() }}">{{ student.toString() }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+
+                {% if (tasks.isEmpty()) %}
+                    <p style="font-size: x-large">Task list is empty.</p>
+                {% else %}
+                    <select name="group" class="auto-combo-box" title="Tasks" required>
+                        {% for task in tasks %}
+                        <option value="{{ task.getId() }}">{{ task.toString() }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+
+                {% if (students.isEmpty() or tasks.isEmpty()) %}
+                <input disabled type="submit" name="mark-student-quest-button" id="create-button" value="Mark student task">
+                {% else %}
+                <input type="submit" name="mark-student-quest-button" id="create-button" value="Mark student task">
+                {% endif %}
             </form>
         </div>
 
@@ -104,7 +122,7 @@
 
     <footer>
         <div id="bottom-bar">
-            <p id="copyright">© 2018 Design & Implementation : Łukasz Pelczar, Nikodem Ciołczyk</p>
+            <p id="copyright">2018 Design and Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
         </div>
     </footer>
 

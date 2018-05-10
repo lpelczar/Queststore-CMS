@@ -3,10 +3,8 @@ package com.example.queststore.dao.sqlite;
 import com.example.queststore.dao.TaskDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.data.contracts.TaskEntry;
-import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.statements.TaskStatement;
 import com.example.queststore.models.Task;
-import com.example.queststore.models.User;
 import com.example.queststore.utils.QueryLogger;
 
 import java.sql.PreparedStatement;
@@ -22,12 +20,22 @@ public class SqliteTaskDAO extends DbHelper implements TaskDAO {
     private TaskStatement taskStatement = new TaskStatement();
 
     @Override
+    public List<Task> getTasksByStudentId(int id) {
+        String sqlStatement = taskStatement.selectTasksByStudentId();
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(id), sqlStatement);
+        return getTasks(statement);
+    }
+
+    @Override
     public List<Task> getAll() {
         String sqlStatement = taskStatement.selectAllTasks();
+        PreparedStatement statement = getPreparedStatementBy(Collections.emptyList(), sqlStatement);
+        return getTasks(statement);
+    }
 
+    private List<Task> getTasks(PreparedStatement statement) {
         List<Task> tasks = new ArrayList<>();
         try {
-            PreparedStatement statement = getPreparedStatement(sqlStatement);
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 tasks.add(new Task(

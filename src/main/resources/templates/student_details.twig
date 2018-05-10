@@ -6,6 +6,7 @@
     <link href="/static/css/style.css" type="text/css" rel="stylesheet">
     <link href="/static/css/manager.css" type="text/css" rel="stylesheet">
     <link href="/static/css/forms.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/table.css" type="text/css" rel="stylesheet">
     <script src="/static/js/sidenav.js" type="text/javascript"></script>
 </head>
 <body>
@@ -85,26 +86,56 @@
     </header>
 
     <div class="container">
+        <h2 style="text-align: center; margin-top: 50px">Student data:</h2>
 
-        <div class="form">
-            <form class="form" method="post">
-                <p>Please fill in the data to add new item!</p>
-                <input class="field" type="text" name="name" placeholder="Name" required>
-                <input class="field" type="number" name="price" placeholder="Price" required>
-                <input class="field" type="text" name="description" placeholder="Description" required>
-                <select name="category" class="combo-box" title="Categories" required>
-                    <option value="Basic">Basic</option>
-                    <option value="Extra">Extra</option>
-                </select>
-                <input type="submit" name="add-item-button" id="create-button" value="Add item">
-            </form>
+        <div id="details" class="register">
+
+        <ul>
+            <li>Name: <strong> {{ student.getName() }} </strong></li>
+            <li>Login: <strong> {{ student.getLogin() }} </strong></li>
+            <li>E-mail: <strong> {{ student.getEmail() }} </strong></li>
+            <li>Phone number: <strong> {{ student.getPhoneNumber() }} </strong></li>
+            <li>Group: <strong> {{ student.getGroup().getGroupName() }} </strong></li>
+            <li>Team name: <strong> {{ student.getStudentData().getTeamName() }} </strong></li>
+            <li>Level: <strong> {{ student.getStudentData().getLevel() }} </strong></li>
+            <li>Balance: <strong> {{ student.getStudentData().getBalance() }} </strong></li>
+            <li>Experience: <strong> {{ student.getStudentData().getExperience() }} </strong></li>
+            <li>Bought items: <strong>
+
+                    {% if (student.getBoughtItems().isEmpty()) %}
+                        <span>None</span>
+                    {% else %}
+                        <span>| </span>
+                        {% for item in student.getBoughtItems() %}
+                            <span>{{ item.getName() }}</span>
+                            <span>| </span>
+                        {% endfor %}
+                    {% endif %}
+
+            </strong></li>
+
+            <li>Done tasks: <strong>
+
+                    {% if (student.getDoneTasks().isEmpty()) %}
+                        <span>None</span>
+                    {% else %}
+                        <span>| </span>
+                        {% for task in student.getDoneTasks() %}
+                            <span>{{ task.getName() }}</span>
+                            <span>| </span>
+                        {% endfor %}
+                    {% endif %}
+
+                </strong></li>
+
+        </ul>
         </div>
 
     </div>
 
     <footer>
         <div id="bottom-bar">
-            <p id="copyright">© 2018 Design & Implementation : Łukasz Pelczar, Nikodem Ciołczyk</p>
+            <p id="copyright">2018 Design and Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
         </div>
     </footer>
 

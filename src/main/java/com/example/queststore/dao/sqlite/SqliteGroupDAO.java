@@ -42,9 +42,20 @@ public class SqliteGroupDAO extends DbHelper implements GroupDAO {
     @Override
     public Group getByName(String name) {
         String sqlStatement = groupStatement.selectGroupByName();
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(name), sqlStatement);
+        return getGroup(statement);
+    }
+
+    @Override
+    public Group getById(int id) {
+        String sqlStatement = groupStatement.selectGroupById();
+        PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(id), sqlStatement);
+        return getGroup(statement);
+    }
+
+    private Group getGroup(PreparedStatement statement) {
         Group group = null;
         try {
-            PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(name), sqlStatement);
             ResultSet resultSet = query(statement);
             while (resultSet.next())
                 group = new Group(
@@ -60,6 +71,7 @@ public class SqliteGroupDAO extends DbHelper implements GroupDAO {
         }
         return group;
     }
+
 
     @Override
     public List<String> getGroupsNamesByMentorId(int mentorID) {

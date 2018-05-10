@@ -7,6 +7,7 @@ import java.util.List;
 public interface TaskDAO {
 
     List<Task> getAll();
+    List<Task> getTasksByStudentId(int id);
     Task getByName(String name);
     Task getById(int id);
     boolean add(Task task);

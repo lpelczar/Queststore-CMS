@@ -23,7 +23,7 @@ public class TeamController {
         this.userView = userView;
     }
 
-    void handleReshuffleStudentsTeams() {
+    public void handleReshuffleStudentsTeams() {
         List<StudentData> students = studentDataDAO.getAllStudentsData();
         List<StudentData> teams = reshuffleStudentsTeam(students);
 
@@ -143,7 +143,6 @@ public class TeamController {
         if (isUpdated) {
             userView.clearConsole();
             userView.displayOperationSuccessfullyCompleted();
-            userView.displayPressAnyKeyToContinueMessage();
         }
     }
 }

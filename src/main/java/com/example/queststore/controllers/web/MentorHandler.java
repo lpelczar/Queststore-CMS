@@ -1,8 +1,10 @@
 package com.example.queststore.controllers.web;
 
+import com.example.queststore.dao.GroupDAO;
 import com.example.queststore.dao.ItemDAO;
 import com.example.queststore.dao.TaskDAO;
 import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.sqlite.SqliteGroupDAO;
 import com.example.queststore.dao.sqlite.SqliteItemDAO;
 import com.example.queststore.dao.sqlite.SqliteTaskDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
@@ -11,6 +13,7 @@ import com.example.queststore.data.sessions.Session;
 import com.example.queststore.data.sessions.SessionDAO;
 import com.example.queststore.data.sessions.SqliteSessionDAO;
 import com.example.queststore.models.User;
+import com.example.queststore.utils.FormDataParser;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.sun.net.httpserver.HttpExchange;
@@ -24,8 +27,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.net.URL;
+import java.util.List;
 
-import static com.example.queststore.controllers.web.MentorOptions.*;
+import static com.example.queststore.controllers.web.values.MentorOptions.*;
+import static com.example.queststore.controllers.web.values.MentorPages.*;
+import static com.example.queststore.controllers.web.values.RedirectOptions.*;
 
 public class MentorHandler implements HttpHandler {
 
@@ -33,6 +39,7 @@ public class MentorHandler implements HttpHandler {
     private UserDAO userDAO = new SqliteUserDAO();
     private TaskDAO taskDAO = new SqliteTaskDAO();
     private ItemDAO itemDAO = new SqliteItemDAO();
+    private GroupDAO groupDAO = new SqliteGroupDAO();
     private int mentorId;
 
     @Override
@@ -45,7 +52,8 @@ public class MentorHandler implements HttpHandler {
             String sessionCookie = httpExchange.getRequestHeaders().getFirst("Cookie");
             if (sessionCookie != null) {
                 cookie = HttpCookie.parse(sessionCookie).get(0);
-                if (sessionDAO.getById(cookie.getValue()) != null) {
+                Session session = sessionDAO.getById(cookie.getValue());
+                if (session != null && isMentor(session.getUserId())) {
                     showMentorPage(httpExchange, cookie);
                     return;
                 }
@@ -57,32 +65,51 @@ public class MentorHandler implements HttpHandler {
 
             String formData = getFormData(httpExchange);
             System.out.println("Form :" + formData);
-            if (formData.contains("logout")) {
+            List<String> keys = new FormDataParser().getKeys(formData);
+            String lastKey = keys.get(keys.size() - 1);
+            if (lastKey.contains(LOGOUT)) {
                 handleLogout(httpExchange);
-            } else if (formData.contains("redirect")) {
+            } else if (lastKey.contains(REDIRECT)) {
                 handleRedirection(httpExchange, formData);
-            } else if (formData.contains("promote")) {
+            } else if (lastKey.contains(PROMOTE)) {
                 new PromotionHandler(httpExchange).handleUserPromotion(formData);
-            } else if (formData.contains("task")) {
+            } else if (lastKey.contains(TASK)) {
                 new TaskHandler(httpExchange, mentorId).handle(formData);
-            } else if (formData.contains("item")) {
+            } else if (lastKey.contains(ITEM)) {
                 new ItemHandler(httpExchange, mentorId).handle(formData);
+            } else if (lastKey.contains(STUDENT)) {
+                new StudentHandler(httpExchange, mentorId).handle(formData);
+            } else if (lastKey.contains("reshuffle-teams")) {
+                new TeamHandler(httpExchange, mentorId).reshuffleTeams();
             }
         }
     }
 
+    private boolean isMentor(int userId) {
+        User user = userDAO.getById(userId);
+        return user.getRole().equals(UserEntry.MENTOR_ROLE);
+    }
+
     private void handleRedirection(HttpExchange httpExchange, String formData) throws IOException {
 
-        if (formData.contains("redirect-promote-user")) {
+        if (formData.contains(REDIRECT_TO_USER_PROMOTION)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/promote-user");
-        } else if (formData.contains("redirect-tasks")) {
+        } else if (formData.contains(REDIRECT_TO_TASKS)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/tasks");
-        } else if (formData.contains("redirect-add-task")) {
+        } else if (formData.contains(REDIRECT_TO_ADD_TASK)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-task");
-        } else if (formData.contains("redirect-items")) {
+        } else if (formData.contains(REDIRECT_TO_ITEMS)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/items");
-        } else if (formData.contains("redirect-add-item")) {
+        } else if (formData.contains(REDIRECT_TO_ADD_ITEM)) {
             redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-item");
+        } else if (formData.contains(REDIRECT_TO_ADD_STUDENT_TO_GROUP)) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/add-student-to-group");
+        } else if (formData.contains(REDIRECT_TO_STUDENTS)) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/students" );
+        } else if (formData.contains(REDIRECT_TO_MARK_STUDENT_TASK)) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/mark-student-quest" );
+        } else if (formData.contains(REDIRECT_TO_MARK_STUDENT_ITEM)) {
+            redirectToPath(httpExchange, "/mentor/" + mentorId + "/mark-student-artifact" );
         }
     }
 
@@ -100,13 +127,11 @@ public class MentorHandler implements HttpHandler {
     private void showMentorPage(HttpExchange httpExchange, HttpCookie cookie) throws IOException {
         String sessionId = cookie.getValue();
         Session session = sessionDAO.getById(sessionId);
-        int userId = session.getUserId();
-        this.mentorId = userId;
-        User user = userDAO.getById(userId);
-        handleShowingSubPage(httpExchange, user);
+        this.mentorId = session.getUserId();
+        handleShowingSubPage(httpExchange);
     }
 
-    private void handleShowingSubPage(HttpExchange httpExchange, User user) throws IOException {
+    private void handleShowingSubPage(HttpExchange httpExchange) throws IOException {
 
         String path = httpExchange.getRequestURI().getPath();
         System.out.println("Path: " + path);
@@ -150,11 +175,32 @@ public class MentorHandler implements HttpHandler {
             case ADD_ITEM:
                 sendStaticPage(httpExchange, "static/mentor/add_item.html");
                 break;
-            default:
-                template = JtwigTemplate.classpathTemplate("templates/mentor_manager.twig");
+            case ADD_STUDENT_TO_GROUP:
+                template = JtwigTemplate.classpathTemplate("templates/add_student_to_group.twig");
                 model = JtwigModel.newModel();
-                model.with("userName", user.getLogin());
+                model.with("students", userDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+                model.with("groups", groupDAO.getAll());
                 sendResponse(httpExchange, template.render(model));
+                break;
+            case STUDENTS:
+                new StudentHandler(httpExchange, mentorId).showStudentsPage();
+                break;
+            case MARK_STUDENT_QUEST:
+                template = JtwigTemplate.classpathTemplate("templates/mark_student_task.twig");
+                model = JtwigModel.newModel();
+                model.with("students", userDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+                model.with("tasks", taskDAO.getAll());
+                sendResponse(httpExchange, template.render(model));
+                break;
+            case MARK_STUDENT_ARTIFACT:
+                template = JtwigTemplate.classpathTemplate("templates/mark_student_item.twig");
+                model = JtwigModel.newModel();
+                model.with("students", userDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+                model.with("items", itemDAO.getAllItems());
+                sendResponse(httpExchange, template.render(model));
+                break;
+            default:
+                sendStaticPage(httpExchange, "static/error404.html");
         }
     }
 
