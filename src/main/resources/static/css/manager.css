@@ -38,6 +38,8 @@
     font-size: 25px;
     transition: 0.3s;
     font-family: 'IBM Plex Serif', sans-serif;
+    white-space: normal;
+    width: 250px;
 }
 
 /* When you mouse over the navigation links, change their color */
