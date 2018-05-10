@@ -105,6 +105,8 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
         else if (uri.toString().contains("group-manager")) {
             response = prepareTemplateGroupManager();
         }
+//        else if (uri.toString().contains("revoke-manager")) {
+//        }
         else {
             response = prepareTemplateMain();
         }
@@ -162,8 +164,13 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
     }
 
     private String prepareTemplateGroupManager() {
+        Map<Group, User> groupsAssignMentors = profileHandler.getAllGroupsAssignMentors();
+
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/group_manager.twig");
         JtwigModel model = JtwigModel.newModel();
+
+        model.with("groups", groupsAssignMentors);
+
 
         return template.render(model);
     }

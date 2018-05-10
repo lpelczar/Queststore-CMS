@@ -63,25 +63,24 @@ public class ProfileHandler {
         return groups;
     }
 
-    public Map<String, String> getAllGroupsAssignMentos() {
-        Map<String, String> assignMentorsToGroups = prepareMentorsAssignToGroup();
+    public Map<Group, User> getAllGroupsAssignMentors() {
+        Map<Group, User> assignMentorsToGroups = prepareMentorsAssignToGroup();
         List<Group> groups = getAllGroups();
-        String noMentorAssign = "None";
 
         for (Group group : groups) {
-            if (!assignMentorsToGroups.containsKey(group.getGroupName())) {
+            if (!assignMentorsToGroups.containsKey(group)) {
                 assignMentorsToGroups.put(
-                        group.getGroupName(),
-                        noMentorAssign
+                        group,
+                        null
                 );
             }
         }
         return assignMentorsToGroups;
     }
 
-    private Map<String, String> prepareMentorsAssignToGroup() {
+    private Map<Group, User> prepareMentorsAssignToGroup() {
         Map<Integer, Integer> groupMentorsId = groupDAO.getMentorAssignedToGroups();
-        Map<String, String> groupsMentorsNames = new HashMap<>();
+        Map<Group, User> groupsMentorsNames = new HashMap<>();
 
         for (Integer groupId : groupMentorsId.keySet()) {
             int mentorId = groupMentorsId.get(groupId);
@@ -90,8 +89,8 @@ public class ProfileHandler {
             User mentor = userDAO.getById(mentorId);
 
             groupsMentorsNames.put(
-                    group.getGroupName(),
-                    mentor.getName()
+                    group,
+                    mentor
             );
         }
         return groupsMentorsNames;
