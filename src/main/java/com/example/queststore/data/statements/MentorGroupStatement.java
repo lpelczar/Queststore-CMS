@@ -32,7 +32,7 @@ public class MentorGroupStatement {
     }
 
     public String deleteConnectionStatementByMentorID() {
-        return "DELETE FROM " + MentorGroupEntry.TABLE_NAME + " ( " +
+        return "DELETE FROM " + MentorGroupEntry.TABLE_NAME +
                 " WHERE " + MentorGroupEntry.ID_MENTOR + " = ? ;";
     }
 }

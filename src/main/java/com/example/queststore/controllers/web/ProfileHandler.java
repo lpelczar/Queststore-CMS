@@ -1,8 +1,10 @@
 package com.example.queststore.controllers.web;
 
 import com.example.queststore.dao.GroupDAO;
+import com.example.queststore.dao.MentorGroupDAO;
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.dao.sqlite.SqliteGroupDAO;
+import com.example.queststore.dao.sqlite.SqliteMentorGroupDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.models.Group;
@@ -63,14 +65,14 @@ public class ProfileHandler {
         return groups;
     }
 
-    public Map<Group, User> getAllGroupsAssignMentors() {
-        Map<Group, User> assignMentorsToGroups = prepareMentorsAssignToGroup();
+    public Map<String, User> getAllGroupsAssignMentors() {
+        Map<String, User> assignMentorsToGroups = prepareMentorsAssignToGroup();
         List<Group> groups = getAllGroups();
 
         for (Group group : groups) {
-            if (!assignMentorsToGroups.containsKey(group)) {
+            if (!assignMentorsToGroups.containsKey(group.getGroupName())) {
                 assignMentorsToGroups.put(
-                        group,
+                        group.getGroupName(),
                         null
                 );
             }
@@ -78,9 +80,9 @@ public class ProfileHandler {
         return assignMentorsToGroups;
     }
 
-    private Map<Group, User> prepareMentorsAssignToGroup() {
+    private Map<String, User> prepareMentorsAssignToGroup() {
         Map<Integer, Integer> groupMentorsId = groupDAO.getMentorAssignedToGroups();
-        Map<Group, User> groupsMentorsNames = new HashMap<>();
+        Map<String, User> groupsMentorsNames = new HashMap<>();
 
         for (Integer groupId : groupMentorsId.keySet()) {
             int mentorId = groupMentorsId.get(groupId);
@@ -89,7 +91,7 @@ public class ProfileHandler {
             User mentor = userDAO.getById(mentorId);
 
             groupsMentorsNames.put(
-                    group,
+                    group.getGroupName(),
                     mentor
             );
         }
@@ -123,5 +125,10 @@ public class ProfileHandler {
     public void updateDb(User user) {
         UserDAO userDAO = new SqliteUserDAO();
         userDAO.update(user);
+    }
+
+    public void revokeMentorFromGroup(int mentorID) {
+        MentorGroupDAO mentorGroupDAO = new SqliteMentorGroupDAO();
+        mentorGroupDAO.deleteBy(mentorID);
     }
 }
