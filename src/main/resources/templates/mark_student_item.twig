@@ -95,20 +95,20 @@
                     </select>
                 {% endif %}
 
-                {% if (tasks.isEmpty()) %}
-                    <p style="font-size: x-large">Task list is empty.</p>
+                {% if (items.isEmpty()) %}
+                    <p style="font-size: x-large">Item list is empty.</p>
                 {% else %}
-                    <select name="group" class="auto-combo-box" title="Tasks" required>
-                        {% for task in tasks %}
-                        <option value="{{ task.getId() }}">{{ task.toString() }}</option>
+                    <select name="group" class="auto-combo-box" title="Items" required>
+                        {% for item in items %}
+                        <option value="{{ item.getId() }}">{{ item.toString() }}</option>
                         {% endfor %}
                     </select>
                 {% endif %}
 
-                {% if (students.isEmpty() or tasks.isEmpty()) %}
-                <input disabled type="submit" name="mark-student-quest-button" id="create-button" value="Mark student task">
+                {% if (students.isEmpty() or item.isEmpty()) %}
+                <input disabled type="submit" name="mark-student-artifact-button" id="create-button" value="Mark student item">
                 {% else %}
-                <input type="submit" name="mark-student-quest-button" id="create-button" value="Mark student task">
+                <input type="submit" name="mark-student-artifact-button" id="create-button" value="Mark student item">
                 {% endif %}
             </form>
         </div>

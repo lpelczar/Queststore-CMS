@@ -184,6 +184,13 @@ public class MentorHandler implements HttpHandler {
                 model.with("tasks", taskDAO.getAll());
                 sendResponse(httpExchange, template.render(model));
                 break;
+            case MARK_STUDENT_ARTIFACT:
+                template = JtwigTemplate.classpathTemplate("templates/mark_student_item.twig");
+                model = JtwigModel.newModel();
+                model.with("students", userDAO.getAllByRole(UserEntry.STUDENT_ROLE));
+                model.with("items", itemDAO.getAllItems());
+                sendResponse(httpExchange, template.render(model));
+                break;
         }
     }
 

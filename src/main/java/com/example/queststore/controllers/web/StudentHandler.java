@@ -25,6 +25,7 @@ class StudentHandler {
     private ItemDAO itemDAO = new SqliteItemDAO();
     private TaskDAO taskDAO = new SqliteTaskDAO();
     private StudentTaskDAO studentTaskDAO = new SqliteStudentTaskDAO();
+    private StudentItemDAO studentItemDAO = new SqliteStudentItemDAO();
     private int mentorId;
 
     StudentHandler(HttpExchange httpExchange, int mentorId) {
@@ -39,6 +40,8 @@ class StudentHandler {
             sendStudentDetailsPage(formData);
         } else if (formData.contains("mark-student-quest-button")) {
             handleMarkingStudentTask(formData);
+        } else if (formData.contains("mark-student-artifact-button")) {
+            handleMarkingStudentItem(formData);
         }
     }
 
@@ -79,6 +82,17 @@ class StudentHandler {
         int studentId = Integer.parseInt(values.get(STUDENT_ID_INDEX));
         int taskId = Integer.parseInt(values.get(TASK_ID_INDEX));
         studentTaskDAO.add(studentId, taskId);
+        httpExchange.getResponseHeaders().add("Location", "/mentor/" + mentorId + "/students");
+        httpExchange.sendResponseHeaders(301, -1);
+    }
+
+    private void handleMarkingStudentItem(String formData) throws IOException {
+        final int STUDENT_ID_INDEX = 0;
+        final int ITEM_ID_INDEX = 1;
+        List<String> values = new FormDataParser().getValues(formData);
+        int studentId = Integer.parseInt(values.get(STUDENT_ID_INDEX));
+        int itemId = Integer.parseInt(values.get(ITEM_ID_INDEX));
+        studentItemDAO.add(studentId, itemId, 0);
         httpExchange.getResponseHeaders().add("Location", "/mentor/" + mentorId + "/students");
         httpExchange.sendResponseHeaders(301, -1);
     }

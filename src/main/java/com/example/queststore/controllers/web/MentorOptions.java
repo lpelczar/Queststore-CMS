@@ -12,4 +12,5 @@ public interface MentorOptions {
     String ADD_STUDENT_TO_GROUP = "add-student-to-group";
     String STUDENTS = "students";
     String MARK_STUDENT_QUEST = "mark-student-quest";
+    String MARK_STUDENT_ARTIFACT = "mark-student-artifact";
 }
