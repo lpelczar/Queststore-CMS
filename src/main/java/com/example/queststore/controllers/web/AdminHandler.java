@@ -64,8 +64,12 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
             } else if (formData.contains("group-manager")) {
                 redirectToGroupManager(httpExchange);
 
-            } else if (formData.contains("promote-user")) {
+            } else if (formData.contains("promote-user-id")) {
+                new PromotionHandler(httpExchange).handleUserPromotion(formData);
+
+            } else if (formData.contains("promote")) {
                 redirectToPromoteUser(httpExchange);
+
 
             } else if (formData.contains("Accept")) {
                 int userId = profileHandler.getUserIdFrom(profileData);
