@@ -17,6 +17,7 @@ import java.util.Map;
 public class ProfileHandler {
     UserDAO userDAO = new SqliteUserDAO();
     GroupDAO groupDAO = new SqliteGroupDAO();
+    MentorGroupDAO mentorGroupDAO = new SqliteMentorGroupDAO();
 
     public User findUserBy(Integer userId) {
         User user = userDAO.getById(userId);
@@ -130,7 +131,10 @@ public class ProfileHandler {
     }
 
     public void revokeMentorFromGroup(int mentorID, int groupId) {
-        MentorGroupDAO mentorGroupDAO = new SqliteMentorGroupDAO();
         mentorGroupDAO.delete(groupId, mentorID);
+    }
+
+    public void assignMentorToGroup(Integer userId, int groupId) {
+        mentorGroupDAO.add(groupId, userId);
     }
 }
