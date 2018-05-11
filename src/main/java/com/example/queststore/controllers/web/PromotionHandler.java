@@ -1,8 +1,12 @@
 package com.example.queststore.controllers.web;
 
+import com.example.queststore.dao.StudentDataDAO;
 import com.example.queststore.dao.UserDAO;
+import com.example.queststore.dao.sqlite.SqliteStudentDataDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.contracts.UserEntry;
+import com.example.queststore.models.Student;
+import com.example.queststore.models.StudentData;
 import com.example.queststore.models.User;
 import com.example.queststore.utils.FormDataParser;
 import com.sun.net.httpserver.HttpExchange;
@@ -13,6 +17,7 @@ import java.util.List;
 class PromotionHandler {
 
     private UserDAO userDAO = new SqliteUserDAO();
+    private StudentDataDAO studentDataDAO = new SqliteStudentDataDAO();
     private HttpExchange httpExchange;
 
     PromotionHandler(HttpExchange httpExchange) {
@@ -29,6 +34,11 @@ class PromotionHandler {
 
         if (values.get(ROLE_INDEX).contains("student")) {
             user.setRole(UserEntry.STUDENT_ROLE);
+            Student student = new Student(user);
+            StudentData studentData = new StudentData(student.getId(), 1, "Not assigned", "Beginner",
+                    0, 0);
+            studentDataDAO.add(studentData);
+            student.setStudentData(studentData);
         } else if (values.get(ROLE_INDEX).contains("mentor")) {
             user.setRole(UserEntry.MENTOR_ROLE);
         }

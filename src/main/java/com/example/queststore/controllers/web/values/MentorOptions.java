@@ -8,4 +8,5 @@ public interface MentorOptions {
     String TASK = "task";
     String ITEM = "item";
     String STUDENT = "student";
+    String RESHUFFLE_TEAMS = "reshuffle-teams";
 }

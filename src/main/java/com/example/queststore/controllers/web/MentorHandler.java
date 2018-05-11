@@ -79,7 +79,7 @@ public class MentorHandler implements HttpHandler {
                 new ItemHandler(httpExchange, mentorId).handle(formData);
             } else if (lastKey.contains(STUDENT)) {
                 new StudentHandler(httpExchange, mentorId).handle(formData);
-            } else if (lastKey.contains("reshuffle-teams")) {
+            } else if (lastKey.contains(RESHUFFLE_TEAMS)) {
                 new TeamHandler(httpExchange, mentorId).reshuffleTeams();
             }
         }

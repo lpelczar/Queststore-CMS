@@ -96,28 +96,6 @@ public class SqliteGroupDAO extends DbHelper implements GroupDAO {
     }
 
     @Override
-    public Group getById(int groupId) {
-        String sqlStatement = groupStatement.selectByGroupId();
-
-        try {
-            PreparedStatement statement = getPreparedStatementBy(Collections.singletonList(groupId), sqlStatement);
-            ResultSet resultSet = query(statement);
-            if (resultSet.next()) {
-                return new Group(
-                        resultSet.getInt(GroupEntry.ID),
-                        resultSet.getString(GroupEntry.GROUP_NAME)
-                );
-            }
-        } catch (SQLException e) {
-            QueryLogger.logInfo(e.getClass().getName() + ": " + e.getMessage(), "logs/errors.log");
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        } finally {
-            closeConnection();
-        }
-        return null;
-    }
-
-    @Override
     public Map<Integer, Integer> getMentorAssignedToGroups() {
         String sqlStatement = groupStatement.selectMentorAssignedToGroups();
         Map<Integer, Integer> groupMentor = new HashMap<>();
