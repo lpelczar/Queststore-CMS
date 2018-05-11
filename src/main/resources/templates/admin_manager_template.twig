@@ -36,7 +36,9 @@
                         </form>
                     </li>
                     <li class="nav-element">
-                        <a class="navi-button" onclick="closeNav()">Promote blank user</a>
+                        <form method="post">
+                            <input type="submit" name="promote-user" value="Promote blank user">
+                        </form>
                     </li>
                     <li class="nav-element">
                         <a id="edit_mentor" onclick="displayEditWindow(); prepareTableForPickMentor(); displayMentors(); closeNav()">Edit mentor profile</a>
@@ -185,5 +187,6 @@
 <script type="text/javascript" src="../static/js/table_manager_admin.js"></script>
 <script type="text/javascript" src="../static/js/add_mentor_manager.js"></script>
 <script type="text/javascript" src="../static/js/edit_mentor_profile_by_admin.js"></script>
+<script type="text/javascript" src="../static/js/window-modal.js"></script>
 </body>
 </html>
