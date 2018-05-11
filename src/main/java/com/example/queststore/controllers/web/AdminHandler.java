@@ -2,6 +2,7 @@ package com.example.queststore.controllers.web;
 
 import com.example.queststore.dao.UserDAO;
 import com.example.queststore.dao.sqlite.SqliteUserDAO;
+import com.example.queststore.data.contracts.UserEntry;
 import com.example.queststore.data.sessions.Session;
 import com.example.queststore.data.sessions.SessionDAO;
 import com.example.queststore.data.sessions.SqliteSessionDAO;
@@ -63,6 +64,9 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
             } else if (formData.contains("group-manager")) {
                 redirectToGroupManager(httpExchange);
 
+            } else if (formData.contains("promote-user")) {
+                redirectToPromoteUser(httpExchange);
+
             } else if (formData.contains("Accept")) {
                 int userId = profileHandler.getUserIdFrom(profileData);
                 User user = profileHandler.findUserBy(userId);
@@ -89,6 +93,7 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
         admin = userDAO.getById(adminId);
 
         URI uri = httpExchange.getRequestURI();
+        System.out.println(uri.toString());
 
         if (uri.toString().contains("edit")) {
             Integer userId = getUserIdFrom(uri);
@@ -102,9 +107,6 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
 
             response = prepareTemplateMentorProfile(user);
         }
-        else if (uri.toString().contains("group-manager")) {
-            response = prepareTemplateGroupManager();
-        }
         else if (uri.toString().contains("revoke-mentor")) {
             Integer userId = getUserIdFrom(uri);
             String groupName = getGroupNameFrom(uri);
@@ -114,8 +116,27 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
                 profileHandler.revokeMentorFromGroup(userId, group.getId());
 
             }
-            redirectToGroupManager(httpExchange);
             response = prepareTemplateGroupManager();
+            redirectToGroupManager(httpExchange);
+        }
+
+        else if (uri.toString().contains("assign-mentor")) {
+            Integer userId = getUserIdFrom(uri);
+            String groupName = getGroupNameFrom(uri);
+
+            if (userId != null) {
+                Group group = profileHandler.getGroupByName(groupName);
+                profileHandler.assignMentorToGroup(userId, group.getId());
+            }
+            response = prepareTemplateGroupManager();
+            redirectToGroupManager(httpExchange);
+        }
+        else if (uri.toString().contains("group-manager")) {
+            response = prepareTemplateGroupManager();
+        }
+
+        else if (uri.toString().contains("promote-user")) {
+            response = prepareTemplatePromoteUser();
         }
         else {
             response = prepareTemplateMain();
@@ -175,12 +196,22 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
 
     private String prepareTemplateGroupManager() {
         Map<String, User> groupsAssignMentors = profileHandler.getAllGroupsAssignMentors();
+        List<User> mentors = profileHandler.getAllMentors();
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/group_manager.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("groups", groupsAssignMentors);
+        model.with("mentors", mentors);
 
+
+        return template.render(model);
+    }
+
+    private String prepareTemplatePromoteUser() {
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("templates/promote_user.twig");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("users", userDAO.getAllByRole(UserEntry.BLANK_USER_ROLE));
 
         return template.render(model);
     }
@@ -226,5 +257,12 @@ public class AdminHandler extends WebDataTools implements HttpHandler {
         String redirect = "/admin/group-manager";
         headers.add("Location", redirect);
         httpExchange.sendResponseHeaders(301, -1);
+    }
+
+    private void redirectToPromoteUser(HttpExchange httpExchange) throws IOException {
+        Headers responseHeaders = httpExchange.getResponseHeaders();
+        String redirect = "/admin/promote-user";
+        responseHeaders.add("Location", redirect);
+        httpExchange.sendResponseHeaders(302, -1);
     }
 }
