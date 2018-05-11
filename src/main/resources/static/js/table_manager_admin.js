@@ -10,20 +10,10 @@ var mentor_table = document.getElementsByClassName('mentors table')[0];
 var group_table = document.getElementsByClassName('groups table')[0];
 var table_form = document.getElementsByClassName('table-form');
 
-function displayWindow() {
-    var window = document.getElementById("window");
-    var close = document.getElementsByClassName('back-button')[0];
-    window.style.display = "flex";
-
-    close.onclick = function () {
-        window.style.display = "none";
-    }
-}
 
 function displayProfileTables() {
     column_tables.style.height = "90%";
 }
-
 
 function mentor_table_center() {
     hideMentors();

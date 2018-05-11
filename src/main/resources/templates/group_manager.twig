@@ -7,7 +7,9 @@
     <link href="/static/css/manager.css" rel="stylesheet">
     <link href="/static/css/admin-tables.css" rel="stylesheet">
     <link href="/static/css/group-manager.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="/static/css/profile-editor.css" rel="stylesheet">
+    <link href="/static/css/window-modal-admin.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="/static/js/sidenav.js"></script>
 </head>
@@ -60,17 +62,34 @@
                                 <div id="group-name">{{ group }}</div>
                                 <div id="mentor-assigned">{{ mentor.getName() }}</div>
                                 <div id="button-options">
-                                    <a href="#">
+                                    <a onclick="displayWindowAssign('{{ group }}')">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </a>
-                                    <a href="admin/manager-group/revoke-mentor/{{ mentor.getId() }}/{{ group }}">
+                                    <a href="admin/group-manager/revoke-mentor/{{ mentor.getId() }}/{{ group }}/">
                                         <span class="glyphicon glyphicon-minus"></span>
                                     </a>
-                                    <a href="#">
+                                    <a>
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </a>
                                 </div>
                             </li>
+
+                            <div id="window" class="window-modal">
+                                <div id="mentors-list-box">
+                                    <p id="title-mentor-box"></p>
+
+                                    <ul id="mentors">
+                                        {% for mentor in mentors %}
+                                        <li id="mentor-data">
+                                            <div class="mentor-name">
+                                                <a href="admin/group-manager/assign-mentor/{{ mentor.getId() }}/" class="mentor-name-button">{{ mentor.getName() }}</a>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <span class="back-button">back</span>
+                                </div>
+                            </div>
                         {% endfor %}
                     </ul>
                 </div>
@@ -90,9 +109,6 @@
         </div>
     </div>
 
-
-
-
     <footer>
         <div id="bottom-bar">
             <p id="copyright">2018 Design & Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
@@ -101,5 +117,9 @@
 </div>
 
 <script type="text/javascript" src="../static/js/group_manager.js"></script>
+<script type="text/javascript" src="../static/js/window-modal.js"></script>
+<script type="text/javascript" src="../static/js/table_manager_admin.js"></script>
+<script type="text/javascript" src="../static/js/add_mentor_manager.js"></script>
+<script type="text/javascript" src="../static/js/edit_mentor_profile_by_admin.js"></script>
 </body>
 </html>
