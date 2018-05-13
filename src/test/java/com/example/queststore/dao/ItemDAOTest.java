@@ -1,5 +1,8 @@
 package com.example.queststore.dao;
 
+import com.example.queststore.dao.sqlite.SqliteItemDAO;
+import com.example.queststore.dao.sqlite.SqliteStudentItemDAO;
+import com.example.queststore.dao.sqlite.SqliteUserDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.models.Item;
 import com.example.queststore.models.StudentData;
@@ -27,11 +30,15 @@ class ItemDAOTest {
     @BeforeEach
     void setUpConnectionDB() throws Exception {
         Files.deleteIfExists(new File(DATABASE_PATH).toPath());
-        DbHelper.setDatabasePath(DATABASE_PATH);
-        new DbHelper().createDatabase();
-        studentItemDAO = new DbStudentItemDAO();
-        userDAO = new DbUserDAO();
-        itemDAO = new DbItemDAO();
+        DbHelper dbHelper = new DbHelper();
+        dbHelper.setDatabasePath(DATABASE_PATH);
+        dbHelper.createDatabase();
+        studentItemDAO = new SqliteStudentItemDAO();
+        studentItemDAO.setDatabasePath(DATABASE_PATH);
+        userDAO = new SqliteUserDAO();
+        userDAO.setDatabasePath(DATABASE_PATH);
+        itemDAO = new SqliteItemDAO();
+        itemDAO.setDatabasePath(DATABASE_PATH);
 
         item1 = new Item(
                 1,

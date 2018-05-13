@@ -11,4 +11,5 @@ public interface StudentDataDAO {
     List<StudentData> getStudentsDataByTeamName(String teamName);
     boolean add(StudentData student);
     boolean updateStudentData(StudentData student);
+    void setDatabasePath(String path);
 }

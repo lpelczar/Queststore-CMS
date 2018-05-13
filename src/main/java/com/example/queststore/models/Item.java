@@ -55,11 +55,7 @@ public class Item {
     public void setCategory(String category) { this.category = category; }
 
     public String toString() {
-        return "id: " + id +
-                " | Name: " + name +
-                " | Price: " + price +
-                " | Category: " + category +
-                " | Description: " + description;
+        return " Name: " + name + " Price: " + price + " Category: " + category + " Description: " + description;
     }
 
     @Override

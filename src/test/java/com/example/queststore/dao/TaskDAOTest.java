@@ -1,5 +1,6 @@
 package com.example.queststore.dao;
 
+import com.example.queststore.dao.sqlite.SqliteTaskDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.models.Task;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,9 +21,11 @@ class TaskDAOTest {
     void before() throws IOException {
         String testDbPath = "testDb.db";
         Files.deleteIfExists(new File(testDbPath).toPath());
-        DbHelper.setDatabasePath(testDbPath);
-        new DbHelper().createDatabase();
-        this.taskDAO = new DbTaskDAO();
+        DbHelper dbHelper = new DbHelper();
+        dbHelper.setDatabasePath(testDbPath);
+        dbHelper.createDatabase();
+        this.taskDAO = new SqliteTaskDAO();
+        this.taskDAO.setDatabasePath(testDbPath);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.example.queststore.dao;
 
+import com.example.queststore.dao.sqlite.SqliteExpLevelsDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.models.ExpLevel;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,9 +22,11 @@ class ExpLevelsDAOTest {
     void before() throws IOException {
         String testDbPath = "testDb.db";
         Files.deleteIfExists(new File(testDbPath).toPath());
-        DbHelper.setDatabasePath(testDbPath);
-        new DbHelper().createDatabase();
-        this.expLevelsDAO = new DbExpLevelsDAO();
+        DbHelper dbHelper = new DbHelper();
+        dbHelper.setDatabasePath(testDbPath);
+        dbHelper.createDatabase();
+        this.expLevelsDAO = new SqliteExpLevelsDAO();
+        this.expLevelsDAO.setDatabasePath(testDbPath);
     }
 
     @Test

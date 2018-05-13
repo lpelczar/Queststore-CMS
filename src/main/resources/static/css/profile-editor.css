@@ -1,0 +1,37 @@
+#profile-editor {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+}
+
+.editor-table {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#editor-back-button {
+    display: flex;
+}
+
+.mentor-login {
+    height: 10%;
+    margin-top: 30%;
+}
+
+.mentor-editor {
+    border-radius: 20px;
+    width: 150%;
+    height: 100%;
+    margin-left: -25%;
+}
+
+.mentor-profile {
+    position: absolute;
+    padding-top: 22px;
+    padding-left: 80px;
+}
+
+
+

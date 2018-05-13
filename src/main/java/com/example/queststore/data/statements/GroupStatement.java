@@ -15,6 +15,11 @@ public class GroupStatement {
                 " WHERE " + GroupEntry.GROUP_NAME + " = ?;" ;
     }
 
+    public String selectGroupById() {
+        return "SELECT * FROM " + GroupEntry.TABLE_NAME +
+                " WHERE " + GroupEntry.ID + " = ?;" ;
+    }
+
     public String insertGroupStatement() {
 
         return "INSERT INTO " + GroupEntry.TABLE_NAME + " (" +
@@ -39,4 +44,9 @@ public class GroupStatement {
                 GroupEntry.ID + " INTEGER PRIMARY KEY," +
                 GroupEntry.GROUP_NAME + " TEXT NOT NULL UNIQUE);" ;
     }
+
+    public String selectMentorAssignedToGroups() {
+        return "SELECT * FROM " + MentorGroupEntry.TABLE_NAME + " ;";
+    }
+
 }

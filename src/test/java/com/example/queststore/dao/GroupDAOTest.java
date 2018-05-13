@@ -1,5 +1,6 @@
 package com.example.queststore.dao;
 
+import com.example.queststore.dao.sqlite.SqliteGroupDAO;
 import com.example.queststore.data.DbHelper;
 import com.example.queststore.models.Group;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,9 +22,11 @@ class GroupDAOTest {
     void before() throws IOException {
         String testDbPath = "testDb.db";
         Files.deleteIfExists(new File(testDbPath).toPath());
-        DbHelper.setDatabasePath(testDbPath);
-        new DbHelper().createDatabase();
-        this.groupDAO = new DbGroupDAO();
+        DbHelper dbHelper = new DbHelper();
+        dbHelper.setDatabasePath(testDbPath);
+        dbHelper.createDatabase();
+        this.groupDAO = new SqliteGroupDAO();
+        this.groupDAO.setDatabasePath(testDbPath);
     }
 
     @Test

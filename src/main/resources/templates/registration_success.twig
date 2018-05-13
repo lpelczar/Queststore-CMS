@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Queststore</title>
+    <link href="static/css/style.css" type="text/css" rel="stylesheet">
+    <link href="static/css/register.css" type="text/css" rel="stylesheet">
+</head>
+
+<body onload = textAnimation()>
+<header>
+    <div id="title-bar">
+        <h1 id="title-text">Queststore</h1>
+    </div>
+</header>
+
+
+<div class="center">
+
+    <h3 id="created-info">Account successfully created. Please wait for the email confirmation!</h3>
+
+    <div class="register">
+
+        <ul>
+            <li>Login: <strong> {{ userLogin }} </strong></li>
+            <li>Full name: <strong> {{ userName }} </strong></li>
+            <li>E-mail: <strong> {{ userEmail }} </strong></li>
+            <li>Phone number: <strong> {{ userPhoneNumber }} </strong></li>
+        </ul>
+
+    </div>
+</div>
+
+<footer>
+    <div id="bottom-bar">
+        <p id="copyright">2018 Design and Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
+    </div>
+</footer>
+
+</body>
+</html>

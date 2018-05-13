@@ -27,10 +27,7 @@ public class User {
     }
 
     public String toString(){
-        return  "Name: " + name +
-                " | Login: " + login +
-                " | Email: " + email +
-                " | Phone number: " + phoneNumber;
+        return  "Name: " + name + " Login: " + login + " Email: " + email + " Phone number: " + phoneNumber;
     }
 
     public int getId() {
@@ -72,6 +69,8 @@ public class User {
     public void setLogin(String login) {
         this.login = login;
     }
+
+    public void setPassword(String password) { this.password = password; }
 
     public void setEmail(String email) {
         this.email = email;

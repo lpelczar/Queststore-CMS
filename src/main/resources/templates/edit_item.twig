@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Queststore</title>
+    <link href="/static/css/style.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/manager.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/forms.css" type="text/css" rel="stylesheet">
+    <script src="/static/js/sidenav.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <ul>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-students" value="Students">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-promote-user" value="Promote user">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-tasks" value="Tasks">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-add-task" value="Add task">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-items" value="Items">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-add-item" value="Add item">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-add-student-to-group" value="Add student to group">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-mark-student-task" value="Mark student done task">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="redirect-mark-student-item" value="Mark student bought item">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="reshuffle-teams" value="Reshuffle student teams">
+            </form>
+        </li>
+        <li class="nav-element">
+            <form method="post">
+                <input type="submit" name="logout" value="Logout">
+            </form>
+        </li>
+    </ul>
+</div>
+
+<div id="main">
+
+    <header>
+        <div id="title-bar">
+            <div id="menu" onclick="openNav()">
+                <div class="menu-icon"></div>
+                <div class="menu-icon"></div>
+                <div class="menu-icon"></div>
+            </div>
+            <h1 id="title-text">Queststore</h1>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="form">
+            <form class="form" method="post">
+                <p>Please fill in the data to edit item!</p>
+                <input class="field" type="text" name="name" placeholder="Name" value="{{ itemName }}" required>
+                <input class="field" type="number" name="points" placeholder="Points" value="{{ itemPrice }}" required>
+                <input class="field" type="text" name="description" placeholder="Description" value="{{ itemDescription }}" required>
+                <select name="category" class="combo-box" title="Categories" required>
+
+                    {% if (basicItem) %}
+                        <option value="Basic" selected="selected">Basic</option>
+                        <option value="Extra">Extra</option>
+                    {% else %}
+                        <option value="Basic">Basic</option>
+                        <option value="Extra" selected="selected">Extra</option>
+                    {% endif %}
+
+                </select>
+                <input class="field" type="hidden" name="id" value="{{ itemId }}">
+                <input type="submit" name="edit-item-button" id="create-button" value="Edit item">
+            </form>
+        </div>
+
+    </div>
+
+    <footer>
+        <div id="bottom-bar">
+            <p id="copyright">2018 Design and Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>

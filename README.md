@@ -1,4 +1,4 @@
-# Queststore v.0.4
+# Queststore v.0.5
 
 ## Installation
 

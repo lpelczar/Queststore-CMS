@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Queststore</title>
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/manager.css" rel="stylesheet">
+    <link href="/static/css/admin-tables.css" rel="stylesheet">
+    <link href="/static/css/profile-editor.css" rel="stylesheet">
+    <script src="/static/js/sidenav.js"></script>
+</head>
+<body onload="displayEditWindow(); prepareTableForEditMentor()">
+    <div id="main">
+
+        <div class="navi-menu">
+            <header>
+                <div id="title-bar">
+                    <div id="menu" onclick="openNav()">
+                        <div class="menu-icon"></div>
+                        <div class="menu-icon"></div>
+                        <div class="menu-icon"></div>
+                    </div>
+                    <h1 id="title-text">Queststore</h1>
+                </div>
+                <div id="mySidenav" class="sidenav">
+                    <ul id="navi-list">
+                        <li class="nav-element">
+                            <a class="navi-button" onclick="displayWindow(); closeNav()">Show all mentors</a>
+                        </li>
+                        <li class="nav-element">
+                            <a class="navi-button" onclick="displayEditWindow(); prepareTableForAddMentor(); closeNav()">Add new mentor</a>
+                        </li>
+                        <li class="nav-element">
+                            <a id="edit_mentor" onclick="displayEditWindow(); prepareTableForPickMentor(); closeNav()">Edit mentor profile</a>
+                        </li>
+                        <li class="nav-element">
+                            <a href="">Assign mentor-group</a>
+                        </li>
+                        <li class="nav-element">
+                            <a href="">Edit my profile</a>
+                        </li>
+                        <li class="nav-element">
+                            <form method="post">
+                                <input type="submit" name="logout" value="Logout">
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+        </div>
+            <div class="content-admin">
+
+                <div id="row-table">
+                    <div class="assigned table">
+                        <div id="assigned-table-name">Mentors assigned to groups</div>
+
+                        <form method="POST" id="add-mentor-form" onsubmit="returnValidateInputs()">
+
+                            <div class="table-form">
+                                <div class="input-labels">Login</div>
+                                <input class="add-input" value="{{ login }}" type="text" name="login">
+                            </div>
+
+                            <div class="table-form">
+                                <div class="input-labels">Password</div>
+                                <input class="add-input" value="{{ password }}" type="text" name="password">
+                            </div>
+
+                            <div class="table-form">
+                                <div class="input-labels">Name</div>
+                                <input class="add-input" value="{{ name }}" type="text" name="name">
+                            </div>
+
+                            <div class="table-form">
+                                <div class="input-labels">Phone number</div>
+                                <input class="add-input" value="{{ phoneNumber }}" type="text" name="phone-number">
+                            </div>
+
+
+                            <div class="table-form">
+                                <div class="input-labels">Email</div>
+                                <input class="add-input" value="{{ email }}" type="text" name="email">
+                            </div>
+
+                            <div class="mentor-profile-button">
+                                <input type="button" value="Cancel" class="mentor-profile-button" onclick="backToMainPage()">
+                                <input type="submit" name="{{ user_id }}" value="Accept" class="mentor-profile-button">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <footer>
+            <div id="bottom-bar">
+                <p id="copyright">2018 Design & Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
+            </div>
+        </footer>
+    </div>
+    <script type="text/javascript" src="/static/js/table_manager_admin.js"></script>
+    <script type="text/javascript" src="/static/js/add_mentor_manager.js"></script>
+    <script type="text/javascript" src="/static/js/edit_mentor_profile_by_admin.js"></script>
+</body>
+</html>

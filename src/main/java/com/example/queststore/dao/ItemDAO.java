@@ -13,4 +13,6 @@ public interface ItemDAO {
     Item getItemById(int id);
     boolean add(Item item);
     boolean update(Item item);
+    boolean delete(Item item);
+    void setDatabasePath(String path);
 }

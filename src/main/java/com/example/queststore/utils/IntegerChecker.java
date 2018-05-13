@@ -1,8 +1,8 @@
 package com.example.queststore.utils;
 
-public class IntegerChecker {
+class IntegerChecker {
 
-    public static boolean isInteger(String s) {
+    static boolean isInteger(String s) {
         try {
             Integer.parseInt(s);
         } catch(NumberFormatException | NullPointerException e) {

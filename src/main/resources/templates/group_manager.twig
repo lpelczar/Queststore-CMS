@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Queststore</title>
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/manager.css" rel="stylesheet">
+    <link href="/static/css/admin-tables.css" rel="stylesheet">
+    <link href="/static/css/group-manager.css" rel="stylesheet">
+    <link href="/static/css/profile-editor.css" rel="stylesheet">
+    <link href="/static/css/window-modal-admin.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="/static/js/sidenav.js"></script>
+</head>
+<body onload="changeSizeOfMainTable()">
+<div id="main">
+
+    <div class="navi-menu">
+        <header>
+            <div id="title-bar">
+                <div id="menu" onclick="openNav()">
+                    <div class="menu-icon"></div>
+                    <div class="menu-icon"></div>
+                    <div class="menu-icon"></div>
+                </div>
+                <h1 id="title-text">Queststore</h1>
+            </div>
+            <div id="mySidenav" class="sidenav">
+                <ul id="navi-list">
+                    <li class="nav-element">
+                        <form method="post">
+                            <input type="submit" name="main-page" value="Back">
+                        </form>
+                    </li>
+                    <li class="nav-element">
+                        <form method="post">
+                            <input type="submit" name="logout" value="Logout">
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </header>
+    </div>
+
+    <div id="row-table">
+        <div class="assigned table">
+            <div id="assigned-table-name">Group Manager</div>
+
+            <div id="group-manager-container">
+                <div id="groups">
+
+                    <div id="group-manager-labels">
+                        <div id="group-name-label">Group name</div>
+                        <div id="mentor-name-label">Mentor name</div>
+                        <div id="options-label">Options</div>
+                    </div>
+
+                    <ul>
+                        {% for group, mentor in groups %}
+                            <li class="groups-list-element">
+                                <div id="group-name">{{ group }}</div>
+                                <div id="mentor-assigned">{{ mentor.getName() }}</div>
+                                <div id="button-options">
+                                    <a onclick="displayWindowAssign('{{ group }}')">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </a>
+                                    <a href="admin/group-manager/revoke-mentor/{{ mentor.getId() }}/{{ group }}/">
+                                        <span class="glyphicon glyphicon-minus"></span>
+                                    </a>
+                                    <a>
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </div>
+                            </li>
+
+                            <div id="window" class="window-modal">
+                                <div id="mentors-list-box">
+                                    <p id="title-mentor-box"></p>
+
+                                    <ul id="mentors">
+                                        {% for mentor in mentors %}
+                                        <li id="mentor-data">
+                                            <div class="mentor-name">
+                                                <a href="admin/group-manager/assign-mentor/{{ mentor.getId() }}/" class="mentor-name-button">{{ mentor.getName() }}</a>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <span class="back-button">back</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div id="option-buttons">
+
+                    {#<form method="POST">#}
+                        {#<input id="assign-mentor" value=""#}
+                    {#</form>#}
+                    {##}
+                </div>
+            </div>
+
+            <div id="manage-options">
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div id="bottom-bar">
+            <p id="copyright">2018 Design & Implementation : Lukasz Pelczar, Nikodem Ciolczyk</p>
+        </div>
+    </footer>
+</div>
+
+<script type="text/javascript" src="../static/js/group_manager.js"></script>
+<script type="text/javascript" src="../static/js/window-modal.js"></script>
+<script type="text/javascript" src="../static/js/table_manager_admin.js"></script>
+<script type="text/javascript" src="../static/js/add_mentor_manager.js"></script>
+<script type="text/javascript" src="../static/js/edit_mentor_profile_by_admin.js"></script>
+</body>
+</html>
