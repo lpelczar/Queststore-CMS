@@ -31,11 +31,11 @@ Java full stack CMS application to control education process at Codecool. There 
 
 ## Sample Screenshots
 
-![c1](http://i64.tinypic.com/2hn01ap.png)
+![c1](https://raw.github.com/lpelczar/Queststore-CMS/master/docs/quest1.png)
 
-![c2](http://i65.tinypic.com/11kdtzn.png)
+![c1](https://raw.github.com/lpelczar/Queststore-CMS/master/docs/quest2.png)
 
-![c3](http://i65.tinypic.com/v3evyr.png)
+![c1](https://raw.github.com/lpelczar/Queststore-CMS/master/docs/quest3.png)
 
 ## More info
 
