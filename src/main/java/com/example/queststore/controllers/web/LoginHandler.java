@@ -10,7 +10,8 @@ import com.google.common.io.Resources;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import javafx.util.Pair;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -134,6 +135,6 @@ public class LoginHandler implements HttpHandler {
             String[] keyValue = pair.split("=");
             values.add(URLDecoder.decode(keyValue[VALUE_INDEX], Charsets.UTF_8.displayName()));
         }
-        return new Pair<>(values.get(LOGIN_INDEX), values.get(PASSWORD_INDEX));
+        return new ImmutablePair<>(values.get(LOGIN_INDEX), values.get(PASSWORD_INDEX));
     }
 }
