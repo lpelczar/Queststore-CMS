@@ -4,7 +4,7 @@
 
 Java full stack CMS application to control education process at Codecool. There are three types of accounts and every type has its own control manager. Back end written using Java 8, SQLite database, JDBC, MVC and DAO pattern, HttpServer. Front end written using HTML5, CSS, JavaScript and JTwig.
 
-![d1](http://i67.tinypic.com/245m1yu.jpg)
+![c1](https://raw.github.com/lpelczar/Queststore-CMS/master/docs/ERD.png)
 
 ## User stories
 
